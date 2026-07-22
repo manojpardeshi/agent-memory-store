@@ -1,0 +1,1630 @@
+{
+  "schema_version": 1,
+  "dataset_id": "personal-retrieval-v1",
+  "description": "Synthetic personal and project memories for a heuristic local retrieval-quality gate; contains no user-derived data.",
+  "distractor_policy": "For each query, manually select one accessible memory from the same permitted scope or pool that is topically unrelated to the expected answer; distractors are neutral relevance controls, not adversarial near-duplicates.",
+  "top_k": 5,
+  "thresholds": {
+    "query_count_min": 50,
+    "memory_kind_count_min": 1,
+    "recall_at_k_min": 0.9,
+    "mrr_min": 0.85,
+    "distractor_leak_rate_max": 0.1,
+    "scope_violation_count_max": 0,
+    "runtime_seconds_max": 60
+  },
+  "memories": [
+    {
+      "fixture_id": "p01",
+      "kind": "preference",
+      "content": "The evaluation user prefers the Solarized Dark theme in the Helix editor.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p02",
+      "kind": "fact",
+      "content": "The synthetic home backup runs every Sunday at 02:00 local time.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p03",
+      "kind": "event",
+      "content": "A fictional dental appointment is scheduled for April 14 at 09:30.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p04",
+      "kind": "summary",
+      "content": "The synthetic garden plan includes tomatoes, basil, and drip irrigation.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p05",
+      "kind": "turn",
+      "content": "I named my fictional bicycle Comet.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "p06",
+      "kind": "preference",
+      "content": "The evaluation user prefers the thermostat set to 20 degrees Celsius.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p07",
+      "kind": "fact",
+      "content": "The synthetic passport is stored in the desk's blue document folder.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p08",
+      "kind": "event",
+      "content": "A fictional design conference begins in Seattle on October 8.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p09",
+      "kind": "summary",
+      "content": "The synthetic tax checklist includes bank statements and brokerage forms.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p10",
+      "kind": "turn",
+      "content": "The fictional laptop warranty expires on November 30.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "p11",
+      "kind": "preference",
+      "content": "The evaluation user chooses decaffeinated drinks after 2 PM.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p12",
+      "kind": "fact",
+      "content": "The fictional cat's veterinarian is Lakeside Animal Clinic.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p13",
+      "kind": "event",
+      "content": "The synthetic car needs an oil change at 42,000 miles.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p14",
+      "kind": "summary",
+      "content": "The fictional reading queue starts with Dune and The Left Hand of Darkness.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      }
+    },
+    {
+      "fixture_id": "p15",
+      "kind": "turn",
+      "content": "My synthetic shoe size is 10.5 US.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "b01",
+      "kind": "preference",
+      "content": "The evaluation developer formats source code with four-space indentation.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      }
+    },
+    {
+      "fixture_id": "b02",
+      "kind": "fact",
+      "content": "The synthetic staging deployment uses the us-west-2 region.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      }
+    },
+    {
+      "fixture_id": "b03",
+      "kind": "event",
+      "content": "The fictional release freeze starts on December 18.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      }
+    },
+    {
+      "fixture_id": "b04",
+      "kind": "summary",
+      "content": "The synthetic outage review identified an expired certificate as the cause.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      }
+    },
+    {
+      "fixture_id": "b05",
+      "kind": "turn",
+      "content": "The fictional metrics service listens on port 8087.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "b06",
+      "kind": "preference",
+      "content": "The evaluation developer runs the full test suite before creating commits.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      }
+    },
+    {
+      "fixture_id": "b07",
+      "kind": "fact",
+      "content": "The synthetic application retains diagnostic logs for fourteen days.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      }
+    },
+    {
+      "fixture_id": "b08",
+      "kind": "event",
+      "content": "The fictional architecture review occurs Tuesday at 3 PM.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      }
+    },
+    {
+      "fixture_id": "b09",
+      "kind": "summary",
+      "content": "The synthetic migration moves legacy records into the users_archive table.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      }
+    },
+    {
+      "fixture_id": "b10",
+      "kind": "turn",
+      "content": "The fictional feature flag is named aurora_v2.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "s01",
+      "kind": "preference",
+      "content": "Project Blue APIs use JSON fields written in snake_case.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s02",
+      "kind": "fact",
+      "content": "Project Blue stores relational data in PostgreSQL 15.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s03",
+      "kind": "event",
+      "content": "Project Blue's fictional beta launch is scheduled for September 12.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s04",
+      "kind": "summary",
+      "content": "Project Blue architecture consists of an API, background workers, and Redis.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s05",
+      "kind": "turn",
+      "content": "The synthetic customer codename for Project Blue is Orion.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "s06",
+      "kind": "preference",
+      "content": "Project Blue prefers pull requests smaller than four hundred changed lines.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s07",
+      "kind": "fact",
+      "content": "Project Blue's synthetic frontend is implemented with SvelteKit.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s08",
+      "kind": "event",
+      "content": "Project Blue's fictional security audit is planned for August 3.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s09",
+      "kind": "summary",
+      "content": "Project Blue onboarding begins by running the make bootstrap command.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s10",
+      "kind": "turn",
+      "content": "The synthetic email queue topic is jobs.email.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "s11",
+      "kind": "preference",
+      "content": "Project Blue records all application timestamps in UTC.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s12",
+      "kind": "fact",
+      "content": "Project Blue has a synthetic availability objective of 99.9 percent.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s13",
+      "kind": "event",
+      "content": "Project Blue holds a fictional retrospective every other Friday.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s14",
+      "kind": "summary",
+      "content": "Project Blue's synthetic recovery targets are fifteen-minute RPO and sixty-minute RTO.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      }
+    },
+    {
+      "fixture_id": "s15",
+      "kind": "turn",
+      "content": "The fictional infrastructure vendor is Northstar Systems.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "project-blue"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "h01",
+      "kind": "preference",
+      "content": "The synthetic household grocery list should use oat milk.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      }
+    },
+    {
+      "fixture_id": "h02",
+      "kind": "fact",
+      "content": "The fictional household guest Wi-Fi network is named Cedar-Guest.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      }
+    },
+    {
+      "fixture_id": "h03",
+      "kind": "event",
+      "content": "The synthetic plumber visit is booked for May 22.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      }
+    },
+    {
+      "fixture_id": "h04",
+      "kind": "summary",
+      "content": "The fictional recycling schedule collects glass on Thursdays.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      }
+    },
+    {
+      "fixture_id": "h05",
+      "kind": "turn",
+      "content": "Water the synthetic fern twice each week.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "h06",
+      "kind": "preference",
+      "content": "The synthetic household buys unscented laundry detergent.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      }
+    },
+    {
+      "fixture_id": "h07",
+      "kind": "fact",
+      "content": "The fictional air purifier takes a MERV 11 replacement filter.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      }
+    },
+    {
+      "fixture_id": "h08",
+      "kind": "event",
+      "content": "The synthetic rent reminder occurs on the first day of each month.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      }
+    },
+    {
+      "fixture_id": "h09",
+      "kind": "summary",
+      "content": "The fictional emergency kit is stored in the hall closet.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      }
+    },
+    {
+      "fixture_id": "h10",
+      "kind": "turn",
+      "content": "The synthetic dog food uses the salmon formula.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "household"
+      },
+      "role": "assistant"
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "q-p01",
+      "query": "Which editor theme and editor does the user prefer?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p01"
+      ],
+      "distractor_fixture_ids": [
+        "p08"
+      ],
+      "inaccessible_fixture_ids": [
+        "b01"
+      ]
+    },
+    {
+      "query_id": "q-p02",
+      "query": "When does the home backup run?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p02"
+      ],
+      "distractor_fixture_ids": [
+        "p12"
+      ],
+      "inaccessible_fixture_ids": [
+        "b02"
+      ]
+    },
+    {
+      "query_id": "q-p03",
+      "query": "What date and time is the dental appointment?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p03"
+      ],
+      "distractor_fixture_ids": [
+        "p14"
+      ],
+      "inaccessible_fixture_ids": [
+        "b03"
+      ]
+    },
+    {
+      "query_id": "q-p04",
+      "query": "What plants and watering method are in the garden plan?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p04"
+      ],
+      "distractor_fixture_ids": [
+        "p10"
+      ],
+      "inaccessible_fixture_ids": [
+        "b04"
+      ]
+    },
+    {
+      "query_id": "q-p05",
+      "query": "What is the bicycle's name?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p05"
+      ],
+      "distractor_fixture_ids": [
+        "p11"
+      ],
+      "inaccessible_fixture_ids": [
+        "b05"
+      ]
+    },
+    {
+      "query_id": "q-p06",
+      "query": "What thermostat temperature is preferred?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p06"
+      ],
+      "distractor_fixture_ids": [
+        "p13"
+      ],
+      "inaccessible_fixture_ids": [
+        "b06"
+      ]
+    },
+    {
+      "query_id": "q-p07",
+      "query": "Where is the passport kept?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p07"
+      ],
+      "distractor_fixture_ids": [
+        "p15"
+      ],
+      "inaccessible_fixture_ids": [
+        "b07"
+      ]
+    },
+    {
+      "query_id": "q-p08",
+      "query": "Where and when does the design conference begin?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p08"
+      ],
+      "distractor_fixture_ids": [
+        "p01"
+      ],
+      "inaccessible_fixture_ids": [
+        "b08"
+      ]
+    },
+    {
+      "query_id": "q-p09",
+      "query": "Which documents are on the tax checklist?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p09"
+      ],
+      "distractor_fixture_ids": [
+        "p02"
+      ],
+      "inaccessible_fixture_ids": [
+        "b09"
+      ]
+    },
+    {
+      "query_id": "q-p10",
+      "query": "When does the laptop warranty expire?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p10"
+      ],
+      "distractor_fixture_ids": [
+        "p04"
+      ],
+      "inaccessible_fixture_ids": [
+        "b10"
+      ]
+    },
+    {
+      "query_id": "q-p11",
+      "query": "What kind of drinks should be chosen after 2 PM?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p11"
+      ],
+      "distractor_fixture_ids": [
+        "p05"
+      ],
+      "inaccessible_fixture_ids": [
+        "b01"
+      ]
+    },
+    {
+      "query_id": "q-p12",
+      "query": "Which clinic is the cat's veterinarian?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p12"
+      ],
+      "distractor_fixture_ids": [
+        "p06"
+      ],
+      "inaccessible_fixture_ids": [
+        "b02"
+      ]
+    },
+    {
+      "query_id": "q-p13",
+      "query": "At what mileage is the oil change needed?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p13"
+      ],
+      "distractor_fixture_ids": [
+        "p07"
+      ],
+      "inaccessible_fixture_ids": [
+        "b03"
+      ]
+    },
+    {
+      "query_id": "q-p14",
+      "query": "Which books begin the reading queue?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p14"
+      ],
+      "distractor_fixture_ids": [
+        "p08"
+      ],
+      "inaccessible_fixture_ids": [
+        "b04"
+      ]
+    },
+    {
+      "query_id": "q-p15",
+      "query": "What is the user's US shoe size?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-a"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "p15"
+      ],
+      "distractor_fixture_ids": [
+        "p09"
+      ],
+      "inaccessible_fixture_ids": [
+        "b05"
+      ]
+    },
+    {
+      "query_id": "q-b01",
+      "query": "How many spaces are used to indent source code?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b01"
+      ],
+      "distractor_fixture_ids": [
+        "b08"
+      ],
+      "inaccessible_fixture_ids": [
+        "p01"
+      ]
+    },
+    {
+      "query_id": "q-b02",
+      "query": "Which cloud region hosts staging?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b02"
+      ],
+      "distractor_fixture_ids": [
+        "b09"
+      ],
+      "inaccessible_fixture_ids": [
+        "p02"
+      ]
+    },
+    {
+      "query_id": "q-b03",
+      "query": "When does the release freeze start?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b03"
+      ],
+      "distractor_fixture_ids": [
+        "b10"
+      ],
+      "inaccessible_fixture_ids": [
+        "p03"
+      ]
+    },
+    {
+      "query_id": "q-b04",
+      "query": "What caused the outage in the review?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b04"
+      ],
+      "distractor_fixture_ids": [
+        "b06"
+      ],
+      "inaccessible_fixture_ids": [
+        "p04"
+      ]
+    },
+    {
+      "query_id": "q-b05",
+      "query": "Which port does the metrics service use?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b05"
+      ],
+      "distractor_fixture_ids": [
+        "b07"
+      ],
+      "inaccessible_fixture_ids": [
+        "p05"
+      ]
+    },
+    {
+      "query_id": "q-b06",
+      "query": "What should happen before creating commits?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b06"
+      ],
+      "distractor_fixture_ids": [
+        "b03"
+      ],
+      "inaccessible_fixture_ids": [
+        "p06"
+      ]
+    },
+    {
+      "query_id": "q-b07",
+      "query": "How long are diagnostic logs retained?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b07"
+      ],
+      "distractor_fixture_ids": [
+        "b04"
+      ],
+      "inaccessible_fixture_ids": [
+        "p07"
+      ]
+    },
+    {
+      "query_id": "q-b08",
+      "query": "When is the architecture review?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b08"
+      ],
+      "distractor_fixture_ids": [
+        "b01"
+      ],
+      "inaccessible_fixture_ids": [
+        "p08"
+      ]
+    },
+    {
+      "query_id": "q-b09",
+      "query": "Which table receives the legacy records?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b09"
+      ],
+      "distractor_fixture_ids": [
+        "b02"
+      ],
+      "inaccessible_fixture_ids": [
+        "p09"
+      ]
+    },
+    {
+      "query_id": "q-b10",
+      "query": "What is the feature flag called?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "assistant-b"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b10"
+      ],
+      "distractor_fixture_ids": [
+        "b05"
+      ],
+      "inaccessible_fixture_ids": [
+        "p10"
+      ]
+    },
+    {
+      "query_id": "q-s01",
+      "query": "What casing convention do Project Blue JSON fields use?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s01"
+      ],
+      "distractor_fixture_ids": [
+        "s08"
+      ],
+      "inaccessible_fixture_ids": [
+        "h01"
+      ]
+    },
+    {
+      "query_id": "q-s02",
+      "query": "Which database and version does Project Blue use?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s02"
+      ],
+      "distractor_fixture_ids": [
+        "s09"
+      ],
+      "inaccessible_fixture_ids": [
+        "h02"
+      ]
+    },
+    {
+      "query_id": "q-s03",
+      "query": "On what date is the Project Blue beta launch?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s03"
+      ],
+      "distractor_fixture_ids": [
+        "s10"
+      ],
+      "inaccessible_fixture_ids": [
+        "h03"
+      ]
+    },
+    {
+      "query_id": "q-s04",
+      "query": "Which components make up the Project Blue architecture?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s04"
+      ],
+      "distractor_fixture_ids": [
+        "s11"
+      ],
+      "inaccessible_fixture_ids": [
+        "h04"
+      ]
+    },
+    {
+      "query_id": "q-s05",
+      "query": "What is the Project Blue customer codename?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s05"
+      ],
+      "distractor_fixture_ids": [
+        "s12"
+      ],
+      "inaccessible_fixture_ids": [
+        "h05"
+      ]
+    },
+    {
+      "query_id": "q-s06",
+      "query": "What pull request size does Project Blue prefer?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s06"
+      ],
+      "distractor_fixture_ids": [
+        "s13"
+      ],
+      "inaccessible_fixture_ids": [
+        "h06"
+      ]
+    },
+    {
+      "query_id": "q-s07",
+      "query": "Which framework implements the Project Blue frontend?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s07"
+      ],
+      "distractor_fixture_ids": [
+        "s14"
+      ],
+      "inaccessible_fixture_ids": [
+        "h07"
+      ]
+    },
+    {
+      "query_id": "q-s08",
+      "query": "When is the Project Blue security audit?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s08"
+      ],
+      "distractor_fixture_ids": [
+        "s01"
+      ],
+      "inaccessible_fixture_ids": [
+        "h08"
+      ]
+    },
+    {
+      "query_id": "q-s09",
+      "query": "Which command begins Project Blue onboarding?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s09"
+      ],
+      "distractor_fixture_ids": [
+        "s02"
+      ],
+      "inaccessible_fixture_ids": [
+        "h09"
+      ]
+    },
+    {
+      "query_id": "q-s10",
+      "query": "What is the Project Blue email queue topic?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s10"
+      ],
+      "distractor_fixture_ids": [
+        "s03"
+      ],
+      "inaccessible_fixture_ids": [
+        "h10"
+      ]
+    },
+    {
+      "query_id": "q-s11",
+      "query": "Which timezone is required for Project Blue timestamps?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s11"
+      ],
+      "distractor_fixture_ids": [
+        "s04"
+      ],
+      "inaccessible_fixture_ids": [
+        "h01"
+      ]
+    },
+    {
+      "query_id": "q-s12",
+      "query": "What availability objective does Project Blue target?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s12"
+      ],
+      "distractor_fixture_ids": [
+        "s05"
+      ],
+      "inaccessible_fixture_ids": [
+        "h02"
+      ]
+    },
+    {
+      "query_id": "q-s13",
+      "query": "How often does Project Blue hold retrospectives?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s13"
+      ],
+      "distractor_fixture_ids": [
+        "s06"
+      ],
+      "inaccessible_fixture_ids": [
+        "h03"
+      ]
+    },
+    {
+      "query_id": "q-s14",
+      "query": "What are the Project Blue RPO and RTO targets?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s14"
+      ],
+      "distractor_fixture_ids": [
+        "s07"
+      ],
+      "inaccessible_fixture_ids": [
+        "h04"
+      ]
+    },
+    {
+      "query_id": "q-s15",
+      "query": "Which infrastructure vendor does Project Blue use?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "project-blue"
+      ],
+      "expected_fixture_ids": [
+        "s15"
+      ],
+      "distractor_fixture_ids": [
+        "s08"
+      ],
+      "inaccessible_fixture_ids": [
+        "h05"
+      ]
+    },
+    {
+      "query_id": "q-h01",
+      "query": "Which milk belongs on the household grocery list?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h01"
+      ],
+      "distractor_fixture_ids": [
+        "h08"
+      ],
+      "inaccessible_fixture_ids": [
+        "s01"
+      ]
+    },
+    {
+      "query_id": "q-h02",
+      "query": "What is the guest Wi-Fi network name?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h02"
+      ],
+      "distractor_fixture_ids": [
+        "h09"
+      ],
+      "inaccessible_fixture_ids": [
+        "s02"
+      ]
+    },
+    {
+      "query_id": "q-h03",
+      "query": "When is the plumber visit?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h03"
+      ],
+      "distractor_fixture_ids": [
+        "h10"
+      ],
+      "inaccessible_fixture_ids": [
+        "s03"
+      ]
+    },
+    {
+      "query_id": "q-h04",
+      "query": "Which day is glass collected for recycling?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h04"
+      ],
+      "distractor_fixture_ids": [
+        "h06"
+      ],
+      "inaccessible_fixture_ids": [
+        "s04"
+      ]
+    },
+    {
+      "query_id": "q-h05",
+      "query": "How frequently should the fern be watered?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h05"
+      ],
+      "distractor_fixture_ids": [
+        "h07"
+      ],
+      "inaccessible_fixture_ids": [
+        "s05"
+      ]
+    },
+    {
+      "query_id": "q-h06",
+      "query": "What type of laundry detergent should be purchased?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h06"
+      ],
+      "distractor_fixture_ids": [
+        "h03"
+      ],
+      "inaccessible_fixture_ids": [
+        "s06"
+      ]
+    },
+    {
+      "query_id": "q-h07",
+      "query": "Which replacement filter does the air purifier need?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h07"
+      ],
+      "distractor_fixture_ids": [
+        "h04"
+      ],
+      "inaccessible_fixture_ids": [
+        "s07"
+      ]
+    },
+    {
+      "query_id": "q-h08",
+      "query": "When should the rent reminder occur?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h08"
+      ],
+      "distractor_fixture_ids": [
+        "h01"
+      ],
+      "inaccessible_fixture_ids": [
+        "s08"
+      ]
+    },
+    {
+      "query_id": "q-h09",
+      "query": "Where is the emergency kit stored?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h09"
+      ],
+      "distractor_fixture_ids": [
+        "h02"
+      ],
+      "inaccessible_fixture_ids": [
+        "s09"
+      ]
+    },
+    {
+      "query_id": "q-h10",
+      "query": "Which dog food formula is used?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-user",
+        "environment": "evaluation",
+        "owner": "evaluation-consumer"
+      },
+      "shared_pools": [
+        "household"
+      ],
+      "expected_fixture_ids": [
+        "h10"
+      ],
+      "distractor_fixture_ids": [
+        "h05"
+      ],
+      "inaccessible_fixture_ids": [
+        "s10"
+      ]
+    }
+  ]
+}

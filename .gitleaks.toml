@@ -1,0 +1,23 @@
+title = "LLM Memory Store release privacy scan"
+
+# Keep the maintained credential rules and add project-specific privacy checks.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "machine-local-home-path"
+description = "Machine-local user home path"
+regex = '''(?i)(?:/users/[a-z0-9._-]+/|/home/[a-z0-9._-]+/|[a-z]:\\users\\[a-z0-9._-]+\\)'''
+
+# Demo reports intentionally contain deterministic isolation canaries and generated
+# consumer scope identifiers. Limit the exceptions to their exact synthetic shapes.
+[[rules]]
+id = "generic-api-key"
+
+  [[rules.allowlists]]
+  description = "Deterministic synthetic demo identifiers"
+  regexTarget = "line"
+  regexes = [
+    '''"private_secret"\s*:\s*"PRIVATE-[0-9A-Fa-f]{6}"''',
+    '''"consumer_key"\s*:\s*"consumer_[0-9]+_[a-z0-9_-]+"''',
+  ]

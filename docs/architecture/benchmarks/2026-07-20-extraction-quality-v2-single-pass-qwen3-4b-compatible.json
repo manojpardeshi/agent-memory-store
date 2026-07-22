@@ -1,0 +1,1694 @@
+{
+  "case_results": [
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "claude-fact-nimbus-role",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "claude-fact-nimbus-role-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "claude-fact-postgres-stack",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Our primary datastore is PostgreSQL 1:15",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "978f6cced1252b95c85530325a31a54491994cee460e0a8ca00505dca361af2f",
+          "source_fixture_ids": [
+            "claude-fact-postgres-stack-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "claude-fact-postgres-stack-claim"
+      ],
+      "unmatched_proposal_ids": [
+        "978f6cced1252b95c85530325a31a54491994cee460e0a8ca00505dca361af2f"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-fact-juniper-vault",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-fact-juniper-vault-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-fact-lark-toolchain",
+      "content_matched_claim_ids": [
+        "codex-fact-lark-toolchain-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "codex-fact-lark-toolchain-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Studio Lark's supported build uses Rust 1:82 with the Just task runner.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "79be98601d2d1b8b45b937da6a08f40c5c773125f6a80cc2a1cc53a70e090a0b",
+          "source_fixture_ids": [
+            "codex-fact-lark-toolchain-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-fact-dovecote-hours",
+      "content_matched_claim_ids": [
+        "codex-fact-dovecote-hours-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Museum Dovecote is open Tuesday through Saturday, from 10:00 to 18:00",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "c7ccf9d5d52b0b61de2e4233f89b1057c35c88b9a8a2dbf6ce4362189eae8445",
+          "source_fixture_ids": [
+            "codex-fact-dovecote-hours-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-fact-helios-capacity",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-fact-helios-capacity-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-fact-printer-location",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-fact-printer-location-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-fact-meadow-prefix",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-fact-meadow-prefix-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-fact-ibis-humidity",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-fact-ibis-humidity-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-fact-cobalt-checksum",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-fact-cobalt-checksum-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "claude-pref-no-trailing-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "claude-pref-no-trailing-summary-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "claude-pref-show-diff",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "claude-pref-show-diff-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-pref-diagrams-first",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-pref-diagrams-first-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-pref-utc-timestamps",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-pref-utc-timestamps-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-pref-compact-json",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-pref-compact-json-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-pref-keyboard-shortcuts",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-pref-keyboard-shortcuts-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-pref-actions-first",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-pref-actions-first-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-pref-inline-citations",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-pref-inline-citations-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-pref-sunday-backups",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-pref-sunday-backups-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-pref-speaker-labels",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-pref-speaker-labels-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "claude-event-billing-migration",
+      "content_matched_claim_ids": [
+        "claude-event-billing-migration-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "claude-event-billing-migration-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "We finished migrating the billing service from MySQL to Postgres on 17 July 2026.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "1d3be3c0924b8691ef92b56febb488bfa99ebe3b815bc63ed96d6a4fa68bf9e0",
+          "source_fixture_ids": [
+            "claude-event-billing-migration-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-event-beacon-launch",
+      "content_matched_claim_ids": [
+        "codex-event-beacon-launch-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "codex-event-beacon-launch-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Mission Beacon launched its weather satellite on 12 April 2033",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "f87d601c9dd1558f76b5c6072dd35cf2c420222d352b81205bc45a87d0991220",
+          "source_fixture_ids": [
+            "codex-event-beacon-launch-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-event-catalog-audit",
+      "content_matched_claim_ids": [
+        "codex-event-catalog-audit-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "codex-event-catalog-audit-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Library Finch completed its annual catalog audit on 28 February 2032",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "6d3e660bad46c2a0aab0a96755ec6b20710da186343fbe3563739f49e54c35c9",
+          "source_fixture_ids": [
+            "codex-event-catalog-audit-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-event-bridge-test",
+      "content_matched_claim_ids": [
+        "codex-event-bridge-test-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "codex-event-bridge-test-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The Copper Bridge load test passed at 19:40 UTC on 6 June 2034",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "a64bf313a11747eb6454778ccc80d1d7c8d4d84e51a21edfdef6bb3ae7f78adf",
+          "source_fixture_ids": [
+            "codex-event-bridge-test-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-event-harvest",
+      "content_matched_claim_ids": [
+        "codex-event-harvest-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "codex-event-harvest-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Orchard Vela finished the north-field harvest on 3 October 2031",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "6bf286cf7a00556ac3b360c59ac4f905c31eaada0bef161688dc862ab9e33b6e",
+          "source_fixture_ids": [
+            "codex-event-harvest-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-event-release",
+      "content_matched_claim_ids": [
+        "codex-event-release-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "codex-event-release-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Team Kestrel published version 5.4 of the desktop client on 21 January 2035",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "2ab16f9bdc4c6bbb6bbfcf4e6caeb6666df20d3d14cf4d30c325fe1cb2f1fff0",
+          "source_fixture_ids": [
+            "codex-event-release-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-event-restoration",
+      "content_matched_claim_ids": [
+        "codex-event-restoration-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "codex-event-restoration-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Gallery Ember reopened the restored east hall on 30 August 2030",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "dedbc8b374036a3b11e0b89765be82f3f21d9cd0ddbaa27a292970b798798e86",
+          "source_fixture_ids": [
+            "codex-event-restoration-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-event-drill",
+      "content_matched_claim_ids": [
+        "codex-event-drill-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "codex-event-drill-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Station Meridian completed its evacuation drill in 7 minutes on 16 May 2033",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "cb51c7f2d69b2dada4f0c42a90e581acf3c4a07ce8100665cd913110ea298869",
+          "source_fixture_ids": [
+            "codex-event-drill-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-event-dataset",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The Rowan research group released the final tide dataset",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "7b1dc49ee36470055e7362f16dcce15df13b92b56141278a0aa9e611baceb3ce",
+          "source_fixture_ids": [
+            "codex-event-dataset-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-event-dataset-claim"
+      ],
+      "unmatched_proposal_ids": [
+        "7b1dc49ee36470055e7362f16dcce15df13b92b56141278a0aa9e611baceb3ce"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-event-certification",
+      "content_matched_claim_ids": [
+        "codex-event-certification-claim"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "codex-event-certification-claim"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Foundry Iris received its ISO 9001 certification on 25 March 2032",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "cb1b1a93f873965410ddc8ac5338700801e1532b0459c412991d31c9f6d26f51",
+          "source_fixture_ids": [
+            "codex-event-certification-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "claude-summary-onboarding-review",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The Q3 design review was moved to August 1:14",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "52aafc08f1ea42e49b087f94e31fa8b383876a70d40ba832761c46aeef7e7b04",
+          "source_fixture_ids": [
+            "claude-summary-onboarding-review-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "claude-summary-onboarding-review-claim"
+      ],
+      "unmatched_proposal_ids": [
+        "52aafc08f1ea42e49b087f94e31fa8b383876a70d40ba832761c46aeef7e7b04"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-summary-aster-backups",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-summary-aster-backups-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-summary-maple-calibration",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-summary-maple-calibration-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-summary-pine-beta",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Workshop Pine published its completed beta package on 3 November 2035.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "2dab7f01fa536fbc7fd0ca75a07293cb2bd440dc546f7a37868d2ade7c5f97a5",
+          "source_fixture_ids": [
+            "codex-summary-pine-beta-s1"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "The package supports Linux only and includes the offline manual.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "e9ab4dbe3d502e9b320f53f750bf2219cfba6ae8f14b3503c547ac0d15cd0fb9",
+          "source_fixture_ids": [
+            "codex-summary-pine-beta-s2"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-summary-pine-beta-claim"
+      ],
+      "unmatched_proposal_ids": [
+        "2dab7f01fa536fbc7fd0ca75a07293cb2bd440dc546f7a37868d2ade7c5f97a5",
+        "e9ab4dbe3d502e9b320f53f750bf2219cfba6ae8f14b3503c547ac0d15cd0fb9"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-summary-orbit-rotation",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-summary-orbit-rotation-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-summary-wren-pipeline",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Pipeline Wren imports telemetry at 1:00 PM intervals.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "3d3f2a728cb768d425c95301ce98c781f554be6c0c4f2f9397fb4278f21f1599",
+          "source_fixture_ids": [
+            "codex-summary-wren-pipeline-s1"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "Pipeline Wren keeps normalized batches in warm storage for 72 hours.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "aa57e40febeadff8828622a46a12f754dee82f3f75d2814c9121eacad75eba87",
+          "source_fixture_ids": [
+            "codex-summary-wren-pipeline-s2"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-summary-wren-pipeline-claim"
+      ],
+      "unmatched_proposal_ids": [
+        "3d3f2a728cb768d425c95301ce98c781f554be6c0c4f2f9397fb4278f21f1599",
+        "aa57e40febeadff8828622a46a12f754dee82f3f75d2814c9121eacad75eba87"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-summary-jade-exhibit",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-summary-jade-exhibit-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-summary-sparrow-index",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-summary-sparrow-index-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-summary-thistle-reports",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-summary-thistle-reports-claim"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-summary-zephyr-cache",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "If refresh succeeds, it retains the prior cache as a rollback for 24 hours",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "02dd564a432956fbfc969ac2783c968646b035373bd04950b8dcc34f98000bd5",
+          "source_fixture_ids": [
+            "codex-summary-zephyr-cache-s2"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "Gateway Zephyr refreshes its route cache at 0:05 UTC",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "a6148671881a6313f3ddcd715f796c1dfeb9f7533a74d19ed8efecaf6e59a1f8",
+          "source_fixture_ids": [
+            "codex-summary-zephyr-cache-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "codex-summary-zephyr-cache-claim"
+      ],
+      "unmatched_proposal_ids": [
+        "02dd564a432956fbfc969ac2783c968646b035373bd04950b8dcc34f98000bd5",
+        "a6148671881a6313f3ddcd715f796c1dfeb9f7533a74d19ed8efecaf6e59a1f8"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "claude-negative-retracted-middleware",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "claude-negative-quoted-password",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-negative-transient-lunch",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-negative-uncertain-drawer",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-negative-hypothetical-cedar",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-negative-question",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-negative-quoted-document",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 1,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": 0.95,
+          "content": "vault code 884: 8842",
+          "forbidden_matches": [
+            "codex-negative-quoted-document-forbidden"
+          ],
+          "kind": "fact",
+          "proposal_id": "b4a585d46d92f0427eaaa325ca2750cee2668b13220289390eaa50c216ad3729",
+          "source_fixture_ids": [
+            "codex-negative-quoted-document-s1"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [
+        "b4a585d46d92f0427eaaa325ca2750cee2668b13220289390eaa50c216ad3729"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-negative-corrected-color",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": {
+        "message": "proposals[0] cites an unknown source memory ID",
+        "type": "ProposalValidationError"
+      },
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": false
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-negative-impossible-date",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "codex-negative-one-time-task",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    }
+  ],
+  "checks": {
+    "ambiguous_content_match_count": true,
+    "case_count": true,
+    "duplicate_proposal_count": true,
+    "exact_precision": false,
+    "exact_recall": false,
+    "expected_claim_count": true,
+    "forbidden_proposal_count": false,
+    "invalid_case_rate": false,
+    "kind_accuracy": true,
+    "no_write_invariant": true,
+    "provenance_accuracy": true,
+    "source_preservation_invariant": true,
+    "summary_fact_unit_coverage": false
+  },
+  "completed_at": "2026-07-20T13:34:10.990603+00:00",
+  "dataset": {
+    "dataset_id": "extraction-v2-independent",
+    "description": "Blind-Claude-seeded and separately Codex-authored synthetic paired corpus; frozen before any single-pass or two-pass model run and containing no owner data.",
+    "file_name": "extraction_v2.json",
+    "sha256": "4ac553601c2e9c1dd7a8617d547fafb2fc054d0f0c9defaef137ed594cc692a8",
+    "track": "live"
+  },
+  "extractor": {
+    "model": "qwen3:4b",
+    "prompt_version": "extraction-v2",
+    "provider": "ollama",
+    "revision": "sha256:359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+  },
+  "metrics": {
+    "ambiguous_content_match_count": 0,
+    "by_kind": {
+      "event": {
+        "exact_matches": 9,
+        "exact_recall": 0.9,
+        "expected": 10
+      },
+      "fact": {
+        "exact_matches": 1,
+        "exact_recall": 0.1,
+        "expected": 10
+      },
+      "preference": {
+        "exact_matches": 0,
+        "exact_recall": 0.0,
+        "expected": 10
+      },
+      "summary": {
+        "exact_matches": 0,
+        "exact_recall": 0.0,
+        "expected": 10
+      }
+    },
+    "case_count": 50,
+    "content_match_count": 11,
+    "content_recall": 0.275,
+    "duplicate_proposal_count": 0,
+    "exact_f1": 0.32786885245901637,
+    "exact_match_count": 10,
+    "exact_precision": 0.47619047619047616,
+    "exact_precision_wilson_95": {
+      "high": 0.6763046541715557,
+      "low": 0.2834400610153417
+    },
+    "exact_recall": 0.25,
+    "exact_recall_wilson_95": {
+      "high": 0.40193961420768026,
+      "low": 0.14187118639096302
+    },
+    "expected_claim_count": 40,
+    "forbidden_proposal_count": 1,
+    "invalid_case_count": 25,
+    "invalid_case_rate": 0.5,
+    "kind_accuracy": 0.9090909090909091,
+    "no_write_violation_count": 0,
+    "proposal_count": 21,
+    "provenance_accuracy": 1.0,
+    "runtime_seconds": 167.82093908404931,
+    "source_mutation_violation_count": 0,
+    "summary_critical_units_missing": 10,
+    "summary_fact_unit_coverage": 0.15
+  },
+  "passed": false,
+  "schema_version": 1,
+  "scope_of_claim": "single synthetic extraction track; conservative judge-free engineering evidence",
+  "thresholds": {
+    "case_count_min": 50,
+    "duplicate_proposal_count_max": 0,
+    "exact_precision_min": 0.75,
+    "exact_recall_min": 0.65,
+    "expected_claim_count_min": 40,
+    "forbidden_proposal_count_max": 0,
+    "invalid_case_rate_max": 0.0,
+    "kind_accuracy_min": 0.8,
+    "provenance_accuracy_min": 0.9,
+    "summary_fact_unit_coverage_min": 0.85
+  }
+}

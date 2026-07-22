@@ -1,0 +1,68 @@
+{
+  "bundle_digest": "e2cbc1d726a80487f39490843ae5665ced30cf28774183204b8ba9183a53b600",
+  "bundle_schema_version": 1,
+  "counts": {
+    "acceptance_ready_count": 1,
+    "proposal_count": 1,
+    "proposal_statuses": {
+      "new": 1
+    },
+    "source_count": 1,
+    "source_statuses": {
+      "current": 1
+    }
+  },
+  "created_at": "2026-07-20T22:14:19.661234+00:00",
+  "extractor": {
+    "model": "deterministic-rules",
+    "prompt_version": "extraction-v1",
+    "provider": "builtin",
+    "revision": "1"
+  },
+  "proposal_content_included": true,
+  "proposals": [
+    {
+      "acceptance_ready": true,
+      "content": "The synthetic review color is ultraviolet.",
+      "exact_duplicate_memory_ids": [],
+      "exact_duplicate_proposal_ids": [],
+      "kind": "fact",
+      "kind_collision_memory_ids": [],
+      "kind_collision_proposal_ids": [],
+      "primary_status": "new",
+      "proposal_id": "fa82087490d1810861fb560b638fc6d72d60f0c0458953626234cf9b7cc012ed",
+      "recommended_action": "review_for_acceptance",
+      "replay_memory_id": null,
+      "source_memory_ids": [
+        "f0c47682-86cc-4656-8a1e-d423f03c9bca"
+      ],
+      "source_statuses": {
+        "f0c47682-86cc-4656-8a1e-d423f03c9bca": "current"
+      }
+    }
+  ],
+  "read_only": true,
+  "schema_version": 1,
+  "source_content_included": false,
+  "sources": [
+    {
+      "current_content_sha256": "9a3fa4ad38336df8709631226e277d9e80af9b85d0f2a514d695e08d862d2c5b",
+      "current_kind": "turn",
+      "current_role": "user",
+      "current_status": "active",
+      "issues": [],
+      "memory_id": "f0c47682-86cc-4656-8a1e-d423f03c9bca",
+      "replacement_memory_id": null,
+      "snapshot_content_sha256": "9a3fa4ad38336df8709631226e277d9e80af9b85d0f2a514d695e08d862d2c5b",
+      "snapshot_kind": "turn",
+      "snapshot_role": "user",
+      "status": "current"
+    }
+  ],
+  "target_scope": {
+    "environment": "ui-qa",
+    "kind": "private",
+    "owner": "dashboard",
+    "subject": "synthetic-owner"
+  }
+}

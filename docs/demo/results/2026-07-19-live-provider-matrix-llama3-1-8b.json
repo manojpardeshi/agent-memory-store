@@ -1,0 +1,556 @@
+{
+  "acceptance": {
+    "consumer_checks": {
+      "consumer_1_claude-sonnet": {
+        "baseline_accuracy": true,
+        "memory_accuracy": true,
+        "memory_lift": true,
+        "model_invocations": true,
+        "private_isolation": true,
+        "shared_recall_hit_rate": true
+      },
+      "consumer_2_codex-gpt-5-6-sol": {
+        "baseline_accuracy": true,
+        "memory_accuracy": true,
+        "memory_lift": true,
+        "model_invocations": true,
+        "private_isolation": true,
+        "shared_recall_hit_rate": true
+      },
+      "consumer_3_ollama-http-llama3-1-8b": {
+        "baseline_accuracy": true,
+        "memory_accuracy": true,
+        "memory_lift": true,
+        "model_invocations": true,
+        "private_isolation": true,
+        "shared_recall_hit_rate": true
+      }
+    },
+    "final_checks": {
+      "capture_accuracy": true,
+      "private_control": true,
+      "producer_correction": true,
+      "producer_invocations": true,
+      "stale_value_leaks": true
+    },
+    "gating": false,
+    "passed": true
+  },
+  "actor_contract": "the harness performs memory writes, recall, and correction; each model consumes a supplied context bundle in a fresh process",
+  "artifacts": {
+    "database": "memory.sqlite3",
+    "report": "report.json"
+  },
+  "claim": "provider-neutral context re-supply through an explicit shared memory pool",
+  "completed_at": "2026-07-19T18:00:03.915975+00:00",
+  "consumer_results": [
+    {
+      "consumer_key": "consumer_1_claude-sonnet",
+      "context_transfer_id": "producer-to-consumer_1_claude-sonnet",
+      "invocations_ok": true,
+      "metrics": {
+        "baseline_accuracy": 0.0,
+        "memory_accuracy": 1.0,
+        "memory_lift": 1.0,
+        "private_isolation_violations": 0,
+        "shared_recall_hit_rate": 1.0
+      },
+      "model": "claude-sonnet",
+      "outputs": {
+        "baseline": {
+          "editor_preference": "UNKNOWN",
+          "locale_preference": "UNKNOWN",
+          "project_code": "UNKNOWN"
+        },
+        "memory_assisted": {
+          "editor_preference": "EDITOR-752EBF",
+          "locale_preference": "LOCALE-4DFB91",
+          "project_code": "PROJECT-BA45A9"
+        }
+      },
+      "provider_usage": {
+        "baseline": null,
+        "delta_scope": null,
+        "input_token_delta": null,
+        "memory_assisted": null
+      },
+      "scope": {
+        "environment": "provider-matrix-e2e",
+        "kind": "private",
+        "owner": "consumer_1_claude-sonnet",
+        "subject": "matrix-20260719T175930Z-45204c94"
+      }
+    },
+    {
+      "consumer_key": "consumer_2_codex-gpt-5-6-sol",
+      "context_transfer_id": "producer-to-consumer_2_codex-gpt-5-6-sol",
+      "invocations_ok": true,
+      "metrics": {
+        "baseline_accuracy": 0.0,
+        "memory_accuracy": 1.0,
+        "memory_lift": 1.0,
+        "private_isolation_violations": 0,
+        "shared_recall_hit_rate": 1.0
+      },
+      "model": "codex-gpt-5.6-sol",
+      "outputs": {
+        "baseline": {
+          "editor_preference": "UNKNOWN",
+          "locale_preference": "UNKNOWN",
+          "project_code": "UNKNOWN"
+        },
+        "memory_assisted": {
+          "editor_preference": "EDITOR-752EBF",
+          "locale_preference": "LOCALE-4DFB91",
+          "project_code": "PROJECT-BA45A9"
+        }
+      },
+      "provider_usage": {
+        "baseline": {
+          "cached_input_tokens": 9984,
+          "input_tokens": 13007,
+          "output_tokens": 22,
+          "reasoning_output_tokens": 0
+        },
+        "delta_scope": "memory-assisted input tokens minus baseline input tokens; includes prompt framing changes",
+        "input_token_delta": 201,
+        "memory_assisted": {
+          "cached_input_tokens": 9984,
+          "input_tokens": 13208,
+          "output_tokens": 37,
+          "reasoning_output_tokens": 0
+        }
+      },
+      "scope": {
+        "environment": "provider-matrix-e2e",
+        "kind": "private",
+        "owner": "consumer_2_codex-gpt-5-6-sol",
+        "subject": "matrix-20260719T175930Z-45204c94"
+      }
+    },
+    {
+      "consumer_key": "consumer_3_ollama-http-llama3-1-8b",
+      "context_transfer_id": "producer-to-consumer_3_ollama-http-llama3-1-8b",
+      "invocations_ok": true,
+      "metrics": {
+        "baseline_accuracy": 0.0,
+        "memory_accuracy": 1.0,
+        "memory_lift": 1.0,
+        "private_isolation_violations": 0,
+        "shared_recall_hit_rate": 1.0
+      },
+      "model": "ollama-http-llama3.1:8b",
+      "outputs": {
+        "baseline": {
+          "editor_preference": "UNKNOWN",
+          "locale_preference": "UNKNOWN",
+          "project_code": "UNKNOWN"
+        },
+        "memory_assisted": {
+          "editor_preference": "EDITOR-752EBF",
+          "locale_preference": "LOCALE-4DFB91",
+          "project_code": "PROJECT-BA45A9"
+        }
+      },
+      "provider_usage": {
+        "baseline": {
+          "eval_duration_ns": 846423000,
+          "input_tokens": 80,
+          "load_duration_ns": 1348481000,
+          "output_tokens": 27,
+          "prompt_eval_duration_ns": 382687000,
+          "total_duration_ns": 2579109250
+        },
+        "delta_scope": "memory-assisted input tokens minus baseline input tokens; includes prompt framing changes",
+        "input_token_delta": 201,
+        "memory_assisted": {
+          "eval_duration_ns": 1337712000,
+          "input_tokens": 281,
+          "load_duration_ns": 147855208,
+          "output_tokens": 42,
+          "prompt_eval_duration_ns": 926423000,
+          "total_duration_ns": 2415039791
+        }
+      },
+      "scope": {
+        "environment": "provider-matrix-e2e",
+        "kind": "private",
+        "owner": "consumer_3_ollama-http-llama3-1-8b",
+        "subject": "matrix-20260719T175930Z-45204c94"
+      }
+    }
+  ],
+  "context_transfers": [
+    {
+      "bundle_budget_utilization": 0.1215,
+      "bundle_character_budget": 4000,
+      "estimated_memory_tokens": 122,
+      "from_model": "claude-haiku",
+      "memory_character_count": 486,
+      "memory_ids": [
+        "5ecc090d-1e5b-402f-b3ce-9060661499b3",
+        "071ac061-1af0-45b2-a74e-efda47957a1e",
+        "2d19434e-fb3f-463c-ac79-072468528324"
+      ],
+      "memory_item_count": 3,
+      "memory_share_of_prompt": 0.7178729689807977,
+      "memory_utf8_byte_count": 486,
+      "origin": "shared memories written during producer session",
+      "phase": "consumer_1_claude-sonnet_memory_assisted",
+      "prompt_character_count": 677,
+      "to_model": "claude-sonnet",
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "transfer_id": "producer-to-consumer_1_claude-sonnet",
+      "truncated": false
+    },
+    {
+      "bundle_budget_utilization": 0.1215,
+      "bundle_character_budget": 4000,
+      "estimated_memory_tokens": 122,
+      "from_model": "claude-haiku",
+      "memory_character_count": 486,
+      "memory_ids": [
+        "5ecc090d-1e5b-402f-b3ce-9060661499b3",
+        "071ac061-1af0-45b2-a74e-efda47957a1e",
+        "2d19434e-fb3f-463c-ac79-072468528324"
+      ],
+      "memory_item_count": 3,
+      "memory_share_of_prompt": 0.7178729689807977,
+      "memory_utf8_byte_count": 486,
+      "origin": "shared memories written during producer session",
+      "phase": "consumer_2_codex-gpt-5-6-sol_memory_assisted",
+      "prompt_character_count": 677,
+      "to_model": "codex-gpt-5.6-sol",
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "transfer_id": "producer-to-consumer_2_codex-gpt-5-6-sol",
+      "truncated": false
+    },
+    {
+      "bundle_budget_utilization": 0.1215,
+      "bundle_character_budget": 4000,
+      "estimated_memory_tokens": 122,
+      "from_model": "claude-haiku",
+      "memory_character_count": 486,
+      "memory_ids": [
+        "5ecc090d-1e5b-402f-b3ce-9060661499b3",
+        "071ac061-1af0-45b2-a74e-efda47957a1e",
+        "2d19434e-fb3f-463c-ac79-072468528324"
+      ],
+      "memory_item_count": 3,
+      "memory_share_of_prompt": 0.7178729689807977,
+      "memory_utf8_byte_count": 486,
+      "origin": "shared memories written during producer session",
+      "phase": "consumer_3_ollama-http-llama3-1-8b_memory_assisted",
+      "prompt_character_count": 677,
+      "to_model": "ollama-http-llama3.1:8b",
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "transfer_id": "producer-to-consumer_3_ollama-http-llama3-1-8b",
+      "truncated": false
+    },
+    {
+      "bundle_budget_utilization": 0.4065,
+      "bundle_character_budget": 2000,
+      "estimated_memory_tokens": 204,
+      "from_model": "ollama-http-llama3.1:8b",
+      "memory_character_count": 813,
+      "memory_ids": [
+        "5ecc090d-1e5b-402f-b3ce-9060661499b3",
+        "3394abe7-18a4-4379-96e6-118f7383f5d6",
+        "de394f86-d9d1-4882-babf-bc8711268571",
+        "071ac061-1af0-45b2-a74e-efda47957a1e",
+        "250c358a-c7bc-46ad-a8db-6d18ba61296e"
+      ],
+      "memory_item_count": 5,
+      "memory_share_of_prompt": 0.8057482656095144,
+      "memory_utf8_byte_count": 813,
+      "origin": "harness correction after consumer matrix",
+      "phase": "producer_return_correction",
+      "prompt_character_count": 1009,
+      "to_model": "claude-haiku",
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "transfer_id": "consumer-matrix-to-producer-correction",
+      "truncated": false
+    }
+  ],
+  "local_model": {
+    "endpoint": "http://127.0.0.1:11434",
+    "evidence_scope": "single-run-harness-injected",
+    "included": true,
+    "model": "llama3.1:8b",
+    "provider": "ollama",
+    "status": "live-measured",
+    "transport": "ollama-http"
+  },
+  "memory_ids": {
+    "editor_corrected": "3394abe7-18a4-4379-96e6-118f7383f5d6",
+    "editor_original": "2d19434e-fb3f-463c-ac79-072468528324",
+    "locale": "071ac061-1af0-45b2-a74e-efda47957a1e",
+    "project": "5ecc090d-1e5b-402f-b3ce-9060661499b3"
+  },
+  "metrics": {
+    "baseline_accuracy": 0.0,
+    "consumer_count": 3,
+    "correction_accuracy": 1.0,
+    "memory_accuracy": 1.0,
+    "memory_lift": 1.0,
+    "private_control_hit_rate": 1.0,
+    "private_isolation_violations": 0,
+    "stale_value_leaks": 0
+  },
+  "mode": "live-provider-matrix",
+  "models": {
+    "consumers": [
+      "claude-sonnet",
+      "codex-gpt-5.6-sol",
+      "ollama-http-llama3.1:8b"
+    ],
+    "producer": "claude-haiku",
+    "switch_sequence": [
+      "claude-haiku",
+      "claude-sonnet",
+      "codex-gpt-5.6-sol",
+      "ollama-http-llama3.1:8b",
+      "claude-haiku"
+    ]
+  },
+  "responses": [
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 12058.46625007689,
+      "model": "claude-haiku",
+      "phase": "capture",
+      "text": "```json\n{\n  \"project_code\": \"PROJECT-BA45A9\",\n  \"editor_preference\": \"EDITOR-752EBF\",\n  \"locale_preference\": \"LOCALE-4DFB91\"\n}\n```",
+      "usage": null
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 2292.3225001432,
+      "model": "claude-sonnet",
+      "phase": "consumer_1_claude-sonnet_baseline",
+      "text": "```json\n{\n  \"project_code\": \"UNKNOWN\",\n  \"editor_preference\": \"UNKNOWN\",\n  \"locale_preference\": \"UNKNOWN\"\n}\n```",
+      "usage": null
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 2190.9899157471955,
+      "model": "claude-sonnet",
+      "phase": "consumer_1_claude-sonnet_memory_assisted",
+      "text": "```json\n{\n  \"project_code\": \"PROJECT-BA45A9\",\n  \"editor_preference\": \"EDITOR-752EBF\",\n  \"locale_preference\": \"LOCALE-4DFB91\"\n}\n```",
+      "usage": null
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 3857.6526660472155,
+      "model": "codex-gpt-5.6-sol",
+      "phase": "consumer_2_codex-gpt-5-6-sol_baseline",
+      "text": "{\"project_code\":\"UNKNOWN\",\"editor_preference\":\"UNKNOWN\",\"locale_preference\":\"UNKNOWN\"}",
+      "usage": {
+        "cached_input_tokens": 9984,
+        "input_tokens": 13007,
+        "output_tokens": 22,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 3109.0112910605967,
+      "model": "codex-gpt-5.6-sol",
+      "phase": "consumer_2_codex-gpt-5-6-sol_memory_assisted",
+      "text": "{\"project_code\":\"PROJECT-BA45A9\",\"editor_preference\":\"EDITOR-752EBF\",\"locale_preference\":\"LOCALE-4DFB91\"}",
+      "usage": {
+        "cached_input_tokens": 9984,
+        "input_tokens": 13208,
+        "output_tokens": 37,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 2611.421416979283,
+      "model": "ollama-http-llama3.1:8b",
+      "phase": "consumer_3_ollama-http-llama3-1-8b_baseline",
+      "text": "{\n  \"project_code\": \"UNKNOWN\",\n  \"editor_preference\": \"UNKNOWN\",\n  \"locale_preference\": \"UNKNOWN\"\n}",
+      "usage": {
+        "eval_duration_ns": 846423000,
+        "input_tokens": 80,
+        "load_duration_ns": 1348481000,
+        "output_tokens": 27,
+        "prompt_eval_duration_ns": 382687000,
+        "total_duration_ns": 2579109250
+      }
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 2419.3393331952393,
+      "model": "ollama-http-llama3.1:8b",
+      "phase": "consumer_3_ollama-http-llama3-1-8b_memory_assisted",
+      "text": "{\n  \"project_code\": \"PROJECT-BA45A9\",\n  \"editor_preference\": \"EDITOR-752EBF\",\n  \"locale_preference\": \"LOCALE-4DFB91\"\n}",
+      "usage": {
+        "eval_duration_ns": 1337712000,
+        "input_tokens": 281,
+        "load_duration_ns": 147855208,
+        "output_tokens": 42,
+        "prompt_eval_duration_ns": 926423000,
+        "total_duration_ns": 2415039791
+      }
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 5227.557790931314,
+      "model": "claude-haiku",
+      "phase": "producer_return_correction",
+      "text": "```json\n{\n  \"editor_preference\": \"EDITOR-9713D2\"\n}\n```",
+      "usage": null
+    }
+  ],
+  "run_id": "20260719T175930Z-45204c94",
+  "runtime_versions": {
+    "claude_cli": "2.1.215 (Claude Code)",
+    "codex_cli": "codex-cli 0.144.2",
+    "local_runtime": {
+      "available": true,
+      "endpoint": "http://127.0.0.1:11434",
+      "model": "llama3.1:8b",
+      "model_content_digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+      "model_metadata": {
+        "capabilities": [
+          "completion",
+          "tools"
+        ],
+        "details": {
+          "context_length": 131072,
+          "embedding_length": 4096,
+          "families": [
+            "llama"
+          ],
+          "family": "llama",
+          "format": "gguf",
+          "parameter_size": "8.0B",
+          "parent_model": "",
+          "quantization_level": "Q4_K_M"
+        },
+        "digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+        "model": "llama3.1:8b",
+        "modified_at": "2026-07-19T10:54:22.063956941-07:00",
+        "name": "llama3.1:8b",
+        "size": 4920753328
+      },
+      "ollama_version": "0.32.1"
+    }
+  },
+  "schema_version": 3,
+  "scope_of_claim": "cross-provider including local model",
+  "security_controls": {
+    "claude": {
+      "browser": false,
+      "safe_mode": true,
+      "session_persistence": false,
+      "tools": false
+    },
+    "codex": {
+      "ephemeral": true,
+      "ignore_rules": true,
+      "ignore_user_config": true,
+      "model_fallback": false,
+      "sandbox": "read-only",
+      "tool_non_use": "instructed but not independently verified",
+      "workspace": "empty temporary directory"
+    },
+    "environment_allowlist_keys": [
+      "HOME",
+      "LANG",
+      "LC_ALL",
+      "LOGNAME",
+      "PATH",
+      "SHELL",
+      "TERM",
+      "TMPDIR",
+      "USER"
+    ],
+    "environment_values_recorded": false,
+    "fresh_temporary_working_directory_per_invocation": true,
+    "ollama_http": {
+      "conversation_context_reused": false,
+      "loopback_only": true,
+      "stream": false,
+      "structured_output": "json",
+      "temperature": 0,
+      "tools": false
+    }
+  },
+  "shared_scope": {
+    "environment": "provider-matrix-e2e",
+    "kind": "shared",
+    "owner": "provider-neutral-handoff",
+    "subject": "matrix-20260719T175930Z-45204c94"
+  },
+  "started_at": "2026-07-19T17:59:30.101850+00:00",
+  "store_status": {
+    "by_embedding_status": {
+      "ready": 6
+    },
+    "by_kind": {
+      "fact": 2,
+      "preference": 3,
+      "turn": 1
+    },
+    "database": "memory.sqlite3",
+    "default_turn_ttl_days": 30.0,
+    "embedding": {
+      "behavior_fingerprint": "eaa69231e7b9c87b2cbf62c89248ef1cdbba83472cbee91b45f8d70b6c0f1516",
+      "dimension": 64,
+      "distance_metric": "cosine",
+      "model_name": "token-hash-v1",
+      "model_revision": "1",
+      "normalized": true,
+      "provider": "deterministic-token-hash",
+      "runtime_version": "1"
+    },
+    "integrity_check": "ok",
+    "memories": 6,
+    "missing_vectors": 0,
+    "orphan_vectors": 0,
+    "schema_version": 1,
+    "store_id": "f03d3653-d96a-4eec-b518-a92f399f7838"
+  },
+  "synthetic_profile": {
+    "corrected_editor_preference": "EDITOR-9713D2",
+    "editor_preference": "EDITOR-752EBF",
+    "locale_preference": "LOCALE-4DFB91",
+    "private_secret": "PRIVATE-2B28FF",
+    "project_code": "PROJECT-BA45A9"
+  },
+  "telemetry": {
+    "model_latency_ms": {
+      "capture": 12058.46625007689,
+      "consumer_1_claude-sonnet_baseline": 2292.3225001432,
+      "consumer_1_claude-sonnet_memory_assisted": 2190.9899157471955,
+      "consumer_2_codex-gpt-5-6-sol_baseline": 3857.6526660472155,
+      "consumer_2_codex-gpt-5-6-sol_memory_assisted": 3109.0112910605967,
+      "consumer_3_ollama-http-llama3-1-8b_baseline": 2611.421416979283,
+      "consumer_3_ollama-http-llama3-1-8b_memory_assisted": 2419.3393331952393,
+      "producer_return_correction": 5227.557790931314
+    },
+    "recall_latency_ms": {
+      "consumer_1_claude-sonnet_allowed_scopes_ms": 0.4858332686126232,
+      "consumer_1_claude-sonnet_private_ms": 0.1332499086856842,
+      "consumer_1_claude-sonnet_shared_ms": 1.203083898872137,
+      "consumer_2_codex-gpt-5-6-sol_allowed_scopes_ms": 0.5689999088644981,
+      "consumer_2_codex-gpt-5-6-sol_private_ms": 0.09933300316333771,
+      "consumer_2_codex-gpt-5-6-sol_shared_ms": 0.9277919307351112,
+      "consumer_3_ollama-http-llama3-1-8b_allowed_scopes_ms": 2.0002909004688263,
+      "consumer_3_ollama-http-llama3-1-8b_private_ms": 0.0616246834397316,
+      "consumer_3_ollama-http-llama3-1-8b_shared_ms": 1.4777076430618763,
+      "producer_corrected_shared_ms": 1.133000012487173,
+      "producer_private_control_ms": 0.7812087424099445
+    }
+  }
+}

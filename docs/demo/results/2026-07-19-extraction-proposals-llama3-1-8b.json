@@ -1,0 +1,57 @@
+{
+  "evidence_type": "informational_single_run",
+  "run_date": "2026-07-19",
+  "feature": "review_first_memory_extraction",
+  "environment": {
+    "transport": "loopback_ollama_json_api",
+    "endpoint_security": "loopback_only",
+    "embedding": "deterministic_token_hash_test_adapter"
+  },
+  "model": {
+    "provider": "ollama",
+    "tag": "llama3.1:8b",
+    "content_digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+    "parameter_size": "8.0B",
+    "quantization": "Q4_K_M"
+  },
+  "input": {
+    "classification": "synthetic_non_personal",
+    "source_memories": 1,
+    "expected_durable_statements": 3
+  },
+  "proposal": {
+    "validated": true,
+    "proposal_count": 1,
+    "kinds": {
+      "preference": 1
+    },
+    "observed_statement_coverage": 0.3333333333333333,
+    "latency_seconds": 2.84283275,
+    "memory_count_before": 1,
+    "memory_count_after_proposal": 1,
+    "durable_writes_before_acceptance": 0,
+    "artifact_mode": "0600"
+  },
+  "acceptance": {
+    "selected_proposals": 1,
+    "created_typed_memories": 1,
+    "memory_count_after_acceptance": 2,
+    "exact_source_provenance_verified": true,
+    "target_scope_verified": true,
+    "receipt_verified": true
+  },
+  "idempotency_replay": {
+    "same_memory_returned": true,
+    "receipt_marked_replayed": true,
+    "additional_memories_created": 0
+  },
+  "quality_interpretation": {
+    "release_gate": false,
+    "result": "The adapter and explicit review/accept lifecycle worked, but this single run proposed only one of three intentionally durable statements.",
+    "limitations": [
+      "One synthetic source and one local model run are not an extraction-quality benchmark.",
+      "Observed statement coverage is informational and below a reasonable completeness target.",
+      "Deterministic validation and safety tests, not this model observation, are the implementation gate."
+    ]
+  }
+}

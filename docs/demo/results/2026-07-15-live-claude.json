@@ -1,0 +1,217 @@
+{
+  "acceptance": {
+    "checks": {
+      "capture_accuracy": true,
+      "correction_accuracy": true,
+      "memory_accuracy": true,
+      "memory_lift": true,
+      "model_invocations": true,
+      "private_control_hit_rate": true,
+      "private_isolation_violations": true,
+      "shared_recall_hit_rate": true,
+      "stale_value_leaks": true
+    },
+    "gating": false,
+    "passed": true
+  },
+  "actor_contract": "the harness performs memory writes, recall, and correction; models consume the supplied context and do not autonomously select memory tools",
+  "artifacts": {
+    "database": "memory.sqlite3",
+    "report": "report.json"
+  },
+  "claim": "harness-scripted cross-model context consumption through an explicit shared memory pool",
+  "completed_at": "2026-07-15T20:22:22.821815+00:00",
+  "context_transfers": [
+    {
+      "bundle_budget_utilization": 0.1215,
+      "bundle_character_budget": 4000,
+      "estimated_memory_tokens": 122,
+      "from_model": "claude-haiku",
+      "memory_character_count": 486,
+      "memory_ids": [
+        "5c009f34-f2fc-4f28-a282-9a32eb4cdf0c",
+        "195b9563-4910-4335-9552-2cff60f83f4e",
+        "db31f4f5-13f6-4cb3-9928-27542b5128f9"
+      ],
+      "memory_item_count": 3,
+      "memory_share_of_prompt": 0.7178729689807977,
+      "memory_utf8_byte_count": 486,
+      "origin": "shared memories written during model-a session",
+      "phase": "memory_assisted",
+      "prompt_character_count": 677,
+      "to_model": "claude-sonnet",
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "transfer_id": "model-a-to-model-b-shared",
+      "truncated": false
+    },
+    {
+      "bundle_budget_utilization": 0.406,
+      "bundle_character_budget": 2000,
+      "estimated_memory_tokens": 203,
+      "from_model": "claude-sonnet",
+      "memory_character_count": 812,
+      "memory_ids": [
+        "9954a6f5-8475-4221-9b26-a619fefd01f9",
+        "630d1044-a1e8-4d54-a46a-3ca68a31326d",
+        "5c009f34-f2fc-4f28-a282-9a32eb4cdf0c",
+        "db31f4f5-13f6-4cb3-9928-27542b5128f9",
+        "daa77b79-0398-4a91-9ef2-9f34230150e8"
+      ],
+      "memory_item_count": 5,
+      "memory_share_of_prompt": 0.8055555555555556,
+      "memory_utf8_byte_count": 812,
+      "origin": "harness correction written during model-b turn",
+      "phase": "correction",
+      "prompt_character_count": 1008,
+      "to_model": "claude-haiku",
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "transfer_id": "model-b-turn-to-model-a-correction",
+      "truncated": false
+    }
+  ],
+  "memory_ids": {
+    "editor_corrected": "9954a6f5-8475-4221-9b26-a619fefd01f9",
+    "editor_original": "195b9563-4910-4335-9552-2cff60f83f4e",
+    "locale": "5c009f34-f2fc-4f28-a282-9a32eb4cdf0c",
+    "project": "db31f4f5-13f6-4cb3-9928-27542b5128f9"
+  },
+  "metrics": {
+    "baseline_accuracy": 0.0,
+    "capture_accuracy": 1.0,
+    "correction_accuracy": 1.0,
+    "memory_accuracy": 1.0,
+    "memory_lift": 1.0,
+    "private_control_hit_rate": 1.0,
+    "private_isolation_violations": 0,
+    "shared_recall_hit_rate": 1.0,
+    "stale_value_leaks": 0
+  },
+  "mode": "live-claude",
+  "models": {
+    "model_a": "claude-haiku",
+    "model_b": "claude-sonnet",
+    "switch_sequence": [
+      "claude-haiku",
+      "claude-sonnet",
+      "claude-haiku"
+    ]
+  },
+  "responses": [
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 4381.151624955237,
+      "model": "claude-haiku",
+      "phase": "capture",
+      "text": "```json\n{\n  \"project_code\": \"PROJECT-980B6A\",\n  \"editor_preference\": \"EDITOR-8ACC93\",\n  \"locale_preference\": \"LOCALE-48858A\"\n}\n```"
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 2642.2857916913927,
+      "model": "claude-sonnet",
+      "phase": "baseline",
+      "text": "```json\n{\n  \"project_code\": \"UNKNOWN\",\n  \"editor_preference\": \"UNKNOWN\",\n  \"locale_preference\": \"UNKNOWN\"\n}\n```"
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 4284.450582694262,
+      "model": "claude-sonnet",
+      "phase": "memory_assisted",
+      "text": "```json\n{\n  \"project_code\": \"PROJECT-980B6A\",\n  \"editor_preference\": \"EDITOR-8ACC93\",\n  \"locale_preference\": \"LOCALE-48858A\"\n}\n```"
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 3393.0207081139088,
+      "model": "claude-haiku",
+      "phase": "correction",
+      "text": "```json\n{\n  \"editor_preference\": \"EDITOR-EDDB8A\"\n}\n```"
+    }
+  ],
+  "run_id": "20260715T202208Z-225969a6",
+  "schema_version": 2,
+  "scope_of_claim": "cross-model within Anthropic",
+  "scopes": {
+    "model_a_private": {
+      "environment": "model-switch-e2e",
+      "kind": "private",
+      "owner": "model-a",
+      "subject": "demo-20260715T202208Z-225969a6"
+    },
+    "model_b_private": {
+      "environment": "model-switch-e2e",
+      "kind": "private",
+      "owner": "model-b",
+      "subject": "demo-20260715T202208Z-225969a6"
+    },
+    "shared_pool": {
+      "environment": "model-switch-e2e",
+      "kind": "shared",
+      "owner": "cross-model-handoff",
+      "subject": "demo-20260715T202208Z-225969a6"
+    }
+  },
+  "started_at": "2026-07-15T20:22:08.097075+00:00",
+  "store_status": {
+    "by_embedding_status": {
+      "ready": 6
+    },
+    "by_kind": {
+      "fact": 2,
+      "preference": 3,
+      "turn": 1
+    },
+    "database": "memory.sqlite3",
+    "default_turn_ttl_days": 30.0,
+    "embedding": {
+      "behavior_fingerprint": "eaa69231e7b9c87b2cbf62c89248ef1cdbba83472cbee91b45f8d70b6c0f1516",
+      "dimension": 64,
+      "distance_metric": "cosine",
+      "model_name": "token-hash-v1",
+      "model_revision": "1",
+      "normalized": true,
+      "provider": "deterministic-token-hash",
+      "runtime_version": "1"
+    },
+    "integrity_check": "ok",
+    "memories": 6,
+    "missing_vectors": 0,
+    "orphan_vectors": 0,
+    "schema_version": 1,
+    "store_id": "181fb3cd-81ad-4f66-a72c-7b662d8db5b0"
+  },
+  "synthetic_profile": {
+    "corrected_editor_preference": "EDITOR-EDDB8A",
+    "editor_preference": "EDITOR-8ACC93",
+    "locale_preference": "LOCALE-48858A",
+    "private_secret": "PRIVATE-25A91B",
+    "project_code": "PROJECT-980B6A"
+  },
+  "telemetry": {
+    "model_latency_ms": {
+      "baseline": 2642.2857916913927,
+      "capture": 4381.151624955237,
+      "correction": 3393.0207081139088,
+      "memory_assisted": 4284.450582694262
+    },
+    "recall_latency_ms": {
+      "model_a_corrected_shared_ms": 0.6547500379383564,
+      "model_a_private_control_ms": 0.49970904365181923,
+      "model_b_allowed_scopes_ms": 0.8714590221643448,
+      "model_b_private_only_ms": 0.17554080113768578,
+      "model_b_shared_ms": 0.8994578383862972
+    }
+  },
+  "thresholds": {
+    "capture_accuracy": 1.0,
+    "correction_accuracy": 1.0,
+    "memory_accuracy": 1.0,
+    "memory_lift": 0.6666666666666666,
+    "private_control_hit_rate": 1.0,
+    "private_isolation_violations": 0,
+    "shared_recall_hit_rate": 1.0,
+    "stale_value_leaks": 0
+  }
+}

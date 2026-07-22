@@ -1,0 +1,3244 @@
+{
+  "checks": {
+    "distractor_leak_rate": true,
+    "memory_kind_coverage": true,
+    "mrr": true,
+    "query_count": true,
+    "recall_at_k": true,
+    "runtime_seconds": true,
+    "scope_violation_count": true
+  },
+  "completed_at": "2026-07-20T05:36:28.425355+00:00",
+  "dataset": {
+    "dataset_id": "independent-retrieval-v2",
+    "description": "Blind Claude-authored synthetic museum, observatory, and robotics-club memories; contains no user-derived data and was frozen before embedding evaluation.",
+    "distractor_policy": "Each query preselects one accessible non-answer seven positions later in the same authored scope; shared queries use a same-domain shared distractor. Each also names one exact-scope-inaccessible control.",
+    "file_name": "retrieval_v2.json",
+    "kind_counts": {
+      "event": 12,
+      "fact": 12,
+      "preference": 12,
+      "summary": 12,
+      "turn": 12
+    },
+    "memory_count": 60,
+    "query_count": 60,
+    "sha256": "67fd5c4b2779a2dab42dca545cbd8a7a8a0a9a604d83cda0c8b54d60134956bf",
+    "synthetic_only": true,
+    "top_k": 5
+  },
+  "diagnostics": {
+    "distractor_by_access_mode": {
+      "private-exact": {
+        "hits": 3,
+        "rate": 0.075,
+        "reduction_vs_uniform_random": 0.7,
+        "total": 40,
+        "uniform_random_expected_hits": 10.0,
+        "uniform_random_rate": 0.25
+      },
+      "shared-pool": {
+        "hits": 0,
+        "rate": 0.0,
+        "reduction_vs_uniform_random": 1.0,
+        "total": 20,
+        "uniform_random_expected_hits": 2.5,
+        "uniform_random_rate": 0.125
+      }
+    },
+    "distractor_by_memory_kind": {
+      "event": {
+        "hits": 1,
+        "rate": 0.08333333333333333,
+        "reduction_vs_uniform_random": 0.6,
+        "total": 12,
+        "uniform_random_expected_hits": 2.5,
+        "uniform_random_rate": 0.20833333333333334
+      },
+      "fact": {
+        "hits": 0,
+        "rate": 0.0,
+        "reduction_vs_uniform_random": 1.0,
+        "total": 12,
+        "uniform_random_expected_hits": 2.5,
+        "uniform_random_rate": 0.20833333333333334
+      },
+      "preference": {
+        "hits": 0,
+        "rate": 0.0,
+        "reduction_vs_uniform_random": 1.0,
+        "total": 12,
+        "uniform_random_expected_hits": 2.5,
+        "uniform_random_rate": 0.20833333333333334
+      },
+      "summary": {
+        "hits": 1,
+        "rate": 0.08333333333333333,
+        "reduction_vs_uniform_random": 0.6,
+        "total": 12,
+        "uniform_random_expected_hits": 2.5,
+        "uniform_random_rate": 0.20833333333333334
+      },
+      "turn": {
+        "hits": 1,
+        "rate": 0.08333333333333333,
+        "reduction_vs_uniform_random": 0.6,
+        "total": 12,
+        "uniform_random_expected_hits": 2.5,
+        "uniform_random_rate": 0.20833333333333334
+      }
+    },
+    "uniform_random_expected_distractor_hits": 12.5
+  },
+  "embedding": {
+    "behavior_fingerprint": "d448bfe05c5208f88f0c4c327ea72d334b48421c9cb4c5522b5baa688958bcde",
+    "dimension": 384,
+    "distance_metric": "cosine",
+    "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "model_revision": "fastembed-catalog",
+    "normalized": true,
+    "provider": "fastembed",
+    "runtime_version": "0.8.0"
+  },
+  "evaluation_id": "independent-retrieval-v2:67fd5c4b2779",
+  "metrics": {
+    "distractor_hits": 3,
+    "distractor_leak_rate": 0.05,
+    "distractor_reduction_vs_uniform_random": 0.76,
+    "distractor_total": 60,
+    "expected_hits": 59,
+    "expected_total": 60,
+    "mrr": 0.9472222222222222,
+    "recall_at_k": 0.9833333333333333,
+    "runtime_seconds": 1.6499345828779042,
+    "scope_violation_count": 0,
+    "uniform_random_distractor_leak_rate": 0.20833333333333334
+  },
+  "passed": true,
+  "query_results": [
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a01"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.43545445799827576,
+          "fixture_id": "a01",
+          "rank": 1,
+          "recency_score": 0.9999997779041155,
+          "score": 0.6516363891822025,
+          "semantic_score": 0.5645455420017242
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa01",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a01",
+        "a02",
+        "a12",
+        "a18",
+        "a11"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.43545445799827576,
+          "fixture_id": "a01",
+          "rank": 1,
+          "recency_score": 0.9999997779041155,
+          "score": 0.6516363891822025,
+          "semantic_score": 0.5645455420017242
+        },
+        {
+          "distance": 0.5320043563842773,
+          "fixture_id": "a02",
+          "rank": 2,
+          "recency_score": 0.9999997838843806,
+          "score": 0.5743964716694542,
+          "semantic_score": 0.46799564361572266
+        },
+        {
+          "distance": 0.5522295236587524,
+          "fixture_id": "a12",
+          "rank": 3,
+          "recency_score": 0.9999998298655415,
+          "score": 0.5582163470461063,
+          "semantic_score": 0.44777047634124756
+        },
+        {
+          "distance": 0.5557090044021606,
+          "fixture_id": "a18",
+          "rank": 4,
+          "recency_score": 0.9999998487687745,
+          "score": 0.5554327662320264,
+          "semantic_score": 0.44429099559783936
+        },
+        {
+          "distance": 0.5802383422851562,
+          "fixture_id": "a11",
+          "rank": 5,
+          "recency_score": 0.9999998267116154,
+          "score": 0.5358092915141981,
+          "semantic_score": 0.41976165771484375
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a02"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.3942580223083496,
+          "fixture_id": "a02",
+          "rank": 1,
+          "recency_score": 0.9999997799747319,
+          "score": 0.6845935381482666,
+          "semantic_score": 0.6057419776916504
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa02",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a02",
+        "a12"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.3942580223083496,
+          "fixture_id": "a02",
+          "rank": 1,
+          "recency_score": 0.9999997799747319,
+          "score": 0.6845935381482666,
+          "semantic_score": 0.6057419776916504
+        },
+        {
+          "distance": 0.579979419708252,
+          "fixture_id": "a12",
+          "rank": 2,
+          "recency_score": 0.9999998259558925,
+          "score": 0.536016429424577,
+          "semantic_score": 0.42002058029174805
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a03"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.6176693439483643,
+          "fixture_id": "a03",
+          "rank": 1,
+          "recency_score": 0.9999997818279375,
+          "score": 0.5058644812068961,
+          "semantic_score": 0.38233065605163574
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa03",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a03",
+        "a02",
+        "a07",
+        "a01"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.6176693439483643,
+          "fixture_id": "a03",
+          "rank": 1,
+          "recency_score": 0.9999997818279375,
+          "score": 0.5058644812068961,
+          "semantic_score": 0.38233065605163574
+        },
+        {
+          "distance": 0.7499097585678101,
+          "fixture_id": "a02",
+          "rank": 2,
+          "recency_score": 0.9999997763191301,
+          "score": 0.40007214840957794,
+          "semantic_score": 0.25009024143218994
+        },
+        {
+          "distance": 0.7832374572753906,
+          "fixture_id": "a07",
+          "rank": 3,
+          "recency_score": 0.9999998056706445,
+          "score": 0.37340999531381636,
+          "semantic_score": 0.21676254272460938
+        },
+        {
+          "distance": 0.8075046539306641,
+          "fixture_id": "a01",
+          "rank": 4,
+          "recency_score": 0.999999770338865,
+          "score": 0.35399623092324173,
+          "semantic_score": 0.19249534606933594
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a04"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.3488999307155609,
+          "fixture_id": "a04",
+          "rank": 1,
+          "recency_score": 0.9999997832270676,
+          "score": 0.7208800120729648,
+          "semantic_score": 0.6511000692844391
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa04",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a04"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.3488999307155609,
+          "fixture_id": "a04",
+          "rank": 1,
+          "recency_score": 0.9999997832270676,
+          "score": 0.7208800120729648,
+          "semantic_score": 0.6511000692844391
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a05"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.6817701458930969,
+          "fixture_id": "a05",
+          "rank": 1,
+          "recency_score": 0.9999997898272072,
+          "score": 0.45458384125096385,
+          "semantic_score": 0.3182298541069031
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa05",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a05",
+        "a10",
+        "a08",
+        "a09",
+        "a15"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.6817701458930969,
+          "fixture_id": "a05",
+          "rank": 1,
+          "recency_score": 0.9999997898272072,
+          "score": 0.45458384125096385,
+          "semantic_score": 0.3182298541069031
+        },
+        {
+          "distance": 0.6959836483001709,
+          "fixture_id": "a10",
+          "rank": 2,
+          "recency_score": 0.999999808172071,
+          "score": 0.44321304299427744,
+          "semantic_score": 0.3040163516998291
+        },
+        {
+          "distance": 0.7170777320861816,
+          "fixture_id": "a08",
+          "rank": 3,
+          "recency_score": 0.9999998018171534,
+          "score": 0.42633777469448536,
+          "semantic_score": 0.28292226791381836
+        },
+        {
+          "distance": 0.722495436668396,
+          "fixture_id": "a09",
+          "rank": 4,
+          "recency_score": 0.9999998049871245,
+          "score": 0.42200361166270806,
+          "semantic_score": 0.277504563331604
+        },
+        {
+          "distance": 0.7394992709159851,
+          "fixture_id": "a15",
+          "rank": 5,
+          "recency_score": 0.9999998241224758,
+          "score": 0.408400548091707,
+          "semantic_score": 0.2605007290840149
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a06"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4903567433357239,
+          "fixture_id": "a06",
+          "rank": 1,
+          "recency_score": 0.9999997896424214,
+          "score": 0.6077145632599051,
+          "semantic_score": 0.5096432566642761
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa06",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a06",
+        "a07"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4903567433357239,
+          "fixture_id": "a06",
+          "rank": 1,
+          "recency_score": 0.9999997896424214,
+          "score": 0.6077145632599051,
+          "semantic_score": 0.5096432566642761
+        },
+        {
+          "distance": 0.6733630895614624,
+          "fixture_id": "a07",
+          "rank": 2,
+          "recency_score": 0.9999997944679764,
+          "score": 0.46130948724442533,
+          "semantic_score": 0.3266369104385376
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a07"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4692635238170624,
+          "fixture_id": "a07",
+          "rank": 1,
+          "recency_score": 0.9999997905532466,
+          "score": 0.6245891390569994,
+          "semantic_score": 0.5307364761829376
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa07",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a07",
+        "a04",
+        "a18"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4692635238170624,
+          "fixture_id": "a07",
+          "rank": 1,
+          "recency_score": 0.9999997905532466,
+          "score": 0.6245891390569994,
+          "semantic_score": 0.5307364761829376
+        },
+        {
+          "distance": 0.5371573567390442,
+          "fixture_id": "a04",
+          "rank": 2,
+          "recency_score": 0.9999997717476222,
+          "score": 0.570274068958289,
+          "semantic_score": 0.4628426432609558
+        },
+        {
+          "distance": 0.6230069994926453,
+          "fixture_id": "a18",
+          "rank": 3,
+          "recency_score": 0.999999826086125,
+          "score": 0.5015943656231088,
+          "semantic_score": 0.37699300050735474
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a08"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.6545968651771545,
+          "fixture_id": "a08",
+          "rank": 1,
+          "recency_score": 0.9999997903735418,
+          "score": 0.4763224659329847,
+          "semantic_score": 0.34540313482284546
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa08",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a08",
+        "a09",
+        "a02",
+        "a13",
+        "a10"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.6545968651771545,
+          "fixture_id": "a08",
+          "rank": 1,
+          "recency_score": 0.9999997903735418,
+          "score": 0.4763224659329847,
+          "semantic_score": 0.34540313482284546
+        },
+        {
+          "distance": 0.7088088989257812,
+          "fixture_id": "a09",
+          "rank": 2,
+          "recency_score": 0.9999997935435129,
+          "score": 0.4329528395680775,
+          "semantic_score": 0.29119110107421875
+        },
+        {
+          "distance": 0.715461015701294,
+          "fixture_id": "a02",
+          "rank": 3,
+          "recency_score": 0.9999997572696209,
+          "score": 0.42763113889288895,
+          "semantic_score": 0.28453898429870605
+        },
+        {
+          "distance": 0.8001429438591003,
+          "fixture_id": "a13",
+          "rank": 4,
+          "recency_score": 0.9999998064012301,
+          "score": 0.3598856061929657,
+          "semantic_score": 0.19985705614089966
+        },
+        {
+          "distance": 0.8098315596580505,
+          "fixture_id": "a10",
+          "rank": 5,
+          "recency_score": 0.9999997967284594,
+          "score": 0.3521347116192514,
+          "semantic_score": 0.19016844034194946
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a09"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.6379276514053345,
+          "fixture_id": "a09",
+          "rank": 1,
+          "recency_score": 0.9999997900686854,
+          "score": 0.48965783688946946,
+          "semantic_score": 0.3620723485946655
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa09",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a09",
+        "a10",
+        "a13",
+        "a05",
+        "a07"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.6379276514053345,
+          "fixture_id": "a09",
+          "rank": 1,
+          "recency_score": 0.9999997900686854,
+          "score": 0.48965783688946946,
+          "semantic_score": 0.3620723485946655
+        },
+        {
+          "distance": 0.6872832775115967,
+          "fixture_id": "a10",
+          "rank": 2,
+          "recency_score": 0.999999793253632,
+          "score": 0.450173336641449,
+          "semantic_score": 0.3127167224884033
+        },
+        {
+          "distance": 0.6992213726043701,
+          "fixture_id": "a13",
+          "rank": 3,
+          "recency_score": 0.9999998029264027,
+          "score": 0.4406228625017844,
+          "semantic_score": 0.3007786273956299
+        },
+        {
+          "distance": 0.7316508889198303,
+          "fixture_id": "a05",
+          "rank": 4,
+          "recency_score": 0.9999997749087683,
+          "score": 0.4146792438458894,
+          "semantic_score": 0.2683491110801697
+        },
+        {
+          "distance": 0.7867192625999451,
+          "fixture_id": "a07",
+          "rank": 5,
+          "recency_score": 0.9999997831463073,
+          "score": 0.3706245465493054,
+          "semantic_score": 0.21328073740005493
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a10"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.42731913924217224,
+          "fixture_id": "a10",
+          "rank": 2,
+          "recency_score": 0.9999997890086412,
+          "score": 0.6581446464079904,
+          "semantic_score": 0.5726808607578278
+        }
+      ],
+      "first_relevant_rank": 2,
+      "query_id": "qa10",
+      "reciprocal_rank": 0.5,
+      "retrieved_fixture_ids": [
+        "a09",
+        "a10",
+        "a13",
+        "a15"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4012002944946289,
+          "fixture_id": "a09",
+          "rank": 1,
+          "recency_score": 0.9999997858236948,
+          "score": 0.6790397215690358,
+          "semantic_score": 0.5987997055053711
+        },
+        {
+          "distance": 0.42731913924217224,
+          "fixture_id": "a10",
+          "rank": 2,
+          "recency_score": 0.9999997890086412,
+          "score": 0.6581446464079904,
+          "semantic_score": 0.5726808607578278
+        },
+        {
+          "distance": 0.5688758492469788,
+          "fixture_id": "a13",
+          "rank": 3,
+          "recency_score": 0.9999997986814119,
+          "score": 0.5448992803386994,
+          "semantic_score": 0.43112415075302124
+        },
+        {
+          "distance": 0.5950822234153748,
+          "fixture_id": "a15",
+          "rank": 4,
+          "recency_score": 0.9999998049590456,
+          "score": 0.5239341822595093,
+          "semantic_score": 0.40491777658462524
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [
+        {
+          "distance": 0.556362509727478,
+          "fixture_id": "a18",
+          "rank": 4,
+          "recency_score": 0.9999998106368613,
+          "score": 0.5549099543453898,
+          "semantic_score": 0.443637490272522
+        }
+      ],
+      "distractor_leaks": [
+        "a18"
+      ],
+      "expected_hits": [
+        "a11"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.3861442804336548,
+          "fixture_id": "a11",
+          "rank": 1,
+          "recency_score": 0.999999788579703,
+          "score": 0.6910845333690168,
+          "semantic_score": 0.6138557195663452
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa11",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a11",
+        "a01",
+        "a09",
+        "a18",
+        "a10"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.3861442804336548,
+          "fixture_id": "a11",
+          "rank": 1,
+          "recency_score": 0.999999788579703,
+          "score": 0.6910845333690168,
+          "semantic_score": 0.6138557195663452
+        },
+        {
+          "distance": 0.44127288460731506,
+          "fixture_id": "a01",
+          "rank": 2,
+          "recency_score": 0.999999739772205,
+          "score": 0.646981640268589,
+          "semantic_score": 0.5587271153926849
+        },
+        {
+          "distance": 0.5394579768180847,
+          "fixture_id": "a09",
+          "rank": 3,
+          "recency_score": 0.9999997820263615,
+          "score": 0.5684335749508045,
+          "semantic_score": 0.4605420231819153
+        },
+        {
+          "distance": 0.556362509727478,
+          "fixture_id": "a18",
+          "rank": 4,
+          "recency_score": 0.9999998106368613,
+          "score": 0.5549099543453898,
+          "semantic_score": 0.443637490272522
+        },
+        {
+          "distance": 0.5768244862556458,
+          "fixture_id": "a10",
+          "rank": 5,
+          "recency_score": 0.999999785211308,
+          "score": 0.538540368037745,
+          "semantic_score": 0.42317551374435425
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [
+        {
+          "distance": 0.5987781286239624,
+          "fixture_id": "a19",
+          "rank": 3,
+          "recency_score": 0.9999998104116955,
+          "score": 0.5209774591831692,
+          "semantic_score": 0.4012218713760376
+        }
+      ],
+      "distractor_leaks": [
+        "a19"
+      ],
+      "expected_hits": [
+        "a12"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5229032635688782,
+          "fixture_id": "a12",
+          "rank": 1,
+          "recency_score": 0.9999997883537349,
+          "score": 0.5816773468156444,
+          "semantic_score": 0.4770967364311218
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa12",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a12",
+        "a02",
+        "a19",
+        "a13",
+        "a01"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5229032635688782,
+          "fixture_id": "a12",
+          "rank": 1,
+          "recency_score": 0.9999997883537349,
+          "score": 0.5816773468156444,
+          "semantic_score": 0.4770967364311218
+        },
+        {
+          "distance": 0.5719737410545349,
+          "fixture_id": "a02",
+          "rank": 2,
+          "recency_score": 0.9999997423725759,
+          "score": 0.5424209556308872,
+          "semantic_score": 0.4280262589454651
+        },
+        {
+          "distance": 0.5987781286239624,
+          "fixture_id": "a19",
+          "rank": 3,
+          "recency_score": 0.9999998104116955,
+          "score": 0.5209774591831692,
+          "semantic_score": 0.4012218713760376
+        },
+        {
+          "distance": 0.6381629705429077,
+          "fixture_id": "a13",
+          "rank": 4,
+          "recency_score": 0.9999997915041845,
+          "score": 0.4894695818665107,
+          "semantic_score": 0.3618370294570923
+        },
+        {
+          "distance": 0.649453341960907,
+          "fixture_id": "a01",
+          "rank": 5,
+          "recency_score": 0.9999997363923112,
+          "score": 0.48043727370973666,
+          "semantic_score": 0.350546658039093
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a13"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.3550514876842499,
+          "fixture_id": "a13",
+          "rank": 1,
+          "recency_score": 0.9999997861459332,
+          "score": 0.7159587670817867,
+          "semantic_score": 0.6449485123157501
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa13",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a13"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.3550514876842499,
+          "fixture_id": "a13",
+          "rank": 1,
+          "recency_score": 0.9999997861459332,
+          "score": 0.7159587670817867,
+          "semantic_score": 0.6449485123157501
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a14"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.39137792587280273,
+          "fixture_id": "a14",
+          "rank": 1,
+          "recency_score": 0.9999997836477158,
+          "score": 0.686897616031301,
+          "semantic_score": 0.6086220741271973
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa14",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a14"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.39137792587280273,
+          "fixture_id": "a14",
+          "rank": 1,
+          "recency_score": 0.9999997836477158,
+          "score": 0.686897616031301,
+          "semantic_score": 0.6086220741271973
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a15"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.49233171343803406,
+          "fixture_id": "a15",
+          "rank": 1,
+          "recency_score": 0.9999997827328794,
+          "score": 0.6061345857961487,
+          "semantic_score": 0.5076682865619659
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa15",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a15",
+        "a08",
+        "a09",
+        "a11"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.49233171343803406,
+          "fixture_id": "a15",
+          "rank": 1,
+          "recency_score": 0.9999997827328794,
+          "score": 0.6061345857961487,
+          "semantic_score": 0.5076682865619659
+        },
+        {
+          "distance": 0.6219278573989868,
+          "fixture_id": "a08",
+          "rank": 2,
+          "recency_score": 0.999999760427558,
+          "score": 0.5024576661663221,
+          "semantic_score": 0.3780721426010132
+        },
+        {
+          "distance": 0.6916264295578003,
+          "fixture_id": "a09",
+          "rank": 3,
+          "recency_score": 0.999999763597529,
+          "score": 0.44669880907326553,
+          "semantic_score": 0.3083735704421997
+        },
+        {
+          "distance": 0.6921976208686829,
+          "fixture_id": "a11",
+          "rank": 4,
+          "recency_score": 0.9999997701508703,
+          "score": 0.4462418573352277,
+          "semantic_score": 0.30780237913131714
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a16"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4803710877895355,
+          "fixture_id": "a16",
+          "rank": 1,
+          "recency_score": 0.9999997825652084,
+          "score": 0.6157030862814132,
+          "semantic_score": 0.5196289122104645
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa16",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a16",
+        "a06"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4803710877895355,
+          "fixture_id": "a16",
+          "rank": 1,
+          "recency_score": 0.9999997825652084,
+          "score": 0.6157030862814132,
+          "semantic_score": 0.5196289122104645
+        },
+        {
+          "distance": 0.6719644665718079,
+          "fixture_id": "a06",
+          "rank": 2,
+          "recency_score": 0.9999997485288017,
+          "score": 0.462428376448314,
+          "semantic_score": 0.32803553342819214
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a17"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.40927010774612427,
+          "fixture_id": "a17",
+          "rank": 1,
+          "recency_score": 0.9999997824127802,
+          "score": 0.6725838702856566,
+          "semantic_score": 0.5907298922538757
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa17",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a17",
+        "a01",
+        "a11",
+        "a02",
+        "a18"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.40927010774612427,
+          "fixture_id": "a17",
+          "rank": 1,
+          "recency_score": 0.9999997824127802,
+          "score": 0.6725838702856566,
+          "semantic_score": 0.5907298922538757
+        },
+        {
+          "distance": 0.5234353542327881,
+          "fixture_id": "a01",
+          "rank": 2,
+          "recency_score": 0.9999997146945641,
+          "score": 0.5812516595526823,
+          "semantic_score": 0.4765646457672119
+        },
+        {
+          "distance": 0.5352783203125,
+          "fixture_id": "a11",
+          "rank": 3,
+          "recency_score": 0.9999997635020608,
+          "score": 0.5717772964504122,
+          "semantic_score": 0.4647216796875
+        },
+        {
+          "distance": 0.5410065054893494,
+          "fixture_id": "a02",
+          "rank": 4,
+          "recency_score": 0.9999997206748287,
+          "score": 0.5671947397434862,
+          "semantic_score": 0.45899349451065063
+        },
+        {
+          "distance": 0.6005833148956299,
+          "fixture_id": "a18",
+          "rank": 5,
+          "recency_score": 0.9999997855592185,
+          "score": 0.5195333051953397,
+          "semantic_score": 0.3994166851043701
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a18"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.502997100353241,
+          "fixture_id": "a18",
+          "rank": 1,
+          "recency_score": 0.9999997822568757,
+          "score": 0.5976022761687823,
+          "semantic_score": 0.49700289964675903
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa18",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a18",
+        "a07",
+        "a10"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.502997100353241,
+          "fixture_id": "a18",
+          "rank": 1,
+          "recency_score": 0.9999997822568757,
+          "score": 0.5976022761687823,
+          "semantic_score": 0.49700289964675903
+        },
+        {
+          "distance": 0.6994652152061462,
+          "fixture_id": "a07",
+          "rank": 2,
+          "recency_score": 0.9999997467239988,
+          "score": 0.44042777717988274,
+          "semantic_score": 0.30053478479385376
+        },
+        {
+          "distance": 0.7013192772865295,
+          "fixture_id": "a10",
+          "rank": 3,
+          "recency_score": 0.999999756831323,
+          "score": 0.43894452953704094,
+          "semantic_score": 0.29868072271347046
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [
+        {
+          "distance": 0.6588737368583679,
+          "fixture_id": "a06",
+          "rank": 2,
+          "recency_score": 0.9999997385950318,
+          "score": 0.472900958232312,
+          "semantic_score": 0.3411262631416321
+        }
+      ],
+      "distractor_leaks": [
+        "a06"
+      ],
+      "expected_hits": [
+        "a19"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5450016856193542,
+          "fixture_id": "a19",
+          "rank": 1,
+          "recency_score": 0.9999997821081913,
+          "score": 0.5639986079261547,
+          "semantic_score": 0.45499831438064575
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa19",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a19",
+        "a06"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5450016856193542,
+          "fixture_id": "a19",
+          "rank": 1,
+          "recency_score": 0.9999997821081913,
+          "score": 0.5639986079261547,
+          "semantic_score": 0.45499831438064575
+        },
+        {
+          "distance": 0.6588737368583679,
+          "fixture_id": "a06",
+          "rank": 2,
+          "recency_score": 0.9999997385950318,
+          "score": 0.472900958232312,
+          "semantic_score": 0.3411262631416321
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "a20"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5189051032066345,
+          "fixture_id": "a20",
+          "rank": 1,
+          "recency_score": 0.9999997819894578,
+          "score": 0.5848758738325839,
+          "semantic_score": 0.4810948967933655
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qa20",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "a20",
+        "a19",
+        "a14"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5189051032066345,
+          "fixture_id": "a20",
+          "rank": 1,
+          "recency_score": 0.9999997819894578,
+          "score": 0.5848758738325839,
+          "semantic_score": 0.4810948967933655
+        },
+        {
+          "distance": 0.7012401223182678,
+          "fixture_id": "a19",
+          "rank": 2,
+          "recency_score": 0.9999997788136036,
+          "score": 0.4390078579081064,
+          "semantic_score": 0.2987598776817322
+        },
+        {
+          "distance": 0.7061090469360352,
+          "fixture_id": "a14",
+          "rank": 3,
+          "recency_score": 0.9999997630437066,
+          "score": 0.43511271505991317,
+          "semantic_score": 0.29389095306396484
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b01"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.3659934401512146,
+          "fixture_id": "b01",
+          "rank": 1,
+          "recency_score": 0.9999997819129763,
+          "score": 0.7072052042616235,
+          "semantic_score": 0.6340065598487854
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb01",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b01",
+        "b02"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.3659934401512146,
+          "fixture_id": "b01",
+          "rank": 1,
+          "recency_score": 0.9999997819129763,
+          "score": 0.7072052042616235,
+          "semantic_score": 0.6340065598487854
+        },
+        {
+          "distance": 0.5382972359657288,
+          "fixture_id": "b02",
+          "rank": 2,
+          "recency_score": 0.9999997873447674,
+          "score": 0.5693621686963705,
+          "semantic_score": 0.46170276403427124
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b02"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5993990898132324,
+          "fixture_id": "b02",
+          "rank": 1,
+          "recency_score": 0.9999997839490957,
+          "score": 0.5204806849392332,
+          "semantic_score": 0.4006009101867676
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb02",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b02"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5993990898132324,
+          "fixture_id": "b02",
+          "rank": 1,
+          "recency_score": 0.9999997839490957,
+          "score": 0.5204806849392332,
+          "semantic_score": 0.4006009101867676
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b03"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.3823520541191101,
+          "fixture_id": "b03",
+          "rank": 1,
+          "recency_score": 0.9999997838587085,
+          "score": 0.6941183134764536,
+          "semantic_score": 0.6176479458808899
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb03",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b03"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.3823520541191101,
+          "fixture_id": "b03",
+          "rank": 1,
+          "recency_score": 0.9999997838587085,
+          "score": 0.6941183134764536,
+          "semantic_score": 0.6176479458808899
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b04"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4622962772846222,
+          "fixture_id": "b04",
+          "rank": 1,
+          "recency_score": 0.9999997836921072,
+          "score": 0.6301629349107236,
+          "semantic_score": 0.5377037227153778
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb04",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b04"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4622962772846222,
+          "fixture_id": "b04",
+          "rank": 1,
+          "recency_score": 0.9999997836921072,
+          "score": 0.6301629349107236,
+          "semantic_score": 0.5377037227153778
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b05"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5658320784568787,
+          "fixture_id": "b05",
+          "rank": 1,
+          "recency_score": 0.9999997835402139,
+          "score": 0.5473342939425399,
+          "semantic_score": 0.43416792154312134
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb05",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b05",
+        "b07",
+        "b08",
+        "b03"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5658320784568787,
+          "fixture_id": "b05",
+          "rank": 1,
+          "recency_score": 0.9999997835402139,
+          "score": 0.5473342939425399,
+          "semantic_score": 0.43416792154312134
+        },
+        {
+          "distance": 0.6619184613227844,
+          "fixture_id": "b07",
+          "rank": 2,
+          "recency_score": 0.9999997898986077,
+          "score": 0.470465188921494,
+          "semantic_score": 0.3380815386772156
+        },
+        {
+          "distance": 0.7151619791984558,
+          "fixture_id": "b08",
+          "rank": 3,
+          "recency_score": 0.9999997930319425,
+          "score": 0.42787037524762384,
+          "semantic_score": 0.2848380208015442
+        },
+        {
+          "distance": 0.7377222180366516,
+          "fixture_id": "b03",
+          "rank": 4,
+          "recency_score": 0.999999777277823,
+          "score": 0.40982218102624324,
+          "semantic_score": 0.2622777819633484
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b06"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.7645787596702576,
+          "fixture_id": "b06",
+          "rank": 3,
+          "recency_score": 0.9999997833757519,
+          "score": 0.3883369489389443,
+          "semantic_score": 0.23542124032974243
+        }
+      ],
+      "first_relevant_rank": 3,
+      "query_id": "qb06",
+      "reciprocal_rank": 0.3333333333333333,
+      "retrieved_fixture_ids": [
+        "b19",
+        "b10",
+        "b06",
+        "b08",
+        "b17"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.7125924229621887,
+          "fixture_id": "b19",
+          "rank": 1,
+          "recency_score": 0.9999998243896262,
+          "score": 0.42992602650817424,
+          "semantic_score": 0.2874075770378113
+        },
+        {
+          "distance": 0.7275259494781494,
+          "fixture_id": "b10",
+          "rank": 2,
+          "recency_score": 0.9999997959796894,
+          "score": 0.41797919961341834,
+          "semantic_score": 0.2724740505218506
+        },
+        {
+          "distance": 0.7645787596702576,
+          "fixture_id": "b06",
+          "rank": 3,
+          "recency_score": 0.9999997833757519,
+          "score": 0.3883369489389443,
+          "semantic_score": 0.23542124032974243
+        },
+        {
+          "distance": 0.7702897191047668,
+          "fixture_id": "b08",
+          "rank": 4,
+          "recency_score": 0.9999997897352154,
+          "score": 0.38376818266322954,
+          "semantic_score": 0.22971028089523315
+        },
+        {
+          "distance": 0.777255654335022,
+          "fixture_id": "b17",
+          "rank": 5,
+          "recency_score": 0.9999998178397609,
+          "score": 0.37819544009993455,
+          "semantic_score": 0.22274434566497803
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b07"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.6503969430923462,
+          "fixture_id": "b07",
+          "rank": 1,
+          "recency_score": 0.9999997833220009,
+          "score": 0.47968240219052316,
+          "semantic_score": 0.3496030569076538
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb07",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b07",
+        "b19",
+        "b08",
+        "b10",
+        "b06"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.6503969430923462,
+          "fixture_id": "b07",
+          "rank": 1,
+          "recency_score": 0.9999997833220009,
+          "score": 0.47968240219052316,
+          "semantic_score": 0.3496030569076538
+        },
+        {
+          "distance": 0.7084124088287354,
+          "fixture_id": "b19",
+          "rank": 2,
+          "recency_score": 0.9999998211097463,
+          "score": 0.43327003715896095,
+          "semantic_score": 0.29158759117126465
+        },
+        {
+          "distance": 0.7919036149978638,
+          "fixture_id": "b08",
+          "rank": 3,
+          "recency_score": 0.9999997864553357,
+          "score": 0.3664770652927761,
+          "semantic_score": 0.20809638500213623
+        },
+        {
+          "distance": 0.7973436713218689,
+          "fixture_id": "b10",
+          "rank": 4,
+          "recency_score": 0.9999997926998097,
+          "score": 0.3621250214824668,
+          "semantic_score": 0.2026563286781311
+        },
+        {
+          "distance": 0.8099029660224915,
+          "fixture_id": "b06",
+          "rank": 5,
+          "recency_score": 0.9999997800958721,
+          "score": 0.3520775832011812,
+          "semantic_score": 0.19009703397750854
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b08"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5011622905731201,
+          "fixture_id": "b08",
+          "rank": 1,
+          "recency_score": 0.9999997831604805,
+          "score": 0.5990701241736001,
+          "semantic_score": 0.4988377094268799
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb08",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b08",
+        "b05",
+        "b18",
+        "b03",
+        "b01"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5011622905731201,
+          "fixture_id": "b08",
+          "rank": 1,
+          "recency_score": 0.9999997831604805,
+          "score": 0.5990701241736001,
+          "semantic_score": 0.4988377094268799
+        },
+        {
+          "distance": 0.5330843329429626,
+          "fixture_id": "b05",
+          "rank": 2,
+          "recency_score": 0.9999997736687519,
+          "score": 0.5735324883793802,
+          "semantic_score": 0.46691566705703735
+        },
+        {
+          "distance": 0.5868538618087769,
+          "fixture_id": "b18",
+          "rank": 3,
+          "recency_score": 0.9999998145761936,
+          "score": 0.5305168734682172,
+          "semantic_score": 0.41314613819122314
+        },
+        {
+          "distance": 0.6228500604629517,
+          "fixture_id": "b03",
+          "rank": 4,
+          "recency_score": 0.9999997674063611,
+          "score": 0.5017199051109109,
+          "semantic_score": 0.37714993953704834
+        },
+        {
+          "distance": 0.6531028151512146,
+          "fixture_id": "b01",
+          "rank": 5,
+          "recency_score": 0.9999997587799967,
+          "score": 0.47751769963502766,
+          "semantic_score": 0.3468971848487854
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b09"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5384910702705383,
+          "fixture_id": "b09",
+          "rank": 1,
+          "recency_score": 0.9999997829842522,
+          "score": 0.5692071003804198,
+          "semantic_score": 0.46150892972946167
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb09",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b09",
+        "b10",
+        "b03"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5384910702705383,
+          "fixture_id": "b09",
+          "rank": 1,
+          "recency_score": 0.9999997829842522,
+          "score": 0.5692071003804198,
+          "semantic_score": 0.46150892972946167
+        },
+        {
+          "distance": 0.5750262141227722,
+          "fixture_id": "b10",
+          "rank": 2,
+          "recency_score": 0.9999997861052857,
+          "score": 0.5399789859228393,
+          "semantic_score": 0.4249737858772278
+        },
+        {
+          "distance": 0.705234706401825,
+          "fixture_id": "b03",
+          "rank": 3,
+          "recency_score": 0.9999997641066924,
+          "score": 0.4358121876998785,
+          "semantic_score": 0.29476529359817505
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b10"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.36207565665245056,
+          "fixture_id": "b10",
+          "rank": 1,
+          "recency_score": 0.9999997828216621,
+          "score": 0.7103394312423719,
+          "semantic_score": 0.6379243433475494
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb10",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b10",
+        "b09"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.36207565665245056,
+          "fixture_id": "b10",
+          "rank": 1,
+          "recency_score": 0.9999997828216621,
+          "score": 0.7103394312423719,
+          "semantic_score": 0.6379243433475494
+        },
+        {
+          "distance": 0.4189337193965912,
+          "fixture_id": "b09",
+          "rank": 2,
+          "recency_score": 0.9999997797006286,
+          "score": 0.6648529804228528,
+          "semantic_score": 0.5810662806034088
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b11"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.28381800651550293,
+          "fixture_id": "b11",
+          "rank": 1,
+          "recency_score": 0.9999997826903599,
+          "score": 0.7729455513256696,
+          "semantic_score": 0.7161819934844971
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb11",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b11"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.28381800651550293,
+          "fixture_id": "b11",
+          "rank": 1,
+          "recency_score": 0.9999997826903599,
+          "score": 0.7729455513256696,
+          "semantic_score": 0.7161819934844971
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b12"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.24425125122070312,
+          "fixture_id": "b12",
+          "rank": 1,
+          "recency_score": 0.9999997824879246,
+          "score": 0.8045989555210225,
+          "semantic_score": 0.7557487487792969
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb12",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b12"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.24425125122070312,
+          "fixture_id": "b12",
+          "rank": 1,
+          "recency_score": 0.9999997824879246,
+          "score": 0.8045989555210225,
+          "semantic_score": 0.7557487487792969
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b13"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.25475963950157166,
+          "fixture_id": "b13",
+          "rank": 1,
+          "recency_score": 0.9999997823266717,
+          "score": 0.796192244864077,
+          "semantic_score": 0.7452403604984283
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb13",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b13"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.25475963950157166,
+          "fixture_id": "b13",
+          "rank": 1,
+          "recency_score": 0.9999997823266717,
+          "score": 0.796192244864077,
+          "semantic_score": 0.7452403604984283
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b14"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.2697427272796631,
+          "fixture_id": "b14",
+          "rank": 1,
+          "recency_score": 0.9999997821560591,
+          "score": 0.7842057746074813,
+          "semantic_score": 0.7302572727203369
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb14",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b14"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.2697427272796631,
+          "fixture_id": "b14",
+          "rank": 1,
+          "recency_score": 0.9999997821560591,
+          "score": 0.7842057746074813,
+          "semantic_score": 0.7302572727203369
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b15"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4576092064380646,
+          "fixture_id": "b15",
+          "rank": 1,
+          "recency_score": 0.9999997819897253,
+          "score": 0.6339125912474933,
+          "semantic_score": 0.5423907935619354
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb15",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b15"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4576092064380646,
+          "fixture_id": "b15",
+          "rank": 1,
+          "recency_score": 0.9999997819897253,
+          "score": 0.6339125912474933,
+          "semantic_score": 0.5423907935619354
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b16"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5302206873893738,
+          "fixture_id": "b16",
+          "rank": 1,
+          "recency_score": 0.9999997818153689,
+          "score": 0.5758234064515747,
+          "semantic_score": 0.4697793126106262
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb16",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b16"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5302206873893738,
+          "fixture_id": "b16",
+          "rank": 1,
+          "recency_score": 0.9999997818153689,
+          "score": 0.5758234064515747,
+          "semantic_score": 0.4697793126106262
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b17"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.35161155462265015,
+          "fixture_id": "b17",
+          "rank": 1,
+          "recency_score": 0.9999997816591968,
+          "score": 0.7187107126337192,
+          "semantic_score": 0.6483884453773499
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb17",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b17"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.35161155462265015,
+          "fixture_id": "b17",
+          "rank": 1,
+          "recency_score": 0.9999997816591968,
+          "score": 0.7187107126337192,
+          "semantic_score": 0.6483884453773499
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b18"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4818386435508728,
+          "fixture_id": "b18",
+          "rank": 1,
+          "recency_score": 0.999999781681125,
+          "score": 0.6145290414955267,
+          "semantic_score": 0.5181613564491272
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb18",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b18"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4818386435508728,
+          "fixture_id": "b18",
+          "rank": 1,
+          "recency_score": 0.999999781681125,
+          "score": 0.6145290414955267,
+          "semantic_score": 0.5181613564491272
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b19"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.3196585476398468,
+          "fixture_id": "b19",
+          "rank": 1,
+          "recency_score": 0.9999997816353966,
+          "score": 0.7442731182152018,
+          "semantic_score": 0.6803414523601532
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb19",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b19"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.3196585476398468,
+          "fixture_id": "b19",
+          "rank": 1,
+          "recency_score": 0.9999997816353966,
+          "score": 0.7442731182152018,
+          "semantic_score": 0.6803414523601532
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 20,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "b20"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4112042784690857,
+          "fixture_id": "b20",
+          "rank": 1,
+          "recency_score": 0.9999997817450379,
+          "score": 0.6710365335737389,
+          "semantic_score": 0.5887957215309143
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qb20",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "b20"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4112042784690857,
+          "fixture_id": "b20",
+          "rank": 1,
+          "recency_score": 0.9999997817450379,
+          "score": 0.6710365335737389,
+          "semantic_score": 0.5887957215309143
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.25
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s01"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.34886014461517334,
+          "fixture_id": "s01",
+          "rank": 1,
+          "recency_score": 0.9999997824240118,
+          "score": 0.7209118407926637,
+          "semantic_score": 0.6511398553848267
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs01",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s01",
+        "s15",
+        "s17",
+        "s07",
+        "s16"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.34886014461517334,
+          "fixture_id": "s01",
+          "rank": 1,
+          "recency_score": 0.9999997824240118,
+          "score": 0.7209118407926637,
+          "semantic_score": 0.6511398553848267
+        },
+        {
+          "distance": 0.4235083758831024,
+          "fixture_id": "s15",
+          "rank": 2,
+          "recency_score": 0.9999998298465548,
+          "score": 0.661193265262829,
+          "semantic_score": 0.5764916241168976
+        },
+        {
+          "distance": 0.4483172595500946,
+          "fixture_id": "s17",
+          "rank": 3,
+          "recency_score": 0.9999998377426016,
+          "score": 0.6413461599084447,
+          "semantic_score": 0.5516827404499054
+        },
+        {
+          "distance": 0.4745419919490814,
+          "fixture_id": "s07",
+          "rank": 4,
+          "recency_score": 0.9999998021123827,
+          "score": 0.6203663668632113,
+          "semantic_score": 0.5254580080509186
+        },
+        {
+          "distance": 0.48683345317840576,
+          "fixture_id": "s16",
+          "rank": 5,
+          "recency_score": 0.9999998332745842,
+          "score": 0.6105332041121923,
+          "semantic_score": 0.5131665468215942
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s02"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.19138668477535248,
+          "fixture_id": "s02",
+          "rank": 1,
+          "recency_score": 0.9999997828671232,
+          "score": 0.8468906087531427,
+          "semantic_score": 0.8086133152246475
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs02",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s02"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.19138668477535248,
+          "fixture_id": "s02",
+          "rank": 1,
+          "recency_score": 0.9999997828671232,
+          "score": 0.8468906087531427,
+          "semantic_score": 0.8086133152246475
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s03"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.445565789937973,
+          "fixture_id": "s03",
+          "rank": 1,
+          "recency_score": 0.9999997825804512,
+          "score": 0.6435473245657117,
+          "semantic_score": 0.554434210062027
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs03",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s03",
+        "a04"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.445565789937973,
+          "fixture_id": "s03",
+          "rank": 1,
+          "recency_score": 0.9999997825804512,
+          "score": 0.6435473245657117,
+          "semantic_score": 0.554434210062027
+        },
+        {
+          "distance": 0.5356562733650208,
+          "fixture_id": "a04",
+          "rank": 2,
+          "recency_score": 0.9999996452097905,
+          "score": 0.5714749103499415,
+          "semantic_score": 0.46434372663497925
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s04"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.48722875118255615,
+          "fixture_id": "s04",
+          "rank": 1,
+          "recency_score": 0.999999782314103,
+          "score": 0.6102169555167757,
+          "semantic_score": 0.5127712488174438
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs04",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s04",
+        "s18",
+        "s13"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.48722875118255615,
+          "fixture_id": "s04",
+          "rank": 1,
+          "recency_score": 0.999999782314103,
+          "score": 0.6102169555167757,
+          "semantic_score": 0.5127712488174438
+        },
+        {
+          "distance": 0.5944054126739502,
+          "fixture_id": "s18",
+          "rank": 2,
+          "recency_score": 0.999999831492779,
+          "score": 0.5244756361593956,
+          "semantic_score": 0.4055945873260498
+        },
+        {
+          "distance": 0.6539742946624756,
+          "fixture_id": "s13",
+          "rank": 3,
+          "recency_score": 0.9999998125935576,
+          "score": 0.47682052678873105,
+          "semantic_score": 0.3460257053375244
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [
+        {
+          "distance": 0.9464993476867676,
+          "fixture_id": "s12",
+          "rank": 28,
+          "recency_score": 0.9999998058107714,
+          "score": 0.24280048301274018,
+          "semantic_score": 0.05350065231323242
+        }
+      ],
+      "distractor_leaks": [],
+      "expected_hits": [],
+      "expected_item_details": [
+        {
+          "distance": 0.8103483319282532,
+          "fixture_id": "s05",
+          "rank": 9,
+          "recency_score": 0.9999997820022939,
+          "score": 0.3517212908578562,
+          "semantic_score": 0.18965166807174683
+        }
+      ],
+      "first_relevant_rank": null,
+      "query_id": "qs05",
+      "reciprocal_rank": 0.0,
+      "retrieved_fixture_ids": [
+        "s16",
+        "a05",
+        "s08",
+        "a10",
+        "a16"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.7476077675819397,
+          "fixture_id": "s16",
+          "rank": 1,
+          "recency_score": 0.9999998195156685,
+          "score": 0.4019137498375819,
+          "semantic_score": 0.2523922324180603
+        },
+        {
+          "distance": 0.7737111449241638,
+          "fixture_id": "a05",
+          "rank": 2,
+          "recency_score": 0.9999996488966797,
+          "score": 0.3810310138400048,
+          "semantic_score": 0.22628885507583618
+        },
+        {
+          "distance": 0.7859436273574829,
+          "fixture_id": "s08",
+          "rank": 3,
+          "recency_score": 0.9999997914964294,
+          "score": 0.3712450564132995,
+          "semantic_score": 0.2140563726425171
+        },
+        {
+          "distance": 0.78670334815979,
+          "fixture_id": "a10",
+          "rank": 4,
+          "recency_score": 0.9999996672415409,
+          "score": 0.3706372549204761,
+          "semantic_score": 0.21329665184020996
+        },
+        {
+          "distance": 0.7913251519203186,
+          "fixture_id": "a16",
+          "rank": 5,
+          "recency_score": 0.9999996863450668,
+          "score": 0.36693981573275847,
+          "semantic_score": 0.2086748480796814
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s06"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5961786508560181,
+          "fixture_id": "s06",
+          "rank": 2,
+          "recency_score": 0.9999997817145523,
+          "score": 0.5230570356580959,
+          "semantic_score": 0.40382134914398193
+        }
+      ],
+      "first_relevant_rank": 2,
+      "query_id": "qs06",
+      "reciprocal_rank": 0.5,
+      "retrieved_fixture_ids": [
+        "s18",
+        "s06",
+        "s15",
+        "s17",
+        "s07"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5802334547042847,
+          "fixture_id": "s18",
+          "rank": 1,
+          "recency_score": 0.999999824611583,
+          "score": 0.5358132011588889,
+          "semantic_score": 0.41976654529571533
+        },
+        {
+          "distance": 0.5961786508560181,
+          "fixture_id": "s06",
+          "rank": 2,
+          "recency_score": 0.9999997817145523,
+          "score": 0.5230570356580959,
+          "semantic_score": 0.40382134914398193
+        },
+        {
+          "distance": 0.6109926104545593,
+          "fixture_id": "s15",
+          "rank": 3,
+          "recency_score": 0.999999812642495,
+          "score": 0.5112058741648515,
+          "semantic_score": 0.3890073895454407
+        },
+        {
+          "distance": 0.6416051387786865,
+          "fixture_id": "s17",
+          "rank": 4,
+          "recency_score": 0.9999998205385418,
+          "score": 0.4867158530847591,
+          "semantic_score": 0.3583948612213135
+        },
+        {
+          "distance": 0.7043226957321167,
+          "fixture_id": "s07",
+          "rank": 5,
+          "recency_score": 0.9999997849083235,
+          "score": 0.43654180039597135,
+          "semantic_score": 0.2956773042678833
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s07"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.3205273747444153,
+          "fixture_id": "s07",
+          "rank": 1,
+          "recency_score": 0.9999997814840381,
+          "score": 0.7435780565012754,
+          "semantic_score": 0.6794726252555847
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs07",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s07"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.3205273747444153,
+          "fixture_id": "s07",
+          "rank": 1,
+          "recency_score": 0.9999997814840381,
+          "score": 0.7435780565012754,
+          "semantic_score": 0.6794726252555847
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s08"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4153517484664917,
+          "fixture_id": "s08",
+          "rank": 1,
+          "recency_score": 0.9999997812021797,
+          "score": 0.6677185574672425,
+          "semantic_score": 0.5846482515335083
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs08",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s08",
+        "b19"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4153517484664917,
+          "fixture_id": "s08",
+          "rank": 1,
+          "recency_score": 0.9999997812021797,
+          "score": 0.6677185574672425,
+          "semantic_score": 0.5846482515335083
+        },
+        {
+          "distance": 0.5955209136009216,
+          "fixture_id": "b19",
+          "rank": 2,
+          "recency_score": 0.9999997509505376,
+          "score": 0.5235832193093701,
+          "semantic_score": 0.40447908639907837
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s09"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4596794545650482,
+          "fixture_id": "s09",
+          "rank": 1,
+          "recency_score": 0.9999997808796738,
+          "score": 0.6322563925238962,
+          "semantic_score": 0.5403205454349518
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs09",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s09",
+        "s10"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4596794545650482,
+          "fixture_id": "s09",
+          "rank": 1,
+          "recency_score": 0.9999997808796738,
+          "score": 0.6322563925238962,
+          "semantic_score": 0.5403205454349518
+        },
+        {
+          "distance": 0.5820167660713196,
+          "fixture_id": "s10",
+          "rank": 2,
+          "recency_score": 0.9999997848748963,
+          "score": 0.5343865441179235,
+          "semantic_score": 0.4179832339286804
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s10"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.31052500009536743,
+          "fixture_id": "s10",
+          "rank": 1,
+          "recency_score": 0.9999997814492738,
+          "score": 0.7515799562135608,
+          "semantic_score": 0.6894749999046326
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs10",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s10",
+        "s09"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.31052500009536743,
+          "fixture_id": "s10",
+          "rank": 1,
+          "recency_score": 0.9999997814492738,
+          "score": 0.7515799562135608,
+          "semantic_score": 0.6894749999046326
+        },
+        {
+          "distance": 0.41612643003463745,
+          "fixture_id": "s09",
+          "rank": 2,
+          "recency_score": 0.9999997774540513,
+          "score": 0.6670988114631002,
+          "semantic_score": 0.5838735699653625
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s11"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.16642962396144867,
+          "fixture_id": "s11",
+          "rank": 1,
+          "recency_score": 0.9999997818779446,
+          "score": 0.86685625720643,
+          "semantic_score": 0.8335703760385513
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs11",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s11"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.16642962396144867,
+          "fixture_id": "s11",
+          "rank": 1,
+          "recency_score": 0.9999997818779446,
+          "score": 0.86685625720643,
+          "semantic_score": 0.8335703760385513
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s12"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.29545000195503235,
+          "fixture_id": "s12",
+          "rank": 1,
+          "recency_score": 0.9999997817929057,
+          "score": 0.7636399547945552,
+          "semantic_score": 0.7045499980449677
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs12",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s12"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.29545000195503235,
+          "fixture_id": "s12",
+          "rank": 1,
+          "recency_score": 0.9999997817929057,
+          "score": 0.7636399547945552,
+          "semantic_score": 0.7045499980449677
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s13"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5149226784706116,
+          "fixture_id": "s13",
+          "rank": 1,
+          "recency_score": 0.9999997817027859,
+          "score": 0.588061813564068,
+          "semantic_score": 0.4850773215293884
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs13",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s13",
+        "s17",
+        "s14",
+        "s12",
+        "s11"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5149226784706116,
+          "fixture_id": "s13",
+          "rank": 1,
+          "recency_score": 0.9999997817027859,
+          "score": 0.588061813564068,
+          "semantic_score": 0.4850773215293884
+        },
+        {
+          "distance": 0.6087044477462769,
+          "fixture_id": "s17",
+          "rank": 2,
+          "recency_score": 0.9999997965289656,
+          "score": 0.5130364011087716,
+          "semantic_score": 0.39129555225372314
+        },
+        {
+          "distance": 0.6313332319259644,
+          "fixture_id": "s14",
+          "rank": 3,
+          "recency_score": 0.9999997850342773,
+          "score": 0.49493337146608396,
+          "semantic_score": 0.36866676807403564
+        },
+        {
+          "distance": 0.6341298222541809,
+          "fixture_id": "s12",
+          "rank": 4,
+          "recency_score": 0.9999997783560517,
+          "score": 0.4926960978678656,
+          "semantic_score": 0.3658701777458191
+        },
+        {
+          "distance": 0.6536972522735596,
+          "fixture_id": "s11",
+          "rank": 5,
+          "recency_score": 0.9999997749996905,
+          "score": 0.4770421531810904,
+          "semantic_score": 0.34630274772644043
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s14"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.41470831632614136,
+          "fixture_id": "s14",
+          "rank": 1,
+          "recency_score": 0.9999997816014345,
+          "score": 0.6682333032593738,
+          "semantic_score": 0.5852916836738586
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs14",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s14",
+        "b09",
+        "b10"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.41470831632614136,
+          "fixture_id": "s14",
+          "rank": 1,
+          "recency_score": 0.9999997816014345,
+          "score": 0.6682333032593738,
+          "semantic_score": 0.5852916836738586
+        },
+        {
+          "distance": 0.5414756536483765,
+          "fixture_id": "b09",
+          "rank": 2,
+          "recency_score": 0.9999996988262583,
+          "score": 0.5668194168465505,
+          "semantic_score": 0.45852434635162354
+        },
+        {
+          "distance": 0.562489926815033,
+          "fixture_id": "b10",
+          "rank": 3,
+          "recency_score": 0.9999997019472916,
+          "score": 0.550007998937432,
+          "semantic_score": 0.43751007318496704
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s15"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.6011835932731628,
+          "fixture_id": "s15",
+          "rank": 1,
+          "recency_score": 0.99999978177071,
+          "score": 0.5190530817356117,
+          "semantic_score": 0.39881640672683716
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs15",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s15",
+        "s18",
+        "a09",
+        "s08",
+        "a10"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.6011835932731628,
+          "fixture_id": "s15",
+          "rank": 1,
+          "recency_score": 0.99999978177071,
+          "score": 0.5190530817356117,
+          "semantic_score": 0.39881640672683716
+        },
+        {
+          "distance": 0.6697450876235962,
+          "fixture_id": "s18",
+          "rank": 2,
+          "recency_score": 0.9999997937397975,
+          "score": 0.4642038886490825,
+          "semantic_score": 0.3302549123764038
+        },
+        {
+          "distance": 0.6788658499717712,
+          "fixture_id": "a09",
+          "rank": 3,
+          "recency_score": 0.9999996297396709,
+          "score": 0.4569072459705172,
+          "semantic_score": 0.32113415002822876
+        },
+        {
+          "distance": 0.6803225874900818,
+          "fixture_id": "s08",
+          "rank": 4,
+          "recency_score": 0.9999997571795011,
+          "score": 0.45574188144383476,
+          "semantic_score": 0.3196774125099182
+        },
+        {
+          "distance": 0.6894859671592712,
+          "fixture_id": "a10",
+          "rank": 5,
+          "recency_score": 0.9999996329246168,
+          "score": 0.4484111528575063,
+          "semantic_score": 0.31051403284072876
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s16"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.4291694164276123,
+          "fixture_id": "s16",
+          "rank": 1,
+          "recency_score": 0.9999997817709775,
+          "score": 0.6566644232121056,
+          "semantic_score": 0.5708305835723877
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs16",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s16",
+        "s02"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.4291694164276123,
+          "fixture_id": "s16",
+          "rank": 1,
+          "recency_score": 0.9999997817709775,
+          "score": 0.6566644232121056,
+          "semantic_score": 0.5708305835723877
+        },
+        {
+          "distance": 0.4706346094608307,
+          "fixture_id": "s02",
+          "rank": 2,
+          "recency_score": 0.9999997348065235,
+          "score": 0.6234922593926401,
+          "semantic_score": 0.5293653905391693
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s17"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.20252570509910583,
+          "fixture_id": "s17",
+          "rank": 1,
+          "recency_score": 0.99999978273903,
+          "score": 0.8379793924685213,
+          "semantic_score": 0.7974742949008942
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs17",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s17"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.20252570509910583,
+          "fixture_id": "s17",
+          "rank": 1,
+          "recency_score": 0.99999978273903,
+          "score": 0.8379793924685213,
+          "semantic_score": 0.7974742949008942
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s18"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.2597774565219879,
+          "fixture_id": "s18",
+          "rank": 1,
+          "recency_score": 0.9999997833203964,
+          "score": 0.7921779914464889,
+          "semantic_score": 0.7402225434780121
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs18",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s18"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.2597774565219879,
+          "fixture_id": "s18",
+          "rank": 1,
+          "recency_score": 0.9999997833203964,
+          "score": 0.7921779914464889,
+          "semantic_score": 0.7402225434780121
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s19"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.5084301829338074,
+          "fixture_id": "s19",
+          "rank": 2,
+          "recency_score": 0.9999997839453518,
+          "score": 0.5932558104420245,
+          "semantic_score": 0.4915698170661926
+        }
+      ],
+      "first_relevant_rank": 2,
+      "query_id": "qs19",
+      "reciprocal_rank": 0.5,
+      "retrieved_fixture_ids": [
+        "s20",
+        "s19",
+        "s05",
+        "s16",
+        "s14"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.5017362236976624,
+          "fixture_id": "s20",
+          "rank": 1,
+          "recency_score": 0.9999997879590262,
+          "score": 0.5986109786336753,
+          "semantic_score": 0.49826377630233765
+        },
+        {
+          "distance": 0.5084301829338074,
+          "fixture_id": "s19",
+          "rank": 2,
+          "recency_score": 0.9999997839453518,
+          "score": 0.5932558104420245,
+          "semantic_score": 0.4915698170661926
+        },
+        {
+          "distance": 0.5645908713340759,
+          "fixture_id": "s05",
+          "rank": 3,
+          "recency_score": 0.9999997337970212,
+          "score": 0.5483272496921434,
+          "semantic_score": 0.4354091286659241
+        },
+        {
+          "distance": 0.6183642745018005,
+          "fixture_id": "s16",
+          "rank": 4,
+          "recency_score": 0.9999997713103941,
+          "score": 0.5053085346606383,
+          "semantic_score": 0.38163572549819946
+        },
+        {
+          "distance": 0.6748164892196655,
+          "fixture_id": "s14",
+          "rank": 5,
+          "recency_score": 0.9999997642837231,
+          "score": 0.4601467614810122,
+          "semantic_score": 0.3251835107803345
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    },
+    {
+      "accessible_candidate_count": 40,
+      "distractor_item_details": [],
+      "distractor_leaks": [],
+      "expected_hits": [
+        "s20"
+      ],
+      "expected_item_details": [
+        {
+          "distance": 0.397119402885437,
+          "fixture_id": "s20",
+          "rank": 1,
+          "recency_score": 0.999999784506127,
+          "score": 0.6823044345928757,
+          "semantic_score": 0.602880597114563
+        }
+      ],
+      "first_relevant_rank": 1,
+      "query_id": "qs20",
+      "reciprocal_rank": 1.0,
+      "retrieved_fixture_ids": [
+        "s20",
+        "s19"
+      ],
+      "retrieved_items": [
+        {
+          "distance": 0.397119402885437,
+          "fixture_id": "s20",
+          "rank": 1,
+          "recency_score": 0.999999784506127,
+          "score": 0.6823044345928757,
+          "semantic_score": 0.602880597114563
+        },
+        {
+          "distance": 0.48351746797561646,
+          "fixture_id": "s19",
+          "rank": 2,
+          "recency_score": 0.9999997804924528,
+          "score": 0.6131859817179973,
+          "semantic_score": 0.5164825320243835
+        }
+      ],
+      "scope_violations": [],
+      "uniform_random_leak_probability": 0.125
+    }
+  ],
+  "retrieval_config": {
+    "limit": 5,
+    "product_default_for_identity": true,
+    "relevance_filter": {
+      "maximum_semantic_score_gap": 0.2,
+      "strategy": "relative_semantic_gap"
+    }
+  },
+  "runtime": {
+    "machine": "arm64",
+    "python": "3.13.3",
+    "system": "Darwin"
+  },
+  "schema_version": 1,
+  "scope_of_claim": "single synthetic retrieval corpus; heuristic product gate, not a universal benchmark",
+  "thresholds": {
+    "distractor_leak_rate_max": 0.1,
+    "memory_kind_count_min": 12,
+    "mrr_min": 0.85,
+    "query_count_min": 60,
+    "recall_at_k_min": 0.9,
+    "runtime_seconds_max": 60.0,
+    "scope_violation_count_max": 0
+  }
+}

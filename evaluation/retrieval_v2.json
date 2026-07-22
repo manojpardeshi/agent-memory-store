@@ -1,0 +1,1932 @@
+{
+  "schema_version": 1,
+  "dataset_id": "independent-retrieval-v2",
+  "description": "Blind Claude-authored synthetic museum, observatory, and robotics-club memories; contains no user-derived data and was frozen before embedding evaluation.",
+  "distractor_policy": "Each query preselects one accessible non-answer seven positions later in the same authored scope; shared queries use a same-domain shared distractor. Each also names one exact-scope-inaccessible control.",
+  "top_k": 5,
+  "thresholds": {
+    "query_count_min": 60,
+    "memory_kind_count_min": 12,
+    "recall_at_k_min": 0.9,
+    "mrr_min": 0.85,
+    "distractor_leak_rate_max": 0.1,
+    "scope_violation_count_max": 0,
+    "runtime_seconds_max": 60
+  },
+  "memories": [
+    {
+      "fixture_id": "a01",
+      "kind": "fact",
+      "content": "The museum's restored 1897 schooner, the Marigold, is permanently dry-docked in Exhibit Hall B for public viewing.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a02",
+      "kind": "fact",
+      "content": "The maritime museum's archive holds 342 original ship logbooks dating from 1850 to 1920, stored in climate-controlled vault C.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a03",
+      "kind": "preference",
+      "content": "Curator Elena prefers all new artifact acquisitions to be photographed with a grey backdrop before cataloging.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a04",
+      "kind": "preference",
+      "content": "The docent team prefers guided tours to start on the hour rather than the half-hour to reduce group overlap.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a05",
+      "kind": "summary",
+      "content": "Last quarter's conservation report noted that three brass compasses were restored, two rope samples were stabilized, and the ballast display was repainted; overall the lab completed 85% of its planned workload.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a06",
+      "kind": "summary",
+      "content": "The annual visitor survey showed attendance rose 12% year over year, with school groups accounting for nearly a third of total visits and the lighthouse exhibit rated the most popular attraction.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a07",
+      "kind": "event",
+      "content": "On June 14th the museum hosted a nighttime lantern tour that drew over 200 attendees and required extra security staffing.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a08",
+      "kind": "event",
+      "content": "During last week's storm, water intrusion in the east wing damaged two wooden ship models before staff moved them to storage.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a09",
+      "kind": "turn",
+      "content": "Can you check if the anchor exhibit needs its plaque replaced?",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "a10",
+      "kind": "turn",
+      "content": "I've scheduled the plaque replacement for the anchor exhibit next Tuesday with the fabrication team.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "a11",
+      "kind": "fact",
+      "content": "The museum's diving bell exhibit was acquired from a decommissioned naval vessel in 1962.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a12",
+      "kind": "fact",
+      "content": "The maritime library holds over 4,000 rare nautical charts.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a13",
+      "kind": "preference",
+      "content": "The curator prefers using brass polish rather than chemical cleaners for compass displays.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a14",
+      "kind": "preference",
+      "content": "The gift shop manager prefers restocking postcards weekly rather than monthly.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a15",
+      "kind": "summary",
+      "content": "The whale skeleton exhibit hall renovation exceeded its budget by 15% due to new LED lighting installation and structural reinforcements completed in May 2026.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a16",
+      "kind": "summary",
+      "content": "Last quarter's school education program partnered with three local districts, reaching over 900 students through hands-on maritime history workshops.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a17",
+      "kind": "event",
+      "content": "The museum hosted a naval uniform collection unveiling ceremony on June 5, 2026.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a18",
+      "kind": "event",
+      "content": "A maritime festival featuring rope-making demonstrations took place at the museum on July 4, 2026.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      }
+    },
+    {
+      "fixture_id": "a19",
+      "kind": "turn",
+      "content": "Do you know what the current pricing tiers are for family museum memberships?",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "a20",
+      "kind": "turn",
+      "content": "The cafe updates its menu seasonally, adding seafood chowder in fall and citrus salads in summer.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "b01",
+      "kind": "fact",
+      "content": "The observatory's main telescope is a 2.4-meter reflector housed in the north dome.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b02",
+      "kind": "fact",
+      "content": "The observatory sits at an elevation of 3,200 meters on Mount Verrant.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b03",
+      "kind": "preference",
+      "content": "The lead astronomer prefers scheduling observation sessions during the new moon phase for darker skies.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b04",
+      "kind": "preference",
+      "content": "Night staff prefer using red-filtered flashlights to preserve their night vision while walking between domes.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b05",
+      "kind": "summary",
+      "content": "Over the past winter season, the observatory logged 47 clear nights out of 90, with most cloud cover occurring in February due to storm systems from the western ridge.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b06",
+      "kind": "summary",
+      "content": "The annual maintenance review found the secondary mirror coating had degraded by 8%, the dome motor needed lubrication, and backup generators passed all tests.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b07",
+      "kind": "event",
+      "content": "On March 3rd, a sudden power outage caused the dome shutter to freeze halfway open for six hours during a snowstorm.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b08",
+      "kind": "event",
+      "content": "A rare aurora display was observed and photographed from the eastern platform on January 12th, drawing visiting researchers from three countries.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b09",
+      "kind": "turn",
+      "content": "Can you check if the spectrometer calibration is still valid before tonight's session?",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "b10",
+      "kind": "turn",
+      "content": "The spectrometer was calibrated four days ago and remains within tolerance for tonight's session.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "b11",
+      "kind": "fact",
+      "content": "The observatory's backup generator runs on diesel stored in a 2,000-liter tank behind the maintenance shed.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b12",
+      "kind": "fact",
+      "content": "Staff badge access codes reset automatically every 90 days for security compliance.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b13",
+      "kind": "preference",
+      "content": "Dr. Elena prefers her tea black with no sugar during night shifts.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b14",
+      "kind": "preference",
+      "content": "The night crew prefers classical music playlists over ambient noise in the control room.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b15",
+      "kind": "summary",
+      "content": "Last month's visitor program hosted 340 guests across twelve guided tours, with feedback highlighting the gift shop's expanded merchandise selection.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b16",
+      "kind": "summary",
+      "content": "The quarterly budget review concluded that internet bandwidth upgrades are needed to support remote data transfer demands from partner universities.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b17",
+      "kind": "event",
+      "content": "On June 3rd, a supply helicopter delivered fresh produce and mail to the station after a two-week gap due to fog.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b18",
+      "kind": "event",
+      "content": "The observatory hosted a guest lecture by a visiting astrophysicist on exoplanet detection methods last Thursday.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      }
+    },
+    {
+      "fixture_id": "b19",
+      "kind": "turn",
+      "content": "Can you check if the dormitory laundry machines are still out of service?",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "b20",
+      "kind": "turn",
+      "content": "I've logged your request to restock the kitchen's coffee supply for next week's delivery.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "s01",
+      "kind": "fact",
+      "content": "The Riverside Civic Robotics Club was founded in 2014 by a coalition of local high school teachers and city engineers to promote hands-on STEM education for teenagers.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s02",
+      "kind": "fact",
+      "content": "The club currently maintains a roster of 47 active members, including 12 mentors who volunteer weekly to guide student teams.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s03",
+      "kind": "preference",
+      "content": "The steering committee prefers to schedule all general meetings on the second Tuesday of each month at 6:30 PM to accommodate members' school and work schedules.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s04",
+      "kind": "preference",
+      "content": "For all autonomous navigation projects, the technical team prefers using Python with the ROS2 framework over proprietary vendor software.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s05",
+      "kind": "summary",
+      "content": "Last spring's soldering and circuitry workshop drew 30 attendees, covered basic PCB assembly, and resulted in five student-built sensor kits being donated to the local elementary school.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s06",
+      "kind": "summary",
+      "content": "The autumn bake sale and raffle fundraiser raised $3,200 for new competition-grade motors, exceeding the original goal by 60 percent.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s07",
+      "kind": "event",
+      "content": "The club's flagship robot, nicknamed Compass, is scheduled to compete in the Regional Civic Bot Challenge on September 14, 2026.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s08",
+      "kind": "event",
+      "content": "On June 3, 2026, volunteers spent a full Saturday reorganizing the workshop storage room and cataloging spare parts inventory.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s09",
+      "kind": "turn",
+      "content": "Do we have any spare 12V motors left after the last build season?",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "s10",
+      "kind": "turn",
+      "content": "According to the inventory log, there are eight 12V motors remaining in storage bin C3.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "s11",
+      "kind": "fact",
+      "content": "The club's mobile robot uses ultrasonic sensors mounted at 15 centimeters for obstacle detection.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s12",
+      "kind": "fact",
+      "content": "The club stores spare 3D-printed gripper fingers in a labeled drawer in the workshop closet.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s13",
+      "kind": "preference",
+      "content": "Members prefer using Fusion 360 over SolidWorks for chassis design because of easier cloud collaboration.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s14",
+      "kind": "preference",
+      "content": "The club prefers documenting sensor calibration steps in a shared spreadsheet rather than individual notebooks.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s15",
+      "kind": "summary",
+      "content": "Last month the club partnered with the local library to host a robotics demo booth for families, drawing about 40 visitors.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s16",
+      "kind": "summary",
+      "content": "The club's outreach coordinator reported that a mentorship pairing with a nearby high school robotics team led to a joint sensor-testing session.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s17",
+      "kind": "event",
+      "content": "On June 14, 2026, the club held an open build session at the community center to test a new robotic arm gripper design.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s18",
+      "kind": "event",
+      "content": "On July 5, 2026, a sponsor representative visited the workshop to review the club's autonomous navigation demo.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      }
+    },
+    {
+      "fixture_id": "s19",
+      "kind": "turn",
+      "content": "Can we get labeled bins for the spare sensor cables so they don't tangle?",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "s20",
+      "kind": "turn",
+      "content": "I've added a note to order color-coded labels for the sensor cable bins by next week.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "robotics-club"
+      },
+      "role": "assistant"
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "qa01",
+      "query": "Where is the historic sailing vessel currently displayed?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a01"
+      ],
+      "distractor_fixture_ids": [
+        "a08"
+      ],
+      "inaccessible_fixture_ids": [
+        "b01"
+      ]
+    },
+    {
+      "query_id": "qa02",
+      "query": "How many old captain's logs are kept in the collection?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a02"
+      ],
+      "distractor_fixture_ids": [
+        "a09"
+      ],
+      "inaccessible_fixture_ids": [
+        "b02"
+      ]
+    },
+    {
+      "query_id": "qa03",
+      "query": "What's the preferred setup for photographing new items before they're logged?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a03"
+      ],
+      "distractor_fixture_ids": [
+        "a10"
+      ],
+      "inaccessible_fixture_ids": [
+        "b03"
+      ]
+    },
+    {
+      "query_id": "qa04",
+      "query": "Is there a preferred timing convention for starting tours?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a04"
+      ],
+      "distractor_fixture_ids": [
+        "a11"
+      ],
+      "inaccessible_fixture_ids": [
+        "b04"
+      ]
+    },
+    {
+      "query_id": "qa05",
+      "query": "What has the restoration team accomplished recently according to their status update?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a05"
+      ],
+      "distractor_fixture_ids": [
+        "a12"
+      ],
+      "inaccessible_fixture_ids": [
+        "b05"
+      ]
+    },
+    {
+      "query_id": "qa06",
+      "query": "What did this year's guest feedback results reveal about attendance trends?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a06"
+      ],
+      "distractor_fixture_ids": [
+        "a13"
+      ],
+      "inaccessible_fixture_ids": [
+        "b06"
+      ]
+    },
+    {
+      "query_id": "qa07",
+      "query": "Was there a special after-hours tour held earlier this summer?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a07"
+      ],
+      "distractor_fixture_ids": [
+        "a14"
+      ],
+      "inaccessible_fixture_ids": [
+        "b07"
+      ]
+    },
+    {
+      "query_id": "qa08",
+      "query": "Did the recent bad weather cause any harm to the collection?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a08"
+      ],
+      "distractor_fixture_ids": [
+        "a15"
+      ],
+      "inaccessible_fixture_ids": [
+        "b08"
+      ]
+    },
+    {
+      "query_id": "qa09",
+      "query": "What did a staff member ask regarding a display's signage condition?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a09"
+      ],
+      "distractor_fixture_ids": [
+        "a16"
+      ],
+      "inaccessible_fixture_ids": [
+        "b09"
+      ]
+    },
+    {
+      "query_id": "qa10",
+      "query": "What update was given about fixing signage on a heavy metal exhibit?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a10"
+      ],
+      "distractor_fixture_ids": [
+        "a17"
+      ],
+      "inaccessible_fixture_ids": [
+        "b10"
+      ]
+    },
+    {
+      "query_id": "qa11",
+      "query": "Where did the museum get the piece used for underwater exploration displays?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a11"
+      ],
+      "distractor_fixture_ids": [
+        "a18"
+      ],
+      "inaccessible_fixture_ids": [
+        "b11"
+      ]
+    },
+    {
+      "query_id": "qa12",
+      "query": "How many antique navigation maps does the museum's reading room have?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a12"
+      ],
+      "distractor_fixture_ids": [
+        "a19"
+      ],
+      "inaccessible_fixture_ids": [
+        "b12"
+      ]
+    },
+    {
+      "query_id": "qa13",
+      "query": "What cleaning method does the curator favor for shining metal navigation instruments?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a13"
+      ],
+      "distractor_fixture_ids": [
+        "a20"
+      ],
+      "inaccessible_fixture_ids": [
+        "b13"
+      ]
+    },
+    {
+      "query_id": "qa14",
+      "query": "How often does the shop manager like to refresh souvenir card supplies?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a14"
+      ],
+      "distractor_fixture_ids": [
+        "a01"
+      ],
+      "inaccessible_fixture_ids": [
+        "b14"
+      ]
+    },
+    {
+      "query_id": "qa15",
+      "query": "What happened during the recent upgrade of the large sea creature display room?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a15"
+      ],
+      "distractor_fixture_ids": [
+        "a02"
+      ],
+      "inaccessible_fixture_ids": [
+        "b15"
+      ]
+    },
+    {
+      "query_id": "qa16",
+      "query": "How did the outreach collaboration with area schools perform recently?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a16"
+      ],
+      "distractor_fixture_ids": [
+        "a03"
+      ],
+      "inaccessible_fixture_ids": [
+        "b16"
+      ]
+    },
+    {
+      "query_id": "qa17",
+      "query": "When did the museum reveal its new display of historic military sailor attire?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a17"
+      ],
+      "distractor_fixture_ids": [
+        "a04"
+      ],
+      "inaccessible_fixture_ids": [
+        "b17"
+      ]
+    },
+    {
+      "query_id": "qa18",
+      "query": "What outdoor celebration with hands-on cordage crafting happened this summer?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a18"
+      ],
+      "distractor_fixture_ids": [
+        "a05"
+      ],
+      "inaccessible_fixture_ids": [
+        "b18"
+      ]
+    },
+    {
+      "query_id": "qa19",
+      "query": "What did the visitor ask regarding cost levels for household admission plans?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a19"
+      ],
+      "distractor_fixture_ids": [
+        "a06"
+      ],
+      "inaccessible_fixture_ids": [
+        "b19"
+      ]
+    },
+    {
+      "query_id": "qa20",
+      "query": "What did the assistant explain about how the eatery's offerings change through the year?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a20"
+      ],
+      "distractor_fixture_ids": [
+        "a07"
+      ],
+      "inaccessible_fixture_ids": [
+        "b20"
+      ]
+    },
+    {
+      "query_id": "qb01",
+      "query": "What is the size of the facility's primary telescope?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b01"
+      ],
+      "distractor_fixture_ids": [
+        "b08"
+      ],
+      "inaccessible_fixture_ids": [
+        "a01"
+      ]
+    },
+    {
+      "query_id": "qb02",
+      "query": "How high above sea level is the station situated?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b02"
+      ],
+      "distractor_fixture_ids": [
+        "b09"
+      ],
+      "inaccessible_fixture_ids": [
+        "a02"
+      ]
+    },
+    {
+      "query_id": "qb03",
+      "query": "When does the head researcher like to plan sky-viewing time?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b03"
+      ],
+      "distractor_fixture_ids": [
+        "b10"
+      ],
+      "inaccessible_fixture_ids": [
+        "a03"
+      ]
+    },
+    {
+      "query_id": "qb04",
+      "query": "What lighting choice do overnight workers favor when moving outside?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b04"
+      ],
+      "distractor_fixture_ids": [
+        "b11"
+      ],
+      "inaccessible_fixture_ids": [
+        "a04"
+      ]
+    },
+    {
+      "query_id": "qb05",
+      "query": "Summarize the observing weather conditions from last winter.",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b05"
+      ],
+      "distractor_fixture_ids": [
+        "b12"
+      ],
+      "inaccessible_fixture_ids": [
+        "a05"
+      ]
+    },
+    {
+      "query_id": "qb06",
+      "query": "What did the yearly equipment checkup reveal?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b06"
+      ],
+      "distractor_fixture_ids": [
+        "b13"
+      ],
+      "inaccessible_fixture_ids": [
+        "a06"
+      ]
+    },
+    {
+      "query_id": "qb07",
+      "query": "Was there an incident involving an unexpected electrical failure at the site?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b07"
+      ],
+      "distractor_fixture_ids": [
+        "b14"
+      ],
+      "inaccessible_fixture_ids": [
+        "a07"
+      ]
+    },
+    {
+      "query_id": "qb08",
+      "query": "Did any unusual atmospheric light event happen recently at the observatory?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b08"
+      ],
+      "distractor_fixture_ids": [
+        "b15"
+      ],
+      "inaccessible_fixture_ids": [
+        "a08"
+      ]
+    },
+    {
+      "query_id": "qb09",
+      "query": "What did a user ask regarding confirming instrument readiness before observing?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b09"
+      ],
+      "distractor_fixture_ids": [
+        "b16"
+      ],
+      "inaccessible_fixture_ids": [
+        "a09"
+      ]
+    },
+    {
+      "query_id": "qb10",
+      "query": "What was the reply about the current status of an instrument's calibration?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b10"
+      ],
+      "distractor_fixture_ids": [
+        "b17"
+      ],
+      "inaccessible_fixture_ids": [
+        "a10"
+      ]
+    },
+    {
+      "query_id": "qb11",
+      "query": "How much diesel storage capacity does the backup generator have?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b11"
+      ],
+      "distractor_fixture_ids": [
+        "b18"
+      ],
+      "inaccessible_fixture_ids": [
+        "a11"
+      ]
+    },
+    {
+      "query_id": "qb12",
+      "query": "How often do staff access codes get changed?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b12"
+      ],
+      "distractor_fixture_ids": [
+        "b19"
+      ],
+      "inaccessible_fixture_ids": [
+        "a12"
+      ]
+    },
+    {
+      "query_id": "qb13",
+      "query": "What beverage does Dr. Elena like while working nights?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b13"
+      ],
+      "distractor_fixture_ids": [
+        "b20"
+      ],
+      "inaccessible_fixture_ids": [
+        "a13"
+      ]
+    },
+    {
+      "query_id": "qb14",
+      "query": "What kind of music does the night crew like in the control room?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b14"
+      ],
+      "distractor_fixture_ids": [
+        "b01"
+      ],
+      "inaccessible_fixture_ids": [
+        "a14"
+      ]
+    },
+    {
+      "query_id": "qb15",
+      "query": "How did last month's public tour program go overall?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b15"
+      ],
+      "distractor_fixture_ids": [
+        "b02"
+      ],
+      "inaccessible_fixture_ids": [
+        "a15"
+      ]
+    },
+    {
+      "query_id": "qb16",
+      "query": "What did the recent budget meeting decide about network needs?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b16"
+      ],
+      "distractor_fixture_ids": [
+        "b03"
+      ],
+      "inaccessible_fixture_ids": [
+        "a16"
+      ]
+    },
+    {
+      "query_id": "qb17",
+      "query": "When did the helicopter last bring in food and mail?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b17"
+      ],
+      "distractor_fixture_ids": [
+        "b04"
+      ],
+      "inaccessible_fixture_ids": [
+        "a17"
+      ]
+    },
+    {
+      "query_id": "qb18",
+      "query": "Who gave the recent talk on finding planets outside our solar system?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b18"
+      ],
+      "distractor_fixture_ids": [
+        "b05"
+      ],
+      "inaccessible_fixture_ids": [
+        "a18"
+      ]
+    },
+    {
+      "query_id": "qb19",
+      "query": "Did someone ask about the status of broken laundry machines?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b19"
+      ],
+      "distractor_fixture_ids": [
+        "b06"
+      ],
+      "inaccessible_fixture_ids": [
+        "a19"
+      ]
+    },
+    {
+      "query_id": "qb20",
+      "query": "What was said about ordering more coffee for the kitchen?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b20"
+      ],
+      "distractor_fixture_ids": [
+        "b07"
+      ],
+      "inaccessible_fixture_ids": [
+        "a20"
+      ]
+    },
+    {
+      "query_id": "qs01",
+      "query": "When and by whom was our robotics club established?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s01"
+      ],
+      "distractor_fixture_ids": [
+        "s08"
+      ],
+      "inaccessible_fixture_ids": [
+        "b01"
+      ]
+    },
+    {
+      "query_id": "qs02",
+      "query": "How many members and mentors does the club have right now?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s02"
+      ],
+      "distractor_fixture_ids": [
+        "s09"
+      ],
+      "inaccessible_fixture_ids": [
+        "a02"
+      ]
+    },
+    {
+      "query_id": "qs03",
+      "query": "What is the club's preferred timing pattern for regular meetings?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s03"
+      ],
+      "distractor_fixture_ids": [
+        "s10"
+      ],
+      "inaccessible_fixture_ids": [
+        "b03"
+      ]
+    },
+    {
+      "query_id": "qs04",
+      "query": "Which programming stack does the technical team favor for navigation work?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s04"
+      ],
+      "distractor_fixture_ids": [
+        "s11"
+      ],
+      "inaccessible_fixture_ids": [
+        "a04"
+      ]
+    },
+    {
+      "query_id": "qs05",
+      "query": "Can you recap the outcome of the recent circuitry training session?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s05"
+      ],
+      "distractor_fixture_ids": [
+        "s12"
+      ],
+      "inaccessible_fixture_ids": [
+        "b05"
+      ]
+    },
+    {
+      "query_id": "qs06",
+      "query": "What were the results of the club's fall fundraising drive?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s06"
+      ],
+      "distractor_fixture_ids": [
+        "s13"
+      ],
+      "inaccessible_fixture_ids": [
+        "a06"
+      ]
+    },
+    {
+      "query_id": "qs07",
+      "query": "When is our team's robot entering the upcoming regional competition?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s07"
+      ],
+      "distractor_fixture_ids": [
+        "s14"
+      ],
+      "inaccessible_fixture_ids": [
+        "b07"
+      ]
+    },
+    {
+      "query_id": "qs08",
+      "query": "What happened during the recent workshop cleanup day?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s08"
+      ],
+      "distractor_fixture_ids": [
+        "s15"
+      ],
+      "inaccessible_fixture_ids": [
+        "a08"
+      ]
+    },
+    {
+      "query_id": "qs09",
+      "query": "Someone asked about leftover motor stock from the previous season.",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s09"
+      ],
+      "distractor_fixture_ids": [
+        "s16"
+      ],
+      "inaccessible_fixture_ids": [
+        "b09"
+      ]
+    },
+    {
+      "query_id": "qs10",
+      "query": "What was the reported count of remaining motors in storage?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s10"
+      ],
+      "distractor_fixture_ids": [
+        "s17"
+      ],
+      "inaccessible_fixture_ids": [
+        "a10"
+      ]
+    },
+    {
+      "query_id": "qs11",
+      "query": "How high are the ultrasonic sensors placed on the club's mobile robot?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s11"
+      ],
+      "distractor_fixture_ids": [
+        "s18"
+      ],
+      "inaccessible_fixture_ids": [
+        "b11"
+      ]
+    },
+    {
+      "query_id": "qs12",
+      "query": "Where are extra gripper finger parts kept?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s12"
+      ],
+      "distractor_fixture_ids": [
+        "s19"
+      ],
+      "inaccessible_fixture_ids": [
+        "a12"
+      ]
+    },
+    {
+      "query_id": "qs13",
+      "query": "Which CAD tool does the club favor for chassis modeling?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s13"
+      ],
+      "distractor_fixture_ids": [
+        "s20"
+      ],
+      "inaccessible_fixture_ids": [
+        "b13"
+      ]
+    },
+    {
+      "query_id": "qs14",
+      "query": "How does the team like to record calibration procedures?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s14"
+      ],
+      "distractor_fixture_ids": [
+        "s01"
+      ],
+      "inaccessible_fixture_ids": [
+        "a14"
+      ]
+    },
+    {
+      "query_id": "qs15",
+      "query": "What happened during the library outreach event recap?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s15"
+      ],
+      "distractor_fixture_ids": [
+        "s02"
+      ],
+      "inaccessible_fixture_ids": [
+        "b15"
+      ]
+    },
+    {
+      "query_id": "qs16",
+      "query": "Summarize the mentorship collaboration with the high school team.",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s16"
+      ],
+      "distractor_fixture_ids": [
+        "s03"
+      ],
+      "inaccessible_fixture_ids": [
+        "a16"
+      ]
+    },
+    {
+      "query_id": "qs17",
+      "query": "When did the club test the new gripper design at the community center?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s17"
+      ],
+      "distractor_fixture_ids": [
+        "s04"
+      ],
+      "inaccessible_fixture_ids": [
+        "b17"
+      ]
+    },
+    {
+      "query_id": "qs18",
+      "query": "When did the sponsor visit to see the navigation demo?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s18"
+      ],
+      "distractor_fixture_ids": [
+        "s05"
+      ],
+      "inaccessible_fixture_ids": [
+        "a18"
+      ]
+    },
+    {
+      "query_id": "qs19",
+      "query": "What did a member suggest about organizing sensor cables?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "museum-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s19"
+      ],
+      "distractor_fixture_ids": [
+        "s06"
+      ],
+      "inaccessible_fixture_ids": [
+        "b19"
+      ]
+    },
+    {
+      "query_id": "qs20",
+      "query": "What follow-up action was promised regarding cable bin labels?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v2",
+        "environment": "independent-evaluation",
+        "owner": "observatory-assistant"
+      },
+      "shared_pools": [
+        "robotics-club"
+      ],
+      "expected_fixture_ids": [
+        "s20"
+      ],
+      "distractor_fixture_ids": [
+        "s07"
+      ],
+      "inaccessible_fixture_ids": [
+        "a20"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,395 @@
+{
+  "acceptance": {
+    "consumer_checks": {
+      "consumer_1_claude-sonnet": {
+        "baseline_accuracy": true,
+        "memory_accuracy": true,
+        "memory_lift": true,
+        "model_invocations": true,
+        "private_isolation": true,
+        "shared_recall_hit_rate": true
+      },
+      "consumer_2_codex-gpt-5-6-sol": {
+        "baseline_accuracy": true,
+        "memory_accuracy": true,
+        "memory_lift": true,
+        "model_invocations": true,
+        "private_isolation": true,
+        "shared_recall_hit_rate": true
+      }
+    },
+    "final_checks": {
+      "capture_accuracy": true,
+      "private_control": true,
+      "producer_correction": true,
+      "producer_invocations": true,
+      "stale_value_leaks": true
+    },
+    "gating": false,
+    "passed": true
+  },
+  "actor_contract": "the harness performs memory writes, recall, and correction; each model consumes a supplied context bundle in a fresh process",
+  "artifacts": {
+    "database": "memory.sqlite3",
+    "report": "report.json"
+  },
+  "claim": "provider-neutral context re-supply through an explicit shared memory pool",
+  "completed_at": "2026-07-18T14:59:35.514108+00:00",
+  "consumer_results": [
+    {
+      "consumer_key": "consumer_1_claude-sonnet",
+      "context_transfer_id": "producer-to-consumer_1_claude-sonnet",
+      "invocations_ok": true,
+      "metrics": {
+        "baseline_accuracy": 0.0,
+        "memory_accuracy": 1.0,
+        "memory_lift": 1.0,
+        "private_isolation_violations": 0,
+        "shared_recall_hit_rate": 1.0
+      },
+      "model": "claude-sonnet",
+      "outputs": {
+        "baseline": {
+          "editor_preference": "UNKNOWN",
+          "locale_preference": "UNKNOWN",
+          "project_code": "UNKNOWN"
+        },
+        "memory_assisted": {
+          "editor_preference": "EDITOR-D8E041",
+          "locale_preference": "LOCALE-4D6AAE",
+          "project_code": "PROJECT-33716F"
+        }
+      },
+      "provider_usage": {
+        "baseline": null,
+        "delta_scope": null,
+        "input_token_delta": null,
+        "memory_assisted": null
+      },
+      "scope": {
+        "environment": "provider-matrix-e2e",
+        "kind": "private",
+        "owner": "consumer_1_claude-sonnet",
+        "subject": "matrix-20260718T145905Z-416bda53"
+      }
+    },
+    {
+      "consumer_key": "consumer_2_codex-gpt-5-6-sol",
+      "context_transfer_id": "producer-to-consumer_2_codex-gpt-5-6-sol",
+      "invocations_ok": true,
+      "metrics": {
+        "baseline_accuracy": 0.0,
+        "memory_accuracy": 1.0,
+        "memory_lift": 1.0,
+        "private_isolation_violations": 0,
+        "shared_recall_hit_rate": 1.0
+      },
+      "model": "codex-gpt-5.6-sol",
+      "outputs": {
+        "baseline": {
+          "editor_preference": "UNKNOWN",
+          "locale_preference": "UNKNOWN",
+          "project_code": "UNKNOWN"
+        },
+        "memory_assisted": {
+          "editor_preference": "EDITOR-D8E041",
+          "locale_preference": "LOCALE-4D6AAE",
+          "project_code": "PROJECT-33716F"
+        }
+      },
+      "provider_usage": {
+        "baseline": {
+          "cached_input_tokens": 9984,
+          "input_tokens": 13005,
+          "output_tokens": 22,
+          "reasoning_output_tokens": 0
+        },
+        "delta_scope": "whole-turn input-token difference; includes prompt framing changes",
+        "input_token_delta": 206,
+        "memory_assisted": {
+          "cached_input_tokens": 9984,
+          "input_tokens": 13211,
+          "output_tokens": 37,
+          "reasoning_output_tokens": 0
+        }
+      },
+      "scope": {
+        "environment": "provider-matrix-e2e",
+        "kind": "private",
+        "owner": "consumer_2_codex-gpt-5-6-sol",
+        "subject": "matrix-20260718T145905Z-416bda53"
+      }
+    }
+  ],
+  "context_transfers": [
+    {
+      "bundle_budget_utilization": 0.1215,
+      "bundle_character_budget": 4000,
+      "estimated_memory_tokens": 122,
+      "from_model": "claude-haiku",
+      "memory_character_count": 486,
+      "memory_ids": [
+        "bf16c8d5-08fb-4f17-a982-86a4f28a06e5",
+        "67d818cd-e98b-49af-a7ab-c121ea08beaa",
+        "75c746db-9f5e-4edf-aece-b8c517b00de6"
+      ],
+      "memory_item_count": 3,
+      "memory_share_of_prompt": 0.7178729689807977,
+      "memory_utf8_byte_count": 486,
+      "origin": "shared memories written during producer session",
+      "phase": "consumer_1_claude-sonnet_memory_assisted",
+      "prompt_character_count": 677,
+      "to_model": "claude-sonnet",
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "transfer_id": "producer-to-consumer_1_claude-sonnet",
+      "truncated": false
+    },
+    {
+      "bundle_budget_utilization": 0.1215,
+      "bundle_character_budget": 4000,
+      "estimated_memory_tokens": 122,
+      "from_model": "claude-haiku",
+      "memory_character_count": 486,
+      "memory_ids": [
+        "bf16c8d5-08fb-4f17-a982-86a4f28a06e5",
+        "67d818cd-e98b-49af-a7ab-c121ea08beaa",
+        "75c746db-9f5e-4edf-aece-b8c517b00de6"
+      ],
+      "memory_item_count": 3,
+      "memory_share_of_prompt": 0.7178729689807977,
+      "memory_utf8_byte_count": 486,
+      "origin": "shared memories written during producer session",
+      "phase": "consumer_2_codex-gpt-5-6-sol_memory_assisted",
+      "prompt_character_count": 677,
+      "to_model": "codex-gpt-5.6-sol",
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "transfer_id": "producer-to-consumer_2_codex-gpt-5-6-sol",
+      "truncated": false
+    },
+    {
+      "bundle_budget_utilization": 0.4065,
+      "bundle_character_budget": 2000,
+      "estimated_memory_tokens": 204,
+      "from_model": "codex-gpt-5.6-sol",
+      "memory_character_count": 813,
+      "memory_ids": [
+        "a678d5fe-53ad-47c9-9b75-d0b1af72cd72",
+        "6f5615ba-622b-4ea3-8e7b-b7b415655a28",
+        "bf16c8d5-08fb-4f17-a982-86a4f28a06e5",
+        "75c746db-9f5e-4edf-aece-b8c517b00de6",
+        "7792bb47-930b-4ccd-8121-d2564948b184"
+      ],
+      "memory_item_count": 5,
+      "memory_share_of_prompt": 0.8057482656095144,
+      "memory_utf8_byte_count": 813,
+      "origin": "harness correction after consumer matrix",
+      "phase": "producer_return_correction",
+      "prompt_character_count": 1009,
+      "to_model": "claude-haiku",
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "transfer_id": "consumer-matrix-to-producer-correction",
+      "truncated": false
+    }
+  ],
+  "local_model": {
+    "included": false,
+    "model": null,
+    "provider": "ollama",
+    "status": "not-measured"
+  },
+  "memory_ids": {
+    "editor_corrected": "a678d5fe-53ad-47c9-9b75-d0b1af72cd72",
+    "editor_original": "67d818cd-e98b-49af-a7ab-c121ea08beaa",
+    "locale": "bf16c8d5-08fb-4f17-a982-86a4f28a06e5",
+    "project": "75c746db-9f5e-4edf-aece-b8c517b00de6"
+  },
+  "metrics": {
+    "baseline_accuracy": 0.0,
+    "consumer_count": 2,
+    "correction_accuracy": 1.0,
+    "memory_accuracy": 1.0,
+    "memory_lift": 1.0,
+    "private_control_hit_rate": 1.0,
+    "private_isolation_violations": 0,
+    "stale_value_leaks": 0
+  },
+  "mode": "live-provider-matrix",
+  "models": {
+    "consumers": [
+      "claude-sonnet",
+      "codex-gpt-5.6-sol"
+    ],
+    "producer": "claude-haiku",
+    "switch_sequence": [
+      "claude-haiku",
+      "claude-sonnet",
+      "codex-gpt-5.6-sol",
+      "claude-haiku"
+    ]
+  },
+  "responses": [
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 4261.351665947586,
+      "model": "claude-haiku",
+      "phase": "capture",
+      "text": "```json\n{\n  \"project_code\": \"PROJECT-33716F\",\n  \"editor_preference\": \"EDITOR-D8E041\",\n  \"locale_preference\": \"LOCALE-4D6AAE\"\n}\n```",
+      "usage": null
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 2596.937708090991,
+      "model": "claude-sonnet",
+      "phase": "consumer_1_claude-sonnet_baseline",
+      "text": "```json\n{\n  \"project_code\": \"UNKNOWN\",\n  \"editor_preference\": \"UNKNOWN\",\n  \"locale_preference\": \"UNKNOWN\"\n}\n```",
+      "usage": null
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 3177.229084074497,
+      "model": "claude-sonnet",
+      "phase": "consumer_1_claude-sonnet_memory_assisted",
+      "text": "```json\n{\n  \"project_code\": \"PROJECT-33716F\",\n  \"editor_preference\": \"EDITOR-D8E041\",\n  \"locale_preference\": \"LOCALE-4D6AAE\"\n}\n```",
+      "usage": null
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 4196.749791968614,
+      "model": "codex-gpt-5.6-sol",
+      "phase": "consumer_2_codex-gpt-5-6-sol_baseline",
+      "text": "{\"project_code\":\"UNKNOWN\",\"editor_preference\":\"UNKNOWN\",\"locale_preference\":\"UNKNOWN\"}",
+      "usage": {
+        "cached_input_tokens": 9984,
+        "input_tokens": 13005,
+        "output_tokens": 22,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 11975.373750086874,
+      "model": "codex-gpt-5.6-sol",
+      "phase": "consumer_2_codex-gpt-5-6-sol_memory_assisted",
+      "text": "{\"project_code\":\"PROJECT-33716F\",\"editor_preference\":\"EDITOR-D8E041\",\"locale_preference\":\"LOCALE-4D6AAE\"}",
+      "usage": {
+        "cached_input_tokens": 9984,
+        "input_tokens": 13211,
+        "output_tokens": 37,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "error": null,
+      "exit_code": 0,
+      "latency_ms": 3939.4577094353735,
+      "model": "claude-haiku",
+      "phase": "producer_return_correction",
+      "text": "```json\n{\n  \"editor_preference\": \"EDITOR-967584\"\n}\n```",
+      "usage": null
+    }
+  ],
+  "run_id": "20260718T145905Z-416bda53",
+  "runtime_versions": {
+    "claude_cli": "2.1.214 (Claude Code)",
+    "codex_cli": "codex-cli 0.144.2"
+  },
+  "schema_version": 3,
+  "scope_of_claim": "cross-provider Claude and hosted GPT",
+  "security_controls": {
+    "claude": {
+      "browser": false,
+      "safe_mode": true,
+      "session_persistence": false,
+      "tools": false
+    },
+    "codex": {
+      "ephemeral": true,
+      "ignore_rules": true,
+      "ignore_user_config": true,
+      "model_fallback": false,
+      "sandbox": "read-only",
+      "tool_non_use": "instructed but not independently verified",
+      "workspace": "empty temporary directory"
+    },
+    "environment_allowlist_keys": [
+      "HOME",
+      "LANG",
+      "LC_ALL",
+      "LOGNAME",
+      "PATH",
+      "SHELL",
+      "TERM",
+      "TMPDIR",
+      "USER"
+    ],
+    "environment_values_recorded": false,
+    "fresh_temporary_working_directory_per_invocation": true
+  },
+  "shared_scope": {
+    "environment": "provider-matrix-e2e",
+    "kind": "shared",
+    "owner": "provider-neutral-handoff",
+    "subject": "matrix-20260718T145905Z-416bda53"
+  },
+  "started_at": "2026-07-18T14:59:05.341480+00:00",
+  "store_status": {
+    "by_embedding_status": {
+      "ready": 6
+    },
+    "by_kind": {
+      "fact": 2,
+      "preference": 3,
+      "turn": 1
+    },
+    "database": "memory.sqlite3",
+    "default_turn_ttl_days": 30.0,
+    "embedding": {
+      "behavior_fingerprint": "eaa69231e7b9c87b2cbf62c89248ef1cdbba83472cbee91b45f8d70b6c0f1516",
+      "dimension": 64,
+      "distance_metric": "cosine",
+      "model_name": "token-hash-v1",
+      "model_revision": "1",
+      "normalized": true,
+      "provider": "deterministic-token-hash",
+      "runtime_version": "1"
+    },
+    "integrity_check": "ok",
+    "memories": 6,
+    "missing_vectors": 0,
+    "orphan_vectors": 0,
+    "schema_version": 1,
+    "store_id": "88a1eee2-e3d6-46a8-9122-008e828af64b"
+  },
+  "synthetic_profile": {
+    "corrected_editor_preference": "EDITOR-967584",
+    "editor_preference": "EDITOR-D8E041",
+    "locale_preference": "LOCALE-4D6AAE",
+    "private_secret": "PRIVATE-8B86C2",
+    "project_code": "PROJECT-33716F"
+  },
+  "telemetry": {
+    "model_latency_ms": {
+      "capture": 4261.351665947586,
+      "consumer_1_claude-sonnet_baseline": 2596.937708090991,
+      "consumer_1_claude-sonnet_memory_assisted": 3177.229084074497,
+      "consumer_2_codex-gpt-5-6-sol_baseline": 4196.749791968614,
+      "consumer_2_codex-gpt-5-6-sol_memory_assisted": 11975.373750086874,
+      "producer_return_correction": 3939.4577094353735
+    },
+    "recall_latency_ms": {
+      "consumer_1_claude-sonnet_allowed_scopes_ms": 0.5877078510820866,
+      "consumer_1_claude-sonnet_private_ms": 0.20070793107151985,
+      "consumer_1_claude-sonnet_shared_ms": 0.7325420156121254,
+      "consumer_2_codex-gpt-5-6-sol_allowed_scopes_ms": 0.45341718941926956,
+      "consumer_2_codex-gpt-5-6-sol_private_ms": 0.0878344289958477,
+      "consumer_2_codex-gpt-5-6-sol_shared_ms": 0.6935000419616699,
+      "producer_corrected_shared_ms": 0.4193750210106373,
+      "producer_private_control_ms": 0.6834589876234531
+    }
+  }
+}

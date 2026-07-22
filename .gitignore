@@ -1,0 +1,44 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Personal memory artifacts must never enter source control.
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.db
+*.db-wal
+*.db-shm
+*.backup
+*.snapshot
+exports/
+backups/
+model-cache/
+demo-artifacts/
+
+# Dashboard build/install products are also excluded at the repository root so
+# Python source-distribution tooling does not traverse nested generated trees.
+demo/dashboard/node_modules/
+demo/dashboard/.next/
+demo/dashboard/.vinext/
+demo/dashboard/.wrangler/
+demo/dashboard/dist/
+demo/dashboard/out/
+demo/dashboard/outputs/
+demo/dashboard/work/
+
+# Runtime logs may contain machine-local details.
+logs/*.log
+!logs/.gitkeep

@@ -1,0 +1,1607 @@
+{
+  "case_results": [
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-cedar-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "cedar-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-cedar-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "cedar-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-cedar-event",
+      "content_matched_claim_ids": [
+        "cedar-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "cedar-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "On 14 March 2031, Observatory Cedar upgraded its sensor array.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "de188e7c0b283eaf2f34d46197215ea14c6a9e2126b5a7ec88fb2f609328fdf3",
+          "source_fixture_ids": [
+            "cedar-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-cedar-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "cedar-summary"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-harbor-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "harbor-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-harbor-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": 1.0,
+          "content": "I prefer metric units because they are easier to scan.",
+          "forbidden_matches": [],
+          "kind": "preference",
+          "proposal_id": "761d622305bacd189457d154637d1118a837bf2a76e09cf71d66b0c9cacd674b",
+          "source_fixture_ids": [
+            "harbor-preference-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "harbor-preference"
+      ],
+      "unmatched_proposal_ids": [
+        "761d622305bacd189457d154637d1118a837bf2a76e09cf71d66b0c9cacd674b"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-harbor-event",
+      "content_matched_claim_ids": [
+        "harbor-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "harbor-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": 1.0,
+          "content": "On 22 June 2031, Project Harbor completed its navigation trial.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "4bbe74e3e9215052ade8fb82e343744cba0b69378e2c4db234a63a6ac0662a30",
+          "source_fixture_ids": [
+            "harbor-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-harbor-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "harbor-summary"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-linden-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "linden-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-linden-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "linden-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-linden-event",
+      "content_matched_claim_ids": [
+        "linden-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "linden-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "On 9 September 2031, Archive Linden finished its index rebuild.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "9bd5e03b4b91ce8dbdd3f487be9804740adddc1ef647c56656a9180807f74b0c",
+          "source_fixture_ids": [
+            "linden-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-linden-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The automated job for Archive Linden runs every night at 04:30 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "3363ebe8e0c686aff52557676308b7e0a07f81649e01a447f9d1104397d4f545",
+          "source_fixture_ids": [
+            "linden-summary-user"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "linden-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "3363ebe8e0c686aff52557676308b7e0a07f81649e01a447f9d1104397d4f545"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-mesa-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "mesa-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-mesa-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "mesa-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-mesa-event",
+      "content_matched_claim_ids": [
+        "mesa-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "mesa-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "On 18 January 2032, Workshop Mesa calibrated its milling rig.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "8e14b9fcd5bc5d5102e5ed28f527a7446dddec043fb4955955868c8cfaec5b1c",
+          "source_fixture_ids": [
+            "mesa-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-mesa-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "mesa-summary"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-northstar-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "northstar-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-northstar-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "northstar-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-northstar-event",
+      "content_matched_claim_ids": [
+        "northstar-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "northstar-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "On 27 February 2032, Lab Northstar validated its thermal chamber.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "88ff78f8146f2a3bcf2cd2200a01e3ceef517c0b86a551f192f012b474fdaaf2",
+          "source_fixture_ids": [
+            "northstar-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-northstar-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": 1.0,
+          "content": "Lab Northstar's automated job runs every night at 06:50 UTC.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "1e1c2c72e69cdd4a2c6a7e0b59da84c1c4d3e06511910d286656184853157345",
+          "source_fixture_ids": [
+            "northstar-summary-user"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": 1.0,
+          "content": "Generated diagnostic logs are retained for 49 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "fabe4258158a744c2a3aa9ae692adfd62f1cd6f3b586d86452b335cbcb2878f8",
+          "source_fixture_ids": [
+            "northstar-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "northstar-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "1e1c2c72e69cdd4a2c6a7e0b59da84c1c4d3e06511910d286656184853157345",
+        "fabe4258158a744c2a3aa9ae692adfd62f1cd6f3b586d86452b335cbcb2878f8"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-orchid-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "orchid-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-orchid-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "orchid-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-orchid-event",
+      "content_matched_claim_ids": [
+        "orchid-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "orchid-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "On 6 May 2032, Program Orchid released its test catalog.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "4acb6b75236caad5c24590453202428cb508709b901bd2940e685da2f9886f42",
+          "source_fixture_ids": [
+            "orchid-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-orchid-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": 1.0,
+          "content": "Program Orchid runs every night at 07:15 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "729aef1466fba8a133d169df1ee53de46098005804e415b391c2ddef92d0b584",
+          "source_fixture_ids": [
+            "orchid-summary-user"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": 1.0,
+          "content": "Diagnostic logs are retained for 56 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "c82a26421b26b070aa46dfa9f7849b1012a7377318d436fd89ecc64f6c11169f",
+          "source_fixture_ids": [
+            "orchid-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "orchid-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "729aef1466fba8a133d169df1ee53de46098005804e415b391c2ddef92d0b584",
+        "c82a26421b26b070aa46dfa9f7849b1012a7377318d436fd89ecc64f6c11169f"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-quartz-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "quartz-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-quartz-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "quartz-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-quartz-event",
+      "content_matched_claim_ids": [
+        "quartz-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "quartz-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "On 11 July 2032, Station Quartz replaced its weather mast.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "63c6a285ca7879853a86297bffff4ca9785f07b57639e127075b1f875e1fe4bd",
+          "source_fixture_ids": [
+            "quartz-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-quartz-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "quartz-summary"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-raven-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "raven-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-raven-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": 1.0,
+          "content": "I prefer large preview images because they are easier to scan.",
+          "forbidden_matches": [],
+          "kind": "preference",
+          "proposal_id": "02ddaf585c1e65f0d3d10e75e727fb96a962942cc5bf3523cb2774fcf300f284",
+          "source_fixture_ids": [
+            "raven-preference-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "raven-preference"
+      ],
+      "unmatched_proposal_ids": [
+        "02ddaf585c1e65f0d3d10e75e727fb96a962942cc5bf3523cb2774fcf300f284"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-raven-event",
+      "content_matched_claim_ids": [
+        "raven-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "raven-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "On 23 August 2032, Studio Raven opened its acoustic room.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "53fd7ca79b7b9bfbf8a6d29f093f27eab704c9d3dc4beaa7907aa4ce9d626fe8",
+          "source_fixture_ids": [
+            "raven-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-raven-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The automated job for Studio Raven runs every night at 09:35 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "54897093ce9285346d5e1bfa8d7120eb7ddd269feb8082c21d518f4d88b4932b",
+          "source_fixture_ids": [
+            "raven-summary-user"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "raven-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "54897093ce9285346d5e1bfa8d7120eb7ddd269feb8082c21d518f4d88b4932b"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-solace-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "solace-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-solace-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "solace-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-solace-event",
+      "content_matched_claim_ids": [
+        "solace-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "solace-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "On 15 October 2032, Clinic Solace tested its routing simulator.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "fdf0361da156543124edc5a845537ecf7eb637d078cc9b30babf8c874363658c",
+          "source_fixture_ids": [
+            "solace-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-solace-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": 1.0,
+          "content": "The automated job for Clinic Solace runs every night at 10:45 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "e884cc7fa2c26ffbd33bc18a5d4fa786a5afb1e53bc13a12728d8cd6254afc25",
+          "source_fixture_ids": [
+            "solace-summary-user"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "solace-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "e884cc7fa2c26ffbd33bc18a5d4fa786a5afb1e53bc13a12728d8cd6254afc25"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-tundra-fact",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "tundra-fact"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-tundra-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "tundra-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-tundra-event",
+      "content_matched_claim_ids": [
+        "tundra-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "tundra-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "On 2 December 2032, Depot Tundra commissioned its sorting arm.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "787407de530b24969d641b56016a3681234e10c0afc8130782f022cb4997e3df",
+          "source_fixture_ids": [
+            "tundra-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-tundra-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": 1.0,
+          "content": "The automated job for Depot Tundra runs every night at 11:55 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "a6ff021fc909733a5e41450b6b850f08c24d11d541099bf05595a2015e707e70",
+          "source_fixture_ids": [
+            "tundra-summary-user"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "tundra-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "a6ff021fc909733a5e41450b6b850f08c24d11d541099bf05595a2015e707e70"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-greeting",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-transient",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-question",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-hypothetical",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-uncertain",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-task",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-injection",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-retracted",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-quoted-command",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-assistant-refusal",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    }
+  ],
+  "checks": {
+    "ambiguous_content_match_count": true,
+    "case_count": true,
+    "duplicate_proposal_count": true,
+    "exact_precision": false,
+    "exact_recall": false,
+    "expected_claim_count": true,
+    "forbidden_proposal_count": true,
+    "invalid_case_rate": true,
+    "kind_accuracy": true,
+    "no_write_invariant": true,
+    "provenance_accuracy": true,
+    "source_preservation_invariant": true,
+    "summary_fact_unit_coverage": false
+  },
+  "completed_at": "2026-07-20T06:05:20.960798+00:00",
+  "dataset": {
+    "dataset_id": "extraction-v1",
+    "description": "Synthetic, judge-free extraction corpus with strict offline and diagnostic live tracks; no personal or production data.",
+    "file_name": "extraction_v1.json",
+    "sha256": "4e9cd4bb85b3dc29eab259571ea83a3be55fc7207fb5ef44e9b84018c1213167",
+    "track": "live"
+  },
+  "extractor": {
+    "model": "llama3.1:8b",
+    "prompt_version": "extraction-v2",
+    "provider": "ollama",
+    "revision": "sha256:46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e"
+  },
+  "metrics": {
+    "ambiguous_content_match_count": 0,
+    "by_kind": {
+      "event": {
+        "exact_matches": 10,
+        "exact_recall": 1.0,
+        "expected": 10
+      },
+      "fact": {
+        "exact_matches": 0,
+        "exact_recall": 0.0,
+        "expected": 10
+      },
+      "preference": {
+        "exact_matches": 0,
+        "exact_recall": 0.0,
+        "expected": 10
+      },
+      "summary": {
+        "exact_matches": 0,
+        "exact_recall": 0.0,
+        "expected": 10
+      }
+    },
+    "case_count": 50,
+    "content_match_count": 10,
+    "content_recall": 0.25,
+    "duplicate_proposal_count": 0,
+    "exact_f1": 0.3333333333333333,
+    "exact_match_count": 10,
+    "exact_precision": 0.5,
+    "exact_precision_wilson_95": {
+      "high": 0.7007019918017877,
+      "low": 0.2992980081982123
+    },
+    "exact_recall": 0.25,
+    "exact_recall_wilson_95": {
+      "high": 0.40193961420768026,
+      "low": 0.14187118639096302
+    },
+    "expected_claim_count": 40,
+    "forbidden_proposal_count": 0,
+    "invalid_case_count": 0,
+    "invalid_case_rate": 0.0,
+    "kind_accuracy": 1.0,
+    "no_write_violation_count": 0,
+    "proposal_count": 20,
+    "provenance_accuracy": 1.0,
+    "runtime_seconds": 70.77450408274308,
+    "source_mutation_violation_count": 0,
+    "summary_critical_units_missing": 10,
+    "summary_fact_unit_coverage": 0.3
+  },
+  "passed": false,
+  "schema_version": 1,
+  "scope_of_claim": "single synthetic extraction track; conservative judge-free engineering evidence",
+  "thresholds": {
+    "case_count_min": 50,
+    "duplicate_proposal_count_max": 0,
+    "exact_precision_min": 0.75,
+    "exact_recall_min": 0.65,
+    "expected_claim_count_min": 40,
+    "forbidden_proposal_count_max": 0,
+    "invalid_case_rate_max": 0.05,
+    "kind_accuracy_min": 0.8,
+    "provenance_accuracy_min": 0.9,
+    "summary_fact_unit_coverage_min": 0.85
+  }
+}

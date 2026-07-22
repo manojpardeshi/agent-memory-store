@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "release": "0.1.0",
+  "status": "release-candidate",
+  "generated_on": "2026-07-22",
+  "artifacts": [
+    {
+      "path": "dist/llm_memory_store-0.1.0-py3-none-any.whl",
+      "media_type": "application/zip",
+      "size_bytes": 74771,
+      "sha256": "8cfacde2bf043241517c196a1d97a842e49094e3fbf3adda67a3703246b8cb85"
+    },
+    {
+      "path": "dist/llm_memory_store-0.1.0.tar.gz",
+      "media_type": "application/gzip",
+      "size_bytes": 70412,
+      "sha256": "a9ddeb89c8c4c628127225edf4ec2c7471efa20b2f87ced04f9ceb89a8185887"
+    },
+    {
+      "path": "docs/release/0.1.0-sbom.cdx.json",
+      "media_type": "application/vnd.cyclonedx+json",
+      "size_bytes": 67250,
+      "sha256": "a33f6734e964f3c3f133efebf0a07e8fad53a6d07ee5f7f251fcb8ea6f32adf1"
+    }
+  ],
+  "sbom": {
+    "format": "CycloneDX",
+    "spec_version": "1.6",
+    "generator": "cyclonedx-bom 7.3.0",
+    "reference_environment": "CPython 3.13.3 macOS arm64",
+    "component_count": 50,
+    "root_direct_dependency_count": 3,
+    "dependency_edge_count": 108
+  },
+  "verification": {
+    "twine": "6.2.0: pass",
+    "pip_audit": "2.10.1: no known vulnerabilities in locked runtime export",
+    "gitleaks": "8.30.1: zero unresolved findings in history, publication tree, and artifacts",
+    "pytest": "127 passed",
+    "ruff": "pass",
+    "dashboard_lint": "pass",
+    "dashboard_test": "pass"
+  },
+  "wheel_lifecycle_matrix": [
+    {
+      "python": "3.11.15",
+      "result": "pass",
+      "runtime_network": "disabled"
+    },
+    {
+      "python": "3.12.11",
+      "result": "pass",
+      "runtime_network": "disabled"
+    },
+    {
+      "python": "3.13.3",
+      "result": "pass",
+      "runtime_network": "disabled"
+    },
+    {
+      "python": "3.14.5",
+      "result": "pass",
+      "runtime_network": "disabled"
+    }
+  ]
+}

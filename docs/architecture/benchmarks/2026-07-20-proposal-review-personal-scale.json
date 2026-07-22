@@ -1,0 +1,11 @@
+{
+  "active_target_scope_rows": 100001,
+  "benchmark": "proposal-review-personal-scale",
+  "database_total_changes_unchanged": true,
+  "elapsed_seconds": 1.110027,
+  "limit_seconds": 2.0,
+  "passed": true,
+  "peak_traced_bytes": 56749450,
+  "proposal_count": 1,
+  "schema_version": 1
+}

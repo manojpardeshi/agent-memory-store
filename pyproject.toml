@@ -1,0 +1,93 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llm-memory-store"
+version = "0.1.0"
+description = "A personal, local-first memory store for LLM applications and agents"
+readme = "README.md"
+authors = [
+  { name = "Manoj Pardeshi" },
+]
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+keywords = ["llm", "memory", "mcp", "sqlite", "local-first"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Database",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "fastembed>=0.8,<1",
+  "mcp>=1.26,<2",
+  "sqlite-vec>=0.1.9,<0.2",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.4,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.12,<1",
+]
+
+[project.scripts]
+llm-memory = "llm_memory_store.cli:main"
+llm-memory-mcp = "llm_memory_store.mcp_server:main"
+
+[project.urls]
+Homepage = "https://codeberg.org/manojpardeshi/agent-memory-store"
+Repository = "https://codeberg.org/manojpardeshi/agent-memory-store"
+Issues = "https://codeberg.org/manojpardeshi/agent-memory-store/issues"
+Changelog = "https://codeberg.org/manojpardeshi/agent-memory-store/src/branch/main/CHANGELOG.md"
+Documentation = "https://codeberg.org/manojpardeshi/agent-memory-store/src/branch/main/README.md"
+
+[tool.hatch.build]
+skip-excluded-dirs = true
+exclude = [
+  "/demo/dashboard/node_modules",
+  "/demo/dashboard/.next",
+  "/demo/dashboard/.vinext",
+  "/demo/dashboard/.wrangler",
+  "/demo/dashboard/dist",
+  "/demo/dashboard/out",
+  "/demo/dashboard/outputs",
+  "/demo/dashboard/work",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llm_memory_store"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src/llm_memory_store",
+  "/CHANGELOG.md",
+  "/CONTRIBUTING.md",
+  "/LICENSE",
+  "/README.md",
+  "/SECURITY.md",
+  "/SUPPORT.md",
+  "/pyproject.toml",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

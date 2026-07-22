@@ -1,0 +1,95 @@
+{
+  "corrected_exchange": {
+    "captured_assistant_memory_id": null,
+    "captured_user_memory_id": null,
+    "memory_handoff": {
+      "character_count": 194,
+      "estimated_memory_tokens": 49,
+      "item_count": 1,
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "utf8_byte_count": 194
+    },
+    "model_metrics": {
+      "endpoint_security": "loopback-only",
+      "eval_count": 18,
+      "latency_seconds": 1.285551707725972,
+      "mode": "live-ollama",
+      "model": "llama3.1:8b",
+      "prompt_eval_count": 196
+    },
+    "response": "Based on the provided memory data, it appears that your preferred accent color is teal."
+  },
+  "corrected_memory_id": "3a22efcc-5b78-49cb-904a-49d5665b6439",
+  "created_memory_id": "3e344ba8-50f3-4f16-a5c3-55d720428268",
+  "delete_preview": {
+    "count": 2,
+    "kinds": {
+      "preference": 2
+    },
+    "lineage_ids": [
+      "92f15bbb-ada8-4755-8644-dbcb5e5100ba"
+    ],
+    "memory_ids": [
+      "3e344ba8-50f3-4f16-a5c3-55d720428268",
+      "3a22efcc-5b78-49cb-904a-49d5665b6439"
+    ],
+    "requested_memory_id": "3a22efcc-5b78-49cb-904a-49d5665b6439",
+    "requested_scope": null
+  },
+  "delete_receipt": {
+    "deleted_memories": 2,
+    "deleted_vectors": 1,
+    "preview": {
+      "count": 2,
+      "kinds": {
+        "preference": 2
+      },
+      "lineage_ids": [
+        "92f15bbb-ada8-4755-8644-dbcb5e5100ba"
+      ],
+      "memory_ids": [
+        "3e344ba8-50f3-4f16-a5c3-55d720428268",
+        "3a22efcc-5b78-49cb-904a-49d5665b6439"
+      ],
+      "requested_memory_id": "3a22efcc-5b78-49cb-904a-49d5665b6439",
+      "requested_scope": null
+    },
+    "verified": true
+  },
+  "evidence_scope": "deterministic-offline or optional single-run live Ollama",
+  "initial_exchange": {
+    "captured_assistant_memory_id": null,
+    "captured_user_memory_id": null,
+    "memory_handoff": {
+      "character_count": 195,
+      "estimated_memory_tokens": 49,
+      "item_count": 1,
+      "token_estimate_method": "ceil(memory characters / 4); tokenizer-independent estimate",
+      "utf8_byte_count": 195
+    },
+    "model_metrics": {
+      "endpoint_security": "loopback-only",
+      "eval_count": 15,
+      "latency_seconds": 1.2816955838352442,
+      "mode": "live-ollama",
+      "model": "llama3.1:8b",
+      "prompt_eval_count": 199
+    },
+    "response": "Based on the provided memory data, your preferred accent color is amber."
+  },
+  "observed_outcomes": {
+    "corrected_expected_value_mentioned": true,
+    "initial_expected_value_mentioned": true,
+    "stale_value_absent_after_correction": true
+  },
+  "schema_version": 1,
+  "status": {
+    "by_embedding_status": {},
+    "by_kind": {},
+    "integrity_check": "ok",
+    "memories": 0,
+    "missing_vectors": 0,
+    "orphan_vectors": 0,
+    "schema_version": 1
+  }
+}

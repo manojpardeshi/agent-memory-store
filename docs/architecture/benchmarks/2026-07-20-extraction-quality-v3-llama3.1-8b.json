@@ -1,0 +1,1735 @@
+{
+  "case_results": [
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-cedar-fact",
+      "content_matched_claim_ids": [
+        "cedar-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "cedar-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The calibration records for Observatory Cedar are stored in the blue locker 17.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "6491d6011033ff3d0e0ef9da9da3ccf445de6df7aa89629c206c1ecdf2254a2d",
+          "source_fixture_ids": [
+            "cedar-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-cedar-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "cedar-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-cedar-event",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "cedar-event"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-cedar-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The automated job for Observatory Cedar runs every night at 02:10 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "7342611e6b5b2796d0b2a8661c8c5d91f66f480e8f515b6b023240d122f0e645",
+          "source_fixture_ids": [
+            "cedar-summary-user"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "Its generated diagnostic logs are retained for 21 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "f8f6982f363d77c4266c4a28d845c29c512419ed6dcb170116356a22a9d7fd37",
+          "source_fixture_ids": [
+            "cedar-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "cedar-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "7342611e6b5b2796d0b2a8661c8c5d91f66f480e8f515b6b023240d122f0e645",
+        "f8f6982f363d77c4266c4a28d845c29c512419ed6dcb170116356a22a9d7fd37"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-harbor-fact",
+      "content_matched_claim_ids": [
+        "harbor-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "harbor-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The calibration records for Project Harbor are stored in the amber cabinet 6.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "4b2677bff1d5d732e349469c32e413f5b5aec510a00fac0f49348d02d349946d",
+          "source_fixture_ids": [
+            "harbor-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-harbor-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "harbor-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-harbor-event",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Project Harbor completed its navigation trial on June 22, 2031.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "3bcc52f00563d74152026dd7f020b866b20bb273901b1579b0ab90ca6fd7a873",
+          "source_fixture_ids": [
+            "harbor-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "harbor-event"
+      ],
+      "unmatched_proposal_ids": [
+        "3bcc52f00563d74152026dd7f020b866b20bb273901b1579b0ab90ca6fd7a873"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-harbor-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Project Harbor's automated job runs every night at 03:20 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "8101ee891eb2aff32ca694fb3c4f7853c79fcd27d1f5bc236fe3c5163e3dc56d",
+          "source_fixture_ids": [
+            "harbor-summary-user"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "Its generated diagnostic logs are retained for 28 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "f05d729f547cf753de635ddc0991d5864f84b50d0979929477abe75fd2a4d267",
+          "source_fixture_ids": [
+            "harbor-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "harbor-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "8101ee891eb2aff32ca694fb3c4f7853c79fcd27d1f5bc236fe3c5163e3dc56d",
+        "f05d729f547cf753de635ddc0991d5864f84b50d0979929477abe75fd2a4d267"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-linden-fact",
+      "content_matched_claim_ids": [
+        "linden-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "linden-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The calibration records for Archive Linden are stored in the silver shelf 12.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "c4c704e15aef9d3b49049e9fe794d7b54c54bde2094f9344085b84770793d7bf",
+          "source_fixture_ids": [
+            "linden-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-linden-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "linden-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-linden-event",
+      "content_matched_claim_ids": [
+        "linden-event"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "linden-event"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Archive Linden finished its index rebuild on 9 September 2031.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "dac5ca8ee8269b4d44fb2161e81998a592117126807a01918f2550ae9c977c13",
+          "source_fixture_ids": [
+            "linden-event-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-linden-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The automated job for Archive Linden runs every night at 04:30 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "55df8d88b1eb52f43a126ada5dfb662c99b39481077a7d69f7b05312cc11bcd3",
+          "source_fixture_ids": [
+            "linden-summary-user"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "Its generated diagnostic logs are retained for 35 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "bbbf4ffe599cc742b18fb23345b4351c4be57586a13b4da14128071ffdbd5fd2",
+          "source_fixture_ids": [
+            "linden-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "linden-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "55df8d88b1eb52f43a126ada5dfb662c99b39481077a7d69f7b05312cc11bcd3",
+        "bbbf4ffe599cc742b18fb23345b4351c4be57586a13b4da14128071ffdbd5fd2"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-mesa-fact",
+      "content_matched_claim_ids": [
+        "mesa-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "mesa-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The calibration records for Workshop Mesa are stored in the green drawer 4.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "cb2cfa26a4baf0b958bd6f8782a61e0624d9a3db6d7f613b409a4f1531e8c55b",
+          "source_fixture_ids": [
+            "mesa-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-mesa-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "mesa-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-mesa-event",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "mesa-event"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-mesa-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Its generated diagnostic logs are retained for 42 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "2d90e0a6f4a0012c7ca6500abb2c2f01d483a784182ea5f69eefa3a2be5aa83e",
+          "source_fixture_ids": [
+            "mesa-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "The automated job for Workshop Mesa runs every night at 05:40 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "b2b66a431ec023ae3e9614c53d24b7e1a41e5e41ccc0ca2dc35b4bacc52e3834",
+          "source_fixture_ids": [
+            "mesa-summary-user"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "mesa-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "2d90e0a6f4a0012c7ca6500abb2c2f01d483a784182ea5f69eefa3a2be5aa83e",
+        "b2b66a431ec023ae3e9614c53d24b7e1a41e5e41ccc0ca2dc35b4bacc52e3834"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-northstar-fact",
+      "content_matched_claim_ids": [
+        "northstar-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "northstar-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The calibration records for Lab Northstar are stored in the violet case 8.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "0c0a556c2e36d8524341b809bc5671ef19b68a47ae11c371f1a1ee15f527a0ca",
+          "source_fixture_ids": [
+            "northstar-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-northstar-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "northstar-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-northstar-event",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "northstar-event"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-northstar-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Lab Northstar's automated job runs every night at 06:50 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "2e7311ba91f4edf539f4947e88601d0be9d1929a579460ba4356f27df13fceb6",
+          "source_fixture_ids": [
+            "northstar-summary-assistant",
+            "northstar-summary-user"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "Lab Northstar retains generated diagnostic logs for 49 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "4fa9cafa4b7d945ce1fe6c115a055834a521d659ae27c12c98cc8713371f344e",
+          "source_fixture_ids": [
+            "northstar-summary-assistant",
+            "northstar-summary-user"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "northstar-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "2e7311ba91f4edf539f4947e88601d0be9d1929a579460ba4356f27df13fceb6",
+        "4fa9cafa4b7d945ce1fe6c115a055834a521d659ae27c12c98cc8713371f344e"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-orchid-fact",
+      "content_matched_claim_ids": [
+        "orchid-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "orchid-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": 1.0,
+          "content": "The calibration records for Program Orchid are stored in the copper bin 3.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "67c55bc29d37cca7b02bd3c3e459566285caf2029cc8e9605d0e25a24181d317",
+          "source_fixture_ids": [
+            "orchid-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-orchid-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "orchid-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-orchid-event",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "orchid-event"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-orchid-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Program Orchid runs every night at 07:15 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "62412c590a39c693167370a263c0e4067679fd62a20b2ac3695bd22bf4e3aa79",
+          "source_fixture_ids": [
+            "orchid-summary-user"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "Its generated diagnostic logs are retained for 56 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "9d22f4de84e0f0c0ba7de3bd1388f419b5f8735924e2e8410c879e5936c564c0",
+          "source_fixture_ids": [
+            "orchid-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "orchid-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "62412c590a39c693167370a263c0e4067679fd62a20b2ac3695bd22bf4e3aa79",
+        "9d22f4de84e0f0c0ba7de3bd1388f419b5f8735924e2e8410c879e5936c564c0"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-quartz-fact",
+      "content_matched_claim_ids": [
+        "quartz-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "quartz-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The calibration records for Station Quartz are stored in the white locker 25.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "bed8f6e4d74574e0704a6d905b045f06b91f0ca975bebaaa8aeee992ec14315f",
+          "source_fixture_ids": [
+            "quartz-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-quartz-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "quartz-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-quartz-event",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "quartz-event"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-quartz-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The automated job for Station Quartz runs every night at 08:25 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "18e7902f3594fcdf06ea9716822ec0e2a3c47680a36759387e490135c04e0762",
+          "source_fixture_ids": [
+            "quartz-summary-user"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "Its generated diagnostic logs are retained for 63 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "9ddcea1a1aa2626d266f14e9ec48870e35344de9a201f9649465084c9cc76951",
+          "source_fixture_ids": [
+            "quartz-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "quartz-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "18e7902f3594fcdf06ea9716822ec0e2a3c47680a36759387e490135c04e0762",
+        "9ddcea1a1aa2626d266f14e9ec48870e35344de9a201f9649465084c9cc76951"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-raven-fact",
+      "content_matched_claim_ids": [
+        "raven-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "raven-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The calibration records for Studio Raven are stored in the red portfolio 14.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "7cbc52c277de387b26501fa1a3dbfdf70994156b5f5e4f52a2cbab612f5ac983",
+          "source_fixture_ids": [
+            "raven-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-raven-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "raven-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-raven-event",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "raven-event"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-raven-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "raven-summary"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-solace-fact",
+      "content_matched_claim_ids": [
+        "solace-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "solace-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The calibration records for Clinic Solace are stored in the teal archive 5.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "49b5e062f42307047921f8b6e53a96102f77836360805ad54fb3a97043ffedcc",
+          "source_fixture_ids": [
+            "solace-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-solace-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "solace-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-solace-event",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "solace-event"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-solace-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The automated job for Clinic Solace runs every night at 10:45 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "77a276c4a78dbb64e1215a508accd6078a4dc16ecc516e25e24a6dafdbd46f9b",
+          "source_fixture_ids": [
+            "solace-summary-user"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "Its generated diagnostic logs are retained for 77 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "ce7624388f3862b58b494788e9d0f8e67d249c87cad9c2905afc8e2c9d1fd4a5",
+          "source_fixture_ids": [
+            "solace-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "solace-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "77a276c4a78dbb64e1215a508accd6078a4dc16ecc516e25e24a6dafdbd46f9b",
+        "ce7624388f3862b58b494788e9d0f8e67d249c87cad9c2905afc8e2c9d1fd4a5"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-tundra-fact",
+      "content_matched_claim_ids": [
+        "tundra-fact"
+      ],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [
+        "tundra-fact"
+      ],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 1,
+      "no_write_verified": true,
+      "proposal_count": 1,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "The calibration records for Depot Tundra are stored in the black crate 19.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "24a0bfe455daaab5c9c7c61564a51ce8221ac0532245a3a5fcb2fb4669a79b1c",
+          "source_fixture_ids": [
+            "tundra-fact-source"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 1,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-tundra-preference",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "tundra-preference"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-tundra-event",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "tundra-event"
+      ],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-tundra-summary",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 1,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 2,
+      "proposals": [
+        {
+          "confidence": null,
+          "content": "Its generated diagnostic logs are retained for 84 days before deletion.",
+          "forbidden_matches": [],
+          "kind": "fact",
+          "proposal_id": "981954dea22cb8cb1769a1a529b3b0039ba78bcd0e0b4e34612b4d56421f3b08",
+          "source_fixture_ids": [
+            "tundra-summary-assistant"
+          ],
+          "source_relation": "derived_from"
+        },
+        {
+          "confidence": null,
+          "content": "The automated job for Depot Tundra runs every night at 11:55 UTC.",
+          "forbidden_matches": [],
+          "kind": "event",
+          "proposal_id": "b4ef2b751a8abb4eb0cea1440d1015cc239672f81bba57ef37c2e1b23dd6b4e6",
+          "source_fixture_ids": [
+            "tundra-summary-user"
+          ],
+          "source_relation": "derived_from"
+        }
+      ],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 1,
+      "summary_fact_units_covered": 1,
+      "summary_fact_units_total": 2,
+      "track": "live",
+      "unmatched_expected_claim_ids": [
+        "tundra-summary"
+      ],
+      "unmatched_proposal_ids": [
+        "981954dea22cb8cb1769a1a529b3b0039ba78bcd0e0b4e34612b4d56421f3b08",
+        "b4ef2b751a8abb4eb0cea1440d1015cc239672f81bba57ef37c2e1b23dd6b4e6"
+      ],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-greeting",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-transient",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-question",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-hypothetical",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-uncertain",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-task",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-injection",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-retracted",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-quoted-command",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    },
+    {
+      "ambiguous_content_match_count": 0,
+      "case_id": "live-negative-assistant-refusal",
+      "content_matched_claim_ids": [],
+      "duplicate_proposal_count": 0,
+      "error": null,
+      "exact_matched_claim_ids": [],
+      "expected_claim_count": 0,
+      "forbidden_proposal_count": 0,
+      "kind_correct_count": 0,
+      "no_write_verified": true,
+      "proposal_count": 0,
+      "proposals": [],
+      "provenance_correct_count": 0,
+      "source_verified": true,
+      "summary_critical_units_missing": 0,
+      "summary_fact_units_covered": 0,
+      "summary_fact_units_total": 0,
+      "track": "live",
+      "unmatched_expected_claim_ids": [],
+      "unmatched_proposal_ids": [],
+      "valid": true
+    }
+  ],
+  "checks": {
+    "ambiguous_content_match_count": true,
+    "case_count": true,
+    "duplicate_proposal_count": true,
+    "exact_precision": false,
+    "exact_recall": false,
+    "expected_claim_count": true,
+    "forbidden_proposal_count": true,
+    "invalid_case_rate": true,
+    "kind_accuracy": true,
+    "no_write_invariant": true,
+    "provenance_accuracy": true,
+    "source_preservation_invariant": true,
+    "summary_fact_unit_coverage": false
+  },
+  "completed_at": "2026-07-20T06:08:44.555433+00:00",
+  "dataset": {
+    "dataset_id": "extraction-v1",
+    "description": "Synthetic, judge-free extraction corpus with strict offline and diagnostic live tracks; no personal or production data.",
+    "file_name": "extraction_v1.json",
+    "sha256": "4e9cd4bb85b3dc29eab259571ea83a3be55fc7207fb5ef44e9b84018c1213167",
+    "track": "live"
+  },
+  "extractor": {
+    "model": "llama3.1:8b",
+    "prompt_version": "extraction-v3",
+    "provider": "ollama",
+    "revision": "sha256:46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e"
+  },
+  "metrics": {
+    "ambiguous_content_match_count": 0,
+    "by_kind": {
+      "event": {
+        "exact_matches": 1,
+        "exact_recall": 0.1,
+        "expected": 10
+      },
+      "fact": {
+        "exact_matches": 10,
+        "exact_recall": 1.0,
+        "expected": 10
+      },
+      "preference": {
+        "exact_matches": 0,
+        "exact_recall": 0.0,
+        "expected": 10
+      },
+      "summary": {
+        "exact_matches": 0,
+        "exact_recall": 0.0,
+        "expected": 10
+      }
+    },
+    "case_count": 50,
+    "content_match_count": 11,
+    "content_recall": 0.275,
+    "duplicate_proposal_count": 0,
+    "exact_f1": 0.3142857142857143,
+    "exact_match_count": 11,
+    "exact_precision": 0.36666666666666664,
+    "exact_precision_wilson_95": {
+      "high": 0.5448643634520511,
+      "low": 0.21873920806100708
+    },
+    "exact_recall": 0.275,
+    "exact_recall_wilson_95": {
+      "high": 0.42834955806210573,
+      "low": 0.16108016247667337
+    },
+    "expected_claim_count": 40,
+    "forbidden_proposal_count": 0,
+    "invalid_case_count": 0,
+    "invalid_case_rate": 0.0,
+    "kind_accuracy": 1.0,
+    "no_write_violation_count": 0,
+    "proposal_count": 30,
+    "provenance_accuracy": 1.0,
+    "runtime_seconds": 97.7198540000245,
+    "source_mutation_violation_count": 0,
+    "summary_critical_units_missing": 10,
+    "summary_fact_unit_coverage": 0.45
+  },
+  "passed": false,
+  "schema_version": 1,
+  "scope_of_claim": "single synthetic extraction track; conservative judge-free engineering evidence",
+  "thresholds": {
+    "case_count_min": 50,
+    "duplicate_proposal_count_max": 0,
+    "exact_precision_min": 0.75,
+    "exact_recall_min": 0.65,
+    "expected_claim_count_min": 40,
+    "forbidden_proposal_count_max": 0,
+    "invalid_case_rate_max": 0.05,
+    "kind_accuracy_min": 0.8,
+    "provenance_accuracy_min": 0.9,
+    "summary_fact_unit_coverage_min": 0.85
+  }
+}
