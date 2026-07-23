@@ -44,3 +44,7 @@ All notable changes to this pre-release project are documented here.
 - Selected Apache-2.0 with published contribution, security, support, threat-model, and dependency-license policies.
 - Added PEP 639 license metadata and canonical Codeberg project URLs to Python package metadata.
 - Reduced the source distribution to the Python package plus README, changelog, license, build metadata, and public policy files.
+- Added a reproducible release-gate command and a token-minimizing PyPI publication runbook. Codeberg
+  remains canonical; no long-lived PyPI credential is stored in Codeberg CI.
+- Updated affected dashboard dependencies and transitive resolutions after npm reported seven
+  high-severity advisories; the locked dashboard graph now passes `npm audit`.

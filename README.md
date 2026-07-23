@@ -311,4 +311,4 @@ Licensed under the Apache License 2.0. See `LICENSE`. Contributions are accepted
 
 ## Project Status
 
-The canonical public source repository is `https://codeberg.org/manojpardeshi/agent-memory-store`. It was seeded from a reviewed clean tree with a Codeberg noreply identity; the private development history remains unpublished because its Git metadata contains a personal email address. PyPI remains the planned Python distribution channel.
+The canonical public source repository is `https://codeberg.org/manojpardeshi/agent-memory-store`. It was seeded from a reviewed clean tree with a Codeberg noreply identity; the private development history remains unpublished because its Git metadata contains a personal email address. PyPI remains the planned Python distribution channel. The reproducible release gate and credential-minimizing publication sequence are documented in `docs/release/publishing.md`.

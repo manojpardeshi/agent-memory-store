@@ -1,6 +1,6 @@
 # Product Roadmap
 
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 Status: active; ordered by dependency and risk
 
 ## Product direction
@@ -23,7 +23,7 @@ Improve the private, personal-scale memory store through small independently shi
 
 ## Current cycle status
 
-Retrieval-v1 and independent retrieval-v2 certify relative-gap 0.20 for the recorded BGE-small-v1.5 and MiniLM identities. Physical expiry purge, embedding migration, JSON portability, the real-application starter, review-first extraction, and deterministic proposal review are implemented. Extraction-v2 adds a second independent 50-case corpus. Llama single-pass remained the least-bad safe candidate but failed recall and summary gates; a two-pass design, Qwen 2.5, and Qwen3 all failed and were not promoted. The Ollama adapter safely handles the documented optional thinking field without persisting it. Proposal review now revalidates sources, distinguishes durable replay state, exposes exact duplicate/kind indicators without semantic claims, hides content by default, and scanned 100,001 exact-scope rows in 1.110 seconds without writes. Public-release readiness is in progress: content/history, logging, synthetic provenance, Apache-2.0 policy, package metadata, minimal artifact, Twine, vulnerability, SBOM/checksum, release-note, and CPython 3.11–3.14 clean-wheel gates pass. The canonical Codeberg repository is seeded from the reviewed tree as one clean root commit with a noreply identity because the private commits expose a personal author email. Remaining actions are to configure PyPI publishing, tag 0.1.0, and publish the release artifacts.
+Retrieval-v1 and independent retrieval-v2 certify relative-gap 0.20 for the recorded BGE-small-v1.5 and MiniLM identities. Physical expiry purge, embedding migration, JSON portability, the real-application starter, review-first extraction, and deterministic proposal review are implemented. Extraction-v2 adds a second independent 50-case corpus. Llama single-pass remained the least-bad safe candidate but failed recall and summary gates; a two-pass design, Qwen 2.5, and Qwen3 all failed and were not promoted. The Ollama adapter safely handles the documented optional thinking field without persisting it. Proposal review now revalidates sources, distinguishes durable replay state, exposes exact duplicate/kind indicators without semantic claims, hides content by default, and scanned 100,001 exact-scope rows in 1.110 seconds without writes. Public-release readiness is in progress: content/history, logging, synthetic provenance, Apache-2.0 policy, package metadata, minimal artifact, Twine, vulnerability, SBOM/checksum, release-note, and CPython 3.11–3.14 clean-wheel gates pass. The canonical Codeberg repository is seeded from the reviewed tree with a noreply identity, and the reproducible release gate plus token-minimizing PyPI runbook are implemented. Remaining actions are the interactive TestPyPI/PyPI credential step, tag 0.1.0, and publication of the verified artifacts.
 
 ## Working rules
 

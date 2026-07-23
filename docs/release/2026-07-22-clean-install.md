@@ -61,5 +61,6 @@ synthetic content.
 
 The canonical source repository is `https://codeberg.org/manojpardeshi/agent-memory-store`, seeded
 from the reviewed tree as one clean root commit with a Codeberg noreply identity. No tag, Codeberg
-release, PyPI project, or package upload is created by this evidence run. Publishing credentials or
-trusted-publisher configuration must be verified before the tag and package upload are authorized.
+release, PyPI project, or package upload is created by this evidence run. The reproducible gate and
+token-minimizing interactive publication sequence are documented in `docs/release/publishing.md`;
+the remaining blocker is the PyPI account credential step.
