@@ -2,19 +2,20 @@
   "schema_version": 1,
   "release": "0.1.0",
   "status": "release-candidate",
-  "generated_on": "2026-07-22",
+  "generated_on": "2026-07-23",
+  "source_date_epoch": 1784764800,
   "artifacts": [
     {
       "path": "dist/llm_memory_store-0.1.0-py3-none-any.whl",
       "media_type": "application/zip",
-      "size_bytes": 74771,
-      "sha256": "8cfacde2bf043241517c196a1d97a842e49094e3fbf3adda67a3703246b8cb85"
+      "size_bytes": 74787,
+      "sha256": "898f3fccc6357a30c62684ec4d2d43b6b8022acfb9a805f1c92fddcb9790d690"
     },
     {
       "path": "dist/llm_memory_store-0.1.0.tar.gz",
       "media_type": "application/gzip",
-      "size_bytes": 70412,
-      "sha256": "a9ddeb89c8c4c628127225edf4ec2c7471efa20b2f87ced04f9ceb89a8185887"
+      "size_bytes": 70643,
+      "sha256": "4aaae7d7ed84a9fdc3a7fb5f70080dec5c91a981f2ac113f7e821b1cfe985409"
     },
     {
       "path": "docs/release/0.1.0-sbom.cdx.json",
@@ -35,7 +36,9 @@
   "verification": {
     "twine": "6.2.0: pass",
     "pip_audit": "2.10.1: no known vulnerabilities in locked runtime export",
+    "npm_audit": "zero known vulnerabilities",
     "gitleaks": "8.30.1: zero unresolved findings in history, publication tree, and artifacts",
+    "reproducible_build": "pass with SOURCE_DATE_EPOCH=1784764800",
     "pytest": "127 passed",
     "ruff": "pass",
     "dashboard_lint": "pass",

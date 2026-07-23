@@ -1,6 +1,6 @@
 # 0.1.0 Clean-Install and Artifact Verification
 
-Date: 2026-07-22
+Date: 2026-07-23
 Status: release-candidate gate passed; publication not executed
 Reference platform: macOS arm64
 
@@ -8,8 +8,8 @@ Reference platform: macOS arm64
 
 | Artifact | Bytes | SHA-256 |
 | --- | ---: | --- |
-| `llm_memory_store-0.1.0-py3-none-any.whl` | 74,771 | `8cfacde2bf043241517c196a1d97a842e49094e3fbf3adda67a3703246b8cb85` |
-| `llm_memory_store-0.1.0.tar.gz` | 70,412 | `a9ddeb89c8c4c628127225edf4ec2c7471efa20b2f87ced04f9ceb89a8185887` |
+| `llm_memory_store-0.1.0-py3-none-any.whl` | 74,787 | `898f3fccc6357a30c62684ec4d2d43b6b8022acfb9a805f1c92fddcb9790d690` |
+| `llm_memory_store-0.1.0.tar.gz` | 70,643 | `4aaae7d7ed84a9fdc3a7fb5f70080dec5c91a981f2ac113f7e821b1cfe985409` |
 | `0.1.0-sbom.cdx.json` | 67,250 | `a33f6734e964f3c3f133efebf0a07e8fad53a6d07ee5f7f251fcb8ea6f32adf1` |
 
 The wheel contains only the Python package, entry-point/metadata records, and Apache-2.0 license. The
@@ -43,11 +43,13 @@ synthetic content.
 - `uv.lock` records Python dependency versions and source-artifact hashes.
 - `package-lock.json` records the dashboard dependency graph and integrity values.
 - pip-audit 2.10.1 found no known vulnerability in the locked production dependency export.
+- npm audit found zero known vulnerabilities in the dashboard dependency graph.
 - CycloneDX 1.6 SBOM generation used cyclonedx-bom 7.3.0 against a Python 3.13.3 environment synced
   to the locked production set, followed by a no-dependency install of the candidate wheel.
 - The SBOM contains 50 components, three direct root dependencies, and 108 dependency edges.
 - Gitleaks 8.30.1 reports zero unresolved findings for full history and the prospective publication
   tree. Candidate artifacts receive the same archive-aware scan before handoff.
+- Two builds made with `SOURCE_DATE_EPOCH=1784764800` produced byte-identical artifacts.
 
 ## Quality gates
 
