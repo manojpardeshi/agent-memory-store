@@ -8,14 +8,14 @@
     {
       "path": "dist/llm_memory_store-0.1.0-py3-none-any.whl",
       "media_type": "application/zip",
-      "size_bytes": 74787,
-      "sha256": "898f3fccc6357a30c62684ec4d2d43b6b8022acfb9a805f1c92fddcb9790d690"
+      "size_bytes": 74917,
+      "sha256": "2017d75edb9dc939b2f3c1c1c047e1148c904e106f52fcc867190a7c9f32b300"
     },
     {
       "path": "dist/llm_memory_store-0.1.0.tar.gz",
       "media_type": "application/gzip",
-      "size_bytes": 70643,
-      "sha256": "4aaae7d7ed84a9fdc3a7fb5f70080dec5c91a981f2ac113f7e821b1cfe985409"
+      "size_bytes": 70766,
+      "sha256": "2efebd0b141fbf11fc93fb738b63bd14cadffc0cbee6067176eccd1c30cd8864"
     },
     {
       "path": "docs/release/0.1.0-sbom.cdx.json",
@@ -39,6 +39,7 @@
     "npm_audit": "zero known vulnerabilities",
     "gitleaks": "8.30.1: zero unresolved findings in history, publication tree, and artifacts",
     "reproducible_build": "pass with SOURCE_DATE_EPOCH=1784764800",
+    "checksum_manifest": "wheel, source distribution, and SBOM",
     "pytest": "127 passed",
     "ruff": "pass",
     "dashboard_lint": "pass",

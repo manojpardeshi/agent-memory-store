@@ -8,8 +8,8 @@ Reference platform: macOS arm64
 
 | Artifact | Bytes | SHA-256 |
 | --- | ---: | --- |
-| `llm_memory_store-0.1.0-py3-none-any.whl` | 74,787 | `898f3fccc6357a30c62684ec4d2d43b6b8022acfb9a805f1c92fddcb9790d690` |
-| `llm_memory_store-0.1.0.tar.gz` | 70,643 | `4aaae7d7ed84a9fdc3a7fb5f70080dec5c91a981f2ac113f7e821b1cfe985409` |
+| `llm_memory_store-0.1.0-py3-none-any.whl` | 74,917 | `2017d75edb9dc939b2f3c1c1c047e1148c904e106f52fcc867190a7c9f32b300` |
+| `llm_memory_store-0.1.0.tar.gz` | 70,766 | `2efebd0b141fbf11fc93fb738b63bd14cadffc0cbee6067176eccd1c30cd8864` |
 | `0.1.0-sbom.cdx.json` | 67,250 | `a33f6734e964f3c3f133efebf0a07e8fad53a6d07ee5f7f251fcb8ea6f32adf1` |
 
 The wheel contains only the Python package, entry-point/metadata records, and Apache-2.0 license. The
@@ -58,6 +58,8 @@ synthetic content.
 - Dashboard ESLint: passed.
 - Dashboard build and rendered HTML test: passed.
 - `git diff --check`: passed.
+- Claude Fable pre-publication review blocker resolved: the shipped changelog now identifies the
+  `0.1.0` release, and the PyPI long description includes an installed-package quick start.
 
 ## Remaining external actions
 
