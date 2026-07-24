@@ -227,6 +227,10 @@ def main() -> None:
     run_gitleaks(arguments.gitleaks_bin.resolve())
 
     checksum_lines = [f"{record['sha256']}  {record['path']}" for record in second_build]
+    sbom = ROOT / "docs" / "release" / f"{version}-sbom.cdx.json"
+    if not sbom.is_file():
+        raise SystemExit(f"Expected release SBOM is missing: {sbom}")
+    checksum_lines.append(f"{sha256(sbom)}  {sbom.relative_to(ROOT)}")
     (DIST / "SHA256SUMS").write_text("\n".join(checksum_lines) + "\n", encoding="utf-8")
     verification = {
         "schema_version": 1,

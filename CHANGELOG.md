@@ -1,8 +1,8 @@
 # Changelog
 
-All notable changes to this pre-release project are documented here.
+All notable changes to this project are documented here.
 
-## Unreleased
+## 0.1.0 - 2026-07-23
 
 ### Added
 

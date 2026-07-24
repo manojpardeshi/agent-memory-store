@@ -14,6 +14,17 @@ A personal, local-first memory store for LLM applications and agents. The MVP ru
 - JSON export and consistent SQLite backup/restore.
 - No HTTP listener, cloud service, authentication server, or always-on daemon.
 
+## Installation
+
+Requires Python 3.11 or newer:
+
+```bash
+python -m pip install llm-memory-store
+```
+
+This installs the `llm-memory` CLI and the `llm-memory-mcp` stdio server. The default FastEmbed
+model downloads on first use and then runs locally.
+
 ## Development Setup
 
 ```bash
@@ -26,14 +37,14 @@ The default local model is `BAAI/bge-small-en-v1.5`. FastEmbed downloads the mod
 ## Quick Start
 
 ```bash
-uv run llm-memory init --db ~/.llm-memory/memory.sqlite3
+llm-memory init --db ~/.llm-memory/memory.sqlite3
 
-uv run llm-memory remember-turn \
+llm-memory remember-turn \
   --db ~/.llm-memory/memory.sqlite3 \
   --subject me --environment personal --agent codex \
   --role user --content "I prefer local-first tools."
 
-uv run llm-memory recall \
+llm-memory recall \
   --db ~/.llm-memory/memory.sqlite3 \
   --subject me --environment personal --agent codex \
   --query "What kind of tools do I prefer?"
@@ -42,7 +53,7 @@ uv run llm-memory recall \
 Run the stdio MCP server with:
 
 ```bash
-LLM_MEMORY_DB=~/.llm-memory/memory.sqlite3 uv run llm-memory-mcp
+LLM_MEMORY_DB=~/.llm-memory/memory.sqlite3 llm-memory-mcp
 ```
 
 MCP writes protocol messages to stdout; application diagnostics must go to stderr and never include full memory bodies by default.
@@ -50,6 +61,9 @@ MCP writes protocol messages to stdout; application diagnostics must go to stder
 Export always requires an explicit exact scope, subject, or whole-store selector. MCP export and backup first return a non-writing preview and require `confirm=true` to create an artifact. Backup and export refuse to overwrite existing files unless explicitly requested. Restore requires `--yes` and only writes to a new database path; it never overwrites a possibly live store.
 
 ## Retrieval Quality Gate
+
+The evaluation and maintainer workflows below require a source checkout because their datasets and
+supporting evidence are deliberately excluded from the installed package.
 
 After the FastEmbed model has been downloaded once, run the versioned evaluation entirely from local files:
 
