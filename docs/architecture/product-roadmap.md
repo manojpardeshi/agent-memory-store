@@ -1,34 +1,127 @@
 # Product Roadmap
 
-Last updated: 2026-07-23
-Status: active; ordered by dependency and risk
+Last updated: 2026-08-02
+Status: active; post-0.1 roadmap ordered by evidence and competitive risk
 
 ## Product direction
 
-Improve the private, personal-scale memory store through small independently shippable slices. Preserve the local/offline core, exact scope isolation, explicit destructive-operation confirmation, and model-neutral storage contract. Each retrieval-affecting enhancement must pass the retrieval-quality gate before it can ship.
+Build the most auditable, private, provider-neutral local memory layer whose retrieval quality is
+non-inferior to leading local memory systems under matched conditions. The product does not attempt
+feature-for-feature parity with hosted context platforms. Its intended advantage is the combination
+of useful recall with inspectable single-file storage, exact scope isolation, explicit provenance,
+verified lifecycle operations, offline-capable core behavior, and reproducible evidence.
 
-## Ordered enhancements
+The 0.1 cycle established the safety and portability foundation. The post-0.1 cycle must establish
+standard benchmark evidence before changing retrieval behavior. Small synthetic corpora remain
+regression gates, but they are not competitive evidence.
 
-| Order | Enhancement | Outcome | Entry condition | Exit evidence |
+## Post-0.1 ordered phases
+
+| Order | Phase | Outcome | Entry condition | Exit evidence |
 | ---: | --- | --- | --- | --- |
-| 1 | Retrieval-quality gate (OQ-009) | One local command measures Recall@K, MRR, irrelevant-memory leakage, and scope isolation on a versioned synthetic corpus. | Existing retrieval implementation and pinned embedding identity. | At least 50 queries, written thresholds, deterministic metric tests, real FastEmbed report. |
-| 2 | Physical expiry purge | Expired rows, vectors, and relevant provenance are previewed and physically removed on demand. | Lifecycle semantics reviewed; independent of retrieval ranking. | Lifecycle contract, deletion-safety tests, purge receipt and verification. **Implemented.** |
-| 3 | Embedding migration | A user can migrate a snapshot into a new fingerprinted embedding space without corrupting the original store. | Retrieval evidence and safe backup path. | Preview, atomic new-destination migration, compatibility and source/target quality reports, rollback instructions. **Implemented.** |
-| 4 | JSON import and schema migration | Human-readable v1/v2 exports can be imported into a new compatible database. | Stable versioned export schema. | Round-trip, collision, provenance, permission, and failure-atomicity tests. **Implemented.** |
-| 5 | Real-application starter | Python and MCP examples demonstrate capture, recall, context injection, correction, and deletion. | Retrieval usefulness demonstrated. | Runnable local Llama example and integration contract test. **Implemented.** |
-| 6 | Extraction and summarization proposals | Optional local extraction proposes typed memories without silently committing unreviewed model output. | Retrieval gate, import/backup safety, and explicit extraction acceptance policy. | Review/confirmation, provenance, failure handling, and a frozen quality gate. **Implemented; live Llama quality target failed.** |
-| 7 | Extraction quality v2 | Improve safe completeness without tuning further on extraction-v1. | Frozen v1 baseline, prompt comparison, and zero forbidden/write invariants. | New two-author corpus and paired architecture/model matrix. **Completed; every candidate failed and no alternative was promoted.** |
-| 8 | Proposal review ergonomics | Make low-volume manual review safer and faster while model quality remains below automation gates. | Review-only proposal workflow and two independent failed quality matrices. | Source-aware local review, deterministic exact conflict/duplicate indicators, selected acceptance, and no new model authority. **Implemented.** |
-| 9 | Public-release readiness | Publish a privacy-scrubbed, legally clear, reproducibly packaged first release. | Completed bounded product slices and Codeberg canonical remote. | Privacy/security scan, license and contribution policy, reproducible package/install check, release notes, and tagged Codeberg release. |
+| 1 | Competitive baseline | A frozen LongMemEval-S protocol measures the released store before product tuning and supports matched local comparisons. | Published 0.1.0 and stable internal retrieval gates. | Pinned dataset/framework, provider adapter, raw-ingestion baseline, per-category accuracy, retrieval/context/latency/footprint evidence, and pre-registered comparison rules. **In progress: retrieval-only evidence is complete for all 500 at 97.0% Hit@10 and 92.1% answer-session recall@10. That aggregate includes the 150 sealed-validation and 170 reserve questions, so their retrieval statistics are already observed; sealed validation remains unopened for answer quality only. Kimi passed the independent answerer gate at 17/20 on actual Kimi answers and the separate judge gate at 28/30 human agreement on Opus answers. No sealed answer run has started.** |
+| 2 | First measured retrieval improvement | The largest baseline retrieval gap is improved without weakening privacy or internal quality gates. | Frozen retrieval baseline and written error analysis. | Paired before/after LongMemEval-S evidence plus unchanged internal Recall@5, MRR, distractor, latency, and zero-scope-leakage gates. **Completed negative result: default-off session-diverse v1 passed retrieval gates but failed the final human-adjudicated answer gate at 41/60 versus 47/60 baseline. Human reliability and judge-agreement gates passed. The candidate is rejected and does not advance to sealed validation.** |
+| 3 | Second measured memory-quality improvement | The next dominant failure class is addressed independently. | Phase 2 evidence and residual-error analysis. | Paired standard-benchmark evidence. **Closed without execution on 2026-08-02 under the abandonment criterion below. The `session-density-v2` candidate's ceiling was one to three answers on sixty questions, below the measurement's noise floor, while twelve of thirteen observed answer errors fell in multi-session and temporal-reasoning — categories whose retrieval already succeeds. The independently authored and cross-reviewed 60-case corpus is retained unfrozen as a reusable screening instrument; no baseline runner was built and no paid run was made. See AD-053.** |
+| 4 | Matched local comparator runs | Mem0 and Supermemory are measured on the same machine, dataset, and depth, completing the Phase 1 exit condition and making every later quality decision informed rather than blind. | Phase 3 closed; pinned MemoryBench revision and working adapter. | Matched comparator configurations, disclosed asymmetries, and per-category retrieval/context/latency/footprint evidence. **Active — the only unmet Phase 1 exit condition.** |
+| 5 | Multi-session and temporal synthesis | The dominant answer-failure class is addressed where the loss actually occurs, downstream of retrieval. | Phase 3 closed and residual error analysis of retrieval-succeeded/answer-wrong questions. | Written diagnosis distinguishing context formatting, ordering, prompt construction, and reader capability, then one pre-registered paired change. **Not started.** |
+| 6 | Retention tombstones | Expired source payloads retained only for live provenance can be redacted without orphaning descendants. | Two benchmark-driven quality releases or concrete user retention evidence. | Approved schema/interchange/migration contract, explicit rollback boundary, and end-to-end redaction verification. **Paused.** |
 
-## Current cycle status
+### Context-bundling abandonment criterion — invoked 2026-08-02
 
-Retrieval-v1 and independent retrieval-v2 certify relative-gap 0.20 for the recorded BGE-small-v1.5 and MiniLM identities. Physical expiry purge, embedding migration, JSON portability, the real-application starter, review-first extraction, and deterministic proposal review are implemented. Extraction-v2 adds a second independent 50-case corpus. Llama single-pass remained the least-bad safe candidate but failed recall and summary gates; a two-pass design, Qwen 2.5, and Qwen3 all failed and were not promoted. The Ollama adapter safely handles the documented optional thinking field without persisting it. Proposal review now revalidates sources, distinguishes durable replay state, exposes exact duplicate/kind indicators without semantic claims, hides content by default, and scanned 100,001 exact-scope rows in 1.110 seconds without writes. Public-release readiness is in progress: content/history, logging, synthetic provenance, Apache-2.0 policy, package metadata, minimal artifact, Twine, vulnerability, SBOM/checksum, release-note, and CPython 3.11–3.14 clean-wheel gates pass. The canonical Codeberg repository is seeded from the reviewed tree with a noreply identity, and the reproducible release gate plus token-minimizing PyPI runbook are implemented. Remaining actions are the interactive TestPyPI/PyPI credential step, tag 0.1.0, and publication of the verified artifacts.
+Phases 2 and 3 tested one hypothesis: that provider-neutral changes to which retrieved messages
+enter the context bundle improve answer quality. **That hypothesis is now closed.** Phase 2 failed
+under human adjudication, and Phase 3 was closed without execution because its ceiling was smaller
+than the noise floor of the measurement that would evaluate it. No further bundling variant, swap
+count, score threshold, cap grid, or adjacent-expansion rule may be proposed.
+
+Two independent lines of evidence support the closure:
+
+- **Ceiling.** The v1 paired run scored baseline 47/60 against candidate 41/60 under human
+  adjudication, with one candidate win and seven candidate losses. A v2 that avoids every loss and
+  keeps every win reaches about 48/60, or 50/60 under the more generous machine scoring. A one- to
+  three-answer delta on sixty questions cannot be distinguished from noise.
+- **Location of the loss.** On the Opus stratified sixty, four categories scored 39/40 combined
+  while multi-session scored 3/10 and temporal-reasoning 5/10. Answer-session recall@10 for those
+  two categories is already 0.892 and 0.858, and the v1 discordance diagnostic recorded full
+  answer-session coverage in both arms on all eleven disputed questions. Retrieval is comparably
+  strong everywhere; answers collapse only where evidence must be composed across sessions or
+  reasoned over dates.
+
+The synthesis headroom in those two categories is roughly twelve answers — several times anything
+top-ten reordering can deliver. Selection was therefore the wrong optimization target, and effort
+moves to Phase 4 (matched comparators, to stop deciding blind) and Phase 5 (synthesis).
+
+Reopening requires evidence that message selection rather than synthesis dominates multi-session or
+temporal failure. The unfrozen `session-density` corpus and its completed cross-review are retained
+as a reusable screening instrument should that evidence appear.
+
+## Competitive baseline rules
+
+- Use LongMemEval-S first because its categories isolate single-session facts, preferences,
+  multi-session reasoning, temporal reasoning, and knowledge updates.
+- Freeze the benchmark framework revision, dataset digest, sampling, prompts, reader/judge models,
+  retrieval depth, hardware description, and provider versions before tuning.
+- Compare only matched configurations. Local results must not be compared directly with proprietary
+  managed-platform scores.
+- Run the store first with deterministic raw-message ingestion to isolate retrieval behavior. A
+  separate review-first extraction track may diagnose extraction loss, but its results must not be
+  merged with the raw track.
+- Pre-register non-inferiority before viewing comparator results. The initial candidate boundary is
+  Recall@5 within five percentage points of the best matched local comparator at equal or fewer
+  context tokens.
+- Report per-category answer quality, retrieval metrics, context tokens, p50/p95 search latency, and
+  on-disk size. Do not publish a single unqualified “better than” score.
+- Preserve the synthetic retrieval and extraction suites as independent safety/regression gates.
+- Treat answerer/judge validity as a benchmark prerequisite. A run with high labeled retrieval
+  recall but systematically non-responsive answers is diagnostic evidence, not a product score.
+- Preserve the completed Opus 60 as a separate diagnostic; never merge it with Kimi results as one
+  answer-quality score. Run its frozen 440 complement locally for retrieval evidence.
+- Use exact direct-API `kimi-k3` for worker tasks and the now-qualified frozen answerer/judge
+  protocol. Keep the 17/20 Kimi-answer audit separate from the 28/30 Kimi-judge audit on Opus
+  answers. Claude remains the architecture reviewer, not the bulk answerer or judge.
+- Keep development, sealed validation, and reserve manifests disjoint. Product selection may use
+  development only; validation and reserve remain unopened until their respective gates.
+- "Unopened" is scoped to answer quality. The completed 440-question complement covered every sealed
+  and reserve question for retrieval metrics, so their aggregate retrieval statistics are already
+  observed and a later sealed run is not a first look at retrieval. No sealed or reserve question has
+  received an answer, judge vote, or per-question score, and none may before its gate.
+
+The detailed protocol is recorded in
+[`competitive-benchmark-contract.md`](competitive-benchmark-contract.md).
+
+## Completed 0.1 foundation
+
+The first release implemented:
+
+1. Versioned synthetic retrieval-quality gates and identity-scoped relevance filtering.
+2. Physical expiry purge with protected live descendants.
+3. New-destination embedding migration.
+4. JSON v1/v2 portability and new-destination import.
+5. A real-application Python/MCP starter and provider-neutral evidence demos.
+6. Review-first extraction and summarization proposals.
+7. Two independent extraction-quality matrices; every measured small local candidate failed the
+   automation gate and was not promoted.
+8. Store-aware deterministic proposal-review ergonomics.
+9. Reproducible, privacy-scrubbed PyPI and Codeberg publication of version 0.1.0.
+
+Release evidence is recorded in
+[`../release/2026-07-24-publication.md`](../release/2026-07-24-publication.md).
+
+## Deferred surface-area expansion
+
+The current competitive position does not require connectors, document RAG, multimodal ingestion,
+graph memory, a hosted service, a consumer application, multi-user authorization, or background
+processing. Automatic extraction is not retuned on the existing frozen corpora. These items require
+benchmark or user evidence showing that they address the dominant failure.
 
 ## Working rules
 
+- Baseline before tuning; publish failed evidence rather than moving thresholds after a run.
+- Change one material memory-system variable per paired benchmark.
 - A failed quality gate is recorded, not tuned away during the same measurement cycle.
-- Live-model observations remain informational unless a separate repeatable benchmark is approved.
-- Synthetic evaluation data must not be derived from personal memories.
-- No new network listener, cloud dependency, daemon, or multi-user boundary is implied by this roadmap.
-- Architecture decisions and Claude reviews are preserved alongside each completed slice.
+- A retrieval-only gain is insufficient when the matched answer-quality gate fails. Keep the
+  observed development split immutable, complete its blind adjudication, and freeze a newly
+  disclosed protocol before evaluating a materially different candidate.
+- Synthetic evaluation data and public benchmark data must not include owner memory.
+- No standard benchmark run creates a runtime cloud dependency for commit or recall.
+- No new network listener, daemon, or multi-user boundary is implied by this roadmap.

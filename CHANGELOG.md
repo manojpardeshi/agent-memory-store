@@ -2,6 +2,66 @@
 
 All notable changes to this project are documented here.
 
+## Unreleased
+
+### Changed
+
+- Reframed the post-0.1 roadmap around matched standard-benchmark evidence and measurable local
+  retrieval quality before new product tuning.
+- Paused retention-tombstone work until benchmark-driven quality releases or concrete user
+  retention evidence justify the schema and interchange cost.
+
+### Added
+
+- Added a pinned MemoryBench provider/stdio bridge, LongMemEval-S dataset verifier, lifecycle and
+  loopback-evaluator patches, and deterministic adapter tests.
+- Recorded a six-category LongMemEval-S diagnostic smoke: all labeled support sets were retrieved
+  in the top 10, while the local 8B evaluator failed all six answers, gating the full baseline until
+  a trustworthy frozen evaluator pilot passes.
+- Added a resumable, budget-bounded Claude CLI pilot runner and recorded exact `claude-opus-5`
+  passing the six-category evaluator gate at 5/6 for $1.024665; the full 500-question run remains
+  gated on a separate budget decision.
+- Added a frozen 60-question LongMemEval-S manifest, sample-aware MemoryBench search orchestration,
+  explicit FastEmbed cache handling, and deterministic answer-session retrieval analysis.
+- Recorded the Opus 5 stratified diagnostic at 47/60 answers (78.3%) for $9.108015. Multi-session
+  (3/10) and temporal (5/10) questions dominate the misses despite 95% labeled-session hit@10;
+  the planned paid Opus complementary expansion was later superseded by the Kimi worker protocol.
+- Added deterministic LongMemEval development, sealed-validation, reserve, qualification, and
+  complementary manifests; started the API-free 440-question retrieval pass.
+- Added secret-safe direct Kimi K3 probe and resumable evaluator runners with exact-model checks,
+  strict structured judging, cost ceilings, repeated answers/votes, and empty-context controls.
+- Recorded Kimi K3 automated qualification at 15/20 retrieved versus 1/20 empty-context, 96.7%
+  judge unanimity and answer-repeat agreement, for $1.459725.
+- Completed the pre-registered blind 30-item judge-concordance audit on Opus-generated answers:
+  Kimi passed all five gates at 28/30 overall human agreement, 16/17 human-positive, 12/13
+  human-negative, zero positive-count drift, and 28/30 unanimous, for $0.245987 additional spend.
+  This qualifies Kimi judging only.
+- Completed the separate human audit of 20 actual first-pass Kimi answers at 17/20 (85%), passing
+  the frozen 14/20 answerer gate. Provenance validation matched every candidate exactly to raw
+  `kimi-k3` output; this reused existing answers and added no API cost.
+- Completed the local 500-question LongMemEval-S retrieval-only baseline at 97.0% Hit@10, 92.1%
+  answer-session recall@10, and 0.910 MRR@10; multi-session and temporal coverage remain the
+  dominant retrieval gaps.
+- Isolated benchmark JSON-lines output from third-party stdout and ASCII-escaped protocol strings
+  after a U+2028 source character exposed Node readline record splitting; added regression coverage
+  and resumed the intact checkpoint without changing retrieval behavior.
+- Added a default-off, provenance-based session-diverse context policy and resumable development
+  replay. On the frozen 180-question development split it passed all pre-registered retrieval and
+  operational gates: answer-session recall@10 improved from 92.80% to 95.74%, temporal recall from
+  83.48% to 90.72%, and mean formatted context bytes fell 13.2%.
+- Recorded the candidate's frozen matched 60-question exact-`kimi-k3` answer-quality failure:
+  released baseline 45/60 versus session-diverse 40/60 for $4.147215. Added resumable paired-run,
+  analysis, and blinded audit tooling. The completed 13-question audit plus 3 reliability
+  duplicates passed human reliability gates and authoritatively rescored baseline 47/60 versus
+  candidate 41/60. The candidate is rejected; sealed validation and reserve remain unopened.
+- Added a reproducible discordance analyzer showing the hard session cap increased distinct sessions
+  30→69 but reduced labeled answer-session messages 90→37 across the 11 disputed questions; seven
+  of eight candidate losses pruned the direct answer-bearing message.
+- Added a deterministic, fictional 60-case session-density corpus assembled from two isolated author
+  halves, cross-reviewed after one label correction, balanced across six categories and two evidence
+  strata, and verified to have zero normalized 12-token overlap with LongMemEval. The proposed
+  score-gated two-swap contract remains draft/blocked pending v1 human adjudication and freeze review.
+
 ## 0.1.0 - 2026-07-23
 
 ### Added
