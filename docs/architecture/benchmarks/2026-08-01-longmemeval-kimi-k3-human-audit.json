@@ -1,0 +1,52 @@
+{
+  "all_gates_passed": true,
+  "audit_scope": "kimi-k3-judge-concordance-only",
+  "candidate_answer_model": "claude-opus-5",
+  "comparative_diagnostics": {
+    "claude_vs_human_agreement": 28,
+    "claude_vs_human_rate": 0.9333333333333333,
+    "kimi_vs_claude_agreement": 30,
+    "kimi_vs_claude_rate": 1.0
+  },
+  "cost_usd": 0.2459868,
+  "gate_results": {
+    "human_negative_agreement": true,
+    "human_positive_agreement": true,
+    "overall_agreement": true,
+    "positive_count_drift": true,
+    "vote_unanimity": true
+  },
+  "gate_thresholds": {
+    "maximum_absolute_positive_count_drift": 3,
+    "minimum_human_negative_agreement": 11,
+    "minimum_human_positive_agreement": 15,
+    "minimum_overall_agreement": 27,
+    "minimum_unanimous_three_vote_items": 27
+  },
+  "human_labels": {
+    "negative": 13,
+    "positive": 17
+  },
+  "kimi_vs_human": {
+    "absolute_positive_count_drift": 0,
+    "human_negative_agreement": 12,
+    "human_negative_total": 13,
+    "human_positive_agreement": 16,
+    "human_positive_total": 17,
+    "kimi_positive_count": 17,
+    "overall_agreement": 28,
+    "overall_rate": 0.9333333333333333,
+    "unanimous_three_vote_items": 28
+  },
+  "model": "kimi-k3",
+  "not_evidence_for": "kimi-k3-answer-quality",
+  "questions": 30,
+  "schema_version": 1,
+  "source_sha256": {
+    "gates": "45c4981f38678094427ae285d1e1dba31abb55490aea7d5ed43cdf002a71b094",
+    "key": "b15ac77871a5873f983f71ab49cb53943620bdc0a0d860b9862acbf7946554bf",
+    "kimi": "8d98d1ca3ff9e79c852abee4ec153854f2fb4b08eff1eb4473d3f4ae07fd2452",
+    "packet": "c07b14c39d7df98a4321c8acf8188b6ff87407421d5931fc54ac03de563fbe13"
+  },
+  "status": "passed"
+}

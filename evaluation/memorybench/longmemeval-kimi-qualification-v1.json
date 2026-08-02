@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "dataset_sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+  "memorybench_commit": "118209a746d97d0d85e5a7234267f0b6962857e9",
+  "partition_seed": "longmemeval-kimi-evaluation-splits-v1",
+  "observed_selection_sha256": "38391ce30303a228090dadda178fb02ebb46c7707960b685ac55b8324be458cf",
+  "question_type_order": [
+    "single-session-preference",
+    "single-session-user",
+    "multi-session",
+    "temporal-reasoning",
+    "knowledge-update",
+    "single-session-assistant"
+  ],
+  "split_id": "longmemeval-kimi-qualification20-v1",
+  "role": "evaluator-qualification",
+  "sealed": false,
+  "source_run_id": "llm-memory-store-longmemeval-stratified60-v1",
+  "question_count": 20,
+  "question_type_counts": {
+    "knowledge-update": 3,
+    "multi-session": 3,
+    "single-session-assistant": 3,
+    "single-session-preference": 4,
+    "single-session-user": 4,
+    "temporal-reasoning": 3
+  },
+  "question_ids": [
+    "8a2466db",
+    "06878be2",
+    "0edc2aef",
+    "75f70248",
+    "15745da0",
+    "ccb36322",
+    "ec81a493",
+    "58bf7951",
+    "gpt4_7fce9456",
+    "7024f17c",
+    "60bf93ed_abs",
+    "gpt4_468eb063",
+    "a3045048",
+    "gpt4_483dd43c",
+    "22d2cb42",
+    "a2f3aa27",
+    "9ea5eabc",
+    "6222b6eb",
+    "4baee567",
+    "c4f10528"
+  ]
+}

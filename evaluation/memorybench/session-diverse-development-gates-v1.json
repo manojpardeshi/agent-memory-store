@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "status": "frozen-before-candidate-run",
+  "experiment_id": "longmemeval-session-diverse-development-v1",
+  "scope": "development-only-context-selection",
+  "development_manifest": {
+    "path": "evaluation/memorybench/longmemeval-kimi-development-v1.json",
+    "sha256": "34f0d70817fc972fe15ad405d11c78e2309266d6324697badeac314bd5585f94",
+    "questions": 180
+  },
+  "forbidden_splits": [
+    "sealed-validation",
+    "sealed-competitor-reserve"
+  ],
+  "candidate_policy": {
+    "policy_id": "session-diverse-v1",
+    "ranked_candidate_pool": 50,
+    "output_slots": 10,
+    "per_session_cap": 2,
+    "unit": "single-message",
+    "selection": "greedy-in-original-rank-order",
+    "backfill": "previously-skipped-items-in-original-rank-order",
+    "ground_truth_available_to_selection": false
+  },
+  "unchanged_components": [
+    "storage",
+    "embeddings",
+    "base-ranking",
+    "relevance-filter",
+    "answer-and-judge-prompts",
+    "source-data",
+    "result-schema"
+  ],
+  "development_baseline": {
+    "overall_answer_session_recall_at_10": 0.9279629629629628,
+    "multi_session_answer_session_recall_at_10": 0.8931818181818181,
+    "temporal_reasoning_answer_session_recall_at_10": 0.8348484848484847,
+    "overall_mrr_at_10": 0.8971516754850087,
+    "context_json_bytes_mean": 30443.32222222222,
+    "context_json_bytes_p95": 42894,
+    "search_latency_ms_p95": 173
+  },
+  "gates": {
+    "multi_session_recall_minimum": 0.9131818181818181,
+    "temporal_reasoning_recall_minimum": 0.8548484848484847,
+    "overall_recall_minimum": 0.9229629629629628,
+    "overall_mrr_minimum": 0.8921516754850087,
+    "context_json_bytes_mean_maximum_ratio": 1.05,
+    "context_json_bytes_p95_maximum_ratio": 1.1,
+    "selection_latency_ms_p50_maximum": 5,
+    "selection_latency_ms_p95_maximum": 15,
+    "search_latency_ms_p95_maximum": 225,
+    "maximum_category_recall_drop": 0.01,
+    "maximum_questions_with_recall_loss": 3,
+    "minimum_distinct_sessions_mean_gain": 1.0
+  },
+  "pass_rule": "multi-session or temporal recall improves by at least 0.02 while the other does not regress, and every remaining gate passes",
+  "failure_policy": "record-the-negative-result-and-disable-session-diverse-v1; any new cap or pool depth requires a newly disclosed development-informed preregistration",
+  "authorization_on_pass": "retain-as-frozen-development-candidate-only; do-not-open-sealed-validation-without-owner-approval"
+}

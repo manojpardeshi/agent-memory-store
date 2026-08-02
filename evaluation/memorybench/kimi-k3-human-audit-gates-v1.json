@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "status": "frozen-before-kimi-audit-judgments",
+  "frozen_at": "2026-08-01",
+  "sample": {
+    "questions": 30,
+    "candidate_answer_model": "claude-opus-5",
+    "human_negative": 13,
+    "human_positive": 17
+  },
+  "audit_scope": "kimi-k3-judge-concordance-only",
+  "not_evidence_for": "kimi-k3-answer-quality",
+  "gates": {
+    "minimum_overall_agreement": 27,
+    "minimum_human_positive_agreement": 15,
+    "minimum_human_negative_agreement": 11,
+    "maximum_absolute_positive_count_drift": 3,
+    "minimum_unanimous_three_vote_items": 27
+  },
+  "nonconforming_vote_policy": {
+    "reissue_same_vote_limit": 1,
+    "maximum_total_reissues": 3,
+    "persistent_nonconformance": "count-item-as-human-disagreement-and-exclude-from-unanimity",
+    "exceeding_total_reissues": "fail-unanimity-gate"
+  },
+  "decision_rule": "all-five-gates-must-pass",
+  "failure_policy": {
+    "post_hoc_threshold_or_item_changes": "prohibited",
+    "mechanical_defect": "fix-and-use-a-fresh-independent-30-item-human-audit",
+    "judgment_failure": "disqualify-kimi-k3-judge-for-this-benchmark"
+  },
+  "architecture_review": {
+    "requested_model": "claude-opus-5",
+    "resolved_final_model": "claude-opus-5",
+    "claude_cli_cost_usd": 0.0459995,
+    "auxiliary_model_disclosed": "claude-haiku-4-5-20251001",
+    "review_completed_before_kimi_audit_labels": true
+  }
+}

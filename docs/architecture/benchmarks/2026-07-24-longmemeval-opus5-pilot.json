@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "status": "evaluator_pilot_passed_not_full_baseline",
+  "completed_at": "2026-07-24",
+  "source": {
+    "run_id": "llm-memory-store-longmemeval-smoke-v1",
+    "checkpoint_sha256": "38e21f922328c93a4960e11e6c01b6ba9cd4d5a01a41c9ae3981d509ebe99efb",
+    "raw_pilot_sha256": "a79cf1366def695f4eef1c8bbfa5b6674ecedfa103a6a0a5c512cf830df5a2fa",
+    "search_results_reused": true,
+    "retrieval_changed": false
+  },
+  "evaluator": {
+    "answering_model": "claude-opus-5",
+    "judge_model": "claude-opus-5",
+    "claude_cli_version": "2.1.219 (Claude Code)",
+    "system_prompt_sha256": "efa3a6172231b6a0c32235ea9c8b9266ea27b96809b161108b5c3110e4e269c7",
+    "effort": "low",
+    "tools_enabled": false,
+    "session_persistence": false,
+    "same_model_answerer_and_judge": true,
+    "auxiliary_model_observed": "claude-haiku-4-5-20251001"
+  },
+  "budget": {
+    "max_call_usd": 1.0,
+    "max_pilot_usd": 5.0,
+    "actual_total_usd": 1.024665,
+    "answer_total_usd": 0.980525,
+    "judge_total_usd": 0.04414,
+    "opus_reported_usd": 0.96187,
+    "auxiliary_haiku_reported_usd": 0.062795
+  },
+  "results": {
+    "question_count": 6,
+    "correct": 5,
+    "accuracy": 0.8333333333333334,
+    "gate_threshold_correct": 5,
+    "evaluator_gate_passed": true,
+    "answer_mean_duration_ms": 4709,
+    "answer_max_duration_ms": 6719,
+    "judge_mean_duration_ms": 2841.1666666666665,
+    "judge_max_duration_ms": 3091
+  },
+  "questions": [
+    {
+      "question_id": "d24813b1",
+      "question_type": "single-session-preference",
+      "label": "correct"
+    },
+    {
+      "question_id": "15745da0",
+      "question_type": "single-session-user",
+      "label": "correct"
+    },
+    {
+      "question_id": "gpt4_2f8be40d",
+      "question_type": "multi-session",
+      "label": "incorrect",
+      "failure": "Counted three weddings but substituted the sister's wedding for Rachel and Mike's."
+    },
+    {
+      "question_id": "gpt4_483dd43c",
+      "question_type": "temporal-reasoning",
+      "label": "correct"
+    },
+    {
+      "question_id": "c7dc5443",
+      "question_type": "knowledge-update",
+      "label": "correct"
+    },
+    {
+      "question_id": "89527b6b",
+      "question_type": "single-session-assistant",
+      "label": "correct"
+    }
+  ],
+  "full_run_projection": {
+    "method": "linear extrapolation from six consecutive category samples; diagnostic only",
+    "projected_evaluator_usd_for_500": 85.38875,
+    "projected_evaluator_usd_with_20_percent_margin": 102.4665,
+    "projected_evaluator_runtime_minutes": 62.918055555555554,
+    "projected_serial_ingest_hours": 3.6544444444444446,
+    "safe_under_100_usd_credit_with_margin": false
+  },
+  "checks": {
+    "exact_opus_model_reported_for_every_call": true,
+    "all_judge_responses_valid": true,
+    "pilot_budget_respected": true,
+    "evaluator_gate_passed": true,
+    "full_500_run_authorized": false
+  }
+}

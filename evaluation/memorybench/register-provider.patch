@@ -1,0 +1,59 @@
+diff --git a/src/providers/index.ts b/src/providers/index.ts
+index 7db12ac..b7fedda 100644
+--- a/src/providers/index.ts
++++ b/src/providers/index.ts
+@@ -5,13 +5,15 @@ import { Mem0Provider } from "./mem0"
+ import { ZepProvider } from "./zep"
+ import { FilesystemProvider } from "./filesystem"
+ import { RAGProvider } from "./rag"
++import { LLMMemoryStoreProvider } from "./llm-memory-store"
+ 
+ const providers: Record<ProviderName, new () => Provider> = {
+   supermemory: SupermemoryProvider,
+   mem0: Mem0Provider,
+   zep: ZepProvider,
+   filesystem: FilesystemProvider,
+   rag: RAGProvider,
++  "llm-memory-store": LLMMemoryStoreProvider,
+ }
+ 
+ export function createProvider(name: ProviderName): Provider {
+@@ -36,4 +38,11 @@ export function getProviderInfo(name: ProviderName): {
+   }
+ }
+ 
+-export { SupermemoryProvider, Mem0Provider, ZepProvider, FilesystemProvider, RAGProvider }
++export {
++  SupermemoryProvider,
++  Mem0Provider,
++  ZepProvider,
++  FilesystemProvider,
++  RAGProvider,
++  LLMMemoryStoreProvider,
++}
+diff --git a/src/types/provider.ts b/src/types/provider.ts
+index e7b5c93..fa8d952 100644
+--- a/src/types/provider.ts
++++ b/src/types/provider.ts
+@@ -46,5 +46,7 @@ export interface Provider {
+   search(query: string, options: SearchOptions): Promise<unknown[]>
+   clear(containerTag: string): Promise<void>
++  close?(): Promise<void>
+ }
+ 
+-export type ProviderName = "supermemory" | "mem0" | "zep" | "filesystem" | "rag"
++export type ProviderName =
++  "supermemory" | "mem0" | "zep" | "filesystem" | "rag" | "llm-memory-store"
+diff --git a/src/utils/config.ts b/src/utils/config.ts
+index af12b2d..d34e98f 100644
+--- a/src/utils/config.ts
++++ b/src/utils/config.ts
+@@ -24,6 +24,8 @@ export function getProviderConfig(provider: string): { apiKey: string; baseUrl?:
+       return { apiKey: config.openaiApiKey } // Filesystem uses OpenAI for memory extraction
+     case "rag":
+       return { apiKey: config.openaiApiKey } // RAG provider uses OpenAI for embeddings
++    case "llm-memory-store":
++      return { apiKey: "none" }
+     default:
+       throw new Error(`Unknown provider: ${provider}`)
+   }

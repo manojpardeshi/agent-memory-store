@@ -1,0 +1,207 @@
+{
+  "all_gates_passed": false,
+  "arms": {
+    "baseline": {
+      "answer_calls": {
+        "calls": 60,
+        "cost_usd": 1.716024,
+        "latency_ms": {
+          "max": 27693.0,
+          "mean": 9397.267,
+          "p95": 20219.0
+        },
+        "tokens": {
+          "cached_input_tokens": 0,
+          "completion_tokens": 12663,
+          "prompt_tokens": 508693,
+          "reasoning_tokens": 7832,
+          "uncached_input_tokens": 508693
+        }
+      },
+      "category_accuracy": {
+        "knowledge-update": {
+          "accuracy": 1.0,
+          "correct": 10,
+          "questions": 10
+        },
+        "multi-session": {
+          "accuracy": 0.4,
+          "correct": 4,
+          "questions": 10
+        },
+        "single-session-assistant": {
+          "accuracy": 1.0,
+          "correct": 10,
+          "questions": 10
+        },
+        "single-session-preference": {
+          "accuracy": 0.8,
+          "correct": 8,
+          "questions": 10
+        },
+        "single-session-user": {
+          "accuracy": 1.0,
+          "correct": 10,
+          "questions": 10
+        },
+        "temporal-reasoning": {
+          "accuracy": 0.5,
+          "correct": 5,
+          "questions": 10
+        }
+      },
+      "context_json_bytes": {
+        "max": 49468.0,
+        "mean": 30634.8,
+        "p95": 43984.0
+      },
+      "judge_calls": {
+        "calls": 180,
+        "cost_usd": 0.4515456,
+        "latency_ms": {
+          "max": 15433.0,
+          "mean": 5988.233,
+          "p95": 10749.0
+        },
+        "tokens": {
+          "cached_input_tokens": 43262,
+          "completion_tokens": 20153,
+          "prompt_tokens": 88686,
+          "reasoning_tokens": 9455,
+          "uncached_input_tokens": 45424
+        }
+      },
+      "judge_vote_unanimity": 0.95,
+      "majority_accuracy": 0.7833333333333333,
+      "majority_correct": 47,
+      "nonunanimous_question_ids": [
+        "195a1a1b",
+        "60bf93ed_abs",
+        "a2f3aa27"
+      ],
+      "questions": 60
+    },
+    "candidate": {
+      "answer_calls": {
+        "calls": 60,
+        "cost_usd": 1.549107,
+        "latency_ms": {
+          "max": 24908.0,
+          "mean": 9570.533,
+          "p95": 16435.0
+        },
+        "tokens": {
+          "cached_input_tokens": 0,
+          "completion_tokens": 13775,
+          "prompt_tokens": 447494,
+          "reasoning_tokens": 9386,
+          "uncached_input_tokens": 447494
+        }
+      },
+      "category_accuracy": {
+        "knowledge-update": {
+          "accuracy": 0.8,
+          "correct": 8,
+          "questions": 10
+        },
+        "multi-session": {
+          "accuracy": 0.4,
+          "correct": 4,
+          "questions": 10
+        },
+        "single-session-assistant": {
+          "accuracy": 1.0,
+          "correct": 10,
+          "questions": 10
+        },
+        "single-session-preference": {
+          "accuracy": 0.8,
+          "correct": 8,
+          "questions": 10
+        },
+        "single-session-user": {
+          "accuracy": 0.7,
+          "correct": 7,
+          "questions": 10
+        },
+        "temporal-reasoning": {
+          "accuracy": 0.4,
+          "correct": 4,
+          "questions": 10
+        }
+      },
+      "context_json_bytes": {
+        "max": 42780.0,
+        "mean": 25943.25,
+        "p95": 36259.0
+      },
+      "judge_calls": {
+        "calls": 180,
+        "cost_usd": 0.4305384,
+        "latency_ms": {
+          "max": 13278.0,
+          "mean": 5826.722,
+          "p95": 9550.0
+        },
+        "tokens": {
+          "cached_input_tokens": 47608,
+          "completion_tokens": 19800,
+          "prompt_tokens": 87360,
+          "reasoning_tokens": 9065,
+          "uncached_input_tokens": 39752
+        }
+      },
+      "judge_vote_unanimity": 1.0,
+      "majority_accuracy": 0.6833333333333333,
+      "majority_correct": 41,
+      "nonunanimous_question_ids": [],
+      "questions": 60
+    }
+  },
+  "automated_gates_passed": false,
+  "cost": {
+    "computed_total_usd": 4.147215,
+    "reported_total_usd": 4.147215
+  },
+  "gate_results_after_human_substitution": {
+    "context_mean": true,
+    "context_p95": true,
+    "cost_ceiling": true,
+    "exact_model": true,
+    "failed_calls": true,
+    "minimum_candidate_correct": false,
+    "minimum_vote_unanimity_rate": true,
+    "overall_noninferiority": false,
+    "per_category_noninferiority": false,
+    "target_category_combined_gain": false,
+    "untargeted_category_combined_noninferiority": false,
+    "vote_unanimity_rate_balance": true
+  },
+  "human_gate_results": {
+    "minimum_intrarater_agreement": true,
+    "minimum_judge_human_agreement": true
+  },
+  "human_gates_passed": true,
+  "intrarater_agreement": 1.0,
+  "judge_human_agreement": 0.8846153846153846,
+  "model": "kimi-k3",
+  "paired": {
+    "accuracy_delta": -0.09999999999999998,
+    "losses": 7,
+    "ties": 52,
+    "wins": 1
+  },
+  "question_count": 60,
+  "reliability_duplicate_items": 3,
+  "schema_version": 1,
+  "source_sha256": {
+    "checkpoint": "7955578d87193549f09c202cce8028d9c336716c00af072dd19770976066bbf3",
+    "contract": "5a27276688253a52fa359aabc81573ae75a321bb4c8829f0c03dda74bca5666e",
+    "key": "d82ae2b17651f275549fb6dd6da14fca6bca38fbf6d18407630e33547906bc92",
+    "machine": "54ee33f8c2bfd27c7d760882cd18a3159106c4d81018e8d94aefadd6edfddf46",
+    "packet": "04ef2dca51516a4ec7b0afeda42839cdace5b35dfaa0c75a5c4ab36c2f93a32d",
+    "raw": "c5c58bbdf0396ac8e49331a41a9d26b0d0e76d87739b1b12ad0f426a9eda658e"
+  },
+  "status": "failed",
+  "unique_human_audit_questions": 13
+}

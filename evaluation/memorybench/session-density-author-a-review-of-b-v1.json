@@ -1,0 +1,240 @@
+{
+  "aggregate_counts": {
+    "ambiguous_question_or_ground_truth_errors": 0,
+    "cases_needing_individual_corrections": 0,
+    "cases_passing_individual_review": 30,
+    "cases_reviewed": 30,
+    "category_fit_errors": 0,
+    "category_stratum_counts": [
+      {
+        "category": "knowledge-update",
+        "dense_evidence": 3,
+        "diversity_required": 2,
+        "total": 5
+      },
+      {
+        "category": "multi-session",
+        "dense_evidence": 0,
+        "diversity_required": 5,
+        "total": 5
+      },
+      {
+        "category": "single-session-assistant",
+        "dense_evidence": 5,
+        "diversity_required": 0,
+        "total": 5
+      },
+      {
+        "category": "single-session-preference",
+        "dense_evidence": 5,
+        "diversity_required": 0,
+        "total": 5
+      },
+      {
+        "category": "single-session-user",
+        "dense_evidence": 5,
+        "diversity_required": 0,
+        "total": 5
+      },
+      {
+        "category": "temporal-reasoning",
+        "dense_evidence": 2,
+        "diversity_required": 3,
+        "total": 5
+      }
+    ],
+    "corpus_level_errors": 0,
+    "date_logic_errors": 0,
+    "dense_evidence_cases": 20,
+    "diversity_required_cases": 10,
+    "factual_consistency_errors": 0,
+    "fictional_or_privacy_safety_errors": 0,
+    "maximum_distractor_messages_per_case": 21,
+    "maximum_messages_per_case": 24,
+    "maximum_sessions_per_case": 8,
+    "minimum_distractor_messages_per_case": 20,
+    "minimum_messages_per_case": 24,
+    "minimum_sessions_per_case": 8,
+    "required_label_errors": 0,
+    "schema_errors": 0,
+    "source_cases": 30,
+    "stratum_fit_errors_at_case_level": 0
+  },
+  "corpus_findings": [],
+  "per_case_findings": [
+    {
+      "case_id": "B001",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B002",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B003",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B004",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B005",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B006",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B007",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B008",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B009",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B010",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B011",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B012",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B013",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B014",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B015",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B016",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B017",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B018",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B019",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B020",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B021",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B022",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B023",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B024",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B025",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B026",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B027",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B028",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B029",
+      "findings": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "B030",
+      "findings": [],
+      "status": "pass"
+    }
+  ],
+  "review_method": {
+    "date_logic_verification": "all explicit date arithmetic recomputed against the real 2026 calendar; the single weekday assertion (B017 'Wednesday, July 29') matches the real calendar, and the derived August 5 return date is also a Wednesday as the case requires",
+    "independence": "the reviewer did not author the author-B half and used no candidate retrieval output, policy output, or LongMemEval sealed/reserve content while reviewing",
+    "mechanical_checks": "recomputed from the source file by this artifact's generator",
+    "semantic_checks": "reviewer read every question, ground truth, required fact unit, and cited message; verified each ground truth is fully supported by the cited required messages, that fact units are atomic, and that no required label depends on an uncited message",
+    "supersedes_review_of_source_sha256": "57380a9669a7461b3cee934dcba5c99ec91c68f80f83a7ffe32cd7655b3bff2b",
+    "supersession_reason": "The prior review validated the author-B half before the density repair and against the superseded uniform 2-dense/3-diversity per-category expectation. It is invalidated for both the corpus revision and the stratum contract."
+  },
+  "reviewer": "A",
+  "reviewer_notes": [
+    {
+      "blocking": false,
+      "note": "Distractor sessions within a case are topically homogeneous: each case's non-required sessions elaborate a single alternate project in a repetitive four-message pattern. This satisfies the >=12 plausible-distractor requirement and is not a contract violation, but it means a swap that reaches an absent distractor session will tend to be uniformly wrong rather than borderline. Stage 1 swap statistics should be read with that in mind, and the effect should be disclosed in the baseline analysis.",
+      "severity": "advisory"
+    },
+    {
+      "blocking": false,
+      "note": "The reviewer could not independently re-verify the zero 12-token-shingle overlap against LongMemEval: the pinned 277 MB dataset is not present in this working tree. The corpus header asserts longmemeval_overlap_check_completed=true. That assertion is carried forward unverified by this review and must be re-established before freeze.",
+      "severity": "limitation"
+    }
+  ],
+  "schema_version": 1,
+  "source_sha256": "3a127ab9b80944e12fbc11a0a62dc84ecef3f8cf33cbd24d74e14097cac5142b",
+  "status": "pass"
+}

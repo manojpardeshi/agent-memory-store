@@ -1,0 +1,10 @@
+diff --git a/src/orchestrator/index.ts b/src/orchestrator/index.ts
+--- a/src/orchestrator/index.ts
++++ b/src/orchestrator/index.ts
+@@ -309,5 +309,6 @@ export class Orchestrator {
+     // Flush all pending checkpoint saves before marking as complete
+     await this.checkpointManager.flush(checkpoint.runId)
+     this.checkpointManager.updateStatus(checkpoint, "completed")
++    await provider.close?.()
+     logger.success("Run complete!")
+   }

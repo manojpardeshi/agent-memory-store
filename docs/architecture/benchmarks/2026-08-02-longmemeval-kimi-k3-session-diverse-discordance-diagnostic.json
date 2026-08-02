@@ -1,0 +1,701 @@
+{
+  "aggregate": {
+    "answer_session_messages": {
+      "added": 1,
+      "baseline": 90,
+      "candidate": 37,
+      "removed": 54
+    },
+    "causal_patterns": {
+      "direct-answer-bearing-message-pruned": 7,
+      "direct-useful-message-added": 1,
+      "salience-or-wording-boundary": 2,
+      "unsupported-inference-after-context-perturbation": 1
+    },
+    "context_json_bytes": {
+      "baseline": 354988,
+      "candidate": 273988,
+      "questions_with_candidate_reduction": 9,
+      "ratio": 0.7718232728993656
+    },
+    "distinct_sessions": {
+      "baseline": 30,
+      "candidate": 69,
+      "mean_gain": 3.5454545454545454
+    },
+    "full_answer_session_coverage": {
+      "baseline": 11,
+      "candidate": 11
+    },
+    "fully_unanimous_pairs": 10
+  },
+  "baseline_wins": 8,
+  "candidate_wins": 3,
+  "categories": {
+    "knowledge-update": {
+      "baseline_wins": 2,
+      "candidate_wins": 1,
+      "discordant": 3
+    },
+    "multi-session": {
+      "baseline_wins": 1,
+      "candidate_wins": 1,
+      "discordant": 2
+    },
+    "single-session-preference": {
+      "baseline_wins": 1,
+      "candidate_wins": 1,
+      "discordant": 2
+    },
+    "single-session-user": {
+      "baseline_wins": 3,
+      "candidate_wins": 0,
+      "discordant": 3
+    },
+    "temporal-reasoning": {
+      "baseline_wins": 1,
+      "candidate_wins": 0,
+      "discordant": 1
+    }
+  },
+  "discordant_questions": 11,
+  "question_count": 60,
+  "questions": [
+    {
+      "answer_session_coverage": {
+        "baseline": 1,
+        "candidate": 1,
+        "required": 1
+      },
+      "answer_session_messages": {
+        "baseline": 10,
+        "candidate": 2
+      },
+      "baseline": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "candidate": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 8,
+        "removed_answer_session_baseline_ranks": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "removed_answer_session_messages": 8,
+        "removed_messages": 8
+      },
+      "context_json_bytes": {
+        "baseline": 30078,
+        "candidate": 29908,
+        "ratio": 0.994348028459339
+      },
+      "diagnosis": {
+        "evidence": "The cap kept two generic slow-cooker messages and dropped the beef-stew and yogurt personalization evidence at later baseline ranks.",
+        "pattern": "direct-answer-bearing-message-pruned"
+      },
+      "direction": "baseline-win",
+      "distinct_sessions": {
+        "baseline": 1,
+        "candidate": 7,
+        "gain": 6
+      },
+      "question_id": "caf03d32",
+      "question_type": "single-session-preference"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 1,
+        "candidate": 1,
+        "required": 1
+      },
+      "answer_session_messages": {
+        "baseline": 10,
+        "candidate": 2
+      },
+      "baseline": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "candidate": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 8,
+        "removed_answer_session_baseline_ranks": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "removed_answer_session_messages": 8,
+        "removed_messages": 8
+      },
+      "context_json_bytes": {
+        "baseline": 45005,
+        "candidate": 24650,
+        "ratio": 0.5477169203421842
+      },
+      "diagnosis": {
+        "evidence": "Both arms retained the explicit home-storage-capacity message; the candidate framed it directly while the baseline phrased the same condition hypothetically.",
+        "pattern": "salience-or-wording-boundary"
+      },
+      "direction": "candidate-win",
+      "distinct_sessions": {
+        "baseline": 1,
+        "candidate": 7,
+        "gain": 6
+      },
+      "question_id": "1da05512",
+      "question_type": "single-session-preference"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 1,
+        "candidate": 1,
+        "required": 1
+      },
+      "answer_session_messages": {
+        "baseline": 4,
+        "candidate": 2
+      },
+      "baseline": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "candidate": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 6,
+        "removed_answer_session_baseline_ranks": [
+          4,
+          7
+        ],
+        "removed_answer_session_messages": 2,
+        "removed_messages": 6
+      },
+      "context_json_bytes": {
+        "baseline": 32527,
+        "candidate": 31929,
+        "ratio": 0.9816152734651212
+      },
+      "diagnosis": {
+        "evidence": "The explicit week-long family trip to Hawaii was dropped from baseline rank four.",
+        "pattern": "direct-answer-bearing-message-pruned"
+      },
+      "direction": "baseline-win",
+      "distinct_sessions": {
+        "baseline": 2,
+        "candidate": 6,
+        "gain": 4
+      },
+      "question_id": "e01b8e2f",
+      "question_type": "single-session-user"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 1,
+        "candidate": 1,
+        "required": 1
+      },
+      "answer_session_messages": {
+        "baseline": 10,
+        "candidate": 2
+      },
+      "baseline": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "candidate": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 8,
+        "removed_answer_session_baseline_ranks": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "removed_answer_session_messages": 8,
+        "removed_messages": 8
+      },
+      "context_json_bytes": {
+        "baseline": 42699,
+        "candidate": 21944,
+        "ratio": 0.5139230426942083
+      },
+      "diagnosis": {
+        "evidence": "The message explicitly stating the prior surname Johnson was dropped from baseline rank nine.",
+        "pattern": "direct-answer-bearing-message-pruned"
+      },
+      "direction": "baseline-win",
+      "distinct_sessions": {
+        "baseline": 1,
+        "candidate": 7,
+        "gain": 6
+      },
+      "question_id": "c5e8278d",
+      "question_type": "single-session-user"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 1,
+        "candidate": 1,
+        "required": 1
+      },
+      "answer_session_messages": {
+        "baseline": 5,
+        "candidate": 2
+      },
+      "baseline": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "candidate": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 3,
+        "removed_answer_session_baseline_ranks": [
+          3,
+          6,
+          10
+        ],
+        "removed_answer_session_messages": 3,
+        "removed_messages": 3
+      },
+      "context_json_bytes": {
+        "baseline": 33150,
+        "candidate": 34788,
+        "ratio": 1.0494117647058823
+      },
+      "diagnosis": {
+        "evidence": "The message explicitly naming the lemon blueberry birthday cake was dropped from baseline rank three.",
+        "pattern": "direct-answer-bearing-message-pruned"
+      },
+      "direction": "baseline-win",
+      "distinct_sessions": {
+        "baseline": 5,
+        "candidate": 6,
+        "gain": 1
+      },
+      "question_id": "bc8a6e93",
+      "question_type": "single-session-user"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 2,
+        "candidate": 2,
+        "required": 2
+      },
+      "answer_session_messages": {
+        "baseline": 7,
+        "candidate": 4
+      },
+      "baseline": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "candidate": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "context_changes": {
+        "added_answer_session_messages": 1,
+        "added_messages": 4,
+        "removed_answer_session_baseline_ranks": [
+          6,
+          7,
+          9,
+          10
+        ],
+        "removed_answer_session_messages": 4,
+        "removed_messages": 4
+      },
+      "context_json_bytes": {
+        "baseline": 27628,
+        "candidate": 20311,
+        "ratio": 0.7351599826263211
+      },
+      "diagnosis": {
+        "evidence": "The candidate added the explicit four-day Chicago-trip message while retaining the Japan dates, enabling the correct eleven-day sum.",
+        "pattern": "direct-useful-message-added"
+      },
+      "direction": "candidate-win",
+      "distinct_sessions": {
+        "baseline": 4,
+        "candidate": 5,
+        "gain": 1
+      },
+      "question_id": "3fdac837",
+      "question_type": "multi-session"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 3,
+        "candidate": 3,
+        "required": 3
+      },
+      "answer_session_messages": {
+        "baseline": 9,
+        "candidate": 6
+      },
+      "baseline": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "candidate": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 3,
+        "removed_answer_session_baseline_ranks": [
+          7,
+          8,
+          10
+        ],
+        "removed_answer_session_messages": 3,
+        "removed_messages": 3
+      },
+      "context_json_bytes": {
+        "baseline": 24822,
+        "candidate": 25157,
+        "ratio": 1.0134960921762952
+      },
+      "diagnosis": {
+        "evidence": "The three-day Big Sur camping fact needed for the eight-day sum was dropped from baseline rank ten.",
+        "pattern": "direct-answer-bearing-message-pruned"
+      },
+      "direction": "baseline-win",
+      "distinct_sessions": {
+        "baseline": 4,
+        "candidate": 6,
+        "gain": 2
+      },
+      "question_id": "b5ef892d",
+      "question_type": "multi-session"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 2,
+        "candidate": 2,
+        "required": 2
+      },
+      "answer_session_messages": {
+        "baseline": 5,
+        "candidate": 3
+      },
+      "baseline": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "candidate": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 2,
+        "removed_answer_session_baseline_ranks": [
+          9,
+          10
+        ],
+        "removed_answer_session_messages": 2,
+        "removed_messages": 2
+      },
+      "context_json_bytes": {
+        "baseline": 22398,
+        "candidate": 16355,
+        "ratio": 0.730199124921868
+      },
+      "diagnosis": {
+        "evidence": "Both arms retained the four-years-three-months NovaTech tenure, but neither established that the Google job had begun; only the candidate converted it into a pre-Google duration.",
+        "pattern": "unsupported-inference-after-context-perturbation"
+      },
+      "direction": "baseline-win",
+      "distinct_sessions": {
+        "baseline": 6,
+        "candidate": 8,
+        "gain": 2
+      },
+      "question_id": "gpt4_93159ced_abs",
+      "question_type": "temporal-reasoning"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 2,
+        "candidate": 2,
+        "required": 2
+      },
+      "answer_session_messages": {
+        "baseline": 10,
+        "candidate": 4
+      },
+      "baseline": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "candidate": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 6,
+        "removed_answer_session_baseline_ranks": [
+          4,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "removed_answer_session_messages": 6,
+        "removed_messages": 6
+      },
+      "context_json_bytes": {
+        "baseline": 24927,
+        "candidate": 15031,
+        "ratio": 0.6030007622256991
+      },
+      "diagnosis": {
+        "evidence": "The later 5-2 volleyball update was dropped from baseline rank four, leaving the candidate to report the older 3-2 record.",
+        "pattern": "direct-answer-bearing-message-pruned"
+      },
+      "direction": "baseline-win",
+      "distinct_sessions": {
+        "baseline": 2,
+        "candidate": 7,
+        "gain": 5
+      },
+      "question_id": "c7dc5443",
+      "question_type": "knowledge-update"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 2,
+        "candidate": 2,
+        "required": 2
+      },
+      "answer_session_messages": {
+        "baseline": 10,
+        "candidate": 6
+      },
+      "baseline": {
+        "judge_votes": [
+          1,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "candidate": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 4,
+        "removed_answer_session_baseline_ranks": [
+          6,
+          8,
+          9,
+          10
+        ],
+        "removed_answer_session_messages": 4,
+        "removed_messages": 4
+      },
+      "context_json_bytes": {
+        "baseline": 39712,
+        "candidate": 27244,
+        "ratio": 0.6860394842868655
+      },
+      "diagnosis": {
+        "evidence": "Both answers said close to or about 1,300 with an uncertainty caveat; baseline votes were 1/0/0 and candidate votes were unanimous.",
+        "pattern": "salience-or-wording-boundary"
+      },
+      "direction": "candidate-win",
+      "distinct_sessions": {
+        "baseline": 2,
+        "candidate": 4,
+        "gain": 2
+      },
+      "question_id": "a2f3aa27",
+      "question_type": "knowledge-update"
+    },
+    {
+      "answer_session_coverage": {
+        "baseline": 2,
+        "candidate": 2,
+        "required": 2
+      },
+      "answer_session_messages": {
+        "baseline": 10,
+        "candidate": 4
+      },
+      "baseline": {
+        "judge_votes": [
+          1,
+          1,
+          1
+        ],
+        "majority_score": 1
+      },
+      "candidate": {
+        "judge_votes": [
+          0,
+          0,
+          0
+        ],
+        "majority_score": 0
+      },
+      "context_changes": {
+        "added_answer_session_messages": 0,
+        "added_messages": 6,
+        "removed_answer_session_baseline_ranks": [
+          3,
+          4,
+          7,
+          8,
+          9,
+          10
+        ],
+        "removed_answer_session_messages": 6,
+        "removed_messages": 6
+      },
+      "context_json_bytes": {
+        "baseline": 32042,
+        "candidate": 26671,
+        "ratio": 0.8323762561637851
+      },
+      "diagnosis": {
+        "evidence": "The messages stating and confirming seven bass on the earlier trip were dropped from baseline ranks eight and nine.",
+        "pattern": "direct-answer-bearing-message-pruned"
+      },
+      "direction": "baseline-win",
+      "distinct_sessions": {
+        "baseline": 2,
+        "candidate": 6,
+        "gain": 4
+      },
+      "question_id": "10e09553",
+      "question_type": "knowledge-update"
+    }
+  ],
+  "schema_version": 1,
+  "source_sha256": {
+    "baseline_checkpoint": "7955578d87193549f09c202cce8028d9c336716c00af072dd19770976066bbf3",
+    "candidate_replay": "eadf1b6dbcce23c0dc0fd47e1efaa6f3f3f7914e2ffa3f638195eeedf8cee2c2",
+    "contract": "5a27276688253a52fa359aabc81573ae75a321bb4c8829f0c03dda74bca5666e",
+    "dataset": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+    "diagnostic_labels": "ddb22ab8dced0771609e3d258df3813e6d9bcd1620e9310468870756238416f9",
+    "raw": "c5c58bbdf0396ac8e49331a41a9d26b0d0e76d87739b1b12ad0f426a9eda658e"
+  },
+  "status": "completed-development-only-non-tuning-diagnostic"
+}

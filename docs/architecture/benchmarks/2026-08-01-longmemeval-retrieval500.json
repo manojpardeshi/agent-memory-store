@@ -1,0 +1,98 @@
+{
+  "categories": {
+    "knowledge-update": {
+      "answer_session_recall_at_10": 0.9807692307692307,
+      "answer_session_recall_at_5": 0.9102564102564102,
+      "hit_at_10": 0.9871794871794872,
+      "hit_at_5": 0.9743589743589743,
+      "mrr_at_10": 0.9759615384615384,
+      "question_count": 78,
+      "result_precision_at_10": 0.8435897435897436,
+      "result_precision_at_5": 0.9179487179487177,
+      "returned_result_count_max": 10,
+      "returned_result_count_mean": 9.987179487179487,
+      "returned_result_count_min": 9
+    },
+    "multi-session": {
+      "answer_session_recall_at_10": 0.8923558897243108,
+      "answer_session_recall_at_5": 0.7680451127819552,
+      "hit_at_10": 0.9774436090225563,
+      "hit_at_5": 0.9548872180451128,
+      "mrr_at_10": 0.9157984246330111,
+      "question_count": 133,
+      "result_precision_at_10": 0.7999999999999998,
+      "result_precision_at_5": 0.8511278195488718,
+      "returned_result_count_max": 10,
+      "returned_result_count_mean": 10.0,
+      "returned_result_count_min": 10
+    },
+    "single-session-assistant": {
+      "answer_session_recall_at_10": 1.0,
+      "answer_session_recall_at_5": 1.0,
+      "hit_at_10": 1.0,
+      "hit_at_5": 1.0,
+      "mrr_at_10": 0.988095238095238,
+      "question_count": 56,
+      "result_precision_at_10": 0.6035714285714288,
+      "result_precision_at_5": 0.7964285714285712,
+      "returned_result_count_max": 10,
+      "returned_result_count_mean": 9.839285714285714,
+      "returned_result_count_min": 4
+    },
+    "single-session-preference": {
+      "answer_session_recall_at_10": 0.9333333333333333,
+      "answer_session_recall_at_5": 0.9,
+      "hit_at_10": 0.9333333333333333,
+      "hit_at_5": 0.9,
+      "mrr_at_10": 0.8038888888888888,
+      "question_count": 30,
+      "result_precision_at_10": 0.51,
+      "result_precision_at_5": 0.6199999999999999,
+      "returned_result_count_max": 10,
+      "returned_result_count_mean": 10.0,
+      "returned_result_count_min": 10
+    },
+    "single-session-user": {
+      "answer_session_recall_at_10": 0.9571428571428572,
+      "answer_session_recall_at_5": 0.9142857142857143,
+      "hit_at_10": 0.9571428571428572,
+      "hit_at_5": 0.9142857142857143,
+      "mrr_at_10": 0.8586054421768707,
+      "question_count": 70,
+      "result_precision_at_10": 0.5485714285714286,
+      "result_precision_at_5": 0.6714285714285714,
+      "returned_result_count_max": 10,
+      "returned_result_count_mean": 9.985714285714286,
+      "returned_result_count_min": 9
+    },
+    "temporal-reasoning": {
+      "answer_session_recall_at_10": 0.8578947368421052,
+      "answer_session_recall_at_5": 0.7533834586466164,
+      "hit_at_10": 0.9548872180451128,
+      "hit_at_5": 0.924812030075188,
+      "mrr_at_10": 0.8841985917173887,
+      "question_count": 133,
+      "result_precision_at_10": 0.6804511278195486,
+      "result_precision_at_5": 0.7593984962406015,
+      "returned_result_count_max": 10,
+      "returned_result_count_mean": 10.0,
+      "returned_result_count_min": 10
+    }
+  },
+  "metric_scope": "deterministic session-label diagnostic; not MemoryBench LLM relevance",
+  "overall": {
+    "answer_session_recall_at_10": 0.9205666666666665,
+    "answer_session_recall_at_5": 0.8406999999999999,
+    "hit_at_10": 0.97,
+    "hit_at_5": 0.946,
+    "mrr_at_10": 0.9101539682539682,
+    "question_count": 500,
+    "result_precision_at_10": 0.7004000000000004,
+    "result_precision_at_5": 0.7920000000000008,
+    "returned_result_count_max": 10,
+    "returned_result_count_mean": 9.978,
+    "returned_result_count_min": 4
+  },
+  "schema_version": 1,
+  "search_depth": 10
+}

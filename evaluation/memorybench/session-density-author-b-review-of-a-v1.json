@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "reviewer": "B",
+  "source_sha256": "6ae8b5920fed254584a218da2137a4dce4534153fda367832672452a5f18bb3e",
+  "status": "pass",
+  "per_case_findings": [
+    {
+      "case_id": "A001",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A002",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A003",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A004",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A005",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A006",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A007",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A008",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A009",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A010",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A011",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A012",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A013",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A014",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A015",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A016",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A017",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A018",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A019",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A020",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A021",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A022",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A023",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A024",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A025",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A026",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A027",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A028",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A029",
+      "status": "pass",
+      "findings": []
+    },
+    {
+      "case_id": "A030",
+      "status": "pass",
+      "findings": []
+    }
+  ],
+  "corpus_findings": [],
+  "aggregate_counts": {
+    "total_cases": 30,
+    "passed_cases": 30,
+    "cases_needing_corrections": 0,
+    "case_findings": 0,
+    "corpus_findings": 0,
+    "errors": 0,
+    "warnings": 0,
+    "dense_evidence_cases": 20,
+    "diversity_required_cases": 10,
+    "minimum_sessions_per_case": 8,
+    "maximum_sessions_per_case": 8,
+    "minimum_messages_per_case": 22,
+    "maximum_messages_per_case": 24,
+    "categories": [
+      {
+        "category": "single-session-preference",
+        "total": 5,
+        "dense_evidence": 5,
+        "diversity_required": 0
+      },
+      {
+        "category": "single-session-user",
+        "total": 5,
+        "dense_evidence": 5,
+        "diversity_required": 0
+      },
+      {
+        "category": "multi-session",
+        "total": 5,
+        "dense_evidence": 0,
+        "diversity_required": 5
+      },
+      {
+        "category": "temporal-reasoning",
+        "total": 5,
+        "dense_evidence": 3,
+        "diversity_required": 2
+      },
+      {
+        "category": "knowledge-update",
+        "total": 5,
+        "dense_evidence": 2,
+        "diversity_required": 3
+      },
+      {
+        "category": "single-session-assistant",
+        "total": 5,
+        "dense_evidence": 5,
+        "diversity_required": 0
+      }
+    ]
+  }
+}

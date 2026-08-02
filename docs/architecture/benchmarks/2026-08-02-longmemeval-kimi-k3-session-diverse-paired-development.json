@@ -1,0 +1,244 @@
+{
+  "all_gates_passed": false,
+  "arms": {
+    "baseline": {
+      "answer_calls": {
+        "calls": 60,
+        "cost_usd": 1.716024,
+        "latency_ms": {
+          "max": 27693.0,
+          "mean": 9397.267,
+          "p95": 20219.0
+        },
+        "tokens": {
+          "cached_input_tokens": 0,
+          "completion_tokens": 12663,
+          "prompt_tokens": 508693,
+          "reasoning_tokens": 7832,
+          "uncached_input_tokens": 508693
+        }
+      },
+      "category_accuracy": {
+        "knowledge-update": {
+          "accuracy": 0.9,
+          "correct": 9,
+          "questions": 10
+        },
+        "multi-session": {
+          "accuracy": 0.4,
+          "correct": 4,
+          "questions": 10
+        },
+        "single-session-assistant": {
+          "accuracy": 1.0,
+          "correct": 10,
+          "questions": 10
+        },
+        "single-session-preference": {
+          "accuracy": 0.7,
+          "correct": 7,
+          "questions": 10
+        },
+        "single-session-user": {
+          "accuracy": 1.0,
+          "correct": 10,
+          "questions": 10
+        },
+        "temporal-reasoning": {
+          "accuracy": 0.5,
+          "correct": 5,
+          "questions": 10
+        }
+      },
+      "context_json_bytes": {
+        "max": 49468.0,
+        "mean": 30634.8,
+        "p95": 43984.0
+      },
+      "judge_calls": {
+        "calls": 180,
+        "cost_usd": 0.4515456,
+        "latency_ms": {
+          "max": 15433.0,
+          "mean": 5988.233,
+          "p95": 10749.0
+        },
+        "tokens": {
+          "cached_input_tokens": 43262,
+          "completion_tokens": 20153,
+          "prompt_tokens": 88686,
+          "reasoning_tokens": 9455,
+          "uncached_input_tokens": 45424
+        }
+      },
+      "judge_vote_unanimity": 0.95,
+      "majority_accuracy": 0.75,
+      "majority_correct": 45,
+      "nonunanimous_question_ids": [
+        "195a1a1b",
+        "60bf93ed_abs",
+        "a2f3aa27"
+      ],
+      "questions": 60
+    },
+    "candidate": {
+      "answer_calls": {
+        "calls": 60,
+        "cost_usd": 1.549107,
+        "latency_ms": {
+          "max": 24908.0,
+          "mean": 9570.533,
+          "p95": 16435.0
+        },
+        "tokens": {
+          "cached_input_tokens": 0,
+          "completion_tokens": 13775,
+          "prompt_tokens": 447494,
+          "reasoning_tokens": 9386,
+          "uncached_input_tokens": 447494
+        }
+      },
+      "category_accuracy": {
+        "knowledge-update": {
+          "accuracy": 0.8,
+          "correct": 8,
+          "questions": 10
+        },
+        "multi-session": {
+          "accuracy": 0.4,
+          "correct": 4,
+          "questions": 10
+        },
+        "single-session-assistant": {
+          "accuracy": 1.0,
+          "correct": 10,
+          "questions": 10
+        },
+        "single-session-preference": {
+          "accuracy": 0.7,
+          "correct": 7,
+          "questions": 10
+        },
+        "single-session-user": {
+          "accuracy": 0.7,
+          "correct": 7,
+          "questions": 10
+        },
+        "temporal-reasoning": {
+          "accuracy": 0.4,
+          "correct": 4,
+          "questions": 10
+        }
+      },
+      "context_json_bytes": {
+        "max": 42780.0,
+        "mean": 25943.25,
+        "p95": 36259.0
+      },
+      "judge_calls": {
+        "calls": 180,
+        "cost_usd": 0.4305384,
+        "latency_ms": {
+          "max": 13278.0,
+          "mean": 5826.722,
+          "p95": 9550.0
+        },
+        "tokens": {
+          "cached_input_tokens": 47608,
+          "completion_tokens": 19800,
+          "prompt_tokens": 87360,
+          "reasoning_tokens": 9065,
+          "uncached_input_tokens": 39752
+        }
+      },
+      "judge_vote_unanimity": 1.0,
+      "majority_accuracy": 0.6666666666666666,
+      "majority_correct": 40,
+      "nonunanimous_question_ids": [],
+      "questions": 60
+    }
+  },
+  "audit_sample_conclusive": true,
+  "automated_gates_passed": false,
+  "cost": {
+    "computed_total_usd": 4.147215,
+    "reported_total_usd": 4.147215
+  },
+  "experiment_id": "kimi-k3-session-diverse-paired-development60-v1",
+  "gate_results": {
+    "context_mean": true,
+    "context_p95": true,
+    "cost_ceiling": true,
+    "exact_model": true,
+    "failed_calls": true,
+    "minimum_candidate_correct": false,
+    "minimum_vote_unanimity_rate": true,
+    "overall_noninferiority": false,
+    "per_category_noninferiority": false,
+    "target_category_combined_gain": false,
+    "untargeted_category_combined_noninferiority": false,
+    "vote_unanimity_rate_balance": true
+  },
+  "human_audit_required": true,
+  "input_identity": {
+    "baseline_checkpoint_sha256": [
+      "7955578d87193549f09c202cce8028d9c336716c00af072dd19770976066bbf3"
+    ],
+    "candidate_replay_sha256": "eadf1b6dbcce23c0dc0fd47e1efaa6f3f3f7914e2ffa3f638195eeedf8cee2c2",
+    "combined_sha256": "fbe127085b94d03462822bd380891493ff8db71313f2b3f1744e07a207582f2f",
+    "contract_sha256": "5a27276688253a52fa359aabc81573ae75a321bb4c8829f0c03dda74bca5666e",
+    "development_manifest_sha256": "34f0d70817fc972fe15ad405d11c78e2309266d6324697badeac314bd5585f94",
+    "selection_sha256": "38391ce30303a228090dadda178fb02ebb46c7707960b685ac55b8324be458cf"
+  },
+  "judge_repeats": 3,
+  "minimum_unique_audit_questions": 4,
+  "model": "kimi-k3",
+  "paired": {
+    "accuracy_delta": -0.08333333333333337,
+    "audit_question_ids": [
+      "caf03d32",
+      "195a1a1b",
+      "1da05512",
+      "e01b8e2f",
+      "c5e8278d",
+      "bc8a6e93",
+      "3fdac837",
+      "60bf93ed_abs",
+      "b5ef892d",
+      "gpt4_93159ced_abs",
+      "c7dc5443",
+      "a2f3aa27",
+      "10e09553"
+    ],
+    "discordant_question_ids": [
+      "caf03d32",
+      "1da05512",
+      "e01b8e2f",
+      "c5e8278d",
+      "bc8a6e93",
+      "3fdac837",
+      "b5ef892d",
+      "gpt4_93159ced_abs",
+      "c7dc5443",
+      "a2f3aa27",
+      "10e09553"
+    ],
+    "discordant_questions": 11,
+    "losses": 8,
+    "nonunanimous_question_ids": [
+      "195a1a1b",
+      "60bf93ed_abs",
+      "a2f3aa27"
+    ],
+    "nonunanimous_questions": 3,
+    "ties": 49,
+    "wins": 3
+  },
+  "question_count": 60,
+  "schema_version": 1,
+  "source_sha256": {
+    "contract": "5a27276688253a52fa359aabc81573ae75a321bb4c8829f0c03dda74bca5666e",
+    "raw": "c5c58bbdf0396ac8e49331a41a9d26b0d0e76d87739b1b12ad0f426a9eda658e"
+  },
+  "status": "failed"
+}

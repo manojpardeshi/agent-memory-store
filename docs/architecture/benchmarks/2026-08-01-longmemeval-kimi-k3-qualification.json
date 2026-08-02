@@ -1,0 +1,313 @@
+{
+  "empty_context_control": {
+    "answer_calls": {
+      "calls": 20,
+      "cost_usd": 0.032835,
+      "latency_ms": {
+        "max": 7386,
+        "mean": 4172.45,
+        "p95": 5231
+      },
+      "tokens": {
+        "cached_input_tokens": 0,
+        "completion_tokens": 1110,
+        "prompt_tokens": 5395,
+        "reasoning_tokens": 703,
+        "uncached_input_tokens": 5395
+      }
+    },
+    "answer_repeat_accuracy": {
+      "0": 0.05
+    },
+    "answer_repeat_pairwise_agreement": null,
+    "answer_repeats": 1,
+    "category_accuracy": {
+      "knowledge-update": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "questions": 3
+      },
+      "multi-session": {
+        "accuracy": 0.3333333333333333,
+        "correct": 1,
+        "questions": 3
+      },
+      "single-session-assistant": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "questions": 3
+      },
+      "single-session-preference": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "questions": 4
+      },
+      "single-session-user": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "questions": 4
+      },
+      "temporal-reasoning": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "questions": 3
+      }
+    },
+    "context_mode": "empty",
+    "judge_calls": {
+      "calls": 60,
+      "cost_usd": 0.1366236,
+      "latency_ms": {
+        "max": 11655,
+        "mean": 6195.1,
+        "p95": 9114
+      },
+      "tokens": {
+        "cached_input_tokens": 12032,
+        "completion_tokens": 6090,
+        "prompt_tokens": 25920,
+        "reasoning_tokens": 2612,
+        "uncached_input_tokens": 13888
+      }
+    },
+    "judge_repeats": 3,
+    "judge_vote_unanimity": 1.0,
+    "majority_accuracy": 0.05,
+    "majority_correct": 1,
+    "model": "kimi-k3",
+    "question_count": 20,
+    "reported_total_cost_usd": 0.1694586,
+    "stable_question_rate": 1.0
+  },
+  "human_answer_audit": {
+    "all_gates_passed": true,
+    "answer_repeat": 0,
+    "audit_scope": "kimi-k3-answer-quality",
+    "candidate_answer_model": "kimi-k3",
+    "category_accuracy": {
+      "knowledge-update": {
+        "accuracy": 1.0,
+        "correct": 3,
+        "questions": 3
+      },
+      "multi-session": {
+        "accuracy": 1.0,
+        "correct": 3,
+        "questions": 3
+      },
+      "single-session-assistant": {
+        "accuracy": 1.0,
+        "correct": 3,
+        "questions": 3
+      },
+      "single-session-preference": {
+        "accuracy": 0.75,
+        "correct": 3,
+        "questions": 4
+      },
+      "single-session-user": {
+        "accuracy": 1.0,
+        "correct": 4,
+        "questions": 4
+      },
+      "temporal-reasoning": {
+        "accuracy": 0.3333333333333333,
+        "correct": 1,
+        "questions": 3
+      }
+    },
+    "declared_checkpoint_sha256": "7955578d87193549f09c202cce8028d9c336716c00af072dd19770976066bbf3",
+    "failure_policy": "do-not-use-kimi-k3-as-the-sealed-benchmark-answerer",
+    "gate_results": {
+      "answer_repeat_is_zero": true,
+      "exact_model": true,
+      "exact_raw_answer_provenance": true,
+      "minimum_human_accuracy": true,
+      "minimum_human_correct": true,
+      "unique_question_count": true
+    },
+    "gate_thresholds": {
+      "minimum_human_accuracy": 0.7,
+      "minimum_human_correct": 14
+    },
+    "human_accuracy": 0.85,
+    "human_correct": 17,
+    "human_incorrect": 3,
+    "missed_audit_ids": [
+      "K03",
+      "K12",
+      "K13"
+    ],
+    "provenance": {
+      "exact_answer_matches": 20,
+      "raw_answer_repeat": 0,
+      "raw_model": "kimi-k3",
+      "unique_question_ids": 20
+    },
+    "questions": 20,
+    "schema_version": 1,
+    "source_sha256": {
+      "gates": "d77ab52e6a91189225f9b3d24cf04efa8766171c2131299fd8a900ce0007f1ec",
+      "key": "7a47c563f670de3ca1455dbe9b737f07decd930059ae99df94c0e66e14022be8",
+      "kimi": "833f1cc1df854526c50730fcf55a321eebb7ce752b83c419244a4d9433fb3d47",
+      "packet": "2aa1cbe8bc449358b51bbcc341768c2a20f5c0263c30aa4facf5423cdbe40f53"
+    },
+    "status": "passed"
+  },
+  "human_judge_audit": {
+    "all_gates_passed": true,
+    "audit_scope": "kimi-k3-judge-concordance-only",
+    "candidate_answer_model": "claude-opus-5",
+    "comparative_diagnostics": {
+      "claude_vs_human_agreement": 28,
+      "claude_vs_human_rate": 0.9333333333333333,
+      "kimi_vs_claude_agreement": 30,
+      "kimi_vs_claude_rate": 1.0
+    },
+    "cost_usd": 0.2459868,
+    "gate_results": {
+      "human_negative_agreement": true,
+      "human_positive_agreement": true,
+      "overall_agreement": true,
+      "positive_count_drift": true,
+      "vote_unanimity": true
+    },
+    "gate_thresholds": {
+      "maximum_absolute_positive_count_drift": 3,
+      "minimum_human_negative_agreement": 11,
+      "minimum_human_positive_agreement": 15,
+      "minimum_overall_agreement": 27,
+      "minimum_unanimous_three_vote_items": 27
+    },
+    "human_labels": {
+      "negative": 13,
+      "positive": 17
+    },
+    "kimi_vs_human": {
+      "absolute_positive_count_drift": 0,
+      "human_negative_agreement": 12,
+      "human_negative_total": 13,
+      "human_positive_agreement": 16,
+      "human_positive_total": 17,
+      "kimi_positive_count": 17,
+      "overall_agreement": 28,
+      "overall_rate": 0.9333333333333333,
+      "unanimous_three_vote_items": 28
+    },
+    "model": "kimi-k3",
+    "not_evidence_for": "kimi-k3-answer-quality",
+    "questions": 30,
+    "schema_version": 1,
+    "source_sha256": {
+      "gates": "45c4981f38678094427ae285d1e1dba31abb55490aea7d5ed43cdf002a71b094",
+      "key": "b15ac77871a5873f983f71ab49cb53943620bdc0a0d860b9862acbf7946554bf",
+      "kimi": "8d98d1ca3ff9e79c852abee4ec153854f2fb4b08eff1eb4473d3f4ae07fd2452",
+      "packet": "c07b14c39d7df98a4321c8acf8188b6ff87407421d5931fc54ac03de563fbe13"
+    },
+    "status": "passed"
+  },
+  "memory_attributable_accuracy_uplift": 0.7,
+  "model": "kimi-k3",
+  "qualification_gates": {
+    "answer_repeat_pairwise_agreement_at_least_0_90": true,
+    "empty_context_accuracy_at_most_0_10": true,
+    "exact_model": true,
+    "human_answer_audit_complete": true,
+    "human_judge_audit_complete": true,
+    "judge_vote_unanimity_at_least_0_95": true,
+    "retrieved_accuracy_at_least_0_70": true
+  },
+  "raw_evidence": {
+    "answer_human_audit_sha256": "0d1459a60a86d9448d34bca11fe21af6e08ac65efe0ae4f238935637328371d0",
+    "empty_context_sha256": "dead47d690d5b4dea5d297d9fba9f6b7049bad325153e6666fa15679ec264027",
+    "human_audit_sha256": "5c8359b548f8b50f0538ac887247834b2ade5b2a8bd95880347dcc4fd5830310",
+    "retrieved_sha256": "833f1cc1df854526c50730fcf55a321eebb7ce752b83c419244a4d9433fb3d47"
+  },
+  "retrieved_context": {
+    "answer_calls": {
+      "calls": 60,
+      "cost_usd": 0.8323266,
+      "latency_ms": {
+        "max": 49662,
+        "mean": 10940.733,
+        "p95": 22991
+      },
+      "tokens": {
+        "cached_input_tokens": 328192,
+        "completion_tokens": 14357,
+        "prompt_tokens": 501030,
+        "reasoning_tokens": 10243,
+        "uncached_input_tokens": 172838
+      }
+    },
+    "answer_repeat_accuracy": {
+      "0": 0.75,
+      "1": 0.8,
+      "2": 0.75
+    },
+    "answer_repeat_pairwise_agreement": 0.9666666666666667,
+    "answer_repeats": 3,
+    "category_accuracy": {
+      "knowledge-update": {
+        "accuracy": 0.6666666666666666,
+        "correct": 2,
+        "questions": 3
+      },
+      "multi-session": {
+        "accuracy": 0.6666666666666666,
+        "correct": 2,
+        "questions": 3
+      },
+      "single-session-assistant": {
+        "accuracy": 1.0,
+        "correct": 3,
+        "questions": 3
+      },
+      "single-session-preference": {
+        "accuracy": 0.75,
+        "correct": 3,
+        "questions": 4
+      },
+      "single-session-user": {
+        "accuracy": 1.0,
+        "correct": 4,
+        "questions": 4
+      },
+      "temporal-reasoning": {
+        "accuracy": 0.3333333333333333,
+        "correct": 1,
+        "questions": 3
+      }
+    },
+    "context_mode": "retrieved",
+    "judge_calls": {
+      "calls": 180,
+      "cost_usd": 0.4579398,
+      "latency_ms": {
+        "max": 16859,
+        "mean": 6928.878,
+        "p95": 11654
+      },
+      "tokens": {
+        "cached_input_tokens": 42236,
+        "completion_tokens": 20844,
+        "prompt_tokens": 86439,
+        "reasoning_tokens": 10164,
+        "uncached_input_tokens": 44203
+      }
+    },
+    "judge_repeats": 3,
+    "judge_vote_unanimity": 0.9666666666666667,
+    "majority_accuracy": 0.75,
+    "majority_correct": 15,
+    "model": "kimi-k3",
+    "question_count": 20,
+    "reported_total_cost_usd": 1.2902664,
+    "stable_question_rate": 0.95
+  },
+  "schema_version": 1,
+  "selection_sha256": "e8d024d1cc5f9bb11ede9f722f018073147c200d0e036dc780775dcf5002ed76",
+  "source_checkpoint_sha256": "7955578d87193549f09c202cce8028d9c336716c00af072dd19770976066bbf3",
+  "status": "answerer-and-judge-qualified",
+  "total_cost_usd": 1.7057118
+}

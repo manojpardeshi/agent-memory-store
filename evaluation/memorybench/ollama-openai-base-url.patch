@@ -1,0 +1,68 @@
+diff --git a/src/judges/openai.ts b/src/judges/openai.ts
+--- a/src/judges/openai.ts
++++ b/src/judges/openai.ts
+@@ -14,6 +14,7 @@ export class OpenAIJudge implements Judge {
+   async initialize(config: JudgeConfig): Promise<void> {
+     this.client = createOpenAI({
+       apiKey: config.apiKey,
++      ...(config.baseUrl ? { baseURL: config.baseUrl } : {}),
+     })
+     const modelAlias = config.model || DEFAULT_JUDGE_MODELS.openai
+     this.modelConfig = getModelConfig(modelAlias)
+diff --git a/src/orchestrator/phases/answer.ts b/src/orchestrator/phases/answer.ts
+--- a/src/orchestrator/phases/answer.ts
++++ b/src/orchestrator/phases/answer.ts
+@@ -30,7 +30,10 @@ function getAnsweringModel(modelAlias: string): {
+   switch (modelConfig.provider) {
+     case "openai":
+       return {
+-        client: createOpenAI({ apiKey: config.openaiApiKey }),
++        client: createOpenAI({
++          apiKey: config.openaiApiKey,
++          ...(config.openaiBaseUrl ? { baseURL: config.openaiBaseUrl } : {}),
++        }),
+         modelConfig,
+       }
+     case "anthropic":
+diff --git a/src/types/judge.ts b/src/types/judge.ts
+--- a/src/types/judge.ts
++++ b/src/types/judge.ts
+@@ -2,6 +2,7 @@ import type { ProviderPrompts } from "./prompts"
+ 
+ export interface JudgeConfig {
+   apiKey: string
++  baseUrl?: string
+   model?: string
+ }
+ 
+diff --git a/src/utils/config.ts b/src/utils/config.ts
+--- a/src/utils/config.ts
++++ b/src/utils/config.ts
+@@ -4,6 +4,7 @@ export interface Config {
+   mem0ApiKey: string
+   zepApiKey: string
+   openaiApiKey: string
++  openaiBaseUrl: string
+   anthropicApiKey: string
+   googleApiKey: string
+ }
+@@ -14,6 +15,7 @@ export const config: Config = {
+   mem0ApiKey: process.env.MEM0_API_KEY || "",
+   zepApiKey: process.env.ZEP_API_KEY || "",
+   openaiApiKey: process.env.OPENAI_API_KEY || "",
++  openaiBaseUrl: process.env.OPENAI_BASE_URL || "",
+   anthropicApiKey: process.env.ANTHROPIC_API_KEY || "",
+   googleApiKey: process.env.GOOGLE_API_KEY || "",
+ }
+@@ -38,7 +40,10 @@ export function getProviderConfig(provider: string): { apiKey: string; baseUrl?:
+ export function getJudgeConfig(judge: string): { apiKey: string; model?: string } {
+   switch (judge) {
+     case "openai":
+-      return { apiKey: config.openaiApiKey }
++      return {
++        apiKey: config.openaiApiKey,
++        ...(config.openaiBaseUrl ? { baseUrl: config.openaiBaseUrl } : {}),
++      }
+     case "anthropic":
+       return { apiKey: config.anthropicApiKey }
+     case "google":

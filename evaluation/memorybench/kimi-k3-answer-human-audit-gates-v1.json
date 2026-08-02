@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "status": "frozen-before-human-answer-audit",
+  "candidate_answer_model": "kimi-k3",
+  "answer_repeat": 0,
+  "unique_questions": 20,
+  "minimum_human_correct": 14,
+  "minimum_human_accuracy": 0.7,
+  "decision_rule": "human-correct-must-be-at-least-14-of-20",
+  "failure_policy": "do-not-use-kimi-k3-as-the-sealed-benchmark-answerer"
+}

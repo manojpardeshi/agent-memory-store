@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "status": "frozen-before-paid-run",
+  "experiment_id": "kimi-k3-session-diverse-paired-development60-v1",
+  "scope": "development-only-paired-answer-noninferiority-with-targeted-improvement",
+  "selection": {
+    "path": "evaluation/memorybench/longmemeval-stratified60-v1.json",
+    "sha256": "38391ce30303a228090dadda178fb02ebb46c7707960b685ac55b8324be458cf",
+    "question_ids_sha256": "09a5ea17871f98ac5a428b04c33e3f341609552999a409cf5e58b5c5a1a9bc93",
+    "questions": 60,
+    "questions_per_category": 10,
+    "development_manifest_sha256": "34f0d70817fc972fe15ad405d11c78e2309266d6324697badeac314bd5585f94",
+    "validation_manifest_sha256": "1f488ec55ff7125b92132c5ab2d3841f3140cf1d56c79cbed03eef6b5e4624ba",
+    "reserve_manifest_sha256": "dc2c63281b9e27260a5e9dc89f0ce59385f99dec53c8ad656384cd96c9cd658c",
+    "validation_overlap": 0,
+    "reserve_overlap": 0
+  },
+  "sources": {
+    "dataset_sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+    "baseline_checkpoint_sha256": "7955578d87193549f09c202cce8028d9c336716c00af072dd19770976066bbf3",
+    "session_diverse_raw_sha256": "eadf1b6dbcce23c0dc0fd47e1efaa6f3f3f7914e2ffa3f638195eeedf8cee2c2",
+    "session_diverse_retrieval_gates_sha256": "fd653d693e0557339125d5536be52ff0d28a390b2e293ce416992d63d1b9dfa4",
+    "session_diverse_retrieval_evidence_sha256": "920f1b8c5fde02956239c4003988435f2ab265b75ce932d3a9fb735e0f74e70f"
+  },
+  "arms": {
+    "baseline": "released-ranked-top-10",
+    "candidate": "session-diverse-v1"
+  },
+  "candidate_policy": {
+    "policy_id": "session-diverse-v1",
+    "ranked_candidate_pool": 50,
+    "output_slots": 10,
+    "per_session_cap": 2,
+    "unit": "single-message",
+    "selection": "greedy-in-original-rank-order",
+    "backfill": "previously-skipped-items-in-original-rank-order",
+    "ground_truth_available_to_selection": false
+  },
+  "preflight_context_json_bytes": {
+    "baseline_mean": 30634.8,
+    "candidate_mean": 25943.25,
+    "mean_ratio": 0.846855536840456,
+    "baseline_p95": 43984,
+    "candidate_p95": 36259,
+    "p95_ratio": 0.8243679519825391,
+    "baseline_max": 49468,
+    "candidate_max": 42780,
+    "exact_identical_context_pairs": 0,
+    "checkpoint_results_match_result_files": 60
+  },
+  "model_protocol": {
+    "exact_model": "kimi-k3",
+    "endpoint": "https://api.moonshot.ai/v1/chat/completions",
+    "answer_repeats": 1,
+    "judge_repeats": 3,
+    "answer_reasoning_effort": "high",
+    "answer_max_completion_tokens": 4096,
+    "answer_system_prompt_sha256": "efa3a6172231b6a0c32235ea9c8b9266ea27b96809b161108b5c3110e4e269c7",
+    "judge_reasoning_effort": "low",
+    "judge_max_completion_tokens": 1024,
+    "judge_system_prompt_sha256": "0e8909fc9e8b668e78db10e23815dcff2cc5c728b0916ef8d0743117c4c99fed",
+    "prompt_builder_source_sha256": "cb3e25ddbe9ab21347a426f98046d6240b9fb6fefa25ae81cc65a13a87aa5208",
+    "request_builder_source_sha256": "e210c889f4ea7653c09d93185693578204127e1e3e61b83e44adf8d6b8b1d998",
+    "temperature": "omitted-provider-default",
+    "top_p": "omitted-provider-default",
+    "seed": "unsupported-omitted",
+    "arm_order": "sha256-experiment-id-and-question-id",
+    "judge_blind_to_arm_context_and_policy": true,
+    "same_base_model_answerer_and_judge": true
+  },
+  "budget": {
+    "maximum_total_cost_usd": 5.0,
+    "maximum_answer_call_cost_usd": 0.25,
+    "maximum_judge_call_cost_usd": 0.05,
+    "single_shared_ledger": true,
+    "pre_call_worst_case_reservation_required": true
+  },
+  "automated_gates": {
+    "minimum_candidate_correct": 42,
+    "overall_noninferiority_maximum_correct_loss": 1,
+    "target_categories": [
+      "multi-session",
+      "temporal-reasoning"
+    ],
+    "target_combined_minimum_correct_gain": 2,
+    "untargeted_combined_maximum_correct_loss": 1,
+    "per_category_maximum_correct_loss": 1,
+    "minimum_vote_unanimity_rate_each_arm": 0.85,
+    "maximum_vote_unanimity_rate_difference": 0.1,
+    "context_mean_maximum_ratio": 1.0,
+    "context_p95_maximum_ratio": 1.1,
+    "maximum_failed_calls": 0,
+    "exact_response_model_required": true
+  },
+  "human_audit": {
+    "required_questions": "every arm-majority-discordant question plus every question with a non-unanimous answer in either arm",
+    "minimum_unique_audit_questions": 4,
+    "blind_left_right_order": "sha256-experiment-id-question-id-human-audit-v1",
+    "context_and_arm_identity_hidden": true,
+    "grade_each_answer_independently": true,
+    "rubric": "Correct only when the answer states the reference fact or satisfies the personalization rubric without a contradicting or fabricated specific; a refusal or missing required fact is incorrect.",
+    "replicate_fraction": 0.2,
+    "minimum_intrarater_agreement": 0.9,
+    "minimum_judge_human_agreement": 0.75,
+    "human_labels_authoritative_for_audited_answers": true,
+    "rerun_automated_scoring_gates_after_substitution": true
+  },
+  "stop_conditions": [
+    "any selection, source, protocol, candidate-policy, or preflight hash mismatch",
+    "any validation or reserve access",
+    "remaining shared budget cannot cover the conservative next-call reservation",
+    "response model differs from exact kimi-k3",
+    "malformed or abnormal response cannot be recovered by one identical-request reissue",
+    "resume identity differs from the frozen contract"
+  ],
+  "failure_policy": "checkpoint incomplete or failed evidence; do not raise the budget, tune the candidate, open sealed validation, or claim a result",
+  "authorization_on_final_pass": "request one owner-approved sealed-validation comparison only; no shipment or external claim"
+}

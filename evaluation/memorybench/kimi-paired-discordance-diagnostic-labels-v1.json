@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "status": "recorded-after-completed-development-run",
+  "scope": "label-aware-non-tuning-diagnostic",
+  "tuning_authorized": false,
+  "source_raw_sha256": "c5c58bbdf0396ac8e49331a41a9d26b0d0e76d87739b1b12ad0f426a9eda658e",
+  "patterns": {
+    "direct-answer-bearing-message-pruned": "The candidate retained the labeled session but the two-message cap removed the message containing the decisive fact.",
+    "direct-useful-message-added": "The candidate added a decisive labeled-session message absent from the baseline top ten.",
+    "salience-or-wording-boundary": "Both arms had the material fact and no new labeled evidence explains the outcome; answer phrasing or grading threshold changed.",
+    "unsupported-inference-after-context-perturbation": "The candidate inferred a specific answer not established by either context after otherwise non-decisive context changes."
+  },
+  "items": {
+    "caf03d32": {
+      "pattern": "direct-answer-bearing-message-pruned",
+      "evidence": "The cap kept two generic slow-cooker messages and dropped the beef-stew and yogurt personalization evidence at later baseline ranks."
+    },
+    "e01b8e2f": {
+      "pattern": "direct-answer-bearing-message-pruned",
+      "evidence": "The explicit week-long family trip to Hawaii was dropped from baseline rank four."
+    },
+    "c5e8278d": {
+      "pattern": "direct-answer-bearing-message-pruned",
+      "evidence": "The message explicitly stating the prior surname Johnson was dropped from baseline rank nine."
+    },
+    "bc8a6e93": {
+      "pattern": "direct-answer-bearing-message-pruned",
+      "evidence": "The message explicitly naming the lemon blueberry birthday cake was dropped from baseline rank three."
+    },
+    "b5ef892d": {
+      "pattern": "direct-answer-bearing-message-pruned",
+      "evidence": "The three-day Big Sur camping fact needed for the eight-day sum was dropped from baseline rank ten."
+    },
+    "gpt4_93159ced_abs": {
+      "pattern": "unsupported-inference-after-context-perturbation",
+      "evidence": "Both arms retained the four-years-three-months NovaTech tenure, but neither established that the Google job had begun; only the candidate converted it into a pre-Google duration."
+    },
+    "c7dc5443": {
+      "pattern": "direct-answer-bearing-message-pruned",
+      "evidence": "The later 5-2 volleyball update was dropped from baseline rank four, leaving the candidate to report the older 3-2 record."
+    },
+    "10e09553": {
+      "pattern": "direct-answer-bearing-message-pruned",
+      "evidence": "The messages stating and confirming seven bass on the earlier trip were dropped from baseline ranks eight and nine."
+    },
+    "3fdac837": {
+      "pattern": "direct-useful-message-added",
+      "evidence": "The candidate added the explicit four-day Chicago-trip message while retaining the Japan dates, enabling the correct eleven-day sum."
+    },
+    "1da05512": {
+      "pattern": "salience-or-wording-boundary",
+      "evidence": "Both arms retained the explicit home-storage-capacity message; the candidate framed it directly while the baseline phrased the same condition hypothetically."
+    },
+    "a2f3aa27": {
+      "pattern": "salience-or-wording-boundary",
+      "evidence": "Both answers said close to or about 1,300 with an uncertainty caveat; baseline votes were 1/0/0 and candidate votes were unanimous."
+    }
+  }
+}
