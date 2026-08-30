@@ -125,3 +125,13 @@ benchmark or user evidence showing that they address the dominant failure.
 - Synthetic evaluation data and public benchmark data must not include owner memory.
 - No standard benchmark run creates a runtime cloud dependency for commit or recall.
 - No new network listener, daemon, or multi-user boundary is implied by this roadmap.
+
+## Parallel candidate-generation branch
+
+`scamper-candidate-generation` runs parallel to `main` and applies a structured SCAMPER
+sweep to generate replacement candidates after the context-bundling hypothesis closed with
+none queued. It generates candidates only: nothing merges toward `main` on the ideation
+record alone, and every candidate still requires its own frozen pre-registered contract
+and explicit owner authorization before a measured run. See
+[`scamper-methodology.md`](scamper-methodology.md) and the pass records under
+[`scamper/`](scamper/).
