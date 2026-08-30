@@ -111,14 +111,43 @@ def _merge_checkpoints(paths: list[Path]) -> dict[str, Any]:
     return questions
 
 
+def _search_results(entry: dict[str, Any], checkpoint_path: Path) -> list[Any]:
+    """Read a question's retrieved results, inline or from its sidecar file.
+
+    MemoryBench stores `resultFile` relative to its own root, not to the checkpoint, and
+    the checkpoint always sits at <root>/data/runs/<run-id>/checkpoint.json.
+    """
+
+    search = entry["phases"]["search"]
+    if "results" in search:
+        return list(search["results"])
+    result_file = search.get("resultFile")
+    if not result_file:
+        raise BaselineRunError("question has neither inline results nor a resultFile")
+    path = Path(result_file)
+    if not path.is_absolute():
+        path = checkpoint_path.parents[3] / result_file
+    if not path.exists():
+        raise BaselineRunError(f"retrieved-results file not found: {path}")
+    return list(json.loads(path.read_text(encoding="utf-8")).get("results", []))
+
+
 def _remaining(report: dict[str, Any]) -> float:
     budget = report["budget"]
     return float(budget["max_total_usd"]) - float(budget["spent_usd"])
 
 
+def _call_cost(call: dict[str, Any]) -> float:
+    """Read the provider-reported cost. run_kimi_call nests it under usage."""
+    try:
+        return float(call["usage"]["calculated_cost_usd"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise BaselineRunError("kimi call returned no usable cost record") from error
+
+
 def _record_cost(report: dict[str, Any], call: dict[str, Any]) -> None:
     report["budget"]["spent_usd"] = round(
-        float(report["budget"]["spent_usd"]) + float(call["cost_usd"]), 8
+        float(report["budget"]["spent_usd"]) + _call_cost(call), 8
     )
 
 
@@ -233,14 +262,7 @@ def run_baseline(
 
     for position, question_id in enumerate(pending, start=1):
         entry = questions[question_id]
-        result_file = entry["phases"]["search"].get("resultFile")
-        if result_file:
-            path = Path(result_file)
-            if not path.is_absolute():
-                path = checkpoints[0].parent / path
-            results = json.loads(path.read_text(encoding="utf-8")).get("results", [])
-        else:
-            results = entry["phases"]["search"]["results"]
+        results = _search_results(entry, checkpoints[0])
 
         resolved_date = question_dates.get(question_id) or entry.get("questionDate")
         prompt = build_answer_prompt(entry["question"], results, resolved_date)
@@ -258,7 +280,7 @@ def run_baseline(
             max_call_usd=ANSWER_MAX_CALL_USD,
             timeout_seconds=timeout_seconds,
         )
-        answer_text = answer_call["text"]
+        answer_text = answer_call["result"]
 
         judge_prompt = build_judge_prompt(
             entry["question"], entry["groundTruth"], answer_text, entry["questionType"]
@@ -279,7 +301,7 @@ def run_baseline(
                 max_call_usd=JUDGE_MAX_CALL_USD,
                 timeout_seconds=timeout_seconds,
             )
-            votes.append(str(parse_judge_response(judge_call["text"])["label"]))
+            votes.append(str(parse_judge_response(judge_call["result"])["label"]))
         label = collections.Counter(votes).most_common(1)[0][0]
 
         report["questions"][question_id] = {
