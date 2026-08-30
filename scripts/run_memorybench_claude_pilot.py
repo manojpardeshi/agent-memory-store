@@ -301,6 +301,28 @@ def _record_call_cost(report: dict[str, Any], cost: float) -> None:
         raise PilotError("pilot exceeded the total budget")
 
 
+def load_question_dates(dataset_path: Path | None) -> dict[str, str]:
+    """Map question_id to the dataset's question_date.
+
+    MemoryBench carries `questionDate` in its checkpoint type, but the retrieval-only
+    phase list this project runs (ingest/indexing/search) leaves it unset, so the
+    answering prompt renders "Question Date: Not specified". Temporal questions of the
+    form "how many days ago ..." are unanswerable without a reference date, and the
+    answerer correctly declines rather than guessing. Reading the date from the pinned
+    dataset restores it without altering retrieval or any stored data.
+    """
+
+    if dataset_path is None:
+        return {}
+    with dataset_path.open(encoding="utf-8") as stream:
+        dataset = json.load(stream)
+    return {
+        str(item["question_id"]): str(item["question_date"])
+        for item in dataset
+        if item.get("question_date")
+    }
+
+
 def run_pilot(
     *,
     root: Path,
@@ -312,6 +334,7 @@ def run_pilot(
     question_ids: tuple[str, ...] = DEFAULT_QUESTION_IDS,
     selection_sha256: str | None = None,
     gate_threshold_correct: int | None = 5,
+    question_dates: dict[str, str] | None = None,
 ) -> dict[str, object]:
     checkpoint_path, checkpoint = _load_source(root, run_id, question_ids)
     if output.exists():
@@ -350,10 +373,13 @@ def run_pilot(
         if not result_path.is_absolute():
             result_path = root / result_path
         search_data = json.loads(result_path.read_text(encoding="utf-8"))
+        resolved_date = (question_dates or {}).get(question_id) or question.get(
+            "questionDate"
+        )
         prompt = build_answer_prompt(
             question["question"],
             search_data.get("results", []),
-            question.get("questionDate"),
+            resolved_date,
         )
         remaining = _remaining_budget(report)
         allowed = min(max_call_usd, remaining)
@@ -363,6 +389,12 @@ def run_pilot(
         _record_call_cost(report, float(call["cost_usd"]))
         answers[question_id] = {
             "question_type": question["questionType"],
+            "question_date": resolved_date,
+            "question_date_source": (
+                "dataset"
+                if (question_dates or {}).get(question_id)
+                else ("checkpoint" if question.get("questionDate") else "unresolved")
+            ),
             "prompt_sha256": _sha256_text(prompt),
             "answer": call["result"],
             "cost_usd": call["cost_usd"],
@@ -434,6 +466,14 @@ def main() -> int:
     parser.add_argument("--max-total-usd", type=float, default=5.0)
     parser.add_argument("--timeout-seconds", type=int, default=300)
     parser.add_argument("--selection-file", type=Path)
+    parser.add_argument(
+        "--dataset",
+        type=Path,
+        help=(
+            "pinned LongMemEval dataset; supplies question_date, which the "
+            "retrieval-only checkpoint does not carry"
+        ),
+    )
     parser.add_argument("--gate-threshold-correct", type=int)
     args = parser.parse_args()
     if args.max_call_usd <= 0 or args.max_total_usd <= 0:
@@ -448,6 +488,7 @@ def main() -> int:
         0 <= gate_threshold_correct <= len(question_ids)
     ):
         parser.error("gate threshold must be between zero and the selection size")
+    question_dates = load_question_dates(args.dataset)
     report = run_pilot(
         root=args.memorybench_root.resolve(),
         run_id=args.run_id,
@@ -458,6 +499,7 @@ def main() -> int:
         question_ids=question_ids,
         selection_sha256=selection_sha256,
         gate_threshold_correct=gate_threshold_correct,
+        question_dates=question_dates,
     )
     print(json.dumps(report["summary"], indent=2, sort_keys=True))
     print(f"total cost: ${report['budget']['spent_usd']:.6f}")
