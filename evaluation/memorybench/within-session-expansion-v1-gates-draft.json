@@ -30,19 +30,21 @@
     "authorized": true,
     "paid": false,
     "gates": {
-      "questions_complete": 60,
+      "questions_complete": 180,
       "baseline_top_ten_all_present": true,
       "new_sessions_introduced": 0,
       "within_session_coverage_mean_min": 0.55,
-      "within_session_coverage_baseline_measured": 0.38,
+      "within_session_coverage_baseline_measured": "re-measured on the 180 inside Stage 1; 0.380 was the sixty",
       "no_category_coverage_regression": true,
       "context_bytes_mean_max_ratio": 1.0,
       "context_bytes_p95_max_ratio": 1.05,
       "selection_p95_ms_max": 15,
       "search_p95_ms_max": 225,
       "scope_lifecycle_source_provenance_failures": 0,
-      "internal_suites_unchanged": true
-    }
+      "internal_suites_unchanged": true,
+      "within_session_coverage_min_points_above_baseline_on_same_180": 15
+    },
+    "question_set": "all 180 development questions"
   },
   "stage_2_paid": {
     "authorized": false,
@@ -86,5 +88,13 @@
     "reserve_used": false,
     "observed_development_may_certify": false
   },
-  "failure_policy": "a failed gate is recorded and published; no bound may be adjusted after observing a result"
+  "failure_policy": "a failed gate is recorded and published; no bound may be adjusted after observing a result",
+  "freeze": {
+    "frozen": false,
+    "frozen_by": null,
+    "frozen_on": null,
+    "contract_sha256": null,
+    "gates_sha256_at_freeze": null,
+    "rule": "bounds and thresholds may not change after a result is observed; a change creates a new experiment identity"
+  }
 }

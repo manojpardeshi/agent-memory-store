@@ -2,7 +2,18 @@
 
 Date: 2026-08-03
 Status: **DRAFT — not frozen, not authorized for execution.** No implementation may claim
-measured results against these gates until the contract is frozen by explicit review.
+measured results against these gates until the contract is frozen by explicit owner review.
+
+## Freeze procedure
+
+Freezing is the owner's act, not the author's. On freeze:
+
+1. The owner confirms each bound in the table below and each gate threshold as one they
+   will stand behind, knowing none may be adjusted after a result is observed.
+2. The SHA-256 of this document and of the machine-readable gates file are recorded in the
+   gates file, and its status changes from `draft-blocked-not-frozen` to `frozen`.
+3. From that point, any change to a bound or threshold creates a new contract and a new
+   experiment identity; it does not amend this one.
 Diagnosis: [`benchmarks/2026-08-03-multi-session-error-analysis.md`](benchmarks/2026-08-03-multi-session-error-analysis.md)
 
 ## Hypothesis
@@ -70,13 +81,21 @@ baseline returned.
 
 ## Stage 1 — local gate, API-free
 
+Runs over **all 180 development questions**, not only the stratified sixty. Stage 1
+involves no model, so the larger sample costs nothing and triples the evidence behind the
+mechanism gate. Coverage on the 120 questions outside the stratified sixty is
+retrieval-level observation only — already observed in the `session-diverse` development
+run — and does not touch the answer-level purity Stage 3 depends on.
+
 All must pass:
 
-- all 60 questions complete; zero scope, lifecycle, source, or provenance failures;
+- all 180 questions complete; zero scope, lifecycle, source, or provenance failures;
 - every baseline top-ten message is present in the candidate output, verified per question;
 - zero new sessions introduced;
-- **mechanism check:** mean within-session coverage on answer sessions rises from the
-  measured 38.0% to at least 55%, and no category falls;
+- **mechanism check:** mean within-session coverage on answer sessions reaches at least 55%
+  **and** exceeds the baseline measured on the identical 180 by at least 15 points, with no
+  category falling. The 38.0% figure was measured on the sixty; the baseline on the 180 is
+  re-measured inside Stage 1 rather than assumed;
 - mean formatted context bytes ≤ 1.00× baseline and p95 ≤ 1.05× baseline;
 - pure selection p95 ≤ 15 ms and search p95 ≤ 225 ms;
 - internal synthetic suites unchanged: Recall@5, MRR, distractor leakage, and zero
