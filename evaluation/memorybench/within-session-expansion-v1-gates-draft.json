@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "experiment_id": "within-session-expansion-v1",
+  "status": "draft-blocked-not-frozen",
+  "execution_authorized": false,
+  "contract": "docs/architecture/within-session-expansion-contract.md",
+  "diagnosis": "docs/architecture/benchmarks/2026-08-03-multi-session-error-analysis.md",
+  "material_variable": "which content from an already-relevant session enters the context",
+  "unchanged_components": [
+    "storage",
+    "embedding identity",
+    "base ranking",
+    "relevance policy",
+    "scope semantics",
+    "provenance",
+    "answer prompt",
+    "judge protocol"
+  ],
+  "candidate_policy": {
+    "name": "within-session-expansion-v1",
+    "model_in_query_path": false,
+    "sessions_admitted": "exactly those in the baseline top ten",
+    "new_sessions_introduced": 0,
+    "per_session_expansion_cap_messages": 4,
+    "originally_retrieved_messages_truncated": false,
+    "originally_retrieved_messages_dropped": false,
+    "emission_order": "original rank order"
+  },
+  "stage_1_local": {
+    "authorized": true,
+    "paid": false,
+    "gates": {
+      "questions_complete": 60,
+      "baseline_top_ten_all_present": true,
+      "new_sessions_introduced": 0,
+      "within_session_coverage_mean_min": 0.55,
+      "within_session_coverage_baseline_measured": 0.38,
+      "no_category_coverage_regression": true,
+      "context_bytes_mean_max_ratio": 1.0,
+      "context_bytes_p95_max_ratio": 1.05,
+      "selection_p95_ms_max": 15,
+      "search_p95_ms_max": 225,
+      "scope_lifecycle_source_provenance_failures": 0,
+      "internal_suites_unchanged": true
+    }
+  },
+  "stage_2_paid": {
+    "authorized": false,
+    "requires_separate_budget_authorization": true,
+    "model": "kimi-k3",
+    "protocol_source": "docs/architecture/benchmarks/2026-08-03-kimi-question-date-baseline60.md",
+    "baseline_reference": {
+      "total": "45/60",
+      "categories": {
+        "single-session-user": "10/10",
+        "single-session-assistant": "10/10",
+        "knowledge-update": "9/10",
+        "single-session-preference": "8/10",
+        "temporal-reasoning": "5/10",
+        "multi-session": "3/10"
+      }
+    },
+    "measured_noise_floor_answers": 2,
+    "gates": {
+      "multi_session_plus_temporal_min_improvement_answers": 4,
+      "multi_session_may_regress": false,
+      "other_category_max_loss_answers": 1,
+      "overall_may_regress": false,
+      "stage_1_gates_hold_on_executed_run": true
+    },
+    "cost_options": {
+      "candidate_arm_only_usd_estimate": 2.2,
+      "paired_usd_estimate": 4.4,
+      "single_arm_valid_only_if_protocol_unchanged": true
+    }
+  },
+  "stage_3_unobserved_development": {
+    "authorized": false,
+    "reason": "the stratified sixty is fully observed and may screen but not certify",
+    "question_set": "the 120 development questions outside the stratified sixty",
+    "consumes_sealed_validation": false,
+    "consumes_reserve": false
+  },
+  "split_isolation": {
+    "sealed_validation_used": false,
+    "reserve_used": false,
+    "observed_development_may_certify": false
+  },
+  "failure_policy": "a failed gate is recorded and published; no bound may be adjusted after observing a result"
+}
