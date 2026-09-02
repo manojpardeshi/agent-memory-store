@@ -1,8 +1,9 @@
 # Within-Session Expansion — Development Contract
 
 Date: 2026-08-03
-Status: **DRAFT — not frozen, not authorized for execution.** No implementation may claim
-measured results against these gates until the contract is frozen by explicit owner review.
+Status: **FROZEN 2026-08-03 by owner review.** Bounds and thresholds below are locked; any change
+creates a new contract and experiment identity. Stage 1 is authorized (API-free). Stage 2 remains
+blocked pending separate budget authorization.
 
 ## Freeze procedure
 

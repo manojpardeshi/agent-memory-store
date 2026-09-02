@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "experiment_id": "within-session-expansion-v1",
+  "frozen_on": "2026-08-03",
+  "frozen_by": "owner",
+  "contract_path": "docs/architecture/within-session-expansion-contract.md",
+  "contract_sha256": "0b3e2c6a4711c8333de8412724291f321e458aea27780843e825247a698490c8",
+  "gates_path": "evaluation/memorybench/within-session-expansion-v1-gates-draft.json",
+  "gates_sha256": "cdef937a797a4c7db21f66ea2ee7d8612ce12284e7fb01a328f80450c37a43af",
+  "stage_1_authorized": true,
+  "stage_2_authorized": false,
+  "stage_3_authorized": false,
+  "rule": "verify both digests before claiming any result against this contract"
+}

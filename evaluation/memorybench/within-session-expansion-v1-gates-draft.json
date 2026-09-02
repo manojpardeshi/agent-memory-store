@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "experiment_id": "within-session-expansion-v1",
-  "status": "draft-blocked-not-frozen",
+  "status": "frozen",
   "execution_authorized": false,
   "contract": "docs/architecture/within-session-expansion-contract.md",
   "diagnosis": "docs/architecture/benchmarks/2026-08-03-multi-session-error-analysis.md",
@@ -90,10 +90,10 @@
   },
   "failure_policy": "a failed gate is recorded and published; no bound may be adjusted after observing a result",
   "freeze": {
-    "frozen": false,
-    "frozen_by": null,
-    "frozen_on": null,
-    "contract_sha256": null,
+    "frozen": true,
+    "frozen_by": "owner",
+    "frozen_on": "2026-08-03",
+    "contract_sha256": "0b3e2c6a4711c8333de8412724291f321e458aea27780843e825247a698490c8",
     "gates_sha256_at_freeze": null,
     "rule": "bounds and thresholds may not change after a result is observed; a change creates a new experiment identity"
   }
