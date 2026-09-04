@@ -16,9 +16,9 @@ from __future__ import annotations
 import argparse
 import faulthandler
 import hashlib
-import signal
 import json
 import re
+import signal
 import statistics
 import time
 from pathlib import Path
