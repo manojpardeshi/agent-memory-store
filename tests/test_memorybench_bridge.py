@@ -223,3 +223,74 @@ def test_dataset_verifier_rejects_unfrozen_input(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="byte size mismatch"):
         verify_dataset(source)
+
+
+def _long_session(session_id: str, count: int, marker: str) -> dict:
+    """A session whose bodies are long enough that spans can pay for expansion."""
+    filler = "This sentence is deliberate filler about unrelated household matters. " * 12
+    messages = []
+    for index in range(count):
+        body = filler + (f" I spent 500 dollars on the {marker} last week." if index == 3 else "")
+        messages.append({"role": "user" if index % 2 == 0 else "assistant", "content": body})
+    return {
+        "sessionId": session_id,
+        "messages": messages,
+        "metadata": {
+            "date": "2026-01-02T03:04:00.000Z",
+            "formattedDate": "3:04 am on 2 January, 2026",
+        },
+    }
+
+
+def test_within_session_expansion_policy_is_explicit_and_reports_config(tmp_path: Path) -> None:
+    from scripts.memorybench_bridge import (
+        EXPANSION_BODY_FLOOR_CHARS,
+        EXPANSION_PER_SESSION_CAP,
+        WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
+    )
+
+    default_bridge = MemoryBenchBridge(tmp_path / "d", DeterministicEmbedder(64))
+    assert default_bridge.initialize()["context_policy"] == RANKED_CONTEXT_POLICY
+    candidate = MemoryBenchBridge(
+        tmp_path / "c", DeterministicEmbedder(64),
+        context_policy=WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
+    ).initialize()
+    config = candidate["context_policy_config"]
+    assert config["per_session_expansion_cap"] == EXPANSION_PER_SESSION_CAP
+    assert config["body_floor_chars"] == EXPANSION_BODY_FLOOR_CHARS
+    assert config["new_sessions_introduced"] == 0
+    assert config["model_in_query_path"] is False
+
+
+def test_within_session_expansion_keeps_baseline_prefix_no_new_sessions_within_budget(
+    tmp_path: Path,
+) -> None:
+    from scripts.memorybench_bridge import WITHIN_SESSION_EXPANSION_CONTEXT_POLICY
+    from scripts.within_session_expansion import context_json_bytes
+
+    sessions = [_long_session("q-session-0", 8, "designer handbag"),
+                _long_session("q-session-1", 6, "garden hose")]
+    ranked = MemoryBenchBridge(tmp_path, DeterministicEmbedder(64))
+    ranked.ingest("tag", sessions)
+    baseline, _ = ranked.search_with_diagnostics("tag", "how much did I spend on the handbag", 3)
+
+    expanded = MemoryBenchBridge(
+        tmp_path, DeterministicEmbedder(64),
+        context_policy=WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
+    )
+    query = "how much did I spend on the handbag"
+    selected, diag = expanded.search_with_diagnostics("tag", query, 3)
+
+    # baseline retained as an ordered prefix, by identity
+    assert [m["memory_id"] for m in selected[:3]] == [m["memory_id"] for m in baseline]
+    # no session outside the baseline's
+    base_sessions = {m["metadata"]["session_id"] for m in baseline}
+    assert {m["metadata"]["session_id"] for m in selected} <= base_sessions
+    # budget: never above what the baseline cost
+    assert context_json_bytes(selected) <= context_json_bytes(baseline)
+    assert diag["selected_context_json_bytes"] <= diag["baseline_context_json_bytes"]
+    # spans actually paid for expansion here
+    assert diag["expansions_admitted"] >= 1
+    assert all("expansion" in m for m in selected[3:])
+    # a reduced baseline body keeps its provenance header
+    assert all(m["content"].startswith("[longmemeval-source]") for m in selected)

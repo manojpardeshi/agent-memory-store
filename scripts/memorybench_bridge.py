@@ -24,6 +24,24 @@ BENCHMARK_SUBJECT = "longmemeval-subject"
 BENCHMARK_ENVIRONMENT = "longmemeval"
 RANKED_CONTEXT_POLICY = "ranked-v1"
 SESSION_DIVERSE_CONTEXT_POLICY = "session-diverse-v1"
+WITHIN_SESSION_EXPANSION_CONTEXT_POLICY = "within-session-expansion-v1.1"
+EXPANSION_PER_SESSION_CAP = 4
+EXPANSION_BODY_FLOOR_CHARS = 400
+EXPANSION_BUDGET_RATIO = 1.0
+EXPANSION_SESSION_FETCH_LIMIT = 1000
+
+if __package__:
+    from scripts.within_session_expansion import (
+        context_json_bytes,
+        expand_within_sessions,
+        fit_to_budget,
+    )
+else:  # pragma: no cover - stdio subprocess path
+    from within_session_expansion import (
+        context_json_bytes,
+        expand_within_sessions,
+        fit_to_budget,
+    )
 SESSION_DIVERSE_POOL_SIZE = 50
 SESSION_DIVERSE_PER_SESSION_CAP = 2
 
@@ -60,6 +78,7 @@ class MemoryBenchBridge:
         if context_policy not in (
             RANKED_CONTEXT_POLICY,
             SESSION_DIVERSE_CONTEXT_POLICY,
+            WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
         ):
             raise ValueError(f"unsupported context policy: {context_policy}")
         self.data_dir = Path(data_dir).expanduser().resolve()
@@ -200,6 +219,16 @@ class MemoryBenchBridge:
                 "unit": "single-message",
                 "backfill": "original-rank-order",
             }
+        elif self.context_policy == WITHIN_SESSION_EXPANSION_CONTEXT_POLICY:
+            result["context_policy_config"] = {
+                "baseline": "ranked-v1 top-limit, retained as an ordered prefix",
+                "per_session_expansion_cap": EXPANSION_PER_SESSION_CAP,
+                "new_sessions_introduced": 0,
+                "budget_ratio_to_baseline_bytes": EXPANSION_BUDGET_RATIO,
+                "body_floor_chars": EXPANSION_BODY_FLOOR_CHARS,
+                "reduction_order": "expansions, then baseline, then drop expansions from tail",
+                "model_in_query_path": False,
+            }
         return result
 
     def ingest(self, container_tag: str, raw_sessions: object) -> dict[str, Any]:
@@ -309,6 +338,72 @@ class MemoryBenchBridge:
             admitted.sort(key=lambda pair: pair[0])
         return [result for _, result in admitted]
 
+    @staticmethod
+    def _serialize_record(record: Any) -> dict[str, Any]:
+        """Same shape as a ranked result, with no scores: used for session neighbours."""
+        return {
+            "content": record.content,
+            "created_at": record.created_at,
+            "kind": record.kind,
+            "memory": record.content,
+            "memory_id": record.memory_id,
+            "metadata": record.metadata,
+            "provenance": {
+                "lineage_id": record.lineage_id,
+                "source_memory_ids": list(record.source_memory_ids),
+            },
+            "recency_score": None,
+            "score": None,
+            "semantic_score": None,
+            "trust_label": "untrusted_memory",
+        }
+
+    @classmethod
+    def select_within_session_expansion(
+        cls,
+        ranked_results: list[dict[str, Any]],
+        session_records: list[Any],
+        query: str,
+        *,
+        limit: int,
+    ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+        """within-session-expansion-v1.1: keep the ranked top-limit as a prefix, add up to
+        EXPANSION_PER_SESSION_CAP neighbours per baseline session, fit to baseline bytes."""
+
+        if not 1 <= limit <= 100:
+            raise ValueError("limit must be between 1 and 100")
+        baseline = ranked_results[:limit]
+        budget = int(context_json_bytes(baseline) * EXPANSION_BUDGET_RATIO)
+        wanted = set()
+        for item in baseline:
+            meta = item.get("metadata") or {}
+            if isinstance(meta.get("session_id"), str):
+                wanted.add(meta["session_id"])
+        by_session: dict[str, list[dict[str, Any]]] = {sid: [] for sid in wanted}
+        for record in session_records:
+            sid = (record.metadata or {}).get("session_id")
+            if sid in by_session:
+                by_session[sid].append(cls._serialize_record(record))
+        expansions = expand_within_sessions(
+            baseline, by_session, cap=EXPANSION_PER_SESSION_CAP
+        )
+        selected = fit_to_budget(
+            baseline,
+            expansions,
+            query,
+            budget_bytes=budget,
+            floor_body_chars=EXPANSION_BODY_FLOOR_CHARS,
+            reduce_baseline=True,
+        )
+        return selected, {
+            "baseline_context_json_bytes": context_json_bytes(baseline),
+            "selected_context_json_bytes": context_json_bytes(selected),
+            "baseline_count": len(baseline),
+            "expansion_candidates": len(expansions),
+            "expansions_admitted": len(selected) - len(baseline),
+            "baseline_sessions": len(wanted),
+        }
+
     def search_with_diagnostics(
         self, container_tag: str, query: str, limit: int
     ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
@@ -326,25 +421,35 @@ class MemoryBenchBridge:
             if self.context_policy == SESSION_DIVERSE_CONTEXT_POLICY
             else limit
         )
+        session_records: list[Any] | None = None
         with MemoryStore(
             path,
             self.embedder,
             default_turn_ttl_days=None,
             read_only=True,
         ) as store:
+            scope = self._scope(container_tag)
             results = store.recall(
                 query,
-                self._scope(container_tag),
+                scope,
                 limit=recall_limit,
                 relevance_filter="default",
             )
+            if self.context_policy == WITHIN_SESSION_EXPANSION_CONTEXT_POLICY:
+                session_records = store.list_memories(
+                    scope, limit=EXPANSION_SESSION_FETCH_LIMIT
+                )
         serialized = self._serialize_results(results)
         selection_started = time.perf_counter()
-        selected = (
-            self.select_session_diverse(serialized, limit=limit)
-            if self.context_policy == SESSION_DIVERSE_CONTEXT_POLICY
-            else serialized[:limit]
-        )
+        extra_diagnostics: dict[str, Any] = {}
+        if self.context_policy == SESSION_DIVERSE_CONTEXT_POLICY:
+            selected = self.select_session_diverse(serialized, limit=limit)
+        elif self.context_policy == WITHIN_SESSION_EXPANSION_CONTEXT_POLICY:
+            selected, extra_diagnostics = self.select_within_session_expansion(
+                serialized, session_records or [], query, limit=limit
+            )
+        else:
+            selected = serialized[:limit]
         selection_duration_ms = (time.perf_counter() - selection_started) * 1000
         diagnostics = {
             "context_policy": self.context_policy,
@@ -354,6 +459,7 @@ class MemoryBenchBridge:
             ],
             "selection_duration_ms": selection_duration_ms,
             "total_duration_ms": (time.perf_counter() - started) * 1000,
+            **extra_diagnostics,
         }
         return selected, diagnostics
 
