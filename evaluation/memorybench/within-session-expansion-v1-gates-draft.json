@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "experiment_id": "within-session-expansion-v1",
+  "experiment_id": "within-session-expansion-v1.1",
   "status": "frozen",
   "execution_authorized": false,
   "contract": "docs/architecture/within-session-expansion-contract.md",
@@ -17,14 +17,16 @@
     "judge protocol"
   ],
   "candidate_policy": {
-    "name": "within-session-expansion-v1",
+    "name": "within-session-expansion-v1.1",
     "model_in_query_path": false,
     "sessions_admitted": "exactly those in the baseline top ten",
     "new_sessions_introduced": 0,
     "per_session_expansion_cap_messages": 4,
-    "originally_retrieved_messages_truncated": false,
+    "originally_retrieved_messages_truncated": "may be span-reduced; never below 400 body chars",
     "originally_retrieved_messages_dropped": false,
-    "emission_order": "original rank order"
+    "emission_order": "original rank order",
+    "body_floor_chars": 400,
+    "reduction_order": "expansions first, then baseline, then drop expansions from tail"
   },
   "stage_1_local": {
     "authorized": true,
@@ -42,7 +44,8 @@
       "search_p95_ms_max": 225,
       "scope_lifecycle_source_provenance_failures": 0,
       "internal_suites_unchanged": true,
-      "within_session_coverage_min_points_above_baseline_on_same_180": 15
+      "within_session_coverage_min_points_above_baseline_on_same_180": 15,
+      "answer_presence_on_stratified60_may_fall": false
     },
     "question_set": "all 180 development questions"
   },
@@ -91,10 +94,12 @@
   "failure_policy": "a failed gate is recorded and published; no bound may be adjusted after observing a result",
   "freeze": {
     "frozen": true,
-    "frozen_by": "owner",
-    "frozen_on": "2026-08-03",
-    "contract_sha256": "0b3e2c6a4711c8333de8412724291f321e458aea27780843e825247a698490c8",
+    "frozen_by": "owner (selected fix A)",
+    "frozen_on": "2026-09-04",
+    "contract_sha256": "567d88cabaecc0da5910b691945d206911e885b07fb0bd30e20104140bfdabcb",
     "gates_sha256_at_freeze": null,
-    "rule": "bounds and thresholds may not change after a result is observed; a change creates a new experiment identity"
-  }
+    "rule": "bounds and thresholds may not change after a result is observed; a change creates a new experiment identity",
+    "version": "1.1"
+  },
+  "supersedes": "within-session-expansion-v1 (frozen 2026-08-03; internally inconsistent, never run)"
 }

@@ -1,14 +1,19 @@
 {
   "schema_version": 1,
-  "experiment_id": "within-session-expansion-v1",
-  "frozen_on": "2026-08-03",
-  "frozen_by": "owner",
+  "experiment_id": "within-session-expansion-v1.1",
+  "frozen_on": "2026-09-04",
+  "frozen_by": "owner (selected fix A)",
   "contract_path": "docs/architecture/within-session-expansion-contract.md",
-  "contract_sha256": "0b3e2c6a4711c8333de8412724291f321e458aea27780843e825247a698490c8",
+  "contract_sha256": "567d88cabaecc0da5910b691945d206911e885b07fb0bd30e20104140bfdabcb",
   "gates_path": "evaluation/memorybench/within-session-expansion-v1-gates-draft.json",
-  "gates_sha256": "cdef937a797a4c7db21f66ea2ee7d8612ce12284e7fb01a328f80450c37a43af",
+  "gates_sha256": "599213d3e1f1d26d9eeae294ae105e43415439c0ac00ee39579109aa8c3a5edc",
   "stage_1_authorized": true,
   "stage_2_authorized": false,
   "stage_3_authorized": false,
-  "rule": "verify both digests before claiming any result against this contract"
+  "rule": "verify both digests before claiming any result against this contract",
+  "superseded_freeze": {
+    "experiment_id": "within-session-expansion-v1",
+    "frozen_on": "2026-08-03",
+    "reason": "internally inconsistent bounds; never run"
+  }
 }

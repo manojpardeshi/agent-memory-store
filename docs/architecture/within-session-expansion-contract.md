@@ -1,9 +1,20 @@
-# Within-Session Expansion — Development Contract
+# Within-Session Expansion — Development Contract (v1.1)
 
 Date: 2026-08-03
-Status: **FROZEN 2026-08-03 by owner review.** Bounds and thresholds below are locked; any change
-creates a new contract and experiment identity. Stage 1 is authorized (API-free). Stage 2 remains
-blocked pending separate budget authorization.
+Status: **FROZEN v1.1 2026-09-04 by owner selection of fix A.** Supersedes the v1 freeze of
+2026-08-03, which was found internally inconsistent before any run (see *Revision v1.1*). Bounds
+and thresholds below are locked; any change creates a new contract and experiment identity.
+Stage 1 is authorized (API-free). Stage 2 remains blocked pending separate budget authorization.
+
+## Revision v1.1 — why v1 could not be run
+
+v1 froze two bounds that cannot both hold: originally retrieved messages "never reduced below
+full text", and total context "≤ 1.00× baseline". Expansion only adds bytes, so under v1 every
+question's context exceeds baseline unless expansion is empty. The defect was found while
+designing the span budget, before implementation and before any measurement, and was put to the
+owner rather than reinterpreted. The owner selected **fix A**: baseline items may be reduced to
+query-aware spans but are never dropped and never reordered, with a body floor; the ≤ 1.00×
+budget stands; and a Stage 1 guard is added so pruned answer text is detectable.
 
 ## Freeze procedure
 
@@ -62,8 +73,11 @@ Deterministic, provider-neutral, no model in the query path.
 3. For each retained session, admit additional content from that same session: the messages
    adjacent to the highest-ranked retrieved message, expanding outward, bounded by a
    per-session cap.
-4. Reduce admitted content to spans so the total formatted context does not exceed baseline.
-   The message that was originally retrieved is **never** reduced below its full text.
+4. Reduce content to query-aware spans so the total formatted context does not exceed the
+   baseline's for the same question. Expansion bodies are reduced first; baseline bodies only
+   if still over budget. A baseline item is **never dropped and never reordered**, and no body
+   is reduced below 400 characters (or its full length if shorter). Expansions are dropped
+   from the tail only after every body has reached the floor.
 5. Emit in original rank order with full provenance on every item.
 
 Bounds are fixed before execution and may not be tuned during a measurement cycle:
@@ -73,12 +87,13 @@ Bounds are fixed before execution and may not be tuned during a measurement cycl
 | Sessions admitted | exactly those already in the baseline top ten |
 | New sessions introduced | zero |
 | Per-session expansion cap | at most 4 additional messages |
-| Originally retrieved messages | never truncated, never dropped |
+| Originally retrieved messages | never dropped, never reordered; body ≥ 400 chars or full |
 | Total formatted context | ≤ 1.00× baseline mean, ≤ 1.05× baseline p95 |
 
 Point 4's protection is deliberate. `session-diverse-v1` failed because seven of eight
-losses pruned the answer-bearing message. This candidate may only ever **add** to what the
-baseline returned.
+losses **dropped** the answer-bearing message. This candidate never drops a baseline item; it
+may shorten one to a query-aware window, and the Stage 1 answer-presence guard exists to catch
+the case where that window misses the answer sentence.
 
 ## Stage 1 — local gate, API-free
 
@@ -98,6 +113,9 @@ All must pass:
   category falling. The 38.0% figure was measured on the sixty; the baseline on the 180 is
   re-measured inside Stage 1 rather than assumed;
 - mean formatted context bytes ≤ 1.00× baseline and p95 ≤ 1.05× baseline;
+- **answer-presence guard:** on the stratified sixty, lexical answer presence in the top-ten
+  context (`score_content_answer_presence` criterion, extractive categories) does not fall
+  versus baseline. Coverage rising while answer presence falls means spans pruned answer text;
 - pure selection p95 ≤ 15 ms and search p95 ≤ 225 ms;
 - internal synthetic suites unchanged: Recall@5, MRR, distractor leakage, and zero
   inaccessible-scope results.
