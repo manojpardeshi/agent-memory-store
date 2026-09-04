@@ -133,3 +133,22 @@ def test_fit_to_budget_is_fast_on_very_large_contexts() -> None:
     assert context_json_bytes(out) <= budget
     assert [m["memory_id"] for m in out[:10]] == [f"b{i}" for i in range(10)]
     assert elapsed < 3.0, f"fit_to_budget took {elapsed:.1f}s"
+
+
+def test_fit_to_budget_terminates_on_tiny_overshoot() -> None:
+    """Regression: when the overshoot was only a few bytes, each pass removed fewer bytes
+    than the span markers added, the total never fell, and the loop never terminated."""
+    import time
+
+    body = "A sentence about the phone battery draining fast. " * 60
+    baseline = [_msg("b1", "s", 0, body)]
+    expansion = [_msg("e1", "s", 1, body)]
+    budget = context_json_bytes(baseline + expansion) - 3  # over by three bytes
+    started = time.perf_counter()
+    out = fit_to_budget(
+        baseline, expansion, "phone battery", budget_bytes=budget,
+        floor_body_chars=400, reduce_baseline=True,
+    )
+    assert time.perf_counter() - started < 2.0
+    assert context_json_bytes(out) <= budget
+    assert out[0]["memory_id"] == "b1"

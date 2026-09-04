@@ -19,6 +19,8 @@ import re
 from typing import Any
 
 HEADER_PREFIX = "[longmemeval-source]"
+MIN_STEP_CHARS = 64
+MAX_STEPS_PER_TIER = 256
 _SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+|\n+")
 _TOKEN = re.compile(r"[a-z0-9]+")
 
@@ -186,27 +188,35 @@ def fit_to_budget(
         return context_json_bytes(base + exp)
 
     def shrink_tier(items: list[dict[str, Any]]) -> None:
-        """Reduce bodies in this tier, largest first, until within budget or all floored."""
-        touched: set[int] = set()
-        while True:
-            over = total() - budget_bytes
+        """Reduce bodies in this tier, largest first, until within budget or all exhausted.
+
+        Progress is guaranteed: each step removes at least MIN_STEP_CHARS beyond the
+        overshoot, and an item whose reduction fails to lower the total is marked
+        exhausted so it cannot be re-selected. A hard cap bounds the loop regardless.
+        """
+        exhausted: set[int] = set()
+        for _ in range(MAX_STEPS_PER_TIER):
+            before = total()
+            over = before - budget_bytes
             if over <= 0:
                 return
             candidates = [
-                i for i in range(len(items))
-                if i not in touched and len(split_header(items[i]["content"])[1]) > floor_body_chars
+                i
+                for i in range(len(items))
+                if i not in exhausted
+                and len(split_header(items[i]["content"])[1]) > floor_body_chars
             ]
             if not candidates:
                 return
             i = max(candidates, key=lambda k: len(split_header(items[k]["content"])[1]))
             body_len = len(split_header(items[i]["content"])[1])
-            # bytes ≈ chars for the ASCII-dominant bodies here; over-reserve slightly so a
-            # second pass on the same item is rare, never below the floor.
-            target = max(floor_body_chars, body_len - over - marker_slack)
+            step = max(over, MIN_STEP_CHARS) + marker_slack
+            target = max(floor_body_chars, body_len - step)
             reduced = reduce_to_span(items[i]["content"], query, max_body_chars=target)
             items[i] = _with_body(items[i], reduced)
-            if len(split_header(reduced)[1]) <= floor_body_chars:
-                touched.add(i)
+            after = total()
+            if after >= before or len(split_header(reduced)[1]) <= floor_body_chars:
+                exhausted.add(i)
 
     shrink_tier(exp)
     if total() > budget_bytes and reduce_baseline:

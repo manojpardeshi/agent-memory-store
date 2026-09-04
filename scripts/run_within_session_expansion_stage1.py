@@ -14,7 +14,9 @@ Both arms use the same denominator so the delta measures the mechanism, not sele
 from __future__ import annotations
 
 import argparse
+import faulthandler
 import hashlib
+import signal
 import json
 import re
 import statistics
@@ -42,6 +44,17 @@ else:  # pragma: no cover
 from llm_memory_store import FastEmbedder
 
 EXPERIMENT_ID = "within-session-expansion-v1.1"
+PER_QUESTION_DEADLINE_S = 120
+
+
+class _Deadline(RuntimeError):
+    """Raised by the per-question watchdog."""
+
+
+def _on_alarm(signum: int, frame: object) -> None:  # noqa: ARG001
+    raise _Deadline()
+
+
 RUN_IDS = (
     "llm-memory-store-longmemeval-stratified60-v1",
     "llm-memory-store-longmemeval-kimi-complement440-v1",
@@ -112,6 +125,8 @@ def run_stage1(
     output: Path,
     limit: int,
 ) -> dict[str, Any]:
+    faulthandler.enable()
+    signal.signal(signal.SIGALRM, _on_alarm)
     items = {str(x["question_id"]): x for x in json.loads(dataset.read_text(encoding="utf-8"))}
     dev_ids = [str(q) for q in json.loads(dev_manifest.read_text())["question_ids"]]
     strat_ids = set(str(q) for q in json.loads(stratified.read_text())["question_ids"])
@@ -152,8 +167,18 @@ def run_stage1(
             report["questions"][qid] = {"error": "no store on disk"}
             continue
         query = str(item["question"])
-        base, bdiag = ranked.search_with_diagnostics(tag, query, limit)
-        cand, cdiag = candidate.search_with_diagnostics(tag, query, limit)
+        try:
+            signal.alarm(PER_QUESTION_DEADLINE_S)
+            base, bdiag = ranked.search_with_diagnostics(tag, query, limit)
+            cand, cdiag = candidate.search_with_diagnostics(tag, query, limit)
+        except _Deadline:
+            report["questions"][qid] = {
+                "error": f"exceeded {PER_QUESTION_DEADLINE_S}s per-question deadline"
+            }
+            print(f"[{n}/{len(pending)}] {qid} DEADLINE", flush=True)
+            continue
+        finally:
+            signal.alarm(0)
 
         answer_ids = set(item["answer_session_ids"])
         required = {i for i, s in enumerate(item["haystack_session_ids"]) if s in answer_ids}
