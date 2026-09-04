@@ -112,3 +112,24 @@ def test_fit_to_budget_drops_expansions_from_tail_as_last_resort() -> None:
                         floor_body_chars=100, reduce_baseline=False)
     assert out[0]["memory_id"] == "b1"
     assert [m["memory_id"] for m in out[1:]] in ([], ["e1"])
+
+
+def test_fit_to_budget_is_fast_on_very_large_contexts() -> None:
+    """Regression: the halving loop re-encoded the whole context hundreds of times and
+    took minutes on real LongMemEval questions. Proportional reduction must be fast."""
+    import time
+
+    sentence = "The quick brown fox jumps over the lazy dog near the riverbank today. "
+    big = sentence * 450  # ~31 KB per body
+    baseline = [_msg(f"b{i}", "s", i, big) for i in range(10)]
+    expansions = [_msg(f"e{i}", "s", 10 + i, big) for i in range(15)]
+    budget = context_json_bytes(baseline)
+    started = time.perf_counter()
+    out = fit_to_budget(
+        baseline, expansions, "fox riverbank", budget_bytes=budget,
+        floor_body_chars=400, reduce_baseline=True,
+    )
+    elapsed = time.perf_counter() - started
+    assert context_json_bytes(out) <= budget
+    assert [m["memory_id"] for m in out[:10]] == [f"b{i}" for i in range(10)]
+    assert elapsed < 3.0, f"fit_to_budget took {elapsed:.1f}s"

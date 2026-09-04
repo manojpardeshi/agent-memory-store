@@ -169,17 +169,51 @@ def fit_to_budget(
     Order of sacrifice: expansion bodies (largest first) down to the floor; then, only if
     `reduce_baseline`, baseline bodies (largest first) down to the floor; then expansions
     dropped from the tail. Baseline items are never dropped and never reordered.
+
+    Each reduction step shrinks the largest eligible body by the measured overshoot rather
+    than by halves, so an item is normally touched once and the total is re-measured a
+    handful of times instead of hundreds. Byte accounting stays exact: every decision is
+    made against `context_json_bytes` of the full candidate list.
     """
     if floor_body_chars <= 0:
         raise ValueError("floor_body_chars must be positive")
     base = list(baseline)
     exp = list(expansions)
+    # "… " prefix and " …" suffix that reduce_to_span may add; reserve for them.
+    marker_slack = 4
 
     def total() -> int:
         return context_json_bytes(base + exp)
 
-    if total() <= budget_bytes:
-        return base + exp
+    def shrink_tier(items: list[dict[str, Any]]) -> None:
+        """Reduce bodies in this tier, largest first, until within budget or all floored."""
+        touched: set[int] = set()
+        while True:
+            over = total() - budget_bytes
+            if over <= 0:
+                return
+            candidates = [
+                i for i in range(len(items))
+                if i not in touched and len(split_header(items[i]["content"])[1]) > floor_body_chars
+            ]
+            if not candidates:
+                return
+            i = max(candidates, key=lambda k: len(split_header(items[k]["content"])[1]))
+            body_len = len(split_header(items[i]["content"])[1])
+            # bytes ≈ chars for the ASCII-dominant bodies here; over-reserve slightly so a
+            # second pass on the same item is rare, never below the floor.
+            target = max(floor_body_chars, body_len - over - marker_slack)
+            reduced = reduce_to_span(items[i]["content"], query, max_body_chars=target)
+            items[i] = _with_body(items[i], reduced)
+            if len(split_header(reduced)[1]) <= floor_body_chars:
+                touched.add(i)
+
+    shrink_tier(exp)
+    if total() > budget_bytes and reduce_baseline:
+        shrink_tier(base)
+    while total() > budget_bytes and exp:
+        exp.pop()
+    return base + exp
 
     def shrink(items: list[dict[str, Any]]) -> bool:
         """Reduce the largest not-yet-floored body by one step; True if anything changed."""
