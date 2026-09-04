@@ -15,5 +15,10 @@
     "experiment_id": "within-session-expansion-v1",
     "frozen_on": "2026-08-03",
     "reason": "internally inconsistent bounds; never run"
+  },
+  "stage_1_result": {
+    "status": "failed",
+    "report_sha256": "65c39d2d2bec82ac3204e8db1f91968b9fe71aca253c04dc7d01c17d17eff3c3",
+    "closed_on": "2026-09-04"
   }
 }

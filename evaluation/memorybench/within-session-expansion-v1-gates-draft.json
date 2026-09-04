@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "experiment_id": "within-session-expansion-v1.1",
-  "status": "frozen",
+  "status": "stage-1-failed-closed",
   "execution_authorized": false,
   "contract": "docs/architecture/within-session-expansion-contract.md",
   "diagnosis": "docs/architecture/benchmarks/2026-08-03-multi-session-error-analysis.md",
@@ -101,5 +101,15 @@
     "rule": "bounds and thresholds may not change after a result is observed; a change creates a new experiment identity",
     "version": "1.1"
   },
-  "supersedes": "within-session-expansion-v1 (frozen 2026-08-03; internally inconsistent, never run)"
+  "supersedes": "within-session-expansion-v1 (frozen 2026-08-03; internally inconsistent, never run)",
+  "stage_1_result": {
+    "status": "failed",
+    "report_sha256": "65c39d2d2bec82ac3204e8db1f91968b9fe71aca253c04dc7d01c17d17eff3c3",
+    "failed_gates": [
+      "selection_p95_ms",
+      "answer_presence_not_fallen"
+    ],
+    "passed_gates": 10,
+    "closed_on": "2026-09-04"
+  }
 }
