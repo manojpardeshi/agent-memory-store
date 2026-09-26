@@ -211,6 +211,8 @@ def run_baseline(
     api_key: str,
     max_total_usd: float,
     timeout_seconds: int,
+    experiment_id: str = EXPERIMENT_ID,
+    design_blind: list[str] | None = None,
 ) -> dict[str, Any]:
     dataset_sha = _sha256(dataset)
     if dataset_sha != DATASET_SHA256:
@@ -226,12 +228,12 @@ def run_baseline(
 
     if output.exists():
         report = json.loads(output.read_text(encoding="utf-8"))
-        if report.get("model") != MODEL or report.get("experiment_id") != EXPERIMENT_ID:
+        if report.get("model") != MODEL or report.get("experiment_id") != experiment_id:
             raise BaselineRunError("existing report belongs to a different experiment or model")
     else:
         report = {
             "schema_version": 1,
-            "experiment_id": EXPERIMENT_ID,
+            "experiment_id": experiment_id,
             "model": MODEL,
             "status": "in-progress",
             "arm": "baseline",
@@ -248,6 +250,11 @@ def run_baseline(
                 "comparable_to": "kimi-k3-session-diverse-paired-development60-v1 baseline arm",
                 "single_variable_changed": "question_date resolved from the pinned dataset",
             },
+            "design_blind_question_ids": sorted(design_blind or []),
+            "design_blind_rule": (
+                "per-question answers and labels for these ids may be aggregated but must "
+                "not be read to design or tune a candidate; they are held for validation"
+            ),
             "input_identity": {
                 "dataset_sha256": dataset_sha,
                 "selection_sha256": _sha256(selection),
@@ -343,6 +350,12 @@ def main() -> int:
     parser.add_argument("--keychain-service")
     parser.add_argument("--max-total-usd", type=float, required=True)
     parser.add_argument("--timeout-seconds", type=int, default=300)
+    parser.add_argument("--experiment-id", default=EXPERIMENT_ID)
+    parser.add_argument(
+        "--design-blind",
+        type=Path,
+        help="selection file whose ids are held blind to candidate design",
+    )
     args = parser.parse_args()
 
     api_key = load_api_key(
@@ -356,6 +369,12 @@ def main() -> int:
         api_key=api_key,
         max_total_usd=args.max_total_usd,
         timeout_seconds=args.timeout_seconds,
+        experiment_id=args.experiment_id,
+        design_blind=(
+            [str(q) for q in json.loads(args.design_blind.read_text())["question_ids"]]
+            if args.design_blind
+            else None
+        ),
     )
     print(json.dumps(report["summary"], indent=2, sort_keys=True))
     return 0
