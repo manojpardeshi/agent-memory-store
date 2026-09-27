@@ -360,3 +360,76 @@ def test_known_http_429_recovery_records_one_no_charge_identical_retry(
             "reserved_usd": 0.05,
         }
         paired._recover_known_http_429(report, output)
+
+
+def _prompt_recording_call(prompts: list[str]):
+    def fake_call(api_key, body, *, max_completion_tokens, max_call_usd, timeout_seconds):
+        payload = json.loads(body)
+        judge = "response_format" in payload
+        if not judge:
+            prompts.append(payload["messages"][1]["content"])
+        result = '{"score":1,"label":"correct","explanation":"matches"}' if judge else "answer"
+        return {
+            "result": result,
+            "duration_ms": 1,
+            "request_sha256": hashlib.sha256(body).hexdigest(),
+            "usage": {
+                "calculated_cost_usd": 0.001,
+                "prompt_tokens": 1,
+                "completion_tokens": 1,
+                "reasoning_tokens": 0,
+            },
+        }
+
+    return fake_call
+
+
+def _paired_kwargs(paths: dict[str, Path]) -> dict[str, Any]:
+    return {
+        "selection_path": paths["selection"],
+        "development_manifest_path": paths["development"],
+        "contract_path": paths["contract"],
+        "baseline_checkpoint_paths": [paths["baseline"]],
+        "candidate_path": paths["candidate"],
+        "output": paths["output"],
+        "api_key": "secret",
+        "timeout_seconds": 9,
+    }
+
+
+def test_without_dataset_prompts_reproduce_recorded_behaviour(tmp_path, monkeypatch) -> None:
+    """Omitting --dataset must keep recorded paired evidence reproducible."""
+    paths = _fixture_files(tmp_path)
+    prompts: list[str] = []
+    monkeypatch.setattr(paired, "run_kimi_call", _prompt_recording_call(prompts))
+    report = paired.run_paired_development(**_paired_kwargs(paths))
+    assert report["question_dates_supplied"] is False
+    assert prompts and all("Question Date: Not specified" in p for p in prompts)
+
+
+def test_with_dataset_prompts_carry_the_question_date(tmp_path, monkeypatch) -> None:
+    paths = _fixture_files(tmp_path)
+    ids = json.loads(paths["selection"].read_text(encoding="utf-8"))["question_ids"]
+    dates = {qid: "2023/05/30 (Tue) 23:40" for qid in ids}
+    prompts: list[str] = []
+    monkeypatch.setattr(paired, "run_kimi_call", _prompt_recording_call(prompts))
+    report = paired.run_paired_development(**_paired_kwargs(paths), question_dates=dates)
+    assert report["question_dates_supplied"] is True
+    assert prompts and all("2023/05/30 (Tue) 23:40" in p for p in prompts)
+    assert not any("Not specified" in p for p in prompts)
+
+    prompts.clear()
+    resumed = paired.run_paired_development(**_paired_kwargs(paths), question_dates=dates)
+    assert resumed["status"] == "completed"
+    assert prompts == []
+
+
+def test_resume_refuses_to_mix_dated_and_undated_prompts(tmp_path, monkeypatch) -> None:
+    paths = _fixture_files(tmp_path)
+    ids = json.loads(paths["selection"].read_text(encoding="utf-8"))["question_ids"]
+    monkeypatch.setattr(paired, "run_kimi_call", _prompt_recording_call([]))
+    paired.run_paired_development(**_paired_kwargs(paths))
+    with pytest.raises(paired.PairedDevelopmentError, match="mix prompts"):
+        paired.run_paired_development(
+            **_paired_kwargs(paths), question_dates={qid: "2023/05/30" for qid in ids}
+        )

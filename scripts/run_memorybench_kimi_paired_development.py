@@ -17,6 +17,7 @@ if __package__:
     from scripts.run_memorybench_claude_pilot import (
         build_answer_prompt,
         build_judge_prompt,
+        load_question_dates,
         parse_judge_response,
     )
     from scripts.run_memorybench_kimi_qualification import (
@@ -35,6 +36,7 @@ else:
     from run_memorybench_claude_pilot import (
         build_answer_prompt,
         build_judge_prompt,
+        load_question_dates,
         parse_judge_response,
     )
     from run_memorybench_kimi_qualification import (
@@ -335,10 +337,12 @@ def _new_report(
     question_ids: tuple[str, ...],
     identity: dict[str, Any],
     contract: dict[str, Any],
+    question_dates_supplied: bool = False,
 ) -> dict[str, Any]:
     return {
         "schema_version": 1,
         "status": "running",
+        "question_dates_supplied": question_dates_supplied,
         "experiment_id": EXPERIMENT_ID,
         "model": MODEL,
         "question_ids": list(question_ids),
@@ -414,6 +418,20 @@ def _validate_saved_call(
         raise PairedDevelopmentError("saved call cost violates its per-call ceiling")
 
 
+def _answer_date(
+    question_id: str,
+    question: dict[str, Any],
+    question_dates: dict[str, str] | None,
+) -> str | None:
+    """Resolve the prompt's question date identically for fresh calls and resume checks.
+
+    Without a dataset this returns the checkpoint value, which the retrieval-only phase list
+    never populates, so prompts render "Not specified" exactly as every recorded paired run
+    did. That keeps recorded evidence reproducible. With a dataset the date is supplied.
+    """
+    return (question_dates or {}).get(question_id) or question.get("questionDate")
+
+
 def _validate_resume(
     report: dict[str, Any],
     *,
@@ -422,7 +440,13 @@ def _validate_resume(
     contract: dict[str, Any],
     baseline_questions: dict[str, dict[str, Any]],
     candidate: dict[str, Any],
+    question_dates: dict[str, str] | None = None,
 ) -> None:
+    if bool(report.get("question_dates_supplied", False)) != bool(question_dates):
+        raise PairedDevelopmentError(
+            "resume would mix prompts with and without question dates; "
+            "rerun with the same --dataset setting as the original report"
+        )
     expected = {
         "schema_version": 1,
         "experiment_id": EXPERIMENT_ID,
@@ -463,7 +487,9 @@ def _validate_resume(
             if record.get("context_json_bytes") != _context_json_bytes(contexts[arm]):
                 raise PairedDevelopmentError("saved answer context bytes differ")
             prompt = build_answer_prompt(
-                question["question"], contexts[arm], question.get("questionDate")
+                question["question"],
+                contexts[arm],
+                _answer_date(question_id, question, question_dates),
             )
             _validate_saved_call(record, prompt=prompt, judge=False)
             if not isinstance(record.get("answer"), str) or not record["answer"].strip():
@@ -662,6 +688,7 @@ def run_paired_development(
     api_key: str,
     timeout_seconds: int,
     recover_known_http_429: bool = False,
+    question_dates: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     selection = _load(selection_path)
     development = _load(development_manifest_path)
@@ -701,6 +728,7 @@ def run_paired_development(
             contract=contract,
             baseline_questions=baseline_questions,
             candidate=candidate,
+            question_dates=question_dates,
         )
         if recover_known_http_429:
             _recover_known_http_429(report, output)
@@ -709,7 +737,12 @@ def run_paired_development(
         report["status"] = "running"
         _atomic_write_json(output, report)
     else:
-        report = _new_report(question_ids=question_ids, identity=identity, contract=contract)
+        report = _new_report(
+            question_ids=question_ids,
+            identity=identity,
+            contract=contract,
+            question_dates_supplied=bool(question_dates),
+        )
         _atomic_write_json(output, report)
 
     for question_id in question_ids:
@@ -722,7 +755,9 @@ def run_paired_development(
             if arm in answers:
                 continue
             prompt = build_answer_prompt(
-                question["question"], contexts[arm], question.get("questionDate")
+                question["question"],
+                contexts[arm],
+                _answer_date(question_id, question, question_dates),
             )
             body = build_kimi_request(
                 prompt,
@@ -838,6 +873,14 @@ def main() -> int:
         help="record and identically reissue one observed no-response HTTP 429 slot",
     )
     parser.add_argument("--timeout-seconds", type=int, default=300)
+    parser.add_argument(
+        "--dataset",
+        type=Path,
+        help=(
+            "pinned LongMemEval dataset; supplies question_date to answer prompts. Omit only "
+            "to reproduce a recorded report made without dates"
+        ),
+    )
     args = parser.parse_args()
     if args.timeout_seconds < 1:
         parser.error("--timeout-seconds must be positive")
@@ -856,6 +899,7 @@ def main() -> int:
             api_key=api_key,
             timeout_seconds=args.timeout_seconds,
             recover_known_http_429=args.recover_known_http_429,
+            question_dates=load_question_dates(args.dataset) if args.dataset else None,
         )
     except PairedDevelopmentError as error:
         parser.error(str(error))
