@@ -451,7 +451,7 @@ class MemoryStore:
         rows = self.connection.execute(
             f"SELECT id FROM memories {where} ORDER BY id DESC LIMIT ?", values
         ).fetchall()
-        return [self._record_by_internal_id(int(row["id"])) for row in rows]
+        return self._records_by_internal_ids([int(row["id"]) for row in rows])
 
     def correct(
         self, memory_id: str, new_content: str, *, operation_id: str | None = None
@@ -1026,7 +1026,7 @@ class MemoryStore:
         elif all_scopes:
             memory_rows = self.connection.execute("SELECT id FROM memories ORDER BY id").fetchall()
         internal_ids = [int(row["id"]) for row in memory_rows]
-        records = [self._record_by_internal_id(internal_id) for internal_id in internal_ids]
+        records = self._records_by_internal_ids(internal_ids)
         exported_ids = {record.memory_id for record in records}
         export_fields = {
             row["memory_id"]: {
@@ -1152,33 +1152,18 @@ class MemoryStore:
             "integrity_check": self.connection.execute("PRAGMA integrity_check").fetchone()[0],
         }
 
-    def _record_by_internal_id(self, internal_id: int) -> MemoryRecord:
-        row = self.connection.execute(
-            """
-            SELECT m.*, s.kind AS scope_kind, s.subject, s.environment, s.owner,
-                   previous.memory_id AS supersedes_memory_id
-            FROM memories m
-            JOIN scopes s ON s.id=m.scope_id
-            LEFT JOIN memories previous ON previous.id=m.supersedes_id
-            WHERE m.id=?
-            """,
-            (internal_id,),
-        ).fetchone()
-        if row is None:
-            raise KeyError(f"memory internal id not found: {internal_id}")
-        source_ids = tuple(
-            source["memory_id"]
-            for source in self.connection.execute(
-                """
-                SELECT source.memory_id
-                FROM memory_sources ms
-                JOIN memories source ON source.id=ms.source_id
-                WHERE ms.child_id=?
-                ORDER BY source.id
-                """,
-                (internal_id,),
-            ).fetchall()
-        )
+    _RECORD_SELECT = """
+        SELECT m.*, s.kind AS scope_kind, s.subject, s.environment, s.owner,
+               previous.memory_id AS supersedes_memory_id
+        FROM memories m
+        JOIN scopes s ON s.id=m.scope_id
+        LEFT JOIN memories previous ON previous.id=m.supersedes_id
+    """
+    # Well under SQLite's bound-parameter limit on every supported build.
+    _RECORD_BATCH_SIZE = 500
+
+    @staticmethod
+    def _record_from_row(row: sqlite3.Row, source_ids: tuple[str, ...]) -> MemoryRecord:
         return MemoryRecord(
             memory_id=row["memory_id"],
             lineage_id=row["lineage_id"],
@@ -1197,3 +1182,41 @@ class MemoryStore:
             supersedes_memory_id=row["supersedes_memory_id"],
             source_memory_ids=source_ids,
         )
+
+    def _record_by_internal_id(self, internal_id: int) -> MemoryRecord:
+        return self._records_by_internal_ids([internal_id])[0]
+
+    def _records_by_internal_ids(self, internal_ids: Sequence[int]) -> list[MemoryRecord]:
+        """Fetch many records with two queries per batch instead of two per record.
+
+        Output order matches `internal_ids`. A missing id raises KeyError, exactly as the
+        single-record fetch always has.
+        """
+        records: list[MemoryRecord] = []
+        for offset in range(0, len(internal_ids), self._RECORD_BATCH_SIZE):
+            batch = [int(i) for i in internal_ids[offset : offset + self._RECORD_BATCH_SIZE]]
+            marks = ",".join("?" * len(batch))
+            rows = {
+                int(row["id"]): row
+                for row in self.connection.execute(
+                    f"{self._RECORD_SELECT} WHERE m.id IN ({marks})", batch
+                ).fetchall()
+            }
+            sources: dict[int, list[str]] = {}
+            for source in self.connection.execute(
+                f"""
+                SELECT ms.child_id, source.memory_id
+                FROM memory_sources ms
+                JOIN memories source ON source.id=ms.source_id
+                WHERE ms.child_id IN ({marks})
+                ORDER BY ms.child_id, source.id
+                """,
+                batch,
+            ).fetchall():
+                sources.setdefault(int(source["child_id"]), []).append(source["memory_id"])
+            for internal_id in batch:
+                row = rows.get(internal_id)
+                if row is None:
+                    raise KeyError(f"memory internal id not found: {internal_id}")
+                records.append(self._record_from_row(row, tuple(sources.get(internal_id, ()))))
+        return records
