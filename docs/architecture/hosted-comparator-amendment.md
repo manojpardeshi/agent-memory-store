@@ -40,6 +40,9 @@ local result nor the provider's published claim, and it is never reported as eit
   event status.
 - Indexing failures, retries, and any sessions that did not index.
 - That Supermemory authors MemoryBench.
+- That the Mem0 JS client's default PostHog telemetry was disabled with `MEM0_TELEMETRY=false`.
+- That retrieval ran on the M2 Pro and answering on the M1. Latency figures from Track H are
+  therefore not comparable with the store's, and none are reported.
 - That the answering model sees each system's own result objects, serialised identically.
 
 ## Budget and quota
