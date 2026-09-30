@@ -5,10 +5,11 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 import sqlite3
 import uuid
 from collections import Counter, defaultdict, deque
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -452,6 +453,68 @@ class MemoryStore:
             f"SELECT id FROM memories {where} ORDER BY id DESC LIMIT ?", values
         ).fetchall()
         return self._records_by_internal_ids([int(row["id"]) for row in rows])
+
+    _METADATA_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]{0,63}$")
+
+    def find_by_metadata(
+        self,
+        scope: Scope,
+        filters: Mapping[str, str | int | float | bool],
+        *,
+        include_superseded: bool = False,
+        include_expired: bool = False,
+        limit: int = 1000,
+    ) -> list[MemoryRecord]:
+        """Return memories in one exact scope whose top-level metadata matches every filter.
+
+        Matching runs inside SQLite, so only matching rows are materialised; retrieving one
+        conversation's messages no longer means loading the whole scope. Keys must be plain
+        identifiers and values scalars. Results are in insertion order, oldest first.
+
+        Expired memories are excluded by default using the same rule as `recall`, so a caller
+        widening context around a recalled memory cannot resurface expired content.
+        """
+        if not filters:
+            raise ValueError("filters must not be empty")
+        if not 1 <= limit <= 10_000:
+            raise ValueError("limit must be between 1 and 10000")
+        # Validate every input before touching the database, so a malformed filter is an
+        # error whether or not the scope exists.
+        filter_terms: list[Any] = []
+        for key, value in filters.items():
+            if not isinstance(key, str) or not self._METADATA_KEY.match(key):
+                raise ValueError(f"metadata filter key must be a plain identifier: {key!r}")
+            if isinstance(value, bool):
+                bound: Any = 1 if value else 0
+            elif isinstance(value, (int, float, str)):
+                bound = value
+            else:
+                raise TypeError(f"metadata filter value for {key!r} must be a scalar")
+            # The JSON path is bound as a parameter, never interpolated.
+            filter_terms.extend([f"$.{key}", bound])
+        scope_id = self._find_scope_id(scope)
+        if scope_id is None:
+            return []
+        conditions = ["scope_id=?"]
+        values: list[Any] = [scope_id]
+        if not include_superseded:
+            conditions.append("status='active'")
+        conditions.extend(["json_extract(metadata_json, ?) = ?"] * len(filters))
+        values.extend(filter_terms)
+        values.append(limit)
+        rows = self.connection.execute(
+            f"SELECT id FROM memories WHERE {' AND '.join(conditions)} ORDER BY id LIMIT ?",
+            values,
+        ).fetchall()
+        records = self._records_by_internal_ids([int(row["id"]) for row in rows])
+        if include_expired:
+            return records
+        now = datetime.now(UTC)
+        return [
+            record
+            for record in records
+            if record.expires_at is None or datetime.fromisoformat(record.expires_at) > now
+        ]
 
     def correct(
         self, memory_id: str, new_content: str, *, operation_id: str | None = None
