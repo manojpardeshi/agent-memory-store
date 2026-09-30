@@ -11,12 +11,14 @@ Basis: branch `scamper-candidate-generation` at `9656188`, plus every evidence d
   unusually rigorous for a project this size.
 - **Retrieval looks excellent and is not the constraint.** Session-level Hit@10 is 97.0% on all
   500 LongMemEval-S questions.
-- **Answers are the constraint.** 45/60 with kimi-k3 and 47/60 with Opus. Twelve of thirteen errors
-  sit in multi-session (3/10) and temporal-reasoning (5/10).
+- **Answers are the constraint.** 134/180 (74.4%) with kimi-k3 on all development questions. The
+  weakest categories are multi-session at 23/44 (52%) and temporal-reasoning at 30/44 (68%). The
+  earlier 3/10 and 5/10 figures came from ten-question samples and overstated both.
 - **The root cause is now measured.** A retrieved answer session contributes only 36–38% of its
   messages to the context. That within-session coverage tracks accuracy almost monotonically by
   category, while session-level Hit@10 is flat at 93–100% and cannot see the failure.
-- **Measurement noise is about ±2 answers at n=60.** Two identical-protocol runs moved four labels.
+- **Measurement noise is about one answer per sixty.** An identical-protocol repeat of sixty
+  questions changed one label. Across 180 that is roughly two answers of standard deviation.
 - **Candidate history.** `session-diverse-v1` was rejected, `session-density-v2` was closed unrun,
   and `within-session-expansion-v1.1` failed Stage 1 while proving its mechanism: coverage rose
   from 36.1% to 57.6% at 0.968× baseline bytes.
@@ -32,15 +34,14 @@ messages present in context, or better, whether the specific answer-bearing mess
 Keep session Hit@10 as a secondary diagnostic. Every future retrieval candidate should be judged
 on the metric that predicts answers.
 
-### 1.2 Enlarge the answer-quality sample
-At ±2 noise, sixty questions can only detect effects of four or more answers. Move answer gates
-to the full 180 development questions. At the measured $2.16 per sixty single-arm, that is about
-$6.50 per arm, which buys roughly three times the resolution for every future decision.
+### 1.2 Enlarge the answer-quality sample — done
+The 180-question baseline ran on 2026-09-27 for $6.48 and is recorded in
+`docs/architecture/benchmarks/2026-09-27-kimi-question-date-baseline180.md`. Size future gates on
+180: about five answers overall, or four within multi-session plus temporal.
 
-### 1.3 Fix the question-date defect in the paired runner
-`scripts/run_memorybench_kimi_paired_development.py` still reads `questionDate` from a checkpoint
-that never carries it, at lines 466 and 725. The single-arm runner was fixed. Apply the same
-`--dataset` resolution before the next paired run, or that run silently repeats the defect.
+### 1.3 Fix the question-date defect in the paired runner — done
+Fixed behind an opt-in `--dataset` flag in commit `c9d2c42`, so recorded paired evidence stays
+reproducible without it.
 
 ### 1.4 Decide how to handle abstention questions
 Supplying the question date fixed `8077ef71` but caused `gpt4_93159ced_abs` to over-answer an
@@ -57,7 +58,12 @@ comparator, the kimi baseline, and the paired runner.
 
 ## Priority 2 — Quality work, in order
 
-### 2.1 Propose `within-session-expansion-v1.2`
+### 2.1 Propose `within-session-expansion-v1.2` — done, and the line is closed
+**Update 2026-09-30:** v1.2 fixed both v1.1 defects but missed its absolute coverage bar, and a
+pre-registered answer diagnostic on its context scored 134/180 against the 134/180 baseline. Raising
+within-session coverage from 36% to 54% did not move answers, so the coverage correlation is not the
+mechanism. The expansion line is closed. The original recommendation follows for the record.
+
 The mechanism works; two specific defects failed it. Make exactly these changes:
 
 - **Protect the anchor.** Never span-reduce each session's highest-ranked baseline message. On
@@ -94,12 +100,11 @@ only if a residual is attributable to ranking.
 
 ## Priority 3 — Library changes the evidence points to
 
-### 3.1 Remove the N+1 query in `list_memories`
-`list_memories` selects IDs, then calls `_record_by_internal_id` once per row, each a separate
-joined query. Fetching 500 records costs 501 queries. One joined `SELECT` returning full rows
-fixes it and benefits every caller, including export and review.
+### 3.1 Remove the N+1 query in `list_memories` — done
+Records are now fetched two queries per batch of up to 500, in commit `372c4c9`, with tests
+proving identical output and a query count independent of record count.
 
-### 3.2 Add a session-neighbour lookup
+### 3.2 Add a session-neighbour lookup — done as `find_by_metadata`
 Expansion currently loads every record in a container and filters by `session_id` in Python,
 because `list_memories` has no metadata filter. A lookup by `(scope, session_id, message_index
 range)` would make expansion cost proportional to the session rather than the whole store. It
@@ -120,7 +125,12 @@ The current ambiguity leaves the project competing on a dimension it has deliber
 
 ## Priority 4 — Competitive evidence
 
-### 4.1 Run the hosted comparator
+### 4.1 Run the hosted comparator — first result in
+**Update 2026-09-30:** hosted Mem0 (Hobby tier) scored 31/60 against the store's 44/60 on the
+same sixty questions under the same protocol, p = 0.015; see
+`docs/architecture/benchmarks/2026-09-30-mem0-hosted-dev60.md`. The other 120 are being answered.
+Supermemory remains unmeasured.
+
 Matched comparators remain the unmet Phase 1 exit condition. Published figures contradict one
 another: Mem0 claims 94.4% accuracy, Supermemory claims 95% Recall@15, and a third party claims a
 36-point gap between them. Only a matched measurement settles where this store stands. It needs
@@ -140,7 +150,8 @@ outright, and those are the reason it exists.
 
 ## Priority 5 — Repository hygiene
 
-- **Merge and push.** Two branches carry more than twenty unpushed commits, including every
+- **Merge and push.** A private backup of every branch now sits on the M2, but the public
+  remote is still behind. Two branches carry more than twenty unpushed commits, including every
   benchmark result, the SCAMPER records, and three recorded negative results. Negative results
   belong on `main` too. Nothing here is backed up off this machine.
 - **Back up the evidence artifacts.** Several committed documents cite SHA-256 digests of files in
@@ -160,7 +171,7 @@ outright, and those are the reason it exists.
 
 - **Do not chase "superior in all aspects."** Matching hosted systems on every axis means adopting
   a cloud dependency and per-ingest model calls, the two things this product exists to avoid.
-- **Do not promote on small margins.** At n=60, anything under four answers is noise.
+- **Do not promote on small margins.** Size gates on 180 questions, not 60.
 - **Do not cite the Mem0-local result as a general comparison.** It supports one claim only:
   extraction-based memory degrades under a local-model constraint.
 - **Do not reopen context bundling.** The abandonment criterion stands. Within-session expansion
@@ -173,6 +184,6 @@ outright, and those are the reason it exists.
 3. Implement 3.1 and 3.2. They are small library changes that remove v1.2's latency problem at
    its source.
 4. Freeze and run `within-session-expansion-v1.2` Stage 1. Free.
-5. If it passes, authorize a 180-question paid answer run, about $6.50 per arm.
+5. If it passes, run its candidate arm on 180 against the recorded 180 baseline, about $6.50.
 6. In parallel, decide the extraction question and the hosted-comparator budget. Both are owner
    decisions that nothing else unblocks.
