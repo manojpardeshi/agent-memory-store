@@ -28,6 +28,7 @@ if __package__:
     from scripts.memorybench_bridge import (
         RANKED_CONTEXT_POLICY,
         WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
+        WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY,
         MemoryBenchBridge,
     )
     from scripts.score_content_answer_presence import answer_present, normalize
@@ -36,6 +37,7 @@ else:  # pragma: no cover
     from memorybench_bridge import (
         RANKED_CONTEXT_POLICY,
         WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
+        WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY,
         MemoryBenchBridge,
     )
     from score_content_answer_presence import answer_present, normalize
@@ -124,6 +126,9 @@ def run_stage1(
     cache_dir: Path,
     output: Path,
     limit: int,
+    policy: str = WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
+    experiment_id: str = EXPERIMENT_ID,
+    candidate_checkpoint: Path | None = None,
 ) -> dict[str, Any]:
     faulthandler.enable()
     signal.signal(signal.SIGALRM, _on_alarm)
@@ -135,8 +140,21 @@ def run_stage1(
 
     embedder = FastEmbedder(cache_dir=str(cache_dir), local_files_only=True)
     ranked = MemoryBenchBridge(stores, embedder, context_policy=RANKED_CONTEXT_POLICY)
-    candidate = MemoryBenchBridge(
-        stores, embedder, context_policy=WITHIN_SESSION_EXPANSION_CONTEXT_POLICY
+    if policy not in (
+        WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
+        WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY,
+    ):
+        raise ValueError(f"unsupported candidate policy: {policy}")
+    candidate = MemoryBenchBridge(stores, embedder, context_policy=policy)
+    cand_cp: dict[str, Any] = (
+        json.loads(candidate_checkpoint.read_text())
+        if candidate_checkpoint and candidate_checkpoint.exists()
+        else {
+            "status": "in-progress",
+            "policy": policy,
+            "targetQuestionIds": dev_ids,
+            "questions": {},
+        }
     )
 
     report: dict[str, Any] = (
@@ -144,7 +162,8 @@ def run_stage1(
         if output.exists()
         else {
             "schema_version": 1,
-            "experiment_id": EXPERIMENT_ID,
+            "experiment_id": experiment_id,
+            "policy": policy,
             "stage": 1,
             "paid": False,
             "status": "in-progress",
@@ -214,6 +233,17 @@ def run_stage1(
                 "candidate": answer_present(g, _context_text(cand)),
             }
         report["questions"][qid] = row
+        if candidate_checkpoint is not None:
+            cand_cp["questions"][qid] = {
+                "questionId": qid,
+                "question": query,
+                "groundTruth": str(item["answer"]),
+                "questionType": item["question_type"],
+                "phases": {"search": {"status": "completed", "results": cand}},
+            }
+            ctmp = candidate_checkpoint.with_suffix(".tmp")
+            ctmp.write_text(json.dumps(cand_cp))
+            ctmp.replace(candidate_checkpoint)
         tmp = output.with_suffix(".tmp")
         tmp.write_text(json.dumps(report, indent=2))
         tmp.replace(output)
@@ -288,6 +318,10 @@ def run_stage1(
     report["measures"] = measures
     report["gates"] = checks
     report["status"] = "passed" if all(checks.values()) else "failed"
+    if candidate_checkpoint is not None:
+        complete = all(q in cand_cp["questions"] for q in dev_ids)
+        cand_cp["status"] = "completed" if complete else "in-progress"
+        candidate_checkpoint.write_text(json.dumps(cand_cp))
     report["finished_at"] = time.strftime("%Y-%m-%dT%H:%M:%S%z")
     tmp = output.with_suffix(".tmp")
     tmp.write_text(json.dumps(report, indent=2))
@@ -306,6 +340,9 @@ def main() -> int:
     ap.add_argument("--cache-dir", type=Path, required=True)
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--limit", type=int, default=10)
+    ap.add_argument("--policy", default=WITHIN_SESSION_EXPANSION_CONTEXT_POLICY)
+    ap.add_argument("--experiment-id", default=EXPERIMENT_ID)
+    ap.add_argument("--candidate-checkpoint", type=Path)
     a = ap.parse_args()
     report = run_stage1(
         dataset=a.dataset,
@@ -317,6 +354,9 @@ def main() -> int:
         cache_dir=a.cache_dir,
         output=a.output,
         limit=a.limit,
+        policy=a.policy,
+        experiment_id=a.experiment_id,
+        candidate_checkpoint=a.candidate_checkpoint,
     )
     print(
         json.dumps(
