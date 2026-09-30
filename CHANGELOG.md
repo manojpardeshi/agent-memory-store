@@ -21,6 +21,11 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Experimental `llm_memory_store.temporal.resolve_event_dates(text, reference)` resolves relative
+  English date expressions ("last Tuesday", "3 weeks ago", "on March 4th", "last month") to
+  calendar dates or ranges deterministically, with fixed documented rules for ambiguous cases and
+  no model. Not yet used by recall.
+
 - `MemoryStore.find_by_metadata(scope, filters)` returns memories in one exact scope whose top-level
   metadata matches every filter, matched inside SQLite so only matching rows are loaded. Superseded
   and expired memories are excluded by default using the same expiry rule as `recall`. Keys must be
