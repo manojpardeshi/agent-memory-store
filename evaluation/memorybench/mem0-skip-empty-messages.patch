@@ -1,0 +1,26 @@
+--- a/src/providers/mem0/index.ts
++++ b/src/providers/mem0/index.ts
+@@ -102,10 +102,19 @@
+     const eventIds: string[] = []
+ 
+     for (const session of sessions) {
+-      const messages = session.messages.map((m) => ({
+-        role: m.role,
+-        content: m.content,
+-      }))
++      // Mem0 rejects an add containing any empty message ("No messages provided to add
++      // memory"), and LongMemEval contains blank turns. A blank message carries no content, so
++      // drop it; the store's equivalent is an "[empty source message]" placeholder. A session
++      // left with no content at all is skipped rather than sent.
++      const messages = session.messages
++        .filter((m) => typeof m.content === "string" && m.content.trim().length > 0)
++        .map((m) => ({
++          role: m.role,
++          content: m.content,
++        }))
++      if (messages.length === 0) {
++        continue
++      }
+ 
+       // Replayed benchmark sessions happened in the past. Mem0 dates memories by the add
+       // request's `timestamp` (Unix seconds) and falls back to the current time without it,

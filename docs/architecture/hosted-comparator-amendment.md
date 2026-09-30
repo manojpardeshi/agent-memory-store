@@ -47,6 +47,10 @@ local result nor the provider's published claim, and it is never reported as eit
   conversations. The patch passes the session date as Mem0's documented add `timestamp`. Verified on
   four questions: memory creation dates matched their sessions and no memory text mentioned 2026.
   Without it, Mem0 would be scored on temporal questions against dates it was never given.
+- **The empty-message patch** (`evaluation/memorybench/mem0-skip-empty-messages.patch`). LongMemEval
+  contains blank turns, and Mem0 rejects any add containing an empty message. Blank messages are
+  dropped before sending; a session left with no content is skipped. The store stores such turns as
+  an `[empty source message]` placeholder, which likewise carries no information.
 - That retrieval ran on the M2 Pro and answering on the M1. Latency figures from Track H are
   therefore not comparable with the store's, and none are reported.
 - That the answering model sees each system's own result objects, serialised identically.
