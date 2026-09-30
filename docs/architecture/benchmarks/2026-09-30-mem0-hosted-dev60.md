@@ -64,3 +64,7 @@ returns ten short extracted memories rather than raw messages.
 
 The remaining 120 development questions are running as batch B and will be reported in aggregate
 only, under the design-blind rule.
+
+## Correction, same day
+
+The temporal and multi-session leads above did not hold at scale. On 163 questions the store leads in every category, including temporal 30/44 against 24/44 and multi-session 23/44 against 19/44. See `2026-09-30-mem0-hosted-dev163.md`.

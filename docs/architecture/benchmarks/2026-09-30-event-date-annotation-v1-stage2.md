@@ -40,3 +40,7 @@ and must not be read as an improvement.
 Neither more raw text nor pre-computed dates closes the temporal gap. What Mem0 supplies instead is
 a compact, deduplicated, dated fact per memory. The next temporal hypothesis worth a contract is
 fact-shaped context, not more or better-annotated raw context.
+
+## Correction, same day
+
+The temporal lead attributed to Mem0 above came from ten questions. Over all 44 temporal questions the store leads, 30 against 24 (`2026-09-30-mem0-hosted-dev163.md`). The closing inference, that the next temporal contract should target Mem0-style fact-shaped context, is withdrawn: it rested on sampling noise. The candidate's own failure stands unchanged.
