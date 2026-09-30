@@ -5,31 +5,31 @@ Private backup of every branch and all evidence: `~/backups/agent-memory-store/`
 
 ## Headline
 
-1. **Your store beats hosted Mem0 by about 20 points under an identical protocol.** On 163 of the 180
-   development questions answered by both: store 119 (73.0%), Mem0 Hobby tier 87 (53.4%),
-   p = 0.00008. The store leads in every category.
+1. **Your store beats hosted Mem0 by about 23 points under an identical protocol.** All 180
+   development questions: store 134 (74.4%), Mem0 Hobby tier 93 (51.7%), p = 0.000003. The store
+   leads in every category.
 2. **Both candidates tested today failed at the answer level.** More session context and resolved
    event dates each left multi-session and temporal answers where they were. That rules out the two
    explanations the project had pursued since August.
 3. **`recall` makes about 20× fewer database queries and is up to 65% faster, with provably identical
    results.** There is also a new metadata-lookup API and batched listing.
-4. **Kimi ran out of balance at 14:00.** The account is suspended, so 17 Mem0 answers are unfinished.
+4. **Kimi ran out of balance at 14:00.** After the $20 recharge, the last 17 Mem0 answers were completed.
 
-## Hosted Mem0 vs the store (163 of 180)
+## Hosted Mem0 vs the store (all 180)
 
 | Category | Store | Mem0 (Hobby) |
 | --- | ---: | ---: |
+| single-session-assistant | 22/22 | 3/22 |
 | single-session-user | 25/26 | 17/26 |
-| single-session-assistant | 10/10 | 2/10 |
-| knowledge-update | 21/24 | 16/24 |
+| knowledge-update | 24/29 | 21/29 |
 | temporal-reasoning | 30/44 | 24/44 |
 | multi-session | 23/44 | 19/44 |
 | single-session-preference | 10/15 | 9/15 |
-| **Total** | **119/163** | **87/163** |
+| **Total** | **134/180** | **93/180** |
 
 The largest gaps are in what the assistant said and in user facts that Mem0's extraction discards.
 This measures Mem0's free tier with three disclosed harness patches. It is not a statement about
-Mem0's published numbers or its paid tiers. Details: `docs/architecture/benchmarks/2026-09-30-mem0-hosted-dev163.md`.
+Mem0's published numbers or its paid tiers. Details: `docs/architecture/benchmarks/2026-09-30-mem0-hosted-dev180.md`.
 
 **A correction I made during the session.** On the first 60 questions, Mem0 led on temporal (7 vs 5),
 and I briefly used that to suggest a direction for the next candidate. Over all 44 temporal questions
@@ -83,20 +83,16 @@ All are tested and listed in `CHANGELOG.md` under Unreleased.
 | v1.2 diagnostic | $6.72 |
 | event-date Stage 2 | $6.48 |
 | Mem0 answers, first 60 | $1.32 |
-| Mem0 answers, 103 of the other 120 | $2.19 |
-| **Total** | **$17.10** |
+| Mem0 answers, other 120 (including the 17 after recharge) | $2.56 |
+| **Total** | **$17.48** |
 
 Mem0 retrieval cost nothing. It used 8,827 of the free tier's 10,000 monthly add requests.
 
 ## What needs you
 
-1. **Recharge the Kimi account.** Then finish the last 17 Mem0 answers with:
-   ```bash
-   cd ~/Documents/agent-memory-store && uv run python scripts/run_memorybench_kimi_baseline.py --dataset demo-artifacts/longmemeval_s_cleaned.json --selection evaluation/memorybench/longmemeval-dev120-design-blind-v1.json --checkpoint demo-artifacts/memorybench/upstream/data/runs/mem0-hosted-dev120-v1/checkpoint.json --output demo-artifacts/kimi-mem0-hosted-dev120.json --experiment-id kimi-k3-mem0-hosted-dev120-v1 --design-blind evaluation/memorybench/longmemeval-dev120-design-blind-v1.json --keychain-service agent-memory-store-kimi-api --max-total-usd 6.00
-   ```
-2. **Review, then accept, amend, or reject** the Track H amendment and the two contracts I froze.
-3. **Supermemory is still unmeasured.** It needs a Supermemory API key.
-4. **Push to Codeberg** when you are satisfied. About sixty commits exist only on this Mac and in the M2 backup.
+1. **Review, then accept, amend, or reject** the Track H amendment and the two contracts I froze.
+2. **Supermemory is still unmeasured.** It needs a Supermemory API key.
+3. **Push to Codeberg** when you are satisfied. About sixty commits exist only on this Mac and in the M2 backup.
 
 ## Known follow-up
 

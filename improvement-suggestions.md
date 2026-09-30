@@ -126,10 +126,10 @@ The current ambiguity leaves the project competing on a dimension it has deliber
 ## Priority 4 — Competitive evidence
 
 ### 4.1 Run the hosted comparator — first result in
-**Update 2026-09-30:** hosted Mem0 (Hobby tier) scored 31/60 against the store's 44/60 on the
-same sixty questions under the same protocol, p = 0.015; see
-`docs/architecture/benchmarks/2026-09-30-mem0-hosted-dev60.md`. The other 120 are being answered.
-Supermemory remains unmeasured.
+**Update 2026-09-30:** on all 180 development questions under an identical protocol, the store
+scored 134/180 (74.4%) and hosted Mem0 Hobby tier 93/180 (51.7%), p = 3.1e-6, with the store ahead in
+every category; see `docs/architecture/benchmarks/2026-09-30-mem0-hosted-dev180.md`. Supermemory
+remains unmeasured.
 
 Matched comparators remain the unmet Phase 1 exit condition. Published figures contradict one
 another: Mem0 claims 94.4% accuracy, Supermemory claims 95% Recall@15, and a third party claims a
