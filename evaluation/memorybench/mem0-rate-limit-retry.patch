@@ -1,0 +1,54 @@
+--- a/src/providers/mem0/index.ts
++++ b/src/providers/mem0/index.ts
+@@ -51,6 +51,27 @@
+ 
+ 5. Format each memory as a paragraph with a clear narrative structure that captures the person's experience, challenges, and aspirations`
+ 
++// Mem0's free tier rejects bursts with an explicit rate-limit error. Retry only that exact
++// rejection, with backoff: a rejected request was not processed, so a retry cannot duplicate
++// memories. Any other error still fails the question so it can be resumed and inspected.
++const RATE_LIMIT_BACKOFF_MS = [2_000, 5_000, 10_000, 20_000, 40_000, 60_000, 60_000, 60_000]
++
++async function withRateLimitRetry<T>(label: string, fn: () => Promise<T>): Promise<T> {
++  for (let attempt = 0; ; attempt++) {
++    try {
++      return await fn()
++    } catch (error) {
++      const message = String(error)
++      if (!/rate limit exceeded/i.test(message) || attempt >= RATE_LIMIT_BACKOFF_MS.length) {
++        throw error
++      }
++      const delay = RATE_LIMIT_BACKOFF_MS[attempt]
++      logger.warn(`Mem0 rate limit on ${label}; retry ${attempt + 1} in ${delay / 1000}s`)
++      await new Promise((resolve) => setTimeout(resolve, delay))
++    }
++  }
++}
++
+ export class Mem0Provider implements Provider {
+   name = "mem0"
+   prompts = MEM0_PROMPTS
+@@ -110,7 +131,10 @@
+         },
+       }
+ 
+-      const result = (await this.client.add(messages, addOptions)) as Array<{
++      const client = this.client
++      const result = (await withRateLimitRetry(`add ${session.sessionId}`, () =>
++        client.add(messages, addOptions)
++      )) as Array<{
+         event_id?: string
+       }>
+       for (const event of result) {
+@@ -193,7 +217,10 @@
+       output_format: "v1.1",
+     }
+ 
+-    const response = await this.client.search(query, searchOptions)
++    const client = this.client
++    const response = await withRateLimitRetry(`search ${options.containerTag}`, () =>
++      client.search(query, searchOptions)
++    )
+ 
+     const res = response as { results?: unknown[] }
+     return res.results ?? []

@@ -40,7 +40,8 @@ if (new Set(questionIds).size !== questionIds.length) {
   throw new Error("manifest question_ids must be unique")
 }
 
-await new Orchestrator().run({
+try {
+  await new Orchestrator().run({
   provider: provider as "mem0" | "supermemory",
   benchmark: "longmemeval",
   judgeModel: "gpt-4o",
@@ -50,4 +51,9 @@ await new Orchestrator().run({
   concurrency: { default: concurrency },
   force,
   phases: ["ingest", "indexing", "search"],
-})
+  })
+} catch (error) {
+  // Bun can exit 0 after an uncaught rejection here; make failure visible to the driver.
+  console.error(`hosted run failed: ${error}`)
+  process.exit(1)
+}

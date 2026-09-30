@@ -33,7 +33,8 @@ key_for() {
 
 push_tools() {
   scp -q "${ssh_opts[@]}" "$repo/evaluation/memorybench/hosted-search-manifest.ts" \
-    "$repo/scripts/hosted_remote_launch.sh" "$repo/scripts/hosted_remote_batches.sh" "$host:$remote_bench/scripts/"
+    "$repo/scripts/hosted_remote_launch.sh" "$repo/scripts/hosted_remote_batches.sh" \
+    "$repo/scripts/hosted_check_complete.py" "$host:$remote_bench/scripts/"
   ssh "${ssh_opts[@]}" "$host" "chmod +x $remote_bench/scripts/hosted_remote_launch.sh $remote_bench/scripts/hosted_remote_batches.sh; mkdir -p $remote_bench/manifests"
 }
 

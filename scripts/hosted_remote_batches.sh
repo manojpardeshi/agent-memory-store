@@ -23,7 +23,15 @@ nohup caffeinate -i bash -c '
     echo "$(date -u +%FT%TZ) start $run_id ($manifest)"
     "$HOME/.bun/bin/bun" scripts/hosted-search-manifest.ts "'"$provider"'" "$run_id" "$manifest" "'"$conc"'" \
       > "$HOME/bench/memorybench/$run_id.log" 2>&1
-    echo "$(date -u +%FT%TZ) end $run_id exit=$?"
+    rc=$?
+    if [ "$rc" -eq 0 ]; then
+      "$HOME/.local/bin/python3.12" scripts/hosted_check_complete.py "$run_id" "$manifest" || rc=3
+    fi
+    echo "$(date -u +%FT%TZ) end $run_id exit=$rc"
+    if [ "$rc" -ne 0 ]; then
+      echo "$(date -u +%FT%TZ) stopping: $run_id failed; later batches not started"
+      exit "$rc"
+    fi
   done
   echo "$(date -u +%FT%TZ) all batches finished"
 ' _ "$@" > "$driver_log" 2>&1 < /dev/null &
