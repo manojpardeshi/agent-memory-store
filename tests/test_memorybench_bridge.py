@@ -326,3 +326,35 @@ def test_v12_protects_each_sessions_anchor_and_keeps_all_v11_invariants(tmp_path
         chosen = next(m for m in selected if m["memory_id"] == anchor["memory_id"])
         assert split_header(chosen["content"])[1] == split_header(anchor["content"])[1]
     assert diag["protected_anchors"] == len(anchors)
+
+
+def test_event_date_policy_is_explicit_and_only_adds_a_field(tmp_path: Path) -> None:
+    from scripts.memorybench_bridge import EVENT_DATE_CONTEXT_POLICY
+
+    session = {
+        "sessionId": "q-session-0",
+        "messages": [
+            {"role": "user", "content": "I saw the dentist last Tuesday about my tooth."},
+            {"role": "assistant", "content": "I hope the dentist visit went well."},
+        ],
+        "metadata": {"date": "2023-05-30T10:00:00.000Z",
+                     "formattedDate": "10:00 am on 30 May, 2023"},
+    }
+    ranked = MemoryBenchBridge(tmp_path, DeterministicEmbedder(64))
+    ranked.ingest("tag", [session])
+    baseline, _ = ranked.search_with_diagnostics("tag", "when did I see the dentist", 5)
+    annotated = MemoryBenchBridge(
+        tmp_path, DeterministicEmbedder(64), context_policy=EVENT_DATE_CONTEXT_POLICY
+    )
+    assert annotated.initialize()["context_policy_config"]["model_in_query_path"] is False
+    selected, diag = annotated.search_with_diagnostics("tag", "when did I see the dentist", 5)
+    assert [m["memory_id"] for m in selected] == [m["memory_id"] for m in baseline]
+    # score and recency_score move with wall-clock time between the two recalls.
+    volatile = {"event_dates", "score", "recency_score"}
+    for before, after in zip(baseline, selected, strict=True):
+        assert {k: v for k, v in after.items() if k not in volatile} == {
+            k: v for k, v in before.items() if k not in volatile
+        }
+    assert diag["annotated_items"] == 1
+    user_item = next(m for m in selected if "event_dates" in m)
+    assert user_item["event_dates"] == ["2023-05-23 (last Tuesday)"]

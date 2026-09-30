@@ -26,18 +26,21 @@ RANKED_CONTEXT_POLICY = "ranked-v1"
 SESSION_DIVERSE_CONTEXT_POLICY = "session-diverse-v1"
 WITHIN_SESSION_EXPANSION_CONTEXT_POLICY = "within-session-expansion-v1.1"
 WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY = "within-session-expansion-v1.2"
+EVENT_DATE_CONTEXT_POLICY = "event-date-annotation-v1"
 EXPANSION_PER_SESSION_CAP = 4
 EXPANSION_BODY_FLOOR_CHARS = 400
 EXPANSION_BUDGET_RATIO = 1.0
 EXPANSION_SESSION_FETCH_LIMIT = 1000
 
 if __package__:
+    from scripts.event_date_annotation import annotate_event_dates
     from scripts.within_session_expansion import (
         context_json_bytes,
         expand_within_sessions,
         fit_to_budget,
     )
 else:  # pragma: no cover - stdio subprocess path
+    from event_date_annotation import annotate_event_dates
     from within_session_expansion import (
         context_json_bytes,
         expand_within_sessions,
@@ -81,6 +84,7 @@ class MemoryBenchBridge:
             SESSION_DIVERSE_CONTEXT_POLICY,
             WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
             WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY,
+            EVENT_DATE_CONTEXT_POLICY,
         ):
             raise ValueError(f"unsupported context policy: {context_policy}")
         self.data_dir = Path(data_dir).expanduser().resolve()
@@ -241,6 +245,13 @@ class MemoryBenchBridge:
                 "protected": "each session's highest-ranked baseline message is never reduced",
                 "neighbour_lookup": "find_by_metadata per baseline session; no record cap",
                 "reduction_order": "expansions, then unprotected baseline, then drop expansions",
+                "model_in_query_path": False,
+            }
+        elif self.context_policy == EVENT_DATE_CONTEXT_POLICY:
+            result["context_policy_config"] = {
+                "selection": "ranked-v1 top-limit, unchanged order and bodies",
+                "annotation": "event_dates on user messages, resolved deterministically",
+                "excluded_expressions": ["today"],
                 "model_in_query_path": False,
             }
         return result
@@ -490,6 +501,9 @@ class MemoryBenchBridge:
             selected, extra_diagnostics = self.select_within_session_expansion(
                 serialized, session_records or [], query, limit=limit, protect_anchors=True
             )
+        elif self.context_policy == EVENT_DATE_CONTEXT_POLICY:
+            selected, annotated = annotate_event_dates(serialized[:limit])
+            extra_diagnostics = {"annotated_items": annotated}
         else:
             selected = serialized[:limit]
         selection_duration_ms = (time.perf_counter() - selection_started) * 1000
