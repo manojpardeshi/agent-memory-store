@@ -6,6 +6,7 @@
 # copy of the key. It never appears in any command line, file, log, or report.
 #
 # usage: scripts/run_hosted_comparator.sh launch {mem0|supermemory} RUN_ID MANIFEST CONCURRENCY
+#        scripts/run_hosted_comparator.sh batches {mem0|supermemory} CONCURRENCY RUN_ID:MANIFEST...
 #        scripts/run_hosted_comparator.sh selftest {mem0|supermemory}
 #        scripts/run_hosted_comparator.sh status RUN_ID
 #        scripts/run_hosted_comparator.sh fetch RUN_ID
@@ -32,8 +33,8 @@ key_for() {
 
 push_tools() {
   scp -q "${ssh_opts[@]}" "$repo/evaluation/memorybench/hosted-search-manifest.ts" \
-    "$repo/scripts/hosted_remote_launch.sh" "$host:$remote_bench/scripts/"
-  ssh "${ssh_opts[@]}" "$host" "chmod +x $remote_bench/scripts/hosted_remote_launch.sh; mkdir -p $remote_bench/manifests"
+    "$repo/scripts/hosted_remote_launch.sh" "$repo/scripts/hosted_remote_batches.sh" "$host:$remote_bench/scripts/"
+  ssh "${ssh_opts[@]}" "$host" "chmod +x $remote_bench/scripts/hosted_remote_launch.sh $remote_bench/scripts/hosted_remote_batches.sh; mkdir -p $remote_bench/manifests"
 }
 
 case "$mode" in
@@ -51,6 +52,21 @@ case "$mode" in
     # printf is a bash builtin, so the key is not on this side's argv either.
     printf '%s\n' "$key" | ssh "${ssh_opts[@]}" "$host" \
       "$remote_bench/scripts/hosted_remote_launch.sh $var $provider $run_id manifests/$name $conc"
+    unset key ;;
+  batches)
+    provider="${2:?provider}"; conc="${3:?concurrency}"; shift 3
+    [[ "$conc" =~ ^[1-8]$ ]] || { echo "concurrency must be 1 to 8" >&2; exit 2; }
+    key_for "$provider"; push_tools
+    remote_pairs=()
+    for pair in "$@"; do
+      run_id="${pair%%:*}"; manifest="${pair#*:}"
+      [[ "$run_id" =~ ^[A-Za-z0-9._-]+$ ]] || { echo "bad run id: $run_id" >&2; exit 2; }
+      name="$(basename "$manifest")"
+      scp -q "${ssh_opts[@]}" "$repo/$manifest" "$host:$remote_bench/manifests/$name"
+      remote_pairs+=("$run_id:manifests/$name")
+    done
+    printf '%s\n' "$key" | ssh "${ssh_opts[@]}" "$host" \
+      "$remote_bench/scripts/hosted_remote_batches.sh $var $provider $conc ${remote_pairs[*]}"
     unset key ;;
   status)
     run_id="${2:?run id}"
