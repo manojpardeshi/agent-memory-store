@@ -30,6 +30,24 @@ def context_json_bytes(results: list[dict[str, Any]]) -> int:
     return len(json.dumps(results, indent=2, ensure_ascii=False).encode())
 
 
+def nested_item_bytes(item: dict[str, Any]) -> int:
+    """Exact bytes one item contributes inside `json.dumps(list, indent=2)`.
+
+    Nested one level deep, every line of the item's own indent=2 encoding gains a two-space
+    prefix. JSON escapes newlines inside strings, so line breaks come only from layout.
+    """
+    encoded = json.dumps(item, indent=2, ensure_ascii=False)
+    return len(encoded.encode()) + 2 * (encoded.count("\n") + 1)
+
+
+def list_bytes_from_items(item_bytes: list[int]) -> int:
+    """Exact `context_json_bytes` of a list, given each item's `nested_item_bytes`."""
+    if not item_bytes:
+        return 2  # "[]"
+    # "[\n" + items joined by ",\n" + "\n]"
+    return 2 + sum(item_bytes) + 2 * (len(item_bytes) - 1) + 2
+
+
 def _tokens(text: str) -> set[str]:
     return {t for t in _TOKEN.findall(text.lower()) if len(t) >= 3}
 
@@ -165,39 +183,38 @@ def fit_to_budget(
     budget_bytes: int,
     floor_body_chars: int,
     reduce_baseline: bool,
+    protected_ids: frozenset[str] = frozenset(),
 ) -> list[dict[str, Any]]:
     """Return baseline + expansions within `budget_bytes`, reducing before dropping.
 
     Order of sacrifice: expansion bodies (largest first) down to the floor; then, only if
     `reduce_baseline`, baseline bodies (largest first) down to the floor; then expansions
-    dropped from the tail. Baseline items are never dropped and never reordered.
+    dropped from the tail. Baseline items are never dropped and never reordered, and an item
+    whose `memory_id` is in `protected_ids` is never reduced at all.
 
-    Each reduction step shrinks the largest eligible body by the measured overshoot rather
-    than by halves, so an item is normally touched once and the total is re-measured a
-    handful of times instead of hundreds. Byte accounting stays exact: every decision is
-    made against `context_json_bytes` of the full candidate list.
+    Byte accounting is exact and incremental: each item's contribution to the paired
+    runner's `json.dumps(list, indent=2)` is cached and only the changed item is
+    re-encoded, so a step costs one item encode instead of a whole-context encode.
     """
     if floor_body_chars <= 0:
         raise ValueError("floor_body_chars must be positive")
     base = list(baseline)
     exp = list(expansions)
+    base_sizes = [nested_item_bytes(item) for item in base]
+    exp_sizes = [nested_item_bytes(item) for item in exp]
     # "… " prefix and " …" suffix that reduce_to_span may add; reserve for them.
     marker_slack = 4
 
     def total() -> int:
-        return context_json_bytes(base + exp)
+        return list_bytes_from_items(base_sizes + exp_sizes)
 
-    def shrink_tier(items: list[dict[str, Any]]) -> None:
-        """Reduce bodies in this tier, largest first, until within budget or all exhausted.
-
-        Progress is guaranteed: each step removes at least MIN_STEP_CHARS beyond the
-        overshoot, and an item whose reduction fails to lower the total is marked
-        exhausted so it cannot be re-selected. A hard cap bounds the loop regardless.
-        """
-        exhausted: set[int] = set()
+    def shrink_tier(items: list[dict[str, Any]], sizes: list[int]) -> None:
+        """Reduce bodies in this tier, largest first, until within budget or all exhausted."""
+        exhausted: set[int] = {
+            i for i in range(len(items)) if items[i].get("memory_id") in protected_ids
+        }
         for _ in range(MAX_STEPS_PER_TIER):
-            before = total()
-            over = before - budget_bytes
+            over = total() - budget_bytes
             if over <= 0:
                 return
             candidates = [
@@ -213,16 +230,18 @@ def fit_to_budget(
             step = max(over, MIN_STEP_CHARS) + marker_slack
             target = max(floor_body_chars, body_len - step)
             reduced = reduce_to_span(items[i]["content"], query, max_body_chars=target)
+            before = sizes[i]
             items[i] = _with_body(items[i], reduced)
-            after = total()
-            if after >= before or len(split_header(reduced)[1]) <= floor_body_chars:
+            sizes[i] = nested_item_bytes(items[i])
+            if sizes[i] >= before or len(split_header(reduced)[1]) <= floor_body_chars:
                 exhausted.add(i)
 
-    shrink_tier(exp)
+    shrink_tier(exp, exp_sizes)
     if total() > budget_bytes and reduce_baseline:
-        shrink_tier(base)
+        shrink_tier(base, base_sizes)
     while total() > budget_bytes and exp:
         exp.pop()
+        exp_sizes.pop()
     return base + exp
 
     def shrink(items: list[dict[str, Any]]) -> bool:

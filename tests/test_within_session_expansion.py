@@ -152,3 +152,40 @@ def test_fit_to_budget_terminates_on_tiny_overshoot() -> None:
     assert time.perf_counter() - started < 2.0
     assert context_json_bytes(out) <= budget
     assert out[0]["memory_id"] == "b1"
+
+
+def test_incremental_accounting_equals_exact_encoding() -> None:
+    """The cached per-item formula must equal the paired runner's measurement exactly,
+    including non-ASCII, nested structures, empty and single-item lists."""
+    import random
+
+    from scripts.within_session_expansion import list_bytes_from_items, nested_item_bytes
+
+    rng = random.Random(7)
+    alphabet = "abc xyz … 日本 é\n\t\"{}[]\\"
+    for _ in range(200):
+        items = []
+        for k in range(rng.randint(0, 6)):
+            body = "".join(rng.choice(alphabet) for _ in range(rng.randint(0, 120)))
+            items.append({
+                "memory_id": f"m{k}", "content": body, "memory": body,
+                "metadata": {"session_id": "s", "message_index": k, "tags": [1, "two", None]},
+                "score": rng.random(), "nested": {"a": {"b": [True, False]}},
+            })
+        assert list_bytes_from_items([nested_item_bytes(i) for i in items]) == (
+            context_json_bytes(items)
+        )
+
+
+def test_protected_items_are_never_reduced() -> None:
+    big = "The count of mummies was four in the story. " * 80
+    baseline = [_msg("b1", "s", 0, big), _msg("b2", "s", 1, big)]
+    expansions = [_msg("e1", "s", 2, big)]
+    budget = context_json_bytes(baseline)  # expansion must be paid for by reductions
+    out = fit_to_budget(
+        baseline, expansions, "how many mummies", budget_bytes=budget,
+        floor_body_chars=400, reduce_baseline=True, protected_ids=frozenset({"b1"}),
+    )
+    assert out[0]["memory_id"] == "b1"
+    assert split_header(out[0]["content"])[1] == big  # protected anchor untouched
+    assert context_json_bytes(out) <= budget

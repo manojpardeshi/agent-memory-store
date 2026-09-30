@@ -25,6 +25,7 @@ BENCHMARK_ENVIRONMENT = "longmemeval"
 RANKED_CONTEXT_POLICY = "ranked-v1"
 SESSION_DIVERSE_CONTEXT_POLICY = "session-diverse-v1"
 WITHIN_SESSION_EXPANSION_CONTEXT_POLICY = "within-session-expansion-v1.1"
+WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY = "within-session-expansion-v1.2"
 EXPANSION_PER_SESSION_CAP = 4
 EXPANSION_BODY_FLOOR_CHARS = 400
 EXPANSION_BUDGET_RATIO = 1.0
@@ -79,6 +80,7 @@ class MemoryBenchBridge:
             RANKED_CONTEXT_POLICY,
             SESSION_DIVERSE_CONTEXT_POLICY,
             WITHIN_SESSION_EXPANSION_CONTEXT_POLICY,
+            WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY,
         ):
             raise ValueError(f"unsupported context policy: {context_policy}")
         self.data_dir = Path(data_dir).expanduser().resolve()
@@ -229,6 +231,18 @@ class MemoryBenchBridge:
                 "reduction_order": "expansions, then baseline, then drop expansions from tail",
                 "model_in_query_path": False,
             }
+        elif self.context_policy == WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY:
+            result["context_policy_config"] = {
+                "baseline": "ranked-v1 top-limit, retained as an ordered prefix",
+                "per_session_expansion_cap": EXPANSION_PER_SESSION_CAP,
+                "new_sessions_introduced": 0,
+                "budget_ratio_to_baseline_bytes": EXPANSION_BUDGET_RATIO,
+                "body_floor_chars": EXPANSION_BODY_FLOOR_CHARS,
+                "protected": "each session's highest-ranked baseline message is never reduced",
+                "neighbour_lookup": "find_by_metadata per baseline session; no record cap",
+                "reduction_order": "expansions, then unprotected baseline, then drop expansions",
+                "model_in_query_path": False,
+            }
         return result
 
     def ingest(self, container_tag: str, raw_sessions: object) -> dict[str, Any]:
@@ -366,9 +380,14 @@ class MemoryBenchBridge:
         query: str,
         *,
         limit: int,
+        protect_anchors: bool = False,
     ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-        """within-session-expansion-v1.1: keep the ranked top-limit as a prefix, add up to
-        EXPANSION_PER_SESSION_CAP neighbours per baseline session, fit to baseline bytes."""
+        """Keep the ranked top-limit as a prefix, add up to EXPANSION_PER_SESSION_CAP
+        neighbours per baseline session, and fit to the baseline's own bytes.
+
+        v1.1 leaves every baseline body reducible. v1.2 (`protect_anchors`) never reduces
+        each session's highest-ranked baseline message: v1.1 lost an answer by cutting the
+        top-ranked message down to a span that kept its title and dropped its count."""
 
         if not 1 <= limit <= 100:
             raise ValueError("limit must be between 1 and 100")
@@ -387,6 +406,11 @@ class MemoryBenchBridge:
         expansions = expand_within_sessions(
             baseline, by_session, cap=EXPANSION_PER_SESSION_CAP
         )
+        anchors: dict[str, str] = {}
+        for item in baseline:
+            sid = (item.get("metadata") or {}).get("session_id")
+            if isinstance(sid, str) and sid not in anchors:
+                anchors[sid] = item["memory_id"]
         selected = fit_to_budget(
             baseline,
             expansions,
@@ -394,6 +418,7 @@ class MemoryBenchBridge:
             budget_bytes=budget,
             floor_body_chars=EXPANSION_BODY_FLOOR_CHARS,
             reduce_baseline=True,
+            protected_ids=frozenset(anchors.values()) if protect_anchors else frozenset(),
         )
         return selected, {
             "baseline_context_json_bytes": context_json_bytes(baseline),
@@ -402,6 +427,7 @@ class MemoryBenchBridge:
             "expansion_candidates": len(expansions),
             "expansions_admitted": len(selected) - len(baseline),
             "baseline_sessions": len(wanted),
+            "protected_anchors": len(anchors) if protect_anchors else 0,
         }
 
     def search_with_diagnostics(
@@ -439,6 +465,18 @@ class MemoryBenchBridge:
                 session_records = store.list_memories(
                     scope, limit=EXPANSION_SESSION_FETCH_LIMIT
                 )
+            elif self.context_policy == WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY:
+                # Fetch only the sessions the baseline already selected, with no record cap.
+                wanted: list[str] = []
+                for item in results[:limit]:
+                    sid = (item.memory.metadata or {}).get("session_id")
+                    if isinstance(sid, str) and sid not in wanted:
+                        wanted.append(sid)
+                session_records = [
+                    record
+                    for sid in wanted
+                    for record in store.find_by_metadata(scope, {"session_id": sid})
+                ]
         serialized = self._serialize_results(results)
         selection_started = time.perf_counter()
         extra_diagnostics: dict[str, Any] = {}
@@ -447,6 +485,10 @@ class MemoryBenchBridge:
         elif self.context_policy == WITHIN_SESSION_EXPANSION_CONTEXT_POLICY:
             selected, extra_diagnostics = self.select_within_session_expansion(
                 serialized, session_records or [], query, limit=limit
+            )
+        elif self.context_policy == WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY:
+            selected, extra_diagnostics = self.select_within_session_expansion(
+                serialized, session_records or [], query, limit=limit, protect_anchors=True
             )
         else:
             selected = serialized[:limit]

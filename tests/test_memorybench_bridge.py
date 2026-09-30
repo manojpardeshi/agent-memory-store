@@ -294,3 +294,35 @@ def test_within_session_expansion_keeps_baseline_prefix_no_new_sessions_within_b
     assert all("expansion" in m for m in selected[3:])
     # a reduced baseline body keeps its provenance header
     assert all(m["content"].startswith("[longmemeval-source]") for m in selected)
+
+
+def test_v12_protects_each_sessions_anchor_and_keeps_all_v11_invariants(tmp_path: Path) -> None:
+    from scripts.memorybench_bridge import WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY
+    from scripts.within_session_expansion import context_json_bytes, split_header
+
+    sessions = [_long_session("q-session-0", 8, "designer handbag"),
+                _long_session("q-session-1", 6, "garden hose")]
+    ranked = MemoryBenchBridge(tmp_path, DeterministicEmbedder(64))
+    ranked.ingest("tag", sessions)
+    query = "how much did I spend on the handbag"
+    baseline, _ = ranked.search_with_diagnostics("tag", query, 3)
+
+    v12 = MemoryBenchBridge(
+        tmp_path, DeterministicEmbedder(64),
+        context_policy=WITHIN_SESSION_EXPANSION_V12_CONTEXT_POLICY,
+    )
+    assert v12.initialize()["context_policy_config"]["protected"].startswith("each session")
+    selected, diag = v12.search_with_diagnostics("tag", query, 3)
+
+    assert [m["memory_id"] for m in selected[:3]] == [m["memory_id"] for m in baseline]
+    assert {m["metadata"]["session_id"] for m in selected} <= {
+        m["metadata"]["session_id"] for m in baseline
+    }
+    assert context_json_bytes(selected) <= context_json_bytes(baseline)
+    anchors = {}
+    for m in baseline:
+        anchors.setdefault(m["metadata"]["session_id"], m)
+    for anchor in anchors.values():
+        chosen = next(m for m in selected if m["memory_id"] == anchor["memory_id"])
+        assert split_header(chosen["content"])[1] == split_header(anchor["content"])[1]
+    assert diag["protected_anchors"] == len(anchors)
