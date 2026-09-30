@@ -648,15 +648,25 @@ class MemoryStore:
                 candidates[internal_id] = min(distance, candidates.get(internal_id, distance))
 
         now = datetime.now(UTC)
-        results: list[RecallResult] = []
-        for internal_id, distance in candidates.items():
-            row = self.connection.execute(
-                """
-                SELECT status, embedding_status, created_at, expires_at
-                FROM memories WHERE id=?
+        # Score every candidate from one batched status query, then load full records only
+        # for the results actually returned. Previously each candidate cost a status query
+        # plus a full two-query record load, even candidates cut by the limit.
+        status_rows: dict[int, sqlite3.Row] = {}
+        candidate_ids = list(candidates)
+        for offset in range(0, len(candidate_ids), self._RECORD_BATCH_SIZE):
+            batch = candidate_ids[offset : offset + self._RECORD_BATCH_SIZE]
+            marks = ",".join("?" * len(batch))
+            for row in self.connection.execute(
+                f"""
+                SELECT id, memory_id, status, embedding_status, created_at, expires_at
+                FROM memories WHERE id IN ({marks})
                 """,
-                (internal_id,),
-            ).fetchone()
+                batch,
+            ).fetchall():
+                status_rows[int(row["id"])] = row
+        scored: list[tuple[float, str, int, float, float, float]] = []
+        for internal_id, distance in candidates.items():
+            row = status_rows.get(internal_id)
             if row is None or row["status"] != "active" or row["embedding_status"] != "ready":
                 continue
             if row["expires_at"]:
@@ -668,25 +678,30 @@ class MemoryStore:
             semantic_score = max(0.0, min(1.0, 1.0 - distance))
             recency_score = math.pow(0.5, age_days / recency_half_life_days)
             score = semantic_weight * semantic_score + (1 - semantic_weight) * recency_score
-            results.append(
-                RecallResult(
-                    memory=self._record_by_internal_id(internal_id),
-                    score=score,
-                    semantic_score=semantic_score,
-                    recency_score=recency_score,
-                    distance=distance,
-                )
+            scored.append(
+                (score, row["memory_id"], internal_id, semantic_score, recency_score, distance)
             )
-        ranked = sorted(results, key=lambda item: (-item.score, item.memory.memory_id))
-        if effective_filter is not None and ranked:
-            best_semantic_score = ranked[0].semantic_score
+        # Same order as before: descending score, ties broken by public memory id.
+        scored.sort(key=lambda item: (-item[0], item[1]))
+        if effective_filter is not None and scored:
             minimum_semantic_score = (
-                best_semantic_score - effective_filter.maximum_semantic_score_gap
+                scored[0][3] - effective_filter.maximum_semantic_score_gap
             )
-            ranked = [
-                result for result in ranked if result.semantic_score >= minimum_semantic_score
-            ]
-        return ranked[:limit]
+            scored = [item for item in scored if item[3] >= minimum_semantic_score]
+        chosen = scored[:limit]
+        records = self._records_by_internal_ids([item[2] for item in chosen])
+        return [
+            RecallResult(
+                memory=record,
+                score=score,
+                semantic_score=semantic_score,
+                recency_score=recency_score,
+                distance=distance,
+            )
+            for record, (score, _, _, semantic_score, recency_score, distance) in zip(
+                records, chosen, strict=True
+            )
+        ]
 
     @staticmethod
     def context_bundle(
