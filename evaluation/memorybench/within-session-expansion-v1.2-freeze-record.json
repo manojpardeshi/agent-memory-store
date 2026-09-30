@@ -4,5 +4,13 @@
   "frozen_by": "author under owner-delegated authority, before measurement",
   "contract_sha256": "6e7653712e02faafe9545a2997b9c68bb76acda67aca32d7c42d6955020314ec",
   "gates_sha256": "717f68ac4b60401c51a931242a027640ec098a1e8f2ca0b638f8a1798bee9a2b",
-  "code_commit_at_freeze": "00e036d"
+  "code_commit_at_freeze": "00e036d",
+  "stage_1_result": {
+    "status": "failed",
+    "failed_gates": [
+      "coverage_min_absolute"
+    ],
+    "report_sha256": "1d58b94478169dc54359c3a9a702d19786fc56cb18387741ffda88ee542b85f6",
+    "closed_on": "2026-09-30"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "experiment_id": "within-session-expansion-v1.2",
-  "status": "frozen",
+  "status": "stage-1-failed-closed",
   "frozen_on": "2026-09-30",
   "frozen_by": "author under owner-delegated authority, before measurement",
   "baseline_report": "docs/architecture/benchmarks/2026-09-27-kimi-question-date-baseline180.md",
@@ -38,5 +38,13 @@
       "multi_session_min": 23,
       "other_category_max_loss": 1
     }
+  },
+  "stage_1_result": {
+    "status": "failed",
+    "failed_gates": [
+      "coverage_min_absolute"
+    ],
+    "report_sha256": "1d58b94478169dc54359c3a9a702d19786fc56cb18387741ffda88ee542b85f6",
+    "closed_on": "2026-09-30"
   }
 }
