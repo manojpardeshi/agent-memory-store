@@ -99,6 +99,20 @@ Python uses the typed API rather than MCP strings: omit the argument or pass `"d
 
 The frozen two-corpus/two-model matrix reduced designated distractor leakage from 24%/18.3%/40%/16.7% unfiltered to 6%/10%/6%/5% with no Recall@5 or MRR change and zero scope violations. This closes the retrieval-default product gate only for those exact identities; it is not a general statistical claim. See `docs/architecture/benchmarks/2026-07-19-retrieval-quality-v2.md`.
 
+## Looking Up Memories by Metadata
+
+Applications that attach their own identifiers can fetch matching memories directly, for example
+every stored message from one conversation:
+
+```python
+messages = store.find_by_metadata(private_scope, {"conversation_id": "c-42"})
+```
+
+Matching happens inside SQLite within one exact scope, so it stays fast as the store grows and never
+crosses scopes. Superseded and expired memories are excluded by default, matching `recall`; pass
+`include_superseded=True` or `include_expired=True` for audit views. Filters combine with AND, keys
+must be plain identifiers, and values must be strings, numbers, or booleans.
+
 ## Expiry Cleanup
 
 Expired memories are excluded from recall immediately, but physical cleanup is deliberately on demand. Preview the exact cutoff and candidate set first:

@@ -6,12 +6,21 @@ All notable changes to this project are documented here.
 
 ### Changed
 
+- `list_memories` and JSON export fetch records two queries per batch of up to 500 instead of two
+  per record. Output is unchanged, record for record, and the query count no longer grows with the
+  number of records.
+
 - Reframed the post-0.1 roadmap around matched standard-benchmark evidence and measurable local
   retrieval quality before new product tuning.
 - Paused retention-tombstone work until benchmark-driven quality releases or concrete user
   retention evidence justify the schema and interchange cost.
 
 ### Added
+
+- `MemoryStore.find_by_metadata(scope, filters)` returns memories in one exact scope whose top-level
+  metadata matches every filter, matched inside SQLite so only matching rows are loaded. Superseded
+  and expired memories are excluded by default using the same expiry rule as `recall`. Keys must be
+  plain identifiers; the JSON path is always a bound parameter.
 
 - Added a pinned MemoryBench provider/stdio bridge, LongMemEval-S dataset verifier, lifecycle and
   loopback-evaluator patches, and deterministic adapter tests.
