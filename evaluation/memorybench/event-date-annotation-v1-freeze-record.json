@@ -1,0 +1,7 @@
+{
+  "experiment_id": "event-date-annotation-v1",
+  "frozen_on": "2026-09-30",
+  "contract_sha256": "dedc7589441a850789ce00ac053a2bc044a2233ac50a08e0af644c2da8a5b99a",
+  "gates_sha256": "b1de940100f410e9e3b7572eb4e8c6f700a352c7b422a585e33bb135be369069",
+  "code_commit_at_freeze": "ab3a4fa"
+}
