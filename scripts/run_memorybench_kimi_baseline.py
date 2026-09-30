@@ -24,6 +24,7 @@ import collections
 import hashlib
 import json
 import os
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -74,6 +75,9 @@ JUDGE_REPEATS = 3
 ANSWER_MAX_CALL_USD = 0.25
 JUDGE_MAX_CALL_USD = 0.05
 DATASET_SHA256 = "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442"
+# Kimi does not process a request it rejects with HTTP 429, so retrying that exact rejection
+# cannot double-bill. Every other error still stops the run.
+RATE_LIMIT_BACKOFF_S = (5, 10, 20, 40, 60)
 
 
 class BaselineRunError(RuntimeError):
@@ -166,15 +170,28 @@ def _guarded_call(
         raise BaselineRunError(
             f"worst-case ${worst:.6f} exceeds remaining ${_remaining(report):.6f}; stopping"
         )
-    call = run_kimi_call(
-        api_key,
-        body,
-        max_completion_tokens=max_completion_tokens,
-        max_call_usd=max_call_usd,
-        timeout_seconds=timeout_seconds,
-    )
+    for attempt in range(len(RATE_LIMIT_BACKOFF_S) + 1):
+        try:
+            call = run_kimi_call(
+                api_key,
+                body,
+                max_completion_tokens=max_completion_tokens,
+                max_call_usd=max_call_usd,
+                timeout_seconds=timeout_seconds,
+            )
+            break
+        except Exception as error:  # noqa: BLE001 - re-raised unless it is an explicit 429
+            if "HTTP 429" not in str(error) or attempt == len(RATE_LIMIT_BACKOFF_S):
+                raise
+            report.setdefault("rate_limit_retries", 0)
+            report["rate_limit_retries"] += 1
+            _sleep(RATE_LIMIT_BACKOFF_S[attempt])
     _record_cost(report, call)
     return call
+
+
+def _sleep(seconds: float) -> None:
+    time.sleep(seconds)
 
 
 def _summary(report: dict[str, Any]) -> dict[str, Any]:
