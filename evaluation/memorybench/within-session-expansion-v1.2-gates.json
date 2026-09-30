@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "experiment_id": "within-session-expansion-v1.2",
+  "status": "frozen",
+  "frozen_on": "2026-09-30",
+  "frozen_by": "author under owner-delegated authority, before measurement",
+  "baseline_report": "docs/architecture/benchmarks/2026-09-27-kimi-question-date-baseline180.md",
+  "stage_1_local": {
+    "gates": {
+      "questions_complete": 180,
+      "within_session_coverage_mean_min": 0.55,
+      "within_session_coverage_min_points_above_baseline_on_same_180": 15,
+      "context_bytes_mean_max_ratio": 1.0,
+      "context_bytes_p95_max_ratio": 1.05,
+      "selection_p95_ms_max": 15,
+      "search_p95_ms_max": 225
+    }
+  },
+  "stage_2_paid": {
+    "model": "kimi-k3",
+    "max_total_usd": 9.0,
+    "baseline": {
+      "total": 134,
+      "multi_session_plus_temporal": 53,
+      "multi_session": 23,
+      "categories": {
+        "single-session-assistant": 22,
+        "single-session-user": 25,
+        "knowledge-update": 24,
+        "temporal-reasoning": 30,
+        "single-session-preference": 10,
+        "multi-session": 23
+      }
+    },
+    "gates": {
+      "multi_session_plus_temporal_min": 57,
+      "overall_min": 137,
+      "multi_session_min": 23,
+      "other_category_max_loss": 1
+    }
+  }
+}
