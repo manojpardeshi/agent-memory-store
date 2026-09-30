@@ -1,0 +1,9 @@
+{
+  "question_ids": [
+    "d24813b1",
+    "caf03d32",
+    "8a2466db",
+    "06878be2"
+  ],
+  "note": "4-question check of the session-timestamp fix and hosted parallel throughput; all from the observed stratified sixty"
+}

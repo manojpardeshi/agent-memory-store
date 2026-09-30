@@ -1,0 +1,22 @@
+--- a/src/providers/mem0/index.ts
++++ b/src/providers/mem0/index.ts
+@@ -86,8 +86,19 @@
+         content: m.content,
+       }))
+ 
++      // Replayed benchmark sessions happened in the past. Mem0 dates memories by the add
++      // request's `timestamp` (Unix seconds) and falls back to the current time without it,
++      // which turned 2023 conversations into 2026 memories. The date in `metadata` below is
++      // informational only, so pass the session date where Mem0 actually uses it.
++      const sessionDate = session.metadata?.date
++      const sessionEpoch =
++        typeof sessionDate === "string" && !Number.isNaN(Date.parse(sessionDate))
++          ? Math.floor(Date.parse(sessionDate) / 1000)
++          : undefined
++
+       const addOptions: MemoryOptions = {
+         user_id: options.containerTag,
++        ...(sessionEpoch !== undefined ? { timestamp: sessionEpoch } : {}),
+         version: "v2",
+         enable_graph: false,
+         async_mode: true,
