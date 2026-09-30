@@ -41,6 +41,12 @@ local result nor the provider's published claim, and it is never reported as eit
 - Indexing failures, retries, and any sessions that did not index.
 - That Supermemory authors MemoryBench.
 - That the Mem0 JS client's default PostHog telemetry was disabled with `MEM0_TELEMETRY=false`.
+- **The session-timestamp patch** (`evaluation/memorybench/mem0-session-timestamp.patch`). Unpatched,
+  MemoryBench sends each session's date only inside metadata, and Mem0 dated every memory by the
+  ingestion time: the one-question smoke run wrote "September 30, 2026" into memories from May 2023
+  conversations. The patch passes the session date as Mem0's documented add `timestamp`. Verified on
+  four questions: memory creation dates matched their sessions and no memory text mentioned 2026.
+  Without it, Mem0 would be scored on temporal questions against dates it was never given.
 - That retrieval ran on the M2 Pro and answering on the M1. Latency figures from Track H are
   therefore not comparable with the store's, and none are reported.
 - That the answering model sees each system's own result objects, serialised identically.
