@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Changed
 
+- `recall` scores candidates from one batched query and loads only the records it returns: about
+  6 SQL statements per call instead of about 123 at limit 10 and 603 at limit 50, with median
+  latency roughly halved at limit 10 and cut by about 65% at limit 50 on a 3,000-memory store.
+  Results are identical, verified against the previous algorithm.
 - `list_memories` and JSON export fetch records two queries per batch of up to 500 instead of two
   per record. Output is unchanged, record for record, and the query count no longer grows with the
   number of records.
