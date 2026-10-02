@@ -119,9 +119,11 @@ class RecallResult:
     semantic_score: float
     recency_score: float
     distance: float
+    # Reciprocal-rank-fusion score; set only by hybrid recall, which orders results by it.
+    fusion_score: float | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result = {
             "trust_label": "untrusted_memory",
             "memory": self.memory.to_dict(),
             "score": self.score,
@@ -129,6 +131,9 @@ class RecallResult:
             "recency_score": self.recency_score,
             "distance": self.distance,
         }
+        if self.fusion_score is not None:
+            result["fusion_score"] = self.fusion_score
+        return result
 
 
 @dataclass(frozen=True, slots=True)

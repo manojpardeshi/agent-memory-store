@@ -465,6 +465,7 @@ def run_retrieval_evaluation(
     embedder: Embedder,
     *,
     relevance_filter: RelevanceFilter | None = None,
+    retrieval: str = "vector",
 ) -> dict[str, Any]:
     """Seed an isolated store, run the dataset, and return a reproducible report."""
 
@@ -503,6 +504,7 @@ def run_retrieval_evaluation(
                 shared_pools=query.shared_pools,
                 limit=accessible_candidate_count,
                 relevance_filter=relevance_filter,
+                retrieval=retrieval,
             )
             rankings[query.query_id] = [
                 public_to_fixture[result.memory.memory_id] for result in results
@@ -559,6 +561,7 @@ def run_retrieval_evaluation(
         "embedding": embedding_identity.to_dict(),
         "retrieval_config": {
             "limit": dataset.top_k,
+            "retrieval": retrieval,
             "relevance_filter": (
                 relevance_filter.to_dict() if relevance_filter is not None else None
             ),

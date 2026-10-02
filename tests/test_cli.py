@@ -49,6 +49,29 @@ def test_cli_vertical_slice(tmp_path, capsys) -> None:
 
     assert recalled["items"][0]["memory"]["memory_id"] == remembered["memory_id"]
     assert recalled["trust_label"] == "untrusted_memory"
+    assert recalled["retrieval"] == "vector"
+
+    main(
+        [
+            "recall",
+            *common,
+            "--subject",
+            "me",
+            "--environment",
+            "test",
+            "--agent",
+            "codex",
+            "--query",
+            "portable local software",
+            "--retrieval",
+            "hybrid",
+        ]
+    )
+    hybrid = json.loads(capsys.readouterr().out)
+
+    assert hybrid["retrieval"] == "hybrid"
+    assert hybrid["items"][0]["memory"]["memory_id"] == remembered["memory_id"]
+    assert "fusion_score" in hybrid["items"][0]
 
 
 def test_cli_broad_export_and_restore_require_confirmation(tmp_path, capsys) -> None:

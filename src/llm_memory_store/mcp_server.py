@@ -86,8 +86,13 @@ def memory_recall(
     limit: int = 5,
     max_characters: int = 4000,
     relevance_filter: str | None = "default",
+    retrieval: str = "vector",
 ) -> dict[str, Any]:
-    """Recall scopes; filter is default, off, or relative:GAP and may return < limit, even zero."""
+    """Recall scopes; filter is default, off, or relative:GAP and may return < limit, even zero.
+
+    retrieval is vector (default) or hybrid; hybrid adds keyword matching, which helps when the
+    query repeats exact words, names, or numbers from the memory, and can hurt paraphrases.
+    """
 
     store = get_store()
     if relevance_filter in (None, "default"):
@@ -105,8 +110,10 @@ def memory_recall(
         shared_pools=shared_pools or (),
         limit=limit,
         relevance_filter=parsed_filter,
+        retrieval=retrieval,
     )
     bundle = store.context_bundle(query, results, max_characters=max_characters)
+    bundle["retrieval"] = retrieval
     bundle["relevance_filter"] = parsed_filter.to_dict() if parsed_filter is not None else None
     bundle["relevance_filter_policy"] = filter_policy
     if parsed_filter is not None:

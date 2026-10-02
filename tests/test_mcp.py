@@ -115,6 +115,15 @@ def test_mcp_stdio_vertical_slice(tmp_path) -> None:
             )
             assert explicitly_off.structuredContent is not None
             assert explicitly_off.structuredContent["relevance_filter_policy"] == "explicit_off"
+            assert explicitly_off.structuredContent["retrieval"] == "vector"
+            hybrid = await session.call_tool(
+                "memory_recall",
+                {**recall_arguments, "relevance_filter": "off", "retrieval": "hybrid"},
+            )
+            assert hybrid.structuredContent is not None
+            assert hybrid.structuredContent["retrieval"] == "hybrid"
+            assert len(hybrid.structuredContent["items"]) == 2
+            assert all("fusion_score" in item for item in hybrid.structuredContent["items"])
 
             export_path = tmp_path / "mcp-export.json"
             export_preview = await session.call_tool(

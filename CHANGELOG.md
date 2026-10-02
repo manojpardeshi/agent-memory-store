@@ -21,6 +21,20 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Opt-in hybrid recall: `recall(..., retrieval="hybrid")`, `llm-memory recall --retrieval hybrid`,
+  and the MCP `retrieval` argument fuse vector ranking with an FTS5 BM25 keyword ranking by
+  reciprocal rank fusion (k = 60). On held-out LongMemEval-S questions it raised the number with
+  complete evidence in the top ten from 80 to 91 of 117. It lowers MRR on the paraphrase-heavy
+  synthetic retrieval_v2 suite below its gate, so vector stays the default. Results gain a
+  `fusion_score` in hybrid mode only; vector output is unchanged.
+- A trigger-maintained FTS5 keyword index (`memory_keywords`) is created for new stores and built
+  for existing stores the first time they are opened writable. It is additive, so
+  `SCHEMA_VERSION` is unchanged. FTS5 secure-delete makes forgetting physically remove a memory's
+  terms. The index needs SQLite 3.44 or newer; on older SQLite it is skipped and hybrid recall is
+  unavailable. A runtime on older SQLite cannot write to a store already carrying the index.
+  `status()` reports `keyword_index` as `ok`, `corrupt`, `absent`, or `unverified` (read-only).
+- `evaluate-retrieval --retrieval {vector,hybrid}` runs the synthetic gates in either mode.
+
 - Experimental `llm_memory_store.temporal.resolve_event_dates(text, reference)` resolves relative
   English date expressions ("last Tuesday", "3 weeks ago", "on March 4th", "last month") to
   calendar dates or ranges deterministically, with fixed documented rules for ambiguous cases and

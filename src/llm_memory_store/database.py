@@ -245,6 +245,87 @@ def _initialize_schema(connection: sqlite3.Connection, identity: EmbeddingIdenti
     )
 
 
+KEYWORD_INDEX_TABLE = "memory_keywords"
+
+# The keyword index is derived data: it holds no text the memories table does not, can be
+# rebuilt from it at any time, and is maintained by triggers so every write path, including
+# older runtimes writing to an indexed store, keeps it in sync. It is additive and does not
+# change SCHEMA_VERSION. FTS5 secure-delete is required so forgetting a memory physically
+# removes its terms from the index instead of leaving them behind a delete marker.
+_KEYWORD_INDEX_DDL = (
+    f"""
+    CREATE VIRTUAL TABLE {KEYWORD_INDEX_TABLE} USING fts5(
+        content, content='memories', content_rowid='id', tokenize='porter unicode61'
+    )
+    """,
+    f"INSERT INTO {KEYWORD_INDEX_TABLE}({KEYWORD_INDEX_TABLE}, rank) VALUES('secure-delete', 1)",
+    f"""
+    CREATE TRIGGER {KEYWORD_INDEX_TABLE}_after_insert AFTER INSERT ON memories BEGIN
+        INSERT INTO {KEYWORD_INDEX_TABLE}(rowid, content) VALUES (new.id, new.content);
+    END
+    """,
+    f"""
+    CREATE TRIGGER {KEYWORD_INDEX_TABLE}_after_delete AFTER DELETE ON memories BEGIN
+        INSERT INTO {KEYWORD_INDEX_TABLE}({KEYWORD_INDEX_TABLE}, rowid, content)
+        VALUES ('delete', old.id, old.content);
+    END
+    """,
+    f"""
+    CREATE TRIGGER {KEYWORD_INDEX_TABLE}_after_update AFTER UPDATE OF content ON memories BEGIN
+        INSERT INTO {KEYWORD_INDEX_TABLE}({KEYWORD_INDEX_TABLE}, rowid, content)
+        VALUES ('delete', old.id, old.content);
+        INSERT INTO {KEYWORD_INDEX_TABLE}(rowid, content) VALUES (new.id, new.content);
+    END
+    """,
+    f"INSERT INTO {KEYWORD_INDEX_TABLE}({KEYWORD_INDEX_TABLE}) VALUES('rebuild')",
+)
+
+_keyword_index_supported: bool | None = None
+
+
+def keyword_index_supported() -> bool:
+    """Whether this SQLite build has FTS5 with secure-delete (SQLite 3.44 or newer)."""
+
+    global _keyword_index_supported
+    if _keyword_index_supported is None:
+        probe = sqlite3.connect(":memory:")
+        try:
+            probe.execute("CREATE VIRTUAL TABLE probe USING fts5(content)")
+            probe.execute("INSERT INTO probe(probe, rank) VALUES('secure-delete', 1)")
+            _keyword_index_supported = True
+        except sqlite3.OperationalError:
+            _keyword_index_supported = False
+        finally:
+            probe.close()
+    return _keyword_index_supported
+
+
+def keyword_index_exists(connection: sqlite3.Connection) -> bool:
+    row = connection.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (KEYWORD_INDEX_TABLE,)
+    ).fetchone()
+    return row is not None
+
+
+def ensure_keyword_index(connection: sqlite3.Connection) -> bool:
+    """Create and backfill the keyword index if absent; return whether it is available.
+
+    Leaves the store unchanged and returns False when this SQLite build cannot provide a
+    secure-delete FTS5 index, so hybrid recall is simply unavailable there.
+    """
+
+    if keyword_index_exists(connection):
+        return True
+    if not keyword_index_supported():
+        return False
+    with immediate_transaction(connection):
+        # Re-check under the write lock: another process may have just created it.
+        if not keyword_index_exists(connection):
+            for statement in _KEYWORD_INDEX_DDL:
+                connection.execute(statement)
+    return True
+
+
 @contextmanager
 def immediate_transaction(connection: sqlite3.Connection) -> Iterator[None]:
     connection.execute("BEGIN IMMEDIATE")

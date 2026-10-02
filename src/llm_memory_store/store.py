@@ -17,10 +17,14 @@ from typing import Any
 import sqlite_vec
 
 from .database import (
+    KEYWORD_INDEX_TABLE,
+    StoreCompatibilityError,
     connect_database,
     consistent_backup,
+    ensure_keyword_index,
     immediate_transaction,
     initialize_or_validate,
+    keyword_index_exists,
     secure_write_text,
     utc_now,
 )
@@ -40,6 +44,156 @@ from .models import (
 
 MAX_CONTENT_LENGTH = 100_000
 MAX_RECALL_SCOPES = 32
+RECALL_RETRIEVAL_MODES = ("vector", "hybrid")
+# Hybrid recall fuses the vector ranking with an FTS5 BM25 keyword ranking by reciprocal rank
+# fusion. These values are the configuration frozen and confirmed on held-out LongMemEval-S
+# questions (evaluation/memorybench/hybrid-rrf-v1-frozen.json); change them only with new evidence.
+HYBRID_RRF_K = 60
+HYBRID_MIN_DEPTH = 50
+HYBRID_MAX_DEPTH = 500
+MAX_KEYWORD_QUERY_TERMS = 64
+KEYWORD_STOPWORDS = frozenset(
+    [
+        "a",
+        "about",
+        "after",
+        "again",
+        "all",
+        "am",
+        "an",
+        "and",
+        "any",
+        "are",
+        "as",
+        "at",
+        "be",
+        "been",
+        "before",
+        "being",
+        "both",
+        "but",
+        "by",
+        "can",
+        "could",
+        "did",
+        "do",
+        "does",
+        "doing",
+        "during",
+        "each",
+        "few",
+        "for",
+        "from",
+        "had",
+        "has",
+        "have",
+        "having",
+        "he",
+        "her",
+        "here",
+        "hers",
+        "him",
+        "his",
+        "how",
+        "i",
+        "if",
+        "in",
+        "into",
+        "is",
+        "it",
+        "its",
+        "itself",
+        "just",
+        "me",
+        "more",
+        "most",
+        "my",
+        "myself",
+        "no",
+        "nor",
+        "not",
+        "now",
+        "of",
+        "off",
+        "on",
+        "once",
+        "only",
+        "or",
+        "other",
+        "our",
+        "ours",
+        "out",
+        "over",
+        "own",
+        "same",
+        "she",
+        "should",
+        "so",
+        "some",
+        "such",
+        "than",
+        "that",
+        "the",
+        "their",
+        "theirs",
+        "them",
+        "then",
+        "there",
+        "these",
+        "they",
+        "this",
+        "those",
+        "through",
+        "to",
+        "too",
+        "under",
+        "until",
+        "up",
+        "very",
+        "was",
+        "we",
+        "were",
+        "what",
+        "when",
+        "where",
+        "which",
+        "while",
+        "who",
+        "whom",
+        "why",
+        "will",
+        "with",
+        "would",
+        "you",
+        "your",
+        "yours",
+        "yourself",
+        "tell",
+        "remind",
+        "know",
+        "recall",
+        "remember",
+        "mentioned",
+    ]
+)
+_KEYWORD_TOKEN = re.compile(r"[^\W_]+")
+
+
+def keyword_query(text: str) -> str | None:
+    """Build an FTS5 OR query of distinct non-stopword terms, or None when none remain.
+
+    Every term is double-quoted, so user text can never inject FTS5 query syntax.
+    """
+
+    terms = [
+        token
+        for token in _KEYWORD_TOKEN.findall(text.lower())
+        if token not in KEYWORD_STOPWORDS and len(token) > 1
+    ]
+    unique = list(dict.fromkeys(terms))[:MAX_KEYWORD_QUERY_TERMS]
+    return " OR ".join(f'"{term}"' for term in unique) if unique else None
+
+
 CERTIFIED_RELEVANCE_DEFAULTS = {
     (
         "fastembed",
@@ -99,6 +253,12 @@ class MemoryStore:
                     self.embedding_identity,
                     allow_initialize=not read_only,
                 )
+            )
+            # Opening writable builds the keyword index for stores created before it existed.
+            self.keyword_index = (
+                keyword_index_exists(self.connection)
+                if read_only
+                else ensure_keyword_index(self.connection)
             )
         except BaseException:
             self.connection.close()
@@ -598,10 +758,13 @@ class MemoryStore:
         recency_half_life_days: float = 30.0,
         semantic_weight: float = 0.8,
         relevance_filter: RelevanceFilter | None | str = "default",
+        retrieval: str = "vector",
     ) -> list[RecallResult]:
         """Recall ranked memories; the certified default may return fewer than ``limit``.
 
-        Pass ``None`` to explicitly restore unfiltered top-K behavior.
+        Pass ``None`` to explicitly restore unfiltered top-K behavior. ``retrieval="hybrid"``
+        fuses the vector ranking with a keyword (BM25) ranking, which finds memories that share
+        exact words with the query but sit far from it in embedding space.
         """
 
         query = self._validate_content(query)
@@ -621,6 +784,14 @@ class MemoryStore:
             raise ValueError("semantic_weight must be between 0 and 1")
         if len(shared_pools) + 1 > MAX_RECALL_SCOPES:
             raise ValueError(f"recall supports at most {MAX_RECALL_SCOPES} explicit scopes")
+        if retrieval not in RECALL_RETRIEVAL_MODES:
+            raise ValueError(f"retrieval must be one of {', '.join(RECALL_RETRIEVAL_MODES)}")
+        hybrid = retrieval == "hybrid"
+        if hybrid and not self.keyword_index:
+            raise StoreCompatibilityError(
+                "hybrid recall needs the keyword index: open the store writable once to build "
+                "it, on SQLite 3.44 or newer"
+            )
 
         scopes = [private_scope]
         scopes.extend(
@@ -631,7 +802,9 @@ class MemoryStore:
         if not scope_ids:
             return []
         query_vector = sqlite_vec.serialize_float32(self.embedder.embed_query(query))
-        candidate_limit = max(limit * 4, 20)
+        depth = min(max(HYBRID_MIN_DEPTH, limit * 5), HYBRID_MAX_DEPTH)
+        # Hybrid ranks the same vector candidates recall would return at limit=depth.
+        candidate_limit = max((depth if hybrid else limit) * 4, 20)
         candidates: dict[int, float] = {}
         for scope_id in scope_ids:
             rows = self.connection.execute(
@@ -646,6 +819,15 @@ class MemoryStore:
                 internal_id = int(row["rowid"])
                 distance = float(row["distance"])
                 candidates[internal_id] = min(distance, candidates.get(internal_id, distance))
+        vector_candidate_ids = set(candidates)
+        keyword_ranked: list[int] = []
+        if hybrid:
+            keyword_ranked = self._keyword_ranking(query, scope_ids, depth)
+            candidates.update(
+                self._vector_distances(
+                    query_vector, [i for i in keyword_ranked if i not in candidates]
+                )
+            )
 
         now = datetime.now(UTC)
         # Score every candidate from one batched status query, then load full records only
@@ -683,10 +865,28 @@ class MemoryStore:
             )
         # Same order as before: descending score, ties broken by public memory id.
         scored.sort(key=lambda item: (-item[0], item[1]))
-        if effective_filter is not None and scored:
-            minimum_semantic_score = (
-                scored[0][3] - effective_filter.maximum_semantic_score_gap
+        fusion_scores: dict[int, float] = {}
+        if hybrid:
+            vector_ranked = [item for item in scored if item[2] in vector_candidate_ids][:depth]
+            # The relevance filter keeps its vector-mode anchor: the top vector-ranked result.
+            anchor = vector_ranked[0][3] if vector_ranked else None
+            by_internal_id = {item[2]: item for item in scored}
+            for ranking in (
+                [item[2] for item in vector_ranked],
+                [i for i in keyword_ranked if i in by_internal_id],
+            ):
+                for rank, internal_id in enumerate(ranking, start=1):
+                    fusion_scores[internal_id] = fusion_scores.get(internal_id, 0.0) + 1.0 / (
+                        HYBRID_RRF_K + rank
+                    )
+            scored = sorted(
+                (by_internal_id[internal_id] for internal_id in fusion_scores),
+                key=lambda item: (-fusion_scores[item[2]], item[1]),
             )
+        else:
+            anchor = scored[0][3] if scored else None
+        if effective_filter is not None and anchor is not None:
+            minimum_semantic_score = anchor - effective_filter.maximum_semantic_score_gap
             scored = [item for item in scored if item[3] >= minimum_semantic_score]
         chosen = scored[:limit]
         records = self._records_by_internal_ids([item[2] for item in chosen])
@@ -697,11 +897,50 @@ class MemoryStore:
                 semantic_score=semantic_score,
                 recency_score=recency_score,
                 distance=distance,
+                fusion_score=fusion_scores.get(internal_id) if hybrid else None,
             )
-            for record, (score, _, _, semantic_score, recency_score, distance) in zip(
+            for record, (score, _, internal_id, semantic_score, recency_score, distance) in zip(
                 records, chosen, strict=True
             )
         ]
+
+    def _keyword_ranking(self, query: str, scope_ids: Sequence[int], depth: int) -> list[int]:
+        """Return active, embedded memory ids in the given scopes by BM25 rank."""
+
+        match = keyword_query(query)
+        if match is None:
+            return []
+        marks = ",".join("?" * len(scope_ids))
+        rows = self.connection.execute(
+            f"""
+            SELECT m.id FROM {KEYWORD_INDEX_TABLE} k JOIN memories m ON m.id = k.rowid
+            WHERE {KEYWORD_INDEX_TABLE} MATCH ? AND m.scope_id IN ({marks})
+              AND m.status = 'active' AND m.embedding_status = 'ready'
+            ORDER BY bm25({KEYWORD_INDEX_TABLE}), m.id
+            LIMIT ?
+            """,
+            (match, *scope_ids, depth),
+        ).fetchall()
+        return [int(row["id"]) for row in rows]
+
+    def _vector_distances(
+        self, query_vector: bytes, internal_ids: Sequence[int]
+    ) -> dict[int, float]:
+        """Cosine distance from the query for memories outside the vector candidate set."""
+
+        distances: dict[int, float] = {}
+        for offset in range(0, len(internal_ids), self._RECORD_BATCH_SIZE):
+            batch = internal_ids[offset : offset + self._RECORD_BATCH_SIZE]
+            marks = ",".join("?" * len(batch))
+            for row in self.connection.execute(
+                f"""
+                SELECT rowid, vec_distance_cosine(embedding, ?) AS distance
+                FROM memory_vectors WHERE rowid IN ({marks})
+                """,
+                (query_vector, *batch),
+            ).fetchall():
+                distances[int(row["rowid"])] = float(row["distance"])
+        return distances
 
     @staticmethod
     def context_bundle(
@@ -1227,8 +1466,28 @@ class MemoryStore:
             "by_embedding_status": by_embedding,
             "orphan_vectors": len(vector_ids - memory_ids),
             "missing_vectors": len(ready_ids - vector_ids),
+            "keyword_index": self._keyword_index_status(),
             "integrity_check": self.connection.execute("PRAGMA integrity_check").fetchone()[0],
         }
+
+    def _keyword_index_status(self) -> str:
+        """'ok' or 'corrupt' from FTS5's index-versus-content check, else 'absent'.
+
+        The check is issued as a write statement, so a read-only store reports 'unverified'.
+        """
+
+        if not keyword_index_exists(self.connection):
+            return "absent"
+        if self.read_only:
+            return "unverified"
+        try:
+            self.connection.execute(
+                f"INSERT INTO {KEYWORD_INDEX_TABLE}({KEYWORD_INDEX_TABLE}, rank) "
+                "VALUES('integrity-check', 1)"
+            )
+        except sqlite3.DatabaseError:
+            return "corrupt"
+        return "ok"
 
     _RECORD_SELECT = """
         SELECT m.*, s.kind AS scope_kind, s.subject, s.environment, s.owner,

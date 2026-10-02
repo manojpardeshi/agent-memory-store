@@ -261,6 +261,7 @@ def test_runs_isolated_end_to_end_evaluation(tmp_path: Path) -> None:
     )
     assert filtered["retrieval_config"] == {
         "limit": 1,
+        "retrieval": "vector",
         "relevance_filter": {
             "strategy": "relative_semantic_gap",
             "maximum_semantic_score_gap": 0.0,

@@ -67,6 +67,17 @@ internal synthetic suites, latency, and footprint. A frozen contract with a paid
 free stage. Results on the final completed comparison stand: store 134/180, hosted Mem0 Hobby tier
 93/180 (`benchmarks/2026-09-30-mem0-hosted-dev180.md`).
 
+### First free retrieval improvement — hybrid recall, 2026-10-02
+
+BM25 + vector reciprocal rank fusion was tuned on the stratified sixty, frozen, and confirmed on the
+120 design-blind questions. Complete evidence rose from 80 to 91 of 117, with no category losing
+(`benchmarks/2026-10-02-hybrid-retrieval-prototype.md`). It shipped as an opt-in `retrieval="hybrid"`
+backed by a trigger-maintained, secure-delete FTS5 index. It stays off by default because it fails
+the paraphrase-heavy retrieval_v2 MRR gate, 0.834 against 0.85
+(`benchmarks/2026-10-02-hybrid-recall-product.md`). Next: a way to keep the keyword gain without the
+paraphrase loss, judged against a new independently authored paraphrase suite rather than tuned on
+retrieval_v2.
+
 ## Competitive baseline rules
 
 - Use LongMemEval-S first because its categories isolate single-session facts, preferences,

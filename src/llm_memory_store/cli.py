@@ -196,6 +196,12 @@ def build_parser() -> argparse.ArgumentParser:
     recall.add_argument("--shared-pool", action="append", default=[])
     recall.add_argument("--limit", type=int, default=5)
     recall.add_argument("--max-characters", type=int, default=4000)
+    recall.add_argument(
+        "--retrieval",
+        choices=("vector", "hybrid"),
+        default="vector",
+        help="hybrid adds keyword matching, for queries that repeat exact words or names",
+    )
     recall_filter = recall.add_mutually_exclusive_group()
     recall_filter.add_argument(
         "--relevance-filter",
@@ -300,6 +306,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Require the embedding model to exist in the local cache",
     )
     evaluate.add_argument("--overwrite", action="store_true")
+    evaluate.add_argument("--retrieval", choices=("vector", "hybrid"), default="vector")
     evaluation_filter = evaluate.add_mutually_exclusive_group()
     evaluation_filter.add_argument(
         "--relevance-filter",
@@ -415,6 +422,7 @@ def main(argv: list[str] | None = None) -> None:
             args.dataset,
             embedder,
             relevance_filter=effective_filter,
+            retrieval=args.retrieval,
         )
         if args.report:
             write_evaluation_report(report, args.report, overwrite=args.overwrite)
@@ -648,8 +656,10 @@ def main(argv: list[str] | None = None) -> None:
                 shared_pools=args.shared_pool,
                 limit=args.limit,
                 relevance_filter=effective_filter,
+                retrieval=args.retrieval,
             )
             bundle = store.context_bundle(args.query, results, max_characters=args.max_characters)
+            bundle["retrieval"] = args.retrieval
             bundle["relevance_filter"] = (
                 effective_filter.to_dict() if effective_filter is not None else None
             )
