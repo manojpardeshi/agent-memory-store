@@ -55,6 +55,18 @@ Reopening requires evidence that message selection rather than synthesis dominat
 temporal failure. The unfrozen `session-density` corpus and its completed cross-review are retained
 as a reusable screening instrument should that evidence appear.
 
+## No paid evaluation — owner decision, 2026-10-02
+
+The owner stopped all spending on kimi-k3, hosted Mem0, Supermemory, and similar paid services.
+Answer quality, which needs a strong paid answerer and judge, is therefore no longer measured. Free
+local models proved unreliable as answerers and must not be presented as answer evidence.
+
+Retrieval candidates are now judged on free, deterministic signals: evidence-level recall from
+LongMemEval's `has_answer` turn labels (`benchmarks/2026-10-02-evidence-recall-baseline.md`), the
+internal synthetic suites, latency, and footprint. A frozen contract with a paid stage stops at its
+free stage. Results on the final completed comparison stand: store 134/180, hosted Mem0 Hobby tier
+93/180 (`benchmarks/2026-09-30-mem0-hosted-dev180.md`).
+
 ## Competitive baseline rules
 
 - Use LongMemEval-S first because its categories isolate single-session facts, preferences,
