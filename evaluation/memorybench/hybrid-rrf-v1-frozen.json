@@ -1,0 +1,11 @@
+{
+  "experiment_id": "hybrid-rrf-v1",
+  "frozen_on": "2026-10-02",
+  "frozen_before": "any evaluation on the 120 design-blind development questions",
+  "tuned_on": "evaluation/memorybench/longmemeval-stratified60-v1.json only",
+  "choice": "rrf_k60",
+  "definition": "Reciprocal rank fusion of the store's vector ranking (relevance filter off, depth 50) and SQLite FTS5 BM25 (porter unicode61, stopwords removed, OR query, depth 50), equal weights, k = 60, top 10",
+  "rejected_on_tuning_set": {"rrf_k60_bm25_half": "worse than equal weights", "rrf_k20": "tied with k60; standard k=60 kept", "bm25_only": "below fusion", "vector_only": "below fusion"},
+  "tuning_result_complete_evidence": {"vector_only": "41/57", "bm25_only": "45/57", "rrf_k60": "47/57"},
+  "held_out_reading_fixed_now": "Fusion is confirmed if, on the 120 held-out questions, its complete-evidence count exceeds vector-only's by at least 4 and no category loses complete-evidence questions by more than 1."
+}
