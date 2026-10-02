@@ -10,9 +10,11 @@
 #        scripts/run_hosted_comparator.sh selftest {mem0|supermemory}
 #        scripts/run_hosted_comparator.sh status RUN_ID
 #        scripts/run_hosted_comparator.sh fetch RUN_ID
+#
+# HOSTED_HOST (user@address of the benchmark machine) is required.
 set -euo pipefail
 
-host="${HOSTED_HOST:-manojpardeshi@10.10.10.2}"
+host="${HOSTED_HOST:?set HOSTED_HOST to user@address of the benchmark machine}"
 repo="$(cd "$(dirname "$0")/.." && pwd)"
 local_bench="$repo/demo-artifacts/memorybench/upstream"
 remote_bench="bench/memorybench"
