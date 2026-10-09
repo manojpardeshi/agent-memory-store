@@ -58,6 +58,32 @@ def mem0_context(entry: dict[str, Any]) -> str:
     return normalize(" ".join(str(r.get("memory") or "") for r in results[:10]))
 
 
+def _supermemory_text(results: list[dict[str, Any]]) -> str:
+    """The text MemoryBench's Supermemory prompt shows the answerer: memories plus raw chunks."""
+    parts = [str(r.get("memory") or "") for r in results]
+    for r in results:
+        parts.extend(str(c.get("content") or "") for c in r.get("chunks") or [])
+        if isinstance(r.get("chunk"), str):
+            parts.append(r["chunk"])
+    return " ".join(parts)
+
+
+def supermemory_context_top10(entry: dict[str, Any]) -> str:
+    """Supermemory at the store's depth: the first ten results, with their chunks."""
+    results = entry.get("phases", {}).get("search", {}).get("results", [])
+    return normalize(_supermemory_text(results[:10]))
+
+
+def supermemory_context_full(entry: dict[str, Any]) -> str:
+    """Supermemory's MemoryBench default: every returned result (up to 30), with chunks."""
+    results = entry.get("phases", {}).get("search", {}).get("results", [])
+    return normalize(_supermemory_text(results))
+
+
+def context_characters(entry: dict[str, Any], extractor) -> int:
+    return len(extractor(entry))
+
+
 def score(
     checkpoint: dict[str, Any],
     gold: dict[str, dict[str, str]],
@@ -85,6 +111,9 @@ def score(
             for category in sorted(totals)
         },
         "missed_question_ids": misses,
+        "context_characters_median": sorted(
+            context_characters(checkpoint["questions"][q], extractor) for q in gold
+        )[len(gold) // 2],
     }
 
 
@@ -92,12 +121,22 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--gold", type=Path, required=True)
     parser.add_argument("--store-checkpoint", type=Path, required=True)
-    parser.add_argument("--mem0-checkpoint", type=Path, required=True)
+    parser.add_argument("--mem0-checkpoint", type=Path)
+    parser.add_argument("--mem0-label", default="mem0-oss-local-llama3.1-8b")
+    parser.add_argument("--supermemory-checkpoint", type=Path)
+    parser.add_argument("--supermemory-label", default="supermemory-local")
     args = parser.parse_args()
 
     gold = json.loads(args.gold.read_text(encoding="utf-8"))
     store = json.loads(args.store_checkpoint.read_text(encoding="utf-8"))
-    mem0 = json.loads(args.mem0_checkpoint.read_text(encoding="utf-8"))
+    arms = {"llm-memory-store-raw": score(store, gold, store_context)}
+    if args.mem0_checkpoint:
+        mem0 = json.loads(args.mem0_checkpoint.read_text(encoding="utf-8"))
+        arms[args.mem0_label] = score(mem0, gold, mem0_context)
+    if args.supermemory_checkpoint:
+        sm = json.loads(args.supermemory_checkpoint.read_text(encoding="utf-8"))
+        arms[f"{args.supermemory_label}-top10"] = score(sm, gold, supermemory_context_top10)
+        arms[f"{args.supermemory_label}-full"] = score(sm, gold, supermemory_context_full)
 
     report = {
         "schema_version": 1,
@@ -112,10 +151,7 @@ def main() -> int:
             "short_answer_exact_containment_at_or_below_tokens": SHORT_ANSWER_TOKENS,
         },
         "question_count": len(gold),
-        "arms": {
-            "llm-memory-store-raw": score(store, gold, store_context),
-            "mem0-oss-local-llama3.1-8b": score(mem0, gold, mem0_context),
-        },
+        "arms": arms,
     }
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0

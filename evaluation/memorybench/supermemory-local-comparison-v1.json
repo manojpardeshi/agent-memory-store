@@ -1,0 +1,28 @@
+{
+  "experiment_id": "supermemory-local-comparison-v1",
+  "frozen_on": "2026-10-09",
+  "frozen_before": "any Supermemory Local result on these questions other than the one-question plumbing smoke test, whose retrieved text was inspected for shape only and not scored",
+  "questions": "evaluation/memorybench/longmemeval-stratified30-v1.json (first five per category of the stratified sixty; extendable to the full sixty by resuming)",
+  "arms": {
+    "llm-memory-store-raw": "existing completed run llm-memory-store-longmemeval-stratified60-v1 (vector recall, ranked-v1, top ten raw messages), restricted to the thirty questions",
+    "supermemory-local": "Supermemory Local 0.0.8 on the M2 (Apple M2 Pro, 16 GB), extraction by Ollama qwen2.5:7b with a 16k context at temperature 0 via its OpenAI-compatible endpoint, local Xenova/bge-base-en-v1.5 embeddings, telemetry disabled, MemoryBench pinned Supermemory provider unchanged (hybrid search, limit 30, threshold 0.3), ingest through scripts/hosted-search-manifest.ts at question concurrency 1"
+  },
+  "metric": "answer-content presence (scripts/score_content_answer_presence.py): normalized gold answer contained in the retrieved text, exact containment for answers of at most two content tokens, otherwise at least 80% of answer tokens present. A lexical floor on answer availability; not answer quality.",
+  "views": {
+    "supermemory-local-top10": "first ten Supermemory results (memories plus any chunks): matched depth with the store",
+    "supermemory-local-full": "every returned result, as MemoryBench's Supermemory prompt presents them: Supermemory's own default"
+  },
+  "reported": [
+    "hits overall and per category for every arm and view",
+    "median retrieved context characters per arm and view",
+    "paired discordant counts and a two-sided sign test, store versus supermemory-local-top10",
+    "ingest failures and extraction time per session"
+  ],
+  "disclosed_asymmetries": [
+    "Supermemory is designed for a strong hosted extraction model; this measures it under a free local 7B model, as the earlier Mem0 OSS comparison measured Mem0",
+    "the store stores raw messages and needs no extraction model",
+    "Supermemory embeds with bge-base (768d), the store with bge-small (384d)",
+    "the store run predates this comparison and is reused unchanged"
+  ],
+  "claim_scope": "On these thirty LongMemEval-S questions, under free local models only, the store's top ten contained the gold answer text in X cases and Supermemory Local's in Y. No claim about Supermemory's hosted service, answer quality, or other configurations."
+}
