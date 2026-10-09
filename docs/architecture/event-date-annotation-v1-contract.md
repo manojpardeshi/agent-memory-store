@@ -3,6 +3,7 @@
 Date: 2026-09-30
 Status: **FROZEN 2026-09-30 under delegated authority, before any measurement of this policy.** Set by
 the author without owner review during an unattended session; owner review requested.
+**Owner accepted these gates unchanged on 2026-10-09**, after the result below was known; acceptance ratifies the contract as frozen and changes no outcome.
 Baseline: `benchmarks/2026-09-27-kimi-question-date-baseline180.md` (134/180; temporal 30/44).
 Evidence behind the design: `benchmarks/2026-09-30-event-date-resolver-coverage.md`, measured on the
 stratified sixty only.
