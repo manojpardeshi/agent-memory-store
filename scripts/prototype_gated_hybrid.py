@@ -12,6 +12,8 @@ was diagnosed before this design and is therefore not independent evidence for a
 Free and local; the product is unchanged.
 """
 
+# ruff: noqa: E501 -- authored word lists and report rows stay on one line.
+
 from __future__ import annotations
 
 import argparse
@@ -195,9 +197,21 @@ def run_synthetic(path: Path, embedder: Any) -> dict[str, Any]:
         result = score_evaluation_rankings(dataset, rankings, runtime_seconds=0.0)
         report[name] = {
             "passed": result["passed"],
-            **{k: round(result["metrics"][k], 4) for k in ("recall_at_k", "mrr", "distractor_leak_rate")},
+            **{
+                k: round(result["metrics"][k], 4)
+                for k in ("recall_at_k", "mrr", "distractor_leak_rate")
+            },
             "scope_violations": result["metrics"]["scope_violation_count"],
         }
+        styles_path = path.with_name(f"{path.stem}_styles.json")
+        if styles_path.exists():
+            styles = json.loads(styles_path.read_text())["query_styles"]
+            by_style: dict[str, list[float]] = {}
+            for row in result["query_results"]:
+                by_style.setdefault(styles[row["query_id"]], []).append(row["reciprocal_rank"])
+            report[name]["mrr_by_style"] = {
+                style: round(sum(v) / len(v), 4) for style, v in sorted(by_style.items())
+            }
     return report
 
 
@@ -241,7 +255,16 @@ def main() -> int:
     for name in ("dataset", "manifest", "stores", "cache-dir", "output"):
         parser.add_argument(f"--{name}", type=Path, required=True)
     parser.add_argument("--synthetic", type=Path, nargs="+", required=True)
+    parser.add_argument(
+        "--variants",
+        nargs="+",
+        choices=list(VARIANTS),
+        help="evaluate only these variants (held-out runs use only the frozen arms)",
+    )
     args = parser.parse_args()
+    if args.variants:
+        for name in [v for v in VARIANTS if v not in args.variants]:
+            del VARIANTS[name]
     embedder = FastEmbedder(cache_dir=str(args.cache_dir), local_files_only=True)
     report = {
         "synthetic": {p.stem: run_synthetic(p, embedder) for p in args.synthetic},
@@ -249,8 +272,10 @@ def main() -> int:
     }
     args.output.write_text(json.dumps(report, indent=2))
     lme = report["longmemeval_tuning"]
-    print(f"{'variant':20s} {'LME complete':>12s} {'recall':>7s} | " + " | ".join(
-        f"{s}: pass R@k MRR leak" for s in report["synthetic"]))
+    print(
+        f"{'variant':20s} {'LME complete':>12s} {'recall':>7s} | "
+        + " | ".join(f"{s}: pass R@k MRR leak" for s in report["synthetic"])
+    )
     for name in VARIANTS:
         row = f"{name:20s} {lme[name]['complete_evidence']:>5d}/{lme[name]['scored']:<6d} {lme[name]['evidence_recall']:>7.3f} | "
         row += " | ".join(
