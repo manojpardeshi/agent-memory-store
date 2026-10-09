@@ -1,7 +1,7 @@
 # Competitive Benchmark Contract — Hosted Comparator Amendment
 
 Date: 2026-09-30
-Status: **proposed, pending owner acceptance.** Amends `competitive-benchmark-contract.md`.
+Status: **accepted by the owner on 2026-10-09.** Amends `competitive-benchmark-contract.md`.
 
 ## Why
 
@@ -72,3 +72,11 @@ project's answer protocol, the store scored X and the provider's Y-tier service 
 
 It may not support a general superiority claim, a comparison with the provider's published
 figures, or any statement about tiers or configurations not measured.
+
+## Acceptance
+
+Proposed 2026-09-30 and accepted by the owner, unchanged, on 2026-10-09. The Track H runs made
+before acceptance under owner-delegated authority — hosted Mem0 Hobby tier on the stratified sixty
+and the full 180 development questions — were run as written here and stand as Track H results.
+Acceptance authorizes the track, not new spending: under the owner's 2026-10-02 no-paid-evaluation
+decision, no further Track H run is planned.

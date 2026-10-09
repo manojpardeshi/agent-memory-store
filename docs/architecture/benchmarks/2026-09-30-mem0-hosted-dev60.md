@@ -2,8 +2,8 @@
 
 Date: 2026-09-30
 Status: completed. **This project's own measurement of Mem0's hosted Hobby-tier service** under
-Track H of `../hosted-comparator-amendment.md`, which is itself proposed and awaiting owner
-acceptance; run under owner-delegated authority. Not a comparison with Mem0's published figures.
+Track H of `../hosted-comparator-amendment.md`, run under owner-delegated authority before the
+amendment was accepted on 2026-10-09. Not a comparison with Mem0's published figures.
 Answers: `demo-artifacts/kimi-mem0-hosted-dev60.json`, SHA-256 `dd6279eaafef6e79e882a351810b49f7a95f4ee8d79daa4fcd4897470036b90b`
 Retrieval checkpoint: `demo-artifacts/memorybench/upstream/data/runs/mem0-hosted-dev60-v1/checkpoint.json`, SHA-256 `84056908dec5de557a2c0557b2aa18d7275baa6c9c20638e1bc560c56ec139aa`
 
