@@ -5,6 +5,7 @@ Status: **FROZEN 2026-09-30 under delegated authority, before any v1.2 measureme
 delegated decisions for an unattended working session; the author set these gates without owner
 review. Gates were fixed before any v1.2 output was observed. Owner review is requested on return,
 and any change after a result is observed creates a new experiment identity.
+**Owner accepted these gates unchanged on 2026-10-09**, after the result below was known; acceptance ratifies the contract as frozen and changes no outcome.
 Predecessor: `within-session-expansion-contract.md` (v1.1, failed Stage 1, closed).
 Baseline: `benchmarks/2026-09-27-kimi-question-date-baseline180.md` (134/180).
 
