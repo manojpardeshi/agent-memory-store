@@ -1,0 +1,268 @@
+{
+  "author": "author-a",
+  "private_domain": "a freelance wildlife photographer's working assistant (gear, clients, shoots, travel, invoices)",
+  "shared_domain": "a neighborhood community garden cooperative's shared notes",
+  "items": [
+    {
+      "local_id": 1,
+      "pool": "private",
+      "kind": "turn",
+      "role": "user",
+      "content": "Remind me that the 600mm I rented from Kestrelworks has to go back by 4 March 2026, or they charge me for a full extra week.",
+      "query": "When is the Kestrelworks return deadline?",
+      "style": "anchor",
+      "anchor_token": "Kestrelworks"
+    },
+    {
+      "local_id": 2,
+      "pool": "private",
+      "kind": "fact",
+      "content": "The Sony A1 body has a hairline crack near the battery door, so I tape it before any rain outing.",
+      "query": "Which camera is damaged and needs covering in wet weather?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 3,
+      "pool": "private",
+      "kind": "preference",
+      "content": "Odalys Brenner at Fernline Press only wants RAW files delivered through a shared drive folder, never as email attachments.",
+      "query": "How does Fernline like to receive images?",
+      "style": "anchor",
+      "anchor_token": "Fernline"
+    },
+    {
+      "local_id": 4,
+      "pool": "private",
+      "kind": "summary",
+      "content": "Recap of the Svalbard trip planning: flights booked via Oslo, polar bear guard hired for six days, cold-weather batteries ordered, and the insurance rider still pending.",
+      "query": "What's the status of arrangements for the Arctic archipelago expedition?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 5,
+      "pool": "private",
+      "kind": "event",
+      "content": "On 12 May 2026 the drone went down in Loch Varrin during the otter shoot; the SD card was recovered but the gimbal is dead.",
+      "query": "What gear was wrecked at Varrin?",
+      "style": "anchor",
+      "anchor_token": "Varrin"
+    },
+    {
+      "local_id": 6,
+      "pool": "private",
+      "kind": "turn",
+      "role": "assistant",
+      "content": "I've drafted the licensing quote for the heron series at 1,800 euros for two years of web use, matching your rate from the museum deal.",
+      "query": "How much did we propose for the wading bird pictures' online rights?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 7,
+      "pool": "private",
+      "kind": "fact",
+      "content": "Invoice TQ-4471 to the Halden Wetlands Trust covers the March bittern survey images and is due net-30.",
+      "query": "What does TQ-4471 bill for?",
+      "style": "anchor",
+      "anchor_token": "TQ-4471"
+    },
+    {
+      "local_id": 8,
+      "pool": "private",
+      "kind": "preference",
+      "content": "My agent Tobias would rather get a phone call before 9am than a text whenever a shoot date moves.",
+      "query": "How does my representative like to be told about schedule changes?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 9,
+      "pool": "private",
+      "kind": "summary",
+      "content": "Wrap-up of the Marrowind Estate commission: 42 selects delivered, two reshoots of the red deer rut scheduled, and the second payment received in full.",
+      "query": "Where do things stand with the Marrowind job?",
+      "style": "anchor",
+      "anchor_token": "Marrowind"
+    },
+    {
+      "local_id": 10,
+      "pool": "private",
+      "kind": "event",
+      "content": "On 3 August 2026 my 100-400 lens was stolen from the car at a trailhead parking lot outside Brecca.",
+      "query": "When did someone take my zoom from the vehicle?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 11,
+      "pool": "private",
+      "kind": "turn",
+      "role": "user",
+      "content": "Can you add the Gitzo GT3543 tripod to the insurance schedule? It's worth about 1,100 dollars.",
+      "query": "What did I want done with the GT3543?",
+      "style": "anchor",
+      "anchor_token": "GT3543"
+    },
+    {
+      "local_id": 12,
+      "pool": "private",
+      "kind": "fact",
+      "content": "The studio's backup NAS sits in the hallway closet and mirrors to the cloud every night at 2am.",
+      "query": "Where is the storage box for redundant copies of my archive kept?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 13,
+      "pool": "private",
+      "kind": "preference",
+      "content": "For the Quillon Safaris catalogue I like to shoot at f/8 and keep ISO under 3200 so the printer gets clean files.",
+      "query": "What exposure settings do I favor for the Quillon work?",
+      "style": "anchor",
+      "anchor_token": "Quillon"
+    },
+    {
+      "local_id": 14,
+      "pool": "private",
+      "kind": "summary",
+      "content": "Year-end tally for 2025: 61 paid assignments, three new editorial clients, gross income roughly 74,000 euros, and gear spending down by a fifth.",
+      "query": "What did my annual business scorecard show?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 15,
+      "pool": "private",
+      "kind": "event",
+      "content": "The Thornequay harbour seal shoot on 21 September 2026 was cut short when the coast guard closed the jetty for a storm warning.",
+      "query": "Why did the Thornequay session end early?",
+      "style": "anchor",
+      "anchor_token": "Thornequay"
+    },
+    {
+      "local_id": 16,
+      "pool": "private",
+      "kind": "turn",
+      "role": "assistant",
+      "content": "Your Kenya visa is approved; the e-visa PDF is saved in the Travel folder and expires on 30 January 2027.",
+      "query": "Has my entry permit for the East African country come through?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 17,
+      "pool": "private",
+      "kind": "fact",
+      "content": "Pinebrook Gazette's photo desk pays a flat 275 dollars per published image, plus 40 for each online reuse.",
+      "query": "What is the rate at Pinebrook for pictures?",
+      "style": "anchor",
+      "anchor_token": "Pinebrook"
+    },
+    {
+      "local_id": 18,
+      "pool": "private",
+      "kind": "preference",
+      "content": "I'd rather sleep in a cheap guesthouse close to the hide than a nice hotel an hour's drive away.",
+      "query": "Do I value proximity to the blind over comfort when booking lodging?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 19,
+      "pool": "private",
+      "kind": "summary",
+      "content": "Notes from the call with Arnault Okonkwo-Reyes: he wants 12 puffin prints for the Nordvik exhibition at 60x90 cm, shipping by sea freight, deadline 15 November 2026.",
+      "query": "What did we agree for the Nordvik show?",
+      "style": "anchor",
+      "anchor_token": "Nordvik"
+    },
+    {
+      "local_id": 20,
+      "pool": "private",
+      "kind": "event",
+      "content": "Picked up the repaired Nikon Z9 from Halvard Camera Service on 2 October 2026; the shutter was replaced under warranty.",
+      "query": "When did I retrieve my fixed mirrorless body, and did that cost anything?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 21,
+      "pool": "shared",
+      "kind": "turn",
+      "role": "user",
+      "content": "Wren here: I've got the spare key to the Gorsemead tool shed now, so text me if you need the wheelbarrow.",
+      "query": "Who can let people into the Gorsemead storage hut?",
+      "style": "anchor",
+      "anchor_token": "Gorsemead"
+    },
+    {
+      "local_id": 22,
+      "pool": "shared",
+      "kind": "fact",
+      "content": "Plot 6 has the waist-high beds built for wheelchair access, next to the north gate.",
+      "query": "Which allotment is set up for members with disabilities?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 23,
+      "pool": "shared",
+      "kind": "preference",
+      "content": "Marisol in bed 9 asks that nobody scatter Sproutwell slug pellets near her lettuces, even though they're labelled organic; she sticks to beer traps.",
+      "query": "Who objects to Sproutwell being used around her greens?",
+      "style": "anchor",
+      "anchor_token": "Sproutwell"
+    },
+    {
+      "local_id": 24,
+      "pool": "shared",
+      "kind": "summary",
+      "content": "April work-day recap: compost bins turned, the rain barrel overflow pipe fixed, 30 strawberry crowns planted, and two new members signed up.",
+      "query": "At which gathering did a pair of recruits enroll and the water butt's spillover outlet get repaired?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 25,
+      "pool": "shared",
+      "kind": "event",
+      "content": "On 14 June 2026 the Larkhollow beehive swarmed and settled in the plum tree; Dev from the beekeeping club collected it that evening.",
+      "query": "What did the Larkhollow colony do?",
+      "style": "anchor",
+      "anchor_token": "Larkhollow"
+    },
+    {
+      "local_id": 26,
+      "pool": "shared",
+      "kind": "turn",
+      "role": "assistant",
+      "content": "The water bill for the quarter came to 187 dollars, so each of the 22 plots owes 8.50.",
+      "query": "How much is every gardener chipping in for the irrigation charges?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 27,
+      "pool": "shared",
+      "kind": "fact",
+      "content": "The Brambleton soil test came back at pH 6.2 with low potassium, so we're adding wood ash to the east beds.",
+      "query": "What did the Brambleton analysis show?",
+      "style": "anchor",
+      "anchor_token": "Brambleton"
+    },
+    {
+      "local_id": 28,
+      "pool": "shared",
+      "kind": "preference",
+      "content": "Most members voted to keep the gate unlocked during daylight hours instead of using a combination padlock.",
+      "query": "Do people want the entrance left open while the sun is up?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 29,
+      "pool": "shared",
+      "kind": "summary",
+      "content": "Treasurer's update from Ilse Vandermolen: seed order 140 dollars, new hose 55, compost delivery 210, leaving 615 in the kitty.",
+      "query": "What did Vandermolen report about our finances?",
+      "style": "anchor",
+      "anchor_token": "Vandermolen"
+    },
+    {
+      "local_id": 30,
+      "pool": "shared",
+      "kind": "event",
+      "content": "A hard frost on 9 May 2026 killed most of the tomato seedlings that had been set out too early.",
+      "query": "When did a cold snap destroy the young vegetable starts?",
+      "style": "paraphrase"
+    }
+  ]
+}

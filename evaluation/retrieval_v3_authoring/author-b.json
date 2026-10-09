@@ -1,0 +1,268 @@
+{
+  "author": "author-b",
+  "private_domain": "a family's household and home-renovation assistant (contractors, permits, budgets, appliances, kids' schedules)",
+  "shared_domain": "a neighborhood community garden cooperative's shared notes",
+  "items": [
+    {
+      "local_id": 1,
+      "pool": "private",
+      "kind": "turn",
+      "role": "user",
+      "content": "Can you remind me to call Teodor at Brightline before Friday? He still hasn't sent the revised quote for knocking out the pantry wall.",
+      "query": "What document was Teodor late in delivering?",
+      "style": "anchor",
+      "anchor_token": "Teodor"
+    },
+    {
+      "local_id": 2,
+      "pool": "private",
+      "kind": "fact",
+      "content": "The main water shutoff valve is in the basement crawlspace behind the furnace, painted red.",
+      "query": "If a pipe bursts, where do I go to stop everything flowing into the house?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 3,
+      "pool": "private",
+      "kind": "preference",
+      "content": "Priya prefers Halden-gray grout over white for the upstairs bathroom tile, since white shows every stain.",
+      "query": "What's the reasoning behind going with Halden-gray?",
+      "style": "anchor",
+      "anchor_token": "Halden-gray"
+    },
+    {
+      "local_id": 4,
+      "pool": "private",
+      "kind": "summary",
+      "content": "Kitchen remodel recap as of March 14, 2026: cabinets ordered with an eight-week lead time, electrician finished rough-in, and the countertop template is scheduled once the base units are installed. Spent so far is $31,200 of the $48,000 budget.",
+      "query": "Where do things stand overall on redoing the cooking area, including how much money is gone?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 5,
+      "pool": "private",
+      "kind": "event",
+      "content": "On April 3, 2026 the city inspector signed off on the framing for permit BP-26-04417 but flagged a missing fire block near the chimney chase.",
+      "query": "What problem came up during the BP-26-04417 walkthrough?",
+      "style": "anchor",
+      "anchor_token": "BP-26-04417"
+    },
+    {
+      "local_id": 6,
+      "pool": "private",
+      "kind": "turn",
+      "role": "assistant",
+      "content": "I've added Juniper's swim lessons to the family calendar: Tuesdays and Thursdays at 4:30 at the Westbrook aquatic center, starting June 9.",
+      "query": "When does our daughter go to the pool for classes?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 7,
+      "pool": "private",
+      "kind": "fact",
+      "content": "The dishwasher is a Klarsen DW-7740; the warranty runs through November 2027 and the appliance registration card is taped inside the junk drawer.",
+      "query": "Until when is the DW-7740 covered?",
+      "style": "anchor",
+      "anchor_token": "DW-7740"
+    },
+    {
+      "local_id": 8,
+      "pool": "private",
+      "kind": "preference",
+      "content": "Daniel doesn't want any contractor working inside the house before 8 a.m. on weekdays because he takes calls from home early.",
+      "query": "What's the soonest hour my partner is okay with builders showing up?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 9,
+      "pool": "private",
+      "kind": "summary",
+      "content": "Contractor bids for the deck rebuild: Pinecrest Carpentry quoted $14,800 with composite boards, Sutter & Gale quoted $12,300 in cedar, and Hollis Brothers never returned the measurements. We're leaning toward Sutter & Gale.",
+      "query": "How much did Pinecrest want for the job?",
+      "style": "anchor",
+      "anchor_token": "Pinecrest"
+    },
+    {
+      "local_id": 10,
+      "pool": "private",
+      "kind": "event",
+      "content": "Oskar broke his left wrist at the trampoline park on February 21, 2026 and wore a cast for six weeks.",
+      "query": "What injury did our son get at the jumping venue, and when?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 11,
+      "pool": "private",
+      "kind": "turn",
+      "role": "user",
+      "content": "The upstairs toilet keeps running after every flush again — I think the flapper is shot. Can you find a plumber who can come Saturday?",
+      "query": "Which bathroom fixture was I complaining won't stop filling?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 12,
+      "pool": "private",
+      "kind": "fact",
+      "content": "Our property tax parcel ID is 0817-QM-332, and the assessment appeal deadline each year is May 31.",
+      "query": "When is the cutoff to contest the valuation on 0817-QM-332?",
+      "style": "anchor",
+      "anchor_token": "0817-QM-332"
+    },
+    {
+      "local_id": 13,
+      "pool": "private",
+      "kind": "preference",
+      "content": "Priya wants low-VOC paint in the kids' bedrooms, even if it costs more, because Juniper gets headaches from fumes.",
+      "query": "Which household member's sensitivity is driving the choice of finish for the children's sleeping spaces?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 14,
+      "pool": "private",
+      "kind": "summary",
+      "content": "Week of May 18 logistics: Oskar has the Quarryhill soccer tournament Saturday, Juniper's piano recital is Sunday at 2, and the Brightline crew is off Monday for Memorial Day.",
+      "query": "On which day is the Quarryhill competition?",
+      "style": "anchor",
+      "anchor_token": "Quarryhill"
+    },
+    {
+      "local_id": 15,
+      "pool": "private",
+      "kind": "event",
+      "content": "The refrigerator's ice maker leaked overnight on January 12, 2026 and warped two oak floorboards; the insurance adjuster came out on January 15.",
+      "query": "Which appliance mishap ruined some planks of the hardwood?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 16,
+      "pool": "private",
+      "kind": "turn",
+      "role": "assistant",
+      "content": "I checked the county portal: the electrical permit for the garage subpanel was issued under reference EL-5529, and it expires 180 days after issue if no inspection is requested.",
+      "query": "How long before EL-5529 lapses if nobody books a walkthrough?",
+      "style": "anchor",
+      "anchor_token": "EL-5529"
+    },
+    {
+      "local_id": 17,
+      "pool": "private",
+      "kind": "fact",
+      "content": "Juniper is allergic to tree nuts, so her school lunches and any party snacks need to be checked for almonds and cashews.",
+      "query": "What food sensitivity does our daughter have?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 18,
+      "pool": "private",
+      "kind": "preference",
+      "content": "For the new range hood, Daniel insists on venting it outside rather than a recirculating model, and he likes the Vellmar 600 CFM unit.",
+      "query": "What's the airflow capacity of the Vellmar under consideration?",
+      "style": "anchor",
+      "anchor_token": "Vellmar"
+    },
+    {
+      "local_id": 19,
+      "pool": "private",
+      "kind": "summary",
+      "content": "Insurance and warranty roundup: homeowner's policy renews September 1 with Fernbrook Mutual, the roof's workmanship warranty from Calder Roofing ends in 2031, and the water heater was replaced under warranty in 2025.",
+      "query": "What protection plans do we have on the property, and what are their key dates?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 20,
+      "pool": "private",
+      "kind": "event",
+      "content": "On June 27, 2026 the Brightline crew found knob-and-tube wiring behind the dining room plaster, which added a $3,450 change order.",
+      "query": "What did uncovering the knob-and-tube cost us?",
+      "style": "anchor",
+      "anchor_token": "knob-and-tube"
+    },
+    {
+      "local_id": 21,
+      "pool": "shared",
+      "kind": "fact",
+      "content": "Plots 14 through 22 sit on old parking-lot fill, and the soil test showed lead at 410 ppm, so only lined raised beds are allowed there.",
+      "query": "Which part of the garden does the 410 reading concern?",
+      "style": "anchor",
+      "anchor_token": "410"
+    },
+    {
+      "local_id": 22,
+      "pool": "shared",
+      "kind": "turn",
+      "role": "user",
+      "content": "Has anyone got the key to the tool shed? The combination lock was swapped and I couldn't get the wheelbarrow out on Sunday morning.",
+      "query": "What problem did a gardener hit with the equipment hut after its latch was replaced?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 23,
+      "pool": "shared",
+      "kind": "preference",
+      "content": "The steering committee prefers that compost from the Vermillion bins go to the shared herb spiral first, before individual plots can claim any.",
+      "query": "Who gets priority on the Vermillion output?",
+      "style": "anchor",
+      "anchor_token": "Vermillion"
+    },
+    {
+      "local_id": 24,
+      "pool": "shared",
+      "kind": "event",
+      "content": "On August 16, 2026 the cooperative donated 212 pounds of tomatoes and zucchini to the Eastgate food pantry.",
+      "query": "How much produce did we give away to the hunger charity, and when?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 25,
+      "pool": "shared",
+      "kind": "summary",
+      "content": "Recap of the late-summer workday: 23 volunteers turned beds, Marisol Achterberg rebuilt the drip line on the north row, the rain barrels were cleaned, and new woodchips went down on the paths.",
+      "query": "What did Achterberg repair that day?",
+      "style": "anchor",
+      "anchor_token": "Achterberg"
+    },
+    {
+      "local_id": 26,
+      "pool": "shared",
+      "kind": "fact",
+      "content": "Annual plot fees are $45 for a full bed and $25 for a half bed, due by March 1, and members on SNAP can request a waiver.",
+      "query": "How much does it cost each year to rent growing space, and is there help for low-income gardeners?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 27,
+      "pool": "shared",
+      "kind": "turn",
+      "role": "assistant",
+      "content": "Reminder for everyone: the city water hookup at the Larkspur gate gets shut off October 31 for winter, so drain your hoses before then.",
+      "query": "When does the spigot at Larkspur go dry for the season?",
+      "style": "anchor",
+      "anchor_token": "Larkspur"
+    },
+    {
+      "local_id": 28,
+      "pool": "shared",
+      "kind": "preference",
+      "content": "Most members want the garden kept pesticide-free, allowing only hand-picking and neem oil for pest control.",
+      "query": "What's the group's stance on spraying chemicals to deal with bugs?",
+      "style": "paraphrase"
+    },
+    {
+      "local_id": 29,
+      "pool": "shared",
+      "kind": "event",
+      "content": "A groundhog tunneled under the east fence on July 9, 2026 and wiped out the bean row in plots 3 and 4; Tobiah Renquist set a live trap the next evening.",
+      "query": "What did Renquist do about the critter?",
+      "style": "anchor",
+      "anchor_token": "Renquist"
+    },
+    {
+      "local_id": 30,
+      "pool": "shared",
+      "kind": "summary",
+      "content": "Fall closing checklist: pull spent plants by October 25, leave perennials in place, return borrowed tools to the shed, and cover beds with leaf mulch or cardboard.",
+      "query": "What steps make up the routine for shutting down our patches during the cold months?",
+      "style": "paraphrase"
+    }
+  ]
+}

@@ -1,0 +1,1932 @@
+{
+  "schema_version": 1,
+  "dataset_id": "independent-retrieval-v3",
+  "description": "Two-author blind synthetic corpus: a wildlife photographer's assistant, a household renovation assistant, and a shared community-garden pool. Half the questions repeat one distinctive word from their memory; half share no content word with it. No user-derived data; frozen before any retrieval evaluation.",
+  "distractor_policy": "Each query preselects one accessible non-answer seven positions later in the same pool; shared queries alternate asking scope. Each also names one inaccessible control from the other private scope.",
+  "top_k": 5,
+  "thresholds": {
+    "query_count_min": 60,
+    "memory_kind_count_min": 12,
+    "recall_at_k_min": 0.9,
+    "mrr_min": 0.85,
+    "distractor_leak_rate_max": 0.1,
+    "scope_violation_count_max": 0,
+    "runtime_seconds_max": 60
+  },
+  "memories": [
+    {
+      "fixture_id": "a01",
+      "kind": "turn",
+      "content": "Remind me that the 600mm I rented from Kestrelworks has to go back by 4 March 2026, or they charge me for a full extra week.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "a02",
+      "kind": "fact",
+      "content": "The Sony A1 body has a hairline crack near the battery door, so I tape it before any rain outing.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a03",
+      "kind": "preference",
+      "content": "Odalys Brenner at Fernline Press only wants RAW files delivered through a shared drive folder, never as email attachments.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a04",
+      "kind": "summary",
+      "content": "Recap of the Svalbard trip planning: flights booked via Oslo, polar bear guard hired for six days, cold-weather batteries ordered, and the insurance rider still pending.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a05",
+      "kind": "event",
+      "content": "On 12 May 2026 the drone went down in Loch Varrin during the otter shoot; the SD card was recovered but the gimbal is dead.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a06",
+      "kind": "turn",
+      "content": "I've drafted the licensing quote for the heron series at 1,800 euros for two years of web use, matching your rate from the museum deal.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "a07",
+      "kind": "fact",
+      "content": "Invoice TQ-4471 to the Halden Wetlands Trust covers the March bittern survey images and is due net-30.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a08",
+      "kind": "preference",
+      "content": "My agent Tobias would rather get a phone call before 9am than a text whenever a shoot date moves.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a09",
+      "kind": "summary",
+      "content": "Wrap-up of the Marrowind Estate commission: 42 selects delivered, two reshoots of the red deer rut scheduled, and the second payment received in full.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a10",
+      "kind": "event",
+      "content": "On 3 August 2026 my 100-400 lens was stolen from the car at a trailhead parking lot outside Brecca.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a11",
+      "kind": "turn",
+      "content": "Can you add the Gitzo GT3543 tripod to the insurance schedule? It's worth about 1,100 dollars.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "a12",
+      "kind": "fact",
+      "content": "The studio's backup NAS sits in the hallway closet and mirrors to the cloud every night at 2am.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a13",
+      "kind": "preference",
+      "content": "For the Quillon Safaris catalogue I like to shoot at f/8 and keep ISO under 3200 so the printer gets clean files.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a14",
+      "kind": "summary",
+      "content": "Year-end tally for 2025: 61 paid assignments, three new editorial clients, gross income roughly 74,000 euros, and gear spending down by a fifth.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a15",
+      "kind": "event",
+      "content": "The Thornequay harbour seal shoot on 21 September 2026 was cut short when the coast guard closed the jetty for a storm warning.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a16",
+      "kind": "turn",
+      "content": "Your Kenya visa is approved; the e-visa PDF is saved in the Travel folder and expires on 30 January 2027.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "a17",
+      "kind": "fact",
+      "content": "Pinebrook Gazette's photo desk pays a flat 275 dollars per published image, plus 40 for each online reuse.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a18",
+      "kind": "preference",
+      "content": "I'd rather sleep in a cheap guesthouse close to the hide than a nice hotel an hour's drive away.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a19",
+      "kind": "summary",
+      "content": "Notes from the call with Arnault Okonkwo-Reyes: he wants 12 puffin prints for the Nordvik exhibition at 60x90 cm, shipping by sea freight, deadline 15 November 2026.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "a20",
+      "kind": "event",
+      "content": "Picked up the repaired Nikon Z9 from Halvard Camera Service on 2 October 2026; the shutter was replaced under warranty.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      }
+    },
+    {
+      "fixture_id": "b01",
+      "kind": "turn",
+      "content": "Can you remind me to call Teodor at Brightline before Friday? He still hasn't sent the revised quote for knocking out the pantry wall.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "b02",
+      "kind": "fact",
+      "content": "The main water shutoff valve is in the basement crawlspace behind the furnace, painted red.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b03",
+      "kind": "preference",
+      "content": "Priya prefers Halden-gray grout over white for the upstairs bathroom tile, since white shows every stain.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b04",
+      "kind": "summary",
+      "content": "Kitchen remodel recap as of March 14, 2026: cabinets ordered with an eight-week lead time, electrician finished rough-in, and the countertop template is scheduled once the base units are installed. Spent so far is $31,200 of the $48,000 budget.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b05",
+      "kind": "event",
+      "content": "On April 3, 2026 the city inspector signed off on the framing for permit BP-26-04417 but flagged a missing fire block near the chimney chase.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b06",
+      "kind": "turn",
+      "content": "I've added Juniper's swim lessons to the family calendar: Tuesdays and Thursdays at 4:30 at the Westbrook aquatic center, starting June 9.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "b07",
+      "kind": "fact",
+      "content": "The dishwasher is a Klarsen DW-7740; the warranty runs through November 2027 and the appliance registration card is taped inside the junk drawer.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b08",
+      "kind": "preference",
+      "content": "Daniel doesn't want any contractor working inside the house before 8 a.m. on weekdays because he takes calls from home early.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b09",
+      "kind": "summary",
+      "content": "Contractor bids for the deck rebuild: Pinecrest Carpentry quoted $14,800 with composite boards, Sutter & Gale quoted $12,300 in cedar, and Hollis Brothers never returned the measurements. We're leaning toward Sutter & Gale.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b10",
+      "kind": "event",
+      "content": "Oskar broke his left wrist at the trampoline park on February 21, 2026 and wore a cast for six weeks.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b11",
+      "kind": "turn",
+      "content": "The upstairs toilet keeps running after every flush again — I think the flapper is shot. Can you find a plumber who can come Saturday?",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "b12",
+      "kind": "fact",
+      "content": "Our property tax parcel ID is 0817-QM-332, and the assessment appeal deadline each year is May 31.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b13",
+      "kind": "preference",
+      "content": "Priya wants low-VOC paint in the kids' bedrooms, even if it costs more, because Juniper gets headaches from fumes.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b14",
+      "kind": "summary",
+      "content": "Week of May 18 logistics: Oskar has the Quarryhill soccer tournament Saturday, Juniper's piano recital is Sunday at 2, and the Brightline crew is off Monday for Memorial Day.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b15",
+      "kind": "event",
+      "content": "The refrigerator's ice maker leaked overnight on January 12, 2026 and warped two oak floorboards; the insurance adjuster came out on January 15.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b16",
+      "kind": "turn",
+      "content": "I checked the county portal: the electrical permit for the garage subpanel was issued under reference EL-5529, and it expires 180 days after issue if no inspection is requested.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "b17",
+      "kind": "fact",
+      "content": "Juniper is allergic to tree nuts, so her school lunches and any party snacks need to be checked for almonds and cashews.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b18",
+      "kind": "preference",
+      "content": "For the new range hood, Daniel insists on venting it outside rather than a recirculating model, and he likes the Vellmar 600 CFM unit.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b19",
+      "kind": "summary",
+      "content": "Insurance and warranty roundup: homeowner's policy renews September 1 with Fernbrook Mutual, the roof's workmanship warranty from Calder Roofing ends in 2031, and the water heater was replaced under warranty in 2025.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "b20",
+      "kind": "event",
+      "content": "On June 27, 2026 the Brightline crew found knob-and-tube wiring behind the dining room plaster, which added a $3,450 change order.",
+      "scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      }
+    },
+    {
+      "fixture_id": "s01",
+      "kind": "turn",
+      "content": "Wren here: I've got the spare key to the Gorsemead tool shed now, so text me if you need the wheelbarrow.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "s02",
+      "kind": "fact",
+      "content": "Plot 6 has the waist-high beds built for wheelchair access, next to the north gate.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s03",
+      "kind": "preference",
+      "content": "Marisol in bed 9 asks that nobody scatter Sproutwell slug pellets near her lettuces, even though they're labelled organic; she sticks to beer traps.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s04",
+      "kind": "summary",
+      "content": "April work-day recap: compost bins turned, the rain barrel overflow pipe fixed, 30 strawberry crowns planted, and two new members signed up.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s05",
+      "kind": "event",
+      "content": "On 14 June 2026 the Larkhollow beehive swarmed and settled in the plum tree; Dev from the beekeeping club collected it that evening.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s06",
+      "kind": "turn",
+      "content": "The water bill for the quarter came to 187 dollars, so each of the 22 plots owes 8.50.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "s07",
+      "kind": "fact",
+      "content": "The Brambleton soil test came back at pH 6.2 with low potassium, so we're adding wood ash to the east beds.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s08",
+      "kind": "preference",
+      "content": "Most members voted to keep the gate unlocked during daylight hours instead of using a combination padlock.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s09",
+      "kind": "summary",
+      "content": "Treasurer's update from Ilse Vandermolen: seed order 140 dollars, new hose 55, compost delivery 210, leaving 615 in the kitty.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s10",
+      "kind": "event",
+      "content": "A hard frost on 9 May 2026 killed most of the tomato seedlings that had been set out too early.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s11",
+      "kind": "fact",
+      "content": "Plots 14 through 22 sit on old parking-lot fill, and the soil test showed lead at 410 ppm, so only lined raised beds are allowed there.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s12",
+      "kind": "turn",
+      "content": "Has anyone got the key to the tool shed? The combination lock was swapped and I couldn't get the wheelbarrow out on Sunday morning.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      },
+      "role": "user"
+    },
+    {
+      "fixture_id": "s13",
+      "kind": "preference",
+      "content": "The steering committee prefers that compost from the Vermillion bins go to the shared herb spiral first, before individual plots can claim any.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s14",
+      "kind": "event",
+      "content": "On August 16, 2026 the cooperative donated 212 pounds of tomatoes and zucchini to the Eastgate food pantry.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s15",
+      "kind": "summary",
+      "content": "Recap of the late-summer workday: 23 volunteers turned beds, Marisol Achterberg rebuilt the drip line on the north row, the rain barrels were cleaned, and new woodchips went down on the paths.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s16",
+      "kind": "fact",
+      "content": "Annual plot fees are $45 for a full bed and $25 for a half bed, due by March 1, and members on SNAP can request a waiver.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s17",
+      "kind": "turn",
+      "content": "Reminder for everyone: the city water hookup at the Larkspur gate gets shut off October 31 for winter, so drain your hoses before then.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      },
+      "role": "assistant"
+    },
+    {
+      "fixture_id": "s18",
+      "kind": "preference",
+      "content": "Most members want the garden kept pesticide-free, allowing only hand-picking and neem oil for pest control.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s19",
+      "kind": "event",
+      "content": "A groundhog tunneled under the east fence on July 9, 2026 and wiped out the bean row in plots 3 and 4; Tobiah Renquist set a live trap the next evening.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    },
+    {
+      "fixture_id": "s20",
+      "kind": "summary",
+      "content": "Fall closing checklist: pull spent plants by October 25, leave perennials in place, return borrowed tools to the shed, and cover beds with leaf mulch or cardboard.",
+      "scope": {
+        "kind": "shared",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "garden-coop"
+      }
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "qa01",
+      "query": "When is the Kestrelworks return deadline?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a01"
+      ],
+      "distractor_fixture_ids": [
+        "a08"
+      ],
+      "inaccessible_fixture_ids": [
+        "b01"
+      ]
+    },
+    {
+      "query_id": "qa02",
+      "query": "Which camera is damaged and needs covering in wet weather?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a02"
+      ],
+      "distractor_fixture_ids": [
+        "a09"
+      ],
+      "inaccessible_fixture_ids": [
+        "b02"
+      ]
+    },
+    {
+      "query_id": "qa03",
+      "query": "How does Fernline like to receive images?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a03"
+      ],
+      "distractor_fixture_ids": [
+        "a10"
+      ],
+      "inaccessible_fixture_ids": [
+        "b03"
+      ]
+    },
+    {
+      "query_id": "qa04",
+      "query": "What's the status of arrangements for the Arctic archipelago expedition?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a04"
+      ],
+      "distractor_fixture_ids": [
+        "a11"
+      ],
+      "inaccessible_fixture_ids": [
+        "b04"
+      ]
+    },
+    {
+      "query_id": "qa05",
+      "query": "What gear was wrecked at Varrin?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a05"
+      ],
+      "distractor_fixture_ids": [
+        "a12"
+      ],
+      "inaccessible_fixture_ids": [
+        "b05"
+      ]
+    },
+    {
+      "query_id": "qa06",
+      "query": "How much did we propose for the wading bird pictures' online rights?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a06"
+      ],
+      "distractor_fixture_ids": [
+        "a13"
+      ],
+      "inaccessible_fixture_ids": [
+        "b06"
+      ]
+    },
+    {
+      "query_id": "qa07",
+      "query": "What does TQ-4471 bill for?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a07"
+      ],
+      "distractor_fixture_ids": [
+        "a14"
+      ],
+      "inaccessible_fixture_ids": [
+        "b07"
+      ]
+    },
+    {
+      "query_id": "qa08",
+      "query": "How does my representative like to be told about schedule changes?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a08"
+      ],
+      "distractor_fixture_ids": [
+        "a15"
+      ],
+      "inaccessible_fixture_ids": [
+        "b08"
+      ]
+    },
+    {
+      "query_id": "qa09",
+      "query": "Where do things stand with the Marrowind job?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a09"
+      ],
+      "distractor_fixture_ids": [
+        "a16"
+      ],
+      "inaccessible_fixture_ids": [
+        "b09"
+      ]
+    },
+    {
+      "query_id": "qa10",
+      "query": "When did someone take my zoom from the vehicle?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a10"
+      ],
+      "distractor_fixture_ids": [
+        "a17"
+      ],
+      "inaccessible_fixture_ids": [
+        "b10"
+      ]
+    },
+    {
+      "query_id": "qa11",
+      "query": "What did I want done with the GT3543?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a11"
+      ],
+      "distractor_fixture_ids": [
+        "a18"
+      ],
+      "inaccessible_fixture_ids": [
+        "b11"
+      ]
+    },
+    {
+      "query_id": "qa12",
+      "query": "Where is the storage box for redundant copies of my archive kept?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a12"
+      ],
+      "distractor_fixture_ids": [
+        "a19"
+      ],
+      "inaccessible_fixture_ids": [
+        "b12"
+      ]
+    },
+    {
+      "query_id": "qa13",
+      "query": "What exposure settings do I favor for the Quillon work?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a13"
+      ],
+      "distractor_fixture_ids": [
+        "a20"
+      ],
+      "inaccessible_fixture_ids": [
+        "b13"
+      ]
+    },
+    {
+      "query_id": "qa14",
+      "query": "What did my annual business scorecard show?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a14"
+      ],
+      "distractor_fixture_ids": [
+        "a01"
+      ],
+      "inaccessible_fixture_ids": [
+        "b14"
+      ]
+    },
+    {
+      "query_id": "qa15",
+      "query": "Why did the Thornequay session end early?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a15"
+      ],
+      "distractor_fixture_ids": [
+        "a02"
+      ],
+      "inaccessible_fixture_ids": [
+        "b15"
+      ]
+    },
+    {
+      "query_id": "qa16",
+      "query": "Has my entry permit for the East African country come through?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a16"
+      ],
+      "distractor_fixture_ids": [
+        "a03"
+      ],
+      "inaccessible_fixture_ids": [
+        "b16"
+      ]
+    },
+    {
+      "query_id": "qa17",
+      "query": "What is the rate at Pinebrook for pictures?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a17"
+      ],
+      "distractor_fixture_ids": [
+        "a04"
+      ],
+      "inaccessible_fixture_ids": [
+        "b17"
+      ]
+    },
+    {
+      "query_id": "qa18",
+      "query": "Do I value proximity to the blind over comfort when booking lodging?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a18"
+      ],
+      "distractor_fixture_ids": [
+        "a05"
+      ],
+      "inaccessible_fixture_ids": [
+        "b18"
+      ]
+    },
+    {
+      "query_id": "qa19",
+      "query": "What did we agree for the Nordvik show?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a19"
+      ],
+      "distractor_fixture_ids": [
+        "a06"
+      ],
+      "inaccessible_fixture_ids": [
+        "b19"
+      ]
+    },
+    {
+      "query_id": "qa20",
+      "query": "When did I retrieve my fixed mirrorless body, and did that cost anything?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "a20"
+      ],
+      "distractor_fixture_ids": [
+        "a07"
+      ],
+      "inaccessible_fixture_ids": [
+        "b20"
+      ]
+    },
+    {
+      "query_id": "qb01",
+      "query": "What document was Teodor late in delivering?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b01"
+      ],
+      "distractor_fixture_ids": [
+        "b08"
+      ],
+      "inaccessible_fixture_ids": [
+        "a01"
+      ]
+    },
+    {
+      "query_id": "qb02",
+      "query": "If a pipe bursts, where do I go to stop everything flowing into the house?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b02"
+      ],
+      "distractor_fixture_ids": [
+        "b09"
+      ],
+      "inaccessible_fixture_ids": [
+        "a02"
+      ]
+    },
+    {
+      "query_id": "qb03",
+      "query": "What's the reasoning behind going with Halden-gray?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b03"
+      ],
+      "distractor_fixture_ids": [
+        "b10"
+      ],
+      "inaccessible_fixture_ids": [
+        "a03"
+      ]
+    },
+    {
+      "query_id": "qb04",
+      "query": "Where do things stand overall on redoing the cooking area, including how much money is gone?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b04"
+      ],
+      "distractor_fixture_ids": [
+        "b11"
+      ],
+      "inaccessible_fixture_ids": [
+        "a04"
+      ]
+    },
+    {
+      "query_id": "qb05",
+      "query": "What problem came up during the BP-26-04417 walkthrough?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b05"
+      ],
+      "distractor_fixture_ids": [
+        "b12"
+      ],
+      "inaccessible_fixture_ids": [
+        "a05"
+      ]
+    },
+    {
+      "query_id": "qb06",
+      "query": "When does our daughter go to the pool for classes?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b06"
+      ],
+      "distractor_fixture_ids": [
+        "b13"
+      ],
+      "inaccessible_fixture_ids": [
+        "a06"
+      ]
+    },
+    {
+      "query_id": "qb07",
+      "query": "Until when is the DW-7740 covered?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b07"
+      ],
+      "distractor_fixture_ids": [
+        "b14"
+      ],
+      "inaccessible_fixture_ids": [
+        "a07"
+      ]
+    },
+    {
+      "query_id": "qb08",
+      "query": "What's the soonest hour my partner is okay with builders showing up?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b08"
+      ],
+      "distractor_fixture_ids": [
+        "b15"
+      ],
+      "inaccessible_fixture_ids": [
+        "a08"
+      ]
+    },
+    {
+      "query_id": "qb09",
+      "query": "How much did Pinecrest want for the job?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b09"
+      ],
+      "distractor_fixture_ids": [
+        "b16"
+      ],
+      "inaccessible_fixture_ids": [
+        "a09"
+      ]
+    },
+    {
+      "query_id": "qb10",
+      "query": "What injury did our son get at the jumping venue, and when?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b10"
+      ],
+      "distractor_fixture_ids": [
+        "b17"
+      ],
+      "inaccessible_fixture_ids": [
+        "a10"
+      ]
+    },
+    {
+      "query_id": "qb11",
+      "query": "Which bathroom fixture was I complaining won't stop filling?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b11"
+      ],
+      "distractor_fixture_ids": [
+        "b18"
+      ],
+      "inaccessible_fixture_ids": [
+        "a11"
+      ]
+    },
+    {
+      "query_id": "qb12",
+      "query": "When is the cutoff to contest the valuation on 0817-QM-332?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b12"
+      ],
+      "distractor_fixture_ids": [
+        "b19"
+      ],
+      "inaccessible_fixture_ids": [
+        "a12"
+      ]
+    },
+    {
+      "query_id": "qb13",
+      "query": "Which household member's sensitivity is driving the choice of finish for the children's sleeping spaces?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b13"
+      ],
+      "distractor_fixture_ids": [
+        "b20"
+      ],
+      "inaccessible_fixture_ids": [
+        "a13"
+      ]
+    },
+    {
+      "query_id": "qb14",
+      "query": "On which day is the Quarryhill competition?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b14"
+      ],
+      "distractor_fixture_ids": [
+        "b01"
+      ],
+      "inaccessible_fixture_ids": [
+        "a14"
+      ]
+    },
+    {
+      "query_id": "qb15",
+      "query": "Which appliance mishap ruined some planks of the hardwood?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b15"
+      ],
+      "distractor_fixture_ids": [
+        "b02"
+      ],
+      "inaccessible_fixture_ids": [
+        "a15"
+      ]
+    },
+    {
+      "query_id": "qb16",
+      "query": "How long before EL-5529 lapses if nobody books a walkthrough?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b16"
+      ],
+      "distractor_fixture_ids": [
+        "b03"
+      ],
+      "inaccessible_fixture_ids": [
+        "a16"
+      ]
+    },
+    {
+      "query_id": "qb17",
+      "query": "What food sensitivity does our daughter have?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b17"
+      ],
+      "distractor_fixture_ids": [
+        "b04"
+      ],
+      "inaccessible_fixture_ids": [
+        "a17"
+      ]
+    },
+    {
+      "query_id": "qb18",
+      "query": "What's the airflow capacity of the Vellmar under consideration?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b18"
+      ],
+      "distractor_fixture_ids": [
+        "b05"
+      ],
+      "inaccessible_fixture_ids": [
+        "a18"
+      ]
+    },
+    {
+      "query_id": "qb19",
+      "query": "What protection plans do we have on the property, and what are their key dates?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b19"
+      ],
+      "distractor_fixture_ids": [
+        "b06"
+      ],
+      "inaccessible_fixture_ids": [
+        "a19"
+      ]
+    },
+    {
+      "query_id": "qb20",
+      "query": "What did uncovering the knob-and-tube cost us?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [],
+      "expected_fixture_ids": [
+        "b20"
+      ],
+      "distractor_fixture_ids": [
+        "b07"
+      ],
+      "inaccessible_fixture_ids": [
+        "a20"
+      ]
+    },
+    {
+      "query_id": "qs01",
+      "query": "Who can let people into the Gorsemead storage hut?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s01"
+      ],
+      "distractor_fixture_ids": [
+        "s08"
+      ],
+      "inaccessible_fixture_ids": [
+        "b01"
+      ]
+    },
+    {
+      "query_id": "qs02",
+      "query": "Which allotment is set up for members with disabilities?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s02"
+      ],
+      "distractor_fixture_ids": [
+        "s09"
+      ],
+      "inaccessible_fixture_ids": [
+        "a02"
+      ]
+    },
+    {
+      "query_id": "qs03",
+      "query": "Who objects to Sproutwell being used around her greens?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s03"
+      ],
+      "distractor_fixture_ids": [
+        "s10"
+      ],
+      "inaccessible_fixture_ids": [
+        "b03"
+      ]
+    },
+    {
+      "query_id": "qs04",
+      "query": "At which gathering did a pair of recruits enroll and the water butt's spillover outlet get repaired?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s04"
+      ],
+      "distractor_fixture_ids": [
+        "s11"
+      ],
+      "inaccessible_fixture_ids": [
+        "a04"
+      ]
+    },
+    {
+      "query_id": "qs05",
+      "query": "What did the Larkhollow colony do?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s05"
+      ],
+      "distractor_fixture_ids": [
+        "s12"
+      ],
+      "inaccessible_fixture_ids": [
+        "b05"
+      ]
+    },
+    {
+      "query_id": "qs06",
+      "query": "How much is every gardener chipping in for the irrigation charges?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s06"
+      ],
+      "distractor_fixture_ids": [
+        "s13"
+      ],
+      "inaccessible_fixture_ids": [
+        "a06"
+      ]
+    },
+    {
+      "query_id": "qs07",
+      "query": "What did the Brambleton analysis show?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s07"
+      ],
+      "distractor_fixture_ids": [
+        "s14"
+      ],
+      "inaccessible_fixture_ids": [
+        "b07"
+      ]
+    },
+    {
+      "query_id": "qs08",
+      "query": "Do people want the entrance left open while the sun is up?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s08"
+      ],
+      "distractor_fixture_ids": [
+        "s15"
+      ],
+      "inaccessible_fixture_ids": [
+        "a08"
+      ]
+    },
+    {
+      "query_id": "qs09",
+      "query": "What did Vandermolen report about our finances?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s09"
+      ],
+      "distractor_fixture_ids": [
+        "s16"
+      ],
+      "inaccessible_fixture_ids": [
+        "b09"
+      ]
+    },
+    {
+      "query_id": "qs10",
+      "query": "When did a cold snap destroy the young vegetable starts?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s10"
+      ],
+      "distractor_fixture_ids": [
+        "s17"
+      ],
+      "inaccessible_fixture_ids": [
+        "a10"
+      ]
+    },
+    {
+      "query_id": "qs11",
+      "query": "Which part of the garden does the 410 reading concern?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s11"
+      ],
+      "distractor_fixture_ids": [
+        "s18"
+      ],
+      "inaccessible_fixture_ids": [
+        "b11"
+      ]
+    },
+    {
+      "query_id": "qs12",
+      "query": "What problem did a gardener hit with the equipment hut after its latch was replaced?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s12"
+      ],
+      "distractor_fixture_ids": [
+        "s19"
+      ],
+      "inaccessible_fixture_ids": [
+        "a12"
+      ]
+    },
+    {
+      "query_id": "qs13",
+      "query": "Who gets priority on the Vermillion output?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s13"
+      ],
+      "distractor_fixture_ids": [
+        "s20"
+      ],
+      "inaccessible_fixture_ids": [
+        "b13"
+      ]
+    },
+    {
+      "query_id": "qs14",
+      "query": "How much produce did we give away to the hunger charity, and when?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s14"
+      ],
+      "distractor_fixture_ids": [
+        "s01"
+      ],
+      "inaccessible_fixture_ids": [
+        "a14"
+      ]
+    },
+    {
+      "query_id": "qs15",
+      "query": "What did Achterberg repair that day?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s15"
+      ],
+      "distractor_fixture_ids": [
+        "s02"
+      ],
+      "inaccessible_fixture_ids": [
+        "b15"
+      ]
+    },
+    {
+      "query_id": "qs16",
+      "query": "How much does it cost each year to rent growing space, and is there help for low-income gardeners?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s16"
+      ],
+      "distractor_fixture_ids": [
+        "s03"
+      ],
+      "inaccessible_fixture_ids": [
+        "a16"
+      ]
+    },
+    {
+      "query_id": "qs17",
+      "query": "When does the spigot at Larkspur go dry for the season?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s17"
+      ],
+      "distractor_fixture_ids": [
+        "s04"
+      ],
+      "inaccessible_fixture_ids": [
+        "b17"
+      ]
+    },
+    {
+      "query_id": "qs18",
+      "query": "What's the group's stance on spraying chemicals to deal with bugs?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s18"
+      ],
+      "distractor_fixture_ids": [
+        "s05"
+      ],
+      "inaccessible_fixture_ids": [
+        "a18"
+      ]
+    },
+    {
+      "query_id": "qs19",
+      "query": "What did Renquist do about the critter?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "photographer-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s19"
+      ],
+      "distractor_fixture_ids": [
+        "s06"
+      ],
+      "inaccessible_fixture_ids": [
+        "b19"
+      ]
+    },
+    {
+      "query_id": "qs20",
+      "query": "What steps make up the routine for shutting down our patches during the cold months?",
+      "private_scope": {
+        "kind": "private",
+        "subject": "eval-v3",
+        "environment": "independent-evaluation",
+        "owner": "household-assistant"
+      },
+      "shared_pools": [
+        "garden-coop"
+      ],
+      "expected_fixture_ids": [
+        "s20"
+      ],
+      "distractor_fixture_ids": [
+        "s07"
+      ],
+      "inaccessible_fixture_ids": [
+        "a20"
+      ]
+    }
+  ]
+}
