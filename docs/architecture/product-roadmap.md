@@ -78,6 +78,13 @@ the paraphrase-heavy retrieval_v2 MRR gate, 0.834 against 0.85
 paraphrase loss, judged against a new independently authored paraphrase suite rather than tuned on
 retrieval_v2.
 
+**Gated hybrid v1 failed, 2026-10-09.** A rare-term gate tuned on the stratified sixty and
+retrieval_v1/v2 was frozen and judged once on the new two-author corpus retrieval_v3 and the
+design-blind 120. It failed both: v3 MRR 0.782 against vector's 0.867, and held-out complete evidence
+78 against vector's 80. retrieval_v3 shows keyword fusion lifts anchor-word questions (MRR 0.93 →
+0.98) and cuts paraphrase questions (0.80 → 0.53–0.58). The default stays vector and opt-in hybrid
+is unchanged (`benchmarks/2026-10-09-gated-hybrid-v1-decision.md`).
+
 ## Competitive baseline rules
 
 - Use LongMemEval-S first because its categories isolate single-session facts, preferences,

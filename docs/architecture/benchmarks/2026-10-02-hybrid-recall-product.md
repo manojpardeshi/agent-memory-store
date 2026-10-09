@@ -70,3 +70,8 @@ vector stays the default and hybrid is an explicit option in the library, CLI (`
 hybrid`), and MCP tool (`retrieval="hybrid"`). Making it default needs a change that passes
 retrieval_v2 without being tuned on it, for example evidence from a new, independently authored
 paraphrase suite. Answer quality is not measured and no answer-quality gain is claimed.
+
+**Update 2026-10-09:** the independent two-author corpus retrieval_v3 confirms the paraphrase cost.
+Opt-in hybrid scores MRR 0.759 against vector's 0.867: anchor-word questions improve (0.931 →
+0.983), and no-shared-word questions fall (0.804 → 0.534). A rare-term gate meant to remove the cost
+failed both v3 and the held-out check (`2026-10-09-gated-hybrid-v1-decision.md`).

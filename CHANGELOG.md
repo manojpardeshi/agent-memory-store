@@ -34,6 +34,10 @@ All notable changes to this project are documented here.
   unavailable. A runtime on older SQLite cannot write to a store already carrying the index.
   `status()` reports `keyword_index` as `ok`, `corrupt`, `absent`, or `unverified` (read-only).
 - `evaluate-retrieval --retrieval {vector,hybrid}` runs the synthetic gates in either mode.
+- `evaluation/retrieval_v3.json`: a third synthetic retrieval gate, written by two independent
+  authors and cross-reviewed, half anchor-word and half no-shared-word questions, with question
+  styles in `retrieval_v3_styles.json`. Vector recall passes it (MRR 0.867); opt-in hybrid recall
+  does not (MRR 0.759), because keyword matching demotes answers to paraphrased questions.
 
 - Experimental `llm_memory_store.temporal.resolve_event_dates(text, reference)` resolves relative
   English date expressions ("last Tuesday", "3 weeks ago", "on March 4th", "last month") to
