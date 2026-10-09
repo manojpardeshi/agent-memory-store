@@ -1,0 +1,38 @@
+{
+  "experiment_id": "gated-hybrid-v1",
+  "frozen_on": "2026-10-09",
+  "frozen_before": [
+    "retrieval_v3 exists: its two authors were still writing when this was frozen",
+    "any evaluation of this variant on the 120 design-blind LongMemEval-S development questions"
+  ],
+  "tuned_on": [
+    "evaluation/memorybench/longmemeval-stratified60-v1.json (benchmark header stripped)",
+    "evaluation/retrieval_v1.json",
+    "evaluation/retrieval_v2.json — diagnosed before this design, so not independent evidence"
+  ],
+  "choice": "idf_gate_0.02_floor2",
+  "definition": "Hybrid recall as shipped (vector ranking and FTS5 BM25 ranking, reciprocal rank fusion, k = 60, equal weights, depth max(50, 5 x limit)), except that the keyword ranking keeps only memories containing at least one rare query term. A query term is rare when it occurs in at least one and at most max(2, 0.02 x N) memories, where N is the number of active, embedded memories in the scopes the query can reach. With no rare term the result equals vector recall.",
+  "tuning_result": {
+    "longmemeval_stratified60_complete_evidence": {"vector": "41/57", "rrf": "47/57", "chosen": "47/57"},
+    "longmemeval_stratified60_evidence_recall": {"vector": 0.828, "rrf": 0.860, "chosen": 0.898},
+    "retrieval_v1": {"vector": "pass R@k 0.980 MRR 0.980", "chosen": "pass R@k 1.000 MRR 0.980"},
+    "retrieval_v2": {"vector": "pass MRR 0.894", "rrf": "fail MRR 0.834", "chosen": "pass MRR 0.856"}
+  },
+  "rejected_on_tuning_data": {
+    "idf_gate_0.02": "never opens in stores under 50 memories; passes small suites only by being vector recall",
+    "idf_gate_0.05 / idf_gate_0.02_floor1 / idf_gate_0.01_floor1": "fail retrieval_v2 MRR",
+    "idf_gate_0.10": "passes, but lower LongMemEval evidence recall (0.860) than the chosen gate",
+    "coverage_weight / coverage_gate_0.34 / coverage_gate_0.50": "fail retrieval_v2 MRR; gates also lose LongMemEval complete evidence"
+  },
+  "default_flip_rule_fixed_now": {
+    "summary": "Gated hybrid becomes the default recall mode only if every condition holds. Otherwise the product default stays vector, and the result is published either way.",
+    "conditions": [
+      "retrieval_v3, frozen after independent two-author writing and cross-review and measured once, with the certified default relevance filter: gated-hybrid MRR >= vector MRR - 0.01, Recall@k >= vector Recall@k - 0.017, distractor leak <= vector leak + 0.017, zero scope violations.",
+      "retrieval_v3 absolute thresholds (recall_at_k >= 0.90, mrr >= 0.85, distractor_leak_rate <= 0.10, scope_violation_count = 0) are met by gated hybrid whenever vector meets them.",
+      "retrieval_v1 and retrieval_v2 gates pass with the certified default filter (already observed; recorded above).",
+      "LongMemEval-S 120 design-blind questions, aggregate only, benchmark header stripped, unfiltered: gated-hybrid complete-evidence count >= vector + 4, and no category loses more than 1 complete-evidence question against vector.",
+      "Median recall latency on those 120 questions is at most 3 ms above vector."
+    ],
+    "reported_but_not_gating": "retrieval_v3 metrics split by question style (anchor vs paraphrase), and the plain rrf hybrid on retrieval_v3 for comparison."
+  }
+}
