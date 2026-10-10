@@ -19,7 +19,8 @@ set -euo pipefail
 bin="$HOME/.local/bin/supermemory-server"
 fw=/usr/libexec/ApplicationFirewall/socketfilterfw
 base="$HOME/bench/supermemory-local"
-data="$base/data"
+# data-v2: fresh store after the 2026-10-09 server crash stranded the first attempt's queue.
+data="$base/data-v2"
 server_log="$base/server.log"
 key_file="$data/api-key"               # written by the server on first boot
 bench="$HOME/bench/memorybench"
