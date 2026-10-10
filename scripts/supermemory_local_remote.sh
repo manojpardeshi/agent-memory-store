@@ -131,6 +131,11 @@ case "${1:?mode}" in
     if listening; then echo "server: listening"; else echo "server: DOWN"; fi
     tail -5 "$bench/$run_id.log" 2>/dev/null || echo "no log for $run_id" ;;
   stop)
-    if pkill -f "$bin"; then echo stopped; else echo "not running"; fi ;;
+    # $bin is a wrapper that execs the real binary, so match the real binary's path; also stop
+    # the per-data-directory workflow engine it spawns, which otherwise outlives a crash.
+    stopped=""
+    pkill -f "$HOME/.supermemory/bin/supermemory-server" && stopped=1
+    pkill -f "$data/runtime/rivet/rivet-engine" && stopped=1
+    if [ -n "$stopped" ]; then echo stopped; else echo "not running"; fi ;;
   *) echo "unknown mode" >&2; exit 2 ;;
 esac
