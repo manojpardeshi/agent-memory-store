@@ -1,0 +1,16 @@
+{
+  "split_id": "supermemory-local-cloud-split-v1",
+  "cloud_question_ids": [
+    "c7dc5443",
+    "a2f3aa27",
+    "08e075c7",
+    "ce6d2d27",
+    "0ddfec37",
+    "89527b6b",
+    "51b23612",
+    "4baee567",
+    "6222b6eb",
+    "18dcd5a5"
+  ],
+  "rule": "Questions 21-30 of the stratified thirty run on GitHub Actions (CPU); questions 1-20 on the M2 (Apple GPU). A cloud question that fails or times out uses the M2 result, which the M2 reaches anyway in manifest order; where both complete, the cloud result is used and the M2 result is a cross-hardware consistency check."
+}
