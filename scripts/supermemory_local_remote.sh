@@ -4,6 +4,7 @@
 #
 # usage: supermemory_local_remote.sh start
 #        supermemory_local_remote.sh run RUN_ID MANIFEST CONCURRENCY
+#        supermemory_local_remote.sh sequential RUN_PREFIX MANIFEST
 #        supermemory_local_remote.sh status RUN_ID
 #        supermemory_local_remote.sh stop
 #
@@ -19,8 +20,9 @@ set -euo pipefail
 bin="$HOME/.local/bin/supermemory-server"
 fw=/usr/libexec/ApplicationFirewall/socketfilterfw
 base="$HOME/bench/supermemory-local"
-# data-v2: fresh store after the 2026-10-09 server crash stranded the first attempt's queue.
-data="$base/data-v2"
+# data-v3: fresh store. Two bulk attempts (1,420 sessions queued at once) grew the server's
+# in-memory queue until v0.0.8 crashed; `sequential` instead ingests one question at a time.
+data="$base/data-v3"
 server_log="$base/server.log"
 key_file="$data/api-key"               # written by the server on first boot
 bench="$HOME/bench/memorybench"
@@ -70,6 +72,60 @@ case "${1:?mode}" in
     nohup caffeinate -i "$HOME/.bun/bin/bun" scripts/hosted-search-manifest.ts \
       supermemory "$run_id" "$manifest" "$conc" >"$log" 2>&1 </dev/null &
     echo "started pid $! ; log $log" ;;
+  sequential)
+    # One question per run, restarting the server between questions so v0.0.8 never holds
+    # more than one question's sessions in its queue. Resumable: finished questions are skipped.
+    prefix="${2:?run prefix}"; manifest="${3:?manifest}"
+    [[ "$prefix" =~ ^[A-Za-z0-9._-]+$ ]] || { echo "bad run prefix" >&2; exit 2; }
+    py="$HOME/.local/bin/python3.12"
+    ids="$("$py" -c 'import json,sys; print(" ".join(json.load(open(sys.argv[1]))["question_ids"]))' "$bench/$manifest")"
+    mkdir -p "$bench/manifests/$prefix"
+    progress="$bench/$prefix.progress"
+    for qid in $ids; do
+      run_id="$prefix-$qid"
+      checkpoint="$bench/data/runs/$run_id/checkpoint.json"
+      if [ -f "$checkpoint" ] && grep -q '"search"' "$checkpoint" &&
+        "$py" -c 'import json,sys; c=json.load(open(sys.argv[1])); q=next(iter(c["questions"].values())); sys.exit(0 if q["phases"]["search"].get("status")=="completed" else 1)' "$checkpoint"; then
+        continue
+      fi
+      single="manifests/$prefix/$qid.json"
+      printf '{"question_ids": ["%s"]}\n' "$qid" >"$bench/$single"
+      for attempt in 1 2; do
+        "$0" stop >/dev/null 2>&1 || true
+        sleep 5
+        "$0" start >/dev/null
+        export SUPERMEMORY_BASE_URL="http://127.0.0.1:$port"
+        SUPERMEMORY_API_KEY="$(head -1 "$key_file")"
+        export SUPERMEMORY_API_KEY
+        force=""; [ "$attempt" -gt 1 ] && force="--force"   # retry from scratch, not resume
+        started=$(date +%s)
+        (cd "$bench" && exec caffeinate -i "$HOME/.bun/bin/bun" scripts/hosted-search-manifest.ts \
+          supermemory "$run_id" "$single" 1 $force >"$bench/$run_id.log" 2>&1 </dev/null) &
+        harness=$!
+        # Watchdog: the harness waits forever on indexing if the server dies, so stop it when
+        # the server goes down or the question exceeds three hours.
+        reason=""
+        while kill -0 "$harness" 2>/dev/null; do
+          sleep 30
+          listening || { reason="server down"; break; }
+          [ $(( $(date +%s) - started )) -gt 10800 ] && { reason="timeout"; break; }
+        done
+        if [ -n "$reason" ]; then
+          pkill -P "$harness" 2>/dev/null || true
+          kill "$harness" 2>/dev/null || true
+          wait "$harness" 2>/dev/null || true
+          echo "$(date -u +%FT%TZ) $qid FAILED attempt $attempt ($reason)" >>"$progress"
+          continue
+        fi
+        if wait "$harness"; then
+          echo "$(date -u +%FT%TZ) $qid done in $(( $(date +%s) - started ))s (attempt $attempt)" >>"$progress"
+          break
+        fi
+        echo "$(date -u +%FT%TZ) $qid FAILED attempt $attempt (harness error)" >>"$progress"
+      done
+    done
+    "$0" stop >/dev/null 2>&1 || true
+    echo "$(date -u +%FT%TZ) sequence finished" >>"$progress" ;;
   status)
     run_id="${2:?run id}"
     if listening; then echo "server: listening"; else echo "server: DOWN"; fi
