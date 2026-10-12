@@ -93,7 +93,10 @@ case "${1:?mode}" in
       for attempt in 1 2; do
         "$0" stop >/dev/null 2>&1 || true
         sleep 5
-        "$0" start >/dev/null
+        if ! "$0" start >/dev/null 2>&1; then
+          echo "$(date -u +%FT%TZ) $qid FAILED attempt $attempt (server did not start)" >>"$progress"
+          continue
+        fi
         export SUPERMEMORY_BASE_URL="http://127.0.0.1:$port"
         SUPERMEMORY_API_KEY="$(head -1 "$key_file")"
         export SUPERMEMORY_API_KEY
@@ -136,6 +139,11 @@ case "${1:?mode}" in
     stopped=""
     pkill -f "$HOME/.supermemory/bin/supermemory-server" && stopped=1
     pkill -f "$data/runtime/rivet/rivet-engine" && stopped=1
+    # The data directory stays locked until the old server has exited, so wait for it.
+    for _ in $(seq 1 60); do
+      pgrep -f "$HOME/.supermemory/bin/supermemory-server" >/dev/null || break
+      sleep 1
+    done
     if [ -n "$stopped" ]; then echo stopped; else echo "not running"; fi ;;
   *) echo "unknown mode" >&2; exit 2 ;;
 esac
