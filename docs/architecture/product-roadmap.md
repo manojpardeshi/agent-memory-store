@@ -85,6 +85,15 @@ design-blind 120. It failed both: v3 MRR 0.782 against vector's 0.867, and held-
 0.98) and cuts paraphrase questions (0.80 → 0.53–0.58). The default stays vector and opt-in hybrid
 is unchanged (`benchmarks/2026-10-09-gated-hybrid-v1-decision.md`).
 
+### Supermemory Local comparison, 2026-10-12
+
+Under free local models only (Supermemory Local 0.0.8 with Ollama `qwen2.5:7b`), on the stratified
+thirty, the store's top ten contained the gold answer text in 18 of 30 questions and Supermemory's
+top ten in 8. All ten discordant questions favoured the store (p = 0.002), and the store used less
+than half the context. Against Supermemory's full default output, about 5× the store's context, it
+was 18 vs 11 (p = 0.065). Retrieval-level presence only; Supermemory's hosted service is not
+measured (`benchmarks/2026-10-12-supermemory-local-strat30.md`).
+
 ## Competitive baseline rules
 
 - Use LongMemEval-S first because its categories isolate single-session facts, preferences,
