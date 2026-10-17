@@ -50,6 +50,13 @@ All notable changes to this project are documented here.
   and expired memories are excluded by default using the same expiry rule as `recall`. Keys must be
   plain identifiers; the JSON path is always a bound parameter.
 
+### Security
+
+- Raised the minimum `mcp` to 1.30 and locked `mcp` 1.30.0, `pyjwt` 2.15.1, `cryptography` 50.0.2,
+  and `urllib3` 2.8.0, which fix advisories published since 0.1.0. Updated the demo dashboard's
+  `next` (critical advisory), `wrangler`, and related dependencies; its production dependency audit
+  is clean.
+
 ### Compatibility
 
 - Opening a 0.1 store writable with 0.2 adds the keyword index (`memory_keywords` plus three

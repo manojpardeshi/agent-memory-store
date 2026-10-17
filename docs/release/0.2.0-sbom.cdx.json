@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "bom-ref": "PyJWT==2.13.0",
+      "bom-ref": "PyJWT==2.15.1",
       "description": "JSON Web Token implementation in Python",
       "externalReferences": [
         {
@@ -25,9 +25,9 @@
           "value": "crypto"
         }
       ],
-      "purl": "pkg:pypi/pyjwt@2.13.0",
+      "purl": "pkg:pypi/pyjwt@2.15.1",
       "type": "library",
-      "version": "2.13.0"
+      "version": "2.15.1"
     },
     {
       "bom-ref": "PyYAML==6.0.3",
@@ -360,7 +360,7 @@
       "version": "8.4.2"
     },
     {
-      "bom-ref": "cryptography==49.0.0",
+      "bom-ref": "cryptography==50.0.2",
       "description": "cryptography is a package which provides cryptographic recipes and primitives to Python developers.",
       "externalReferences": [
         {
@@ -396,9 +396,9 @@
         }
       ],
       "name": "cryptography",
-      "purl": "pkg:pypi/cryptography@49.0.0",
+      "purl": "pkg:pypi/cryptography@50.0.2",
       "type": "library",
-      "version": "49.0.0"
+      "version": "50.0.2"
     },
     {
       "bom-ref": "fastembed==0.8.0",
@@ -890,13 +890,13 @@
       "version": "0.7.3"
     },
     {
-      "bom-ref": "mcp==1.28.1",
+      "bom-ref": "mcp==1.30.0",
       "description": "Model Context Protocol SDK",
       "externalReferences": [
         {
           "comment": "from packaging metadata Project-URL: Documentation",
           "type": "documentation",
-          "url": "https://py.sdk.modelcontextprotocol.io/"
+          "url": "https://py.sdk.modelcontextprotocol.io/v1/"
         },
         {
           "comment": "from packaging metadata Project-URL: Issues",
@@ -923,9 +923,9 @@
         }
       ],
       "name": "mcp",
-      "purl": "pkg:pypi/mcp@1.28.1",
+      "purl": "pkg:pypi/mcp@1.30.0",
       "type": "library",
-      "version": "1.28.1"
+      "version": "1.30.0"
     },
     {
       "bom-ref": "mmh3==5.2.1",
@@ -1738,7 +1738,7 @@
       "version": "4.16.0"
     },
     {
-      "bom-ref": "urllib3==2.7.0",
+      "bom-ref": "urllib3==2.8.0",
       "description": "HTTP library with thread-safe connection pooling, file post, and more.",
       "externalReferences": [
         {
@@ -1757,6 +1757,11 @@
           "url": "https://github.com/urllib3/urllib3"
         },
         {
+          "comment": "from packaging metadata Project-URL: Security policy",
+          "type": "other",
+          "url": "https://urllib3.readthedocs.io/en/latest/security.html"
+        },
+        {
           "comment": "from packaging metadata Project-URL: Changelog",
           "type": "release-notes",
           "url": "https://github.com/urllib3/urllib3/blob/main/CHANGES.rst"
@@ -1771,9 +1776,9 @@
         }
       ],
       "name": "urllib3",
-      "purl": "pkg:pypi/urllib3@2.7.0",
+      "purl": "pkg:pypi/urllib3@2.8.0",
       "type": "library",
-      "version": "2.7.0"
+      "version": "2.8.0"
     },
     {
       "bom-ref": "uvicorn==0.51.0",
@@ -1817,10 +1822,10 @@
   "dependencies": [
     {
       "dependsOn": [
-        "cryptography==49.0.0",
+        "cryptography==50.0.2",
         "typing_extensions==4.16.0"
       ],
-      "ref": "PyJWT==2.13.0"
+      "ref": "PyJWT==2.15.1"
     },
     {
       "ref": "PyYAML==6.0.3"
@@ -1861,7 +1866,7 @@
         "cffi==2.1.0",
         "typing_extensions==4.16.0"
       ],
-      "ref": "cryptography==49.0.0"
+      "ref": "cryptography==50.0.2"
     },
     {
       "dependsOn": [
@@ -1889,7 +1894,7 @@
         "numpy==2.5.1",
         "requests==2.34.2",
         "tqdm==4.68.4",
-        "urllib3==2.7.0"
+        "urllib3==2.8.0"
       ],
       "ref": "fsspec==2026.6.0"
     },
@@ -1928,14 +1933,14 @@
         "fsspec==2026.6.0",
         "hf-xet==1.5.1",
         "httpx==0.28.1",
-        "mcp==1.28.1",
+        "mcp==1.30.0",
         "numpy==2.5.1",
         "packaging==26.2",
         "pillow==12.3.0",
         "requests==2.34.2",
         "tqdm==4.68.4",
         "typing_extensions==4.16.0",
-        "urllib3==2.7.0"
+        "urllib3==2.8.0"
       ],
       "ref": "huggingface_hub==1.23.0"
     },
@@ -1963,7 +1968,7 @@
     },
     {
       "dependsOn": [
-        "PyJWT==2.13.0",
+        "PyJWT==2.15.1",
         "anyio==4.14.2",
         "httpx-sse==0.4.3",
         "httpx==0.28.1",
@@ -1978,7 +1983,7 @@
         "typing_extensions==4.16.0",
         "uvicorn==0.51.0"
       ],
-      "ref": "mcp==1.28.1"
+      "ref": "mcp==1.30.0"
     },
     {
       "ref": "mmh3==5.2.1"
@@ -2059,14 +2064,14 @@
         "certifi==2026.6.17",
         "charset-normalizer==3.4.9",
         "idna==3.18",
-        "urllib3==2.7.0"
+        "urllib3==2.8.0"
       ],
       "ref": "requests==2.34.2"
     },
     {
       "dependsOn": [
         "fastembed==0.8.0",
-        "mcp==1.28.1",
+        "mcp==1.30.0",
         "sqlite-vec==0.1.9"
       ],
       "ref": "root-component"
@@ -2120,7 +2125,7 @@
       "ref": "typing_extensions==4.16.0"
     },
     {
-      "ref": "urllib3==2.7.0"
+      "ref": "urllib3==2.8.0"
     },
     {
       "dependsOn": [
