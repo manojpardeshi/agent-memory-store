@@ -4,20 +4,18 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+## 0.2.0 — 2026-10-17
+
 ### Changed
 
 - `recall` scores candidates from one batched query and loads only the records it returns: about
   6 SQL statements per call instead of about 123 at limit 10 and 603 at limit 50, with median
   latency roughly halved at limit 10 and cut by about 65% at limit 50 on a 3,000-memory store.
   Results are identical, verified against the previous algorithm.
+
 - `list_memories` and JSON export fetch records two queries per batch of up to 500 instead of two
   per record. Output is unchanged, record for record, and the query count no longer grows with the
   number of records.
-
-- Reframed the post-0.1 roadmap around matched standard-benchmark evidence and measurable local
-  retrieval quality before new product tuning.
-- Paused retention-tombstone work until benchmark-driven quality releases or concrete user
-  retention evidence justify the schema and interchange cost.
 
 ### Added
 
@@ -27,13 +25,16 @@ All notable changes to this project are documented here.
   complete evidence in the top ten from 80 to 91 of 117. It lowers MRR on the paraphrase-heavy
   synthetic retrieval_v2 suite below its gate, so vector stays the default. Results gain a
   `fusion_score` in hybrid mode only; vector output is unchanged.
+
 - A trigger-maintained FTS5 keyword index (`memory_keywords`) is created for new stores and built
   for existing stores the first time they are opened writable. It is additive, so
   `SCHEMA_VERSION` is unchanged. FTS5 secure-delete makes forgetting physically remove a memory's
   terms. The index needs SQLite 3.44 or newer; on older SQLite it is skipped and hybrid recall is
   unavailable. A runtime on older SQLite cannot write to a store already carrying the index.
   `status()` reports `keyword_index` as `ok`, `corrupt`, `absent`, or `unverified` (read-only).
+
 - `evaluate-retrieval --retrieval {vector,hybrid}` runs the synthetic gates in either mode.
+
 - `evaluation/retrieval_v3.json`: a third synthetic retrieval gate, written by two independent
   authors and cross-reviewed, half anchor-word and half no-shared-word questions, with question
   styles in `retrieval_v3_styles.json`. Vector recall passes it (MRR 0.867); opt-in hybrid recall
@@ -49,54 +50,98 @@ All notable changes to this project are documented here.
   and expired memories are excluded by default using the same expiry rule as `recall`. Keys must be
   plain identifiers; the JSON path is always a bound parameter.
 
+### Compatibility
+
+- Opening a 0.1 store writable with 0.2 adds the keyword index (`memory_keywords` plus three
+  triggers) and backfills it once; no data is rewritten and `SCHEMA_VERSION` stays 1. A 0.1 runtime
+  can keep using the store if its SQLite is 3.44 or newer, because the triggers keep the index in
+  sync. Default recall output is unchanged.
+
+### Evaluation and evidence
+
+- Recorded Supermemory Local 0.0.8 against the store under free local models on a balanced thirty
+  LongMemEval-S questions: the store's top ten contained the gold answer text in 18 cases and
+  Supermemory's in 8 (all ten discordant questions favoured the store, p = 0.002), with under half
+  the context (`docs/architecture/benchmarks/2026-10-12-supermemory-local-strat30.md`).
+
+- Recorded the hosted Mem0 comparison on 180 development questions: store 134, Mem0 Hobby tier 93
+  (`docs/architecture/benchmarks/2026-09-30-mem0-hosted-dev180.md`).
+
+- Recorded negative results kept out of the product: within-session expansion v1.1/v1.2,
+  event-date annotation, and the gated-hybrid default candidate, each judged once under rules
+  frozen in advance.
+
 - Added a pinned MemoryBench provider/stdio bridge, LongMemEval-S dataset verifier, lifecycle and
   loopback-evaluator patches, and deterministic adapter tests.
+
 - Recorded a six-category LongMemEval-S diagnostic smoke: all labeled support sets were retrieved
   in the top 10, while the local 8B evaluator failed all six answers, gating the full baseline until
   a trustworthy frozen evaluator pilot passes.
+
 - Added a resumable, budget-bounded Claude CLI pilot runner and recorded exact `claude-opus-5`
   passing the six-category evaluator gate at 5/6 for $1.024665; the full 500-question run remains
   gated on a separate budget decision.
+
 - Added a frozen 60-question LongMemEval-S manifest, sample-aware MemoryBench search orchestration,
   explicit FastEmbed cache handling, and deterministic answer-session retrieval analysis.
+
 - Recorded the Opus 5 stratified diagnostic at 47/60 answers (78.3%) for $9.108015. Multi-session
   (3/10) and temporal (5/10) questions dominate the misses despite 95% labeled-session hit@10;
   the planned paid Opus complementary expansion was later superseded by the Kimi worker protocol.
+
 - Added deterministic LongMemEval development, sealed-validation, reserve, qualification, and
   complementary manifests; started the API-free 440-question retrieval pass.
+
 - Added secret-safe direct Kimi K3 probe and resumable evaluator runners with exact-model checks,
   strict structured judging, cost ceilings, repeated answers/votes, and empty-context controls.
+
 - Recorded Kimi K3 automated qualification at 15/20 retrieved versus 1/20 empty-context, 96.7%
   judge unanimity and answer-repeat agreement, for $1.459725.
+
 - Completed the pre-registered blind 30-item judge-concordance audit on Opus-generated answers:
   Kimi passed all five gates at 28/30 overall human agreement, 16/17 human-positive, 12/13
   human-negative, zero positive-count drift, and 28/30 unanimous, for $0.245987 additional spend.
   This qualifies Kimi judging only.
+
 - Completed the separate human audit of 20 actual first-pass Kimi answers at 17/20 (85%), passing
   the frozen 14/20 answerer gate. Provenance validation matched every candidate exactly to raw
   `kimi-k3` output; this reused existing answers and added no API cost.
+
 - Completed the local 500-question LongMemEval-S retrieval-only baseline at 97.0% Hit@10, 92.1%
   answer-session recall@10, and 0.910 MRR@10; multi-session and temporal coverage remain the
   dominant retrieval gaps.
+
 - Isolated benchmark JSON-lines output from third-party stdout and ASCII-escaped protocol strings
   after a U+2028 source character exposed Node readline record splitting; added regression coverage
   and resumed the intact checkpoint without changing retrieval behavior.
+
 - Added a default-off, provenance-based session-diverse context policy and resumable development
   replay. On the frozen 180-question development split it passed all pre-registered retrieval and
   operational gates: answer-session recall@10 improved from 92.80% to 95.74%, temporal recall from
   83.48% to 90.72%, and mean formatted context bytes fell 13.2%.
+
 - Recorded the candidate's frozen matched 60-question exact-`kimi-k3` answer-quality failure:
   released baseline 45/60 versus session-diverse 40/60 for $4.147215. Added resumable paired-run,
   analysis, and blinded audit tooling. The completed 13-question audit plus 3 reliability
   duplicates passed human reliability gates and authoritatively rescored baseline 47/60 versus
   candidate 41/60. The candidate is rejected; sealed validation and reserve remain unopened.
+
 - Added a reproducible discordance analyzer showing the hard session cap increased distinct sessions
   30→69 but reduced labeled answer-session messages 90→37 across the 11 disputed questions; seven
   of eight candidate losses pruned the direct answer-bearing message.
+
 - Added a deterministic, fictional 60-case session-density corpus assembled from two isolated author
   halves, cross-reviewed after one label correction, balanced across six categories and two evidence
   strata, and verified to have zero normalized 12-token overlap with LongMemEval. The proposed
   score-gated two-swap contract remains draft/blocked pending v1 human adjudication and freeze review.
+
+### Project
+
+- Reframed the post-0.1 roadmap around matched standard-benchmark evidence and measurable local
+  retrieval quality before new product tuning.
+
+- Paused retention-tombstone work until benchmark-driven quality releases or concrete user
+  retention evidence justify the schema and interchange cost.
 
 ## 0.1.0 - 2026-07-23
 

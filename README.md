@@ -99,6 +99,36 @@ Python uses the typed API rather than MCP strings: omit the argument or pass `"d
 
 The frozen two-corpus/two-model matrix reduced designated distractor leakage from 24%/18.3%/40%/16.7% unfiltered to 6%/10%/6%/5% with no Recall@5 or MRR change and zero scope violations. This closes the retrieval-default product gate only for those exact identities; it is not a general statistical claim. See `docs/architecture/benchmarks/2026-07-19-retrieval-quality-v2.md`.
 
+## Hybrid Recall (Opt-In)
+
+Vector recall finds memories by meaning. Hybrid recall also matches exact words, which helps when a
+query repeats a name, code, or number that appears in the memory:
+
+```python
+results = store.recall("What is the Quarryhill tournament schedule?", private_scope, retrieval="hybrid")
+```
+
+```bash
+uv run llm-memory recall --db ~/.llm-memory/memory.sqlite3 \
+  --subject me --environment personal --agent codex \
+  --query "Quarryhill tournament" --retrieval hybrid
+```
+
+MCP callers pass `retrieval: "hybrid"`. Hybrid results also carry a `fusion_score`, and results are
+ordered by it.
+
+Vector stays the default because hybrid has a measured trade-off. On held-out LongMemEval-S
+questions it put every answer-bearing message in the top ten for 91 of 117 questions versus 80 for
+vector. On the independently written `retrieval_v3` suite, however, it lowered MRR on questions that
+share no words with their answer from 0.80 to 0.53. Use it when queries quote the memory; keep the
+default for paraphrased questions.
+
+Hybrid recall uses an FTS5 keyword index that 0.2 creates automatically (built once when an older
+store is first opened writable). The index needs SQLite 3.44 or newer for its secure-delete mode,
+which makes `forget` physically remove a memory's words; on older SQLite, hybrid recall is
+unavailable and vector recall works as before. See
+`docs/architecture/benchmarks/2026-10-02-hybrid-recall-product.md`.
+
 ## Looking Up Memories by Metadata
 
 Applications that attach their own identifiers can fetch matching memories directly, for example
@@ -339,4 +369,4 @@ Licensed under the Apache License 2.0. See `LICENSE`. Contributions are accepted
 
 ## Project Status
 
-The canonical public source repository is `https://codeberg.org/manojpardeshi/agent-memory-store`. Version 0.1.0 is available from PyPI and as a verified Codeberg release. The repository was seeded from a reviewed clean tree with a Codeberg noreply identity; the private development history remains unpublished because its Git metadata contains a personal email address. The reproducible release gate and credential-minimizing publication sequence are documented in `docs/release/publishing.md`.
+The canonical public source repository is `https://codeberg.org/manojpardeshi/agent-memory-store`. Version 0.2.0 is available from PyPI and as a verified Codeberg release; see `CHANGELOG.md` for changes since 0.1.0. The repository was seeded from a reviewed clean tree with a Codeberg noreply identity; the private development history remains unpublished because its Git metadata contains a personal email address. The reproducible release gate and credential-minimizing publication sequence are documented in `docs/release/publishing.md`.
