@@ -21,3 +21,10 @@ id = "generic-api-key"
     '''"private_secret"\s*:\s*"PRIVATE-[0-9A-Fa-f]{6}"''',
     '''"consumer_key"\s*:\s*"consumer_[0-9]+_[a-z0-9_-]+"''',
   ]
+
+  [[rules.allowlists]]
+  description = "SHA-256 digests of benchmark answer-key files recorded in audit evidence"
+  condition = "AND"
+  paths = ['''(docs/architecture/benchmarks|evaluation/memorybench)/[^/]+\.json$''']
+  regexTarget = "line"
+  regexes = ['''"(key|audit_key_sha256)"\s*:\s*"[0-9a-f]{64}"''']
