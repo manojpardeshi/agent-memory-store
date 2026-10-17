@@ -1,0 +1,37 @@
+{
+  "batch_a": [
+    "10e09553",
+    "9ea5eabc",
+    "22d2cb42",
+    "3c1045c8",
+    "b5ef892d",
+    "58470ed2",
+    "4388e9dd",
+    "c4f10528",
+    "07b6f563",
+    "75f70248",
+    "c5e8278d",
+    "bc8a6e93",
+    "ec81a493",
+    "8077ef71",
+    "gpt4_468eb063"
+  ],
+  "batch_b": [
+    "0ddfec37_abs",
+    "6aeb4375",
+    "gpt4_7fce9456",
+    "60bf93ed_abs",
+    "4f54b7c9",
+    "16c90bf4",
+    "2bf43736",
+    "0edc2aef",
+    "1da05512",
+    "09d032c9",
+    "8a137a7f",
+    "58bf7951",
+    "08f4fc43",
+    "gpt4_21adecb5",
+    "gpt4_f49edff3"
+  ],
+  "rule": "within each category (sorted by name), questions in stratified-sixty order alternate between batches, starting batch A for even-indexed categories and batch B for odd-indexed ones"
+}

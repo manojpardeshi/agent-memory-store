@@ -1,0 +1,23 @@
+{
+  "experiment_id": "supermemory-local-comparison-v1-extension-kaggle",
+  "frozen_on": "2026-10-17",
+  "amends": "evaluation/memorybench/supermemory-local-comparison-v1.json",
+  "frozen_before": "any Supermemory Local run on these thirty questions; the only Kaggle run so far was a plumbing smoke test on 08e075c7, a question already completed on the M2, used for no scoring",
+  "questions": "evaluation/memorybench/longmemeval-stratified30b-v1.json (with the first thirty, completes the stratified sixty)",
+  "hardware": "Kaggle free GPU notebook, 2 x NVIDIA Tesla T4 (15 GB); one Ollama server and one Supermemory Local server per GPU, two questions in parallel",
+  "unchanged_pins": {
+    "memorybench_commit": "118209a746d97d0d85e5a7234267f0b6962857e9",
+    "model": "qwen2.5:7b digest 845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e, 16k context, temperature 0",
+    "ollama": "0.32.1",
+    "supermemory_server": "0.0.8 (linux-x64 sha256 87f32433...)",
+    "supermemory_cli": "supermemory@5.0.1",
+    "bun": "1.4.2",
+    "dataset_sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+    "telemetry": "disabled"
+  },
+  "execution": "each question runs alone on a freshly started Supermemory server; at most two attempts, the second from scratch on a fresh data directory; per-question timeout three hours",
+  "validity_rule": "a question counts only if its search phase completed; questions with more than 10% of sessions failed or zero search results are reported and excluded in the sensitivity check, exactly as for the first thirty",
+  "store_arm": "existing completed run llm-memory-store-longmemeval-stratified60-v1, restricted to these thirty questions",
+  "metric_and_views": "unchanged from supermemory-local-comparison-v1 (answer-content presence; Supermemory top 10 and full default)",
+  "reporting": "results for these thirty are reported separately, and combined with the first thirty as the stratified sixty, with the machine (M2 or Kaggle T4) recorded per question; the smoke run showed run-to-run variation in Supermemory's extraction (16 vs 25 results on 08e075c7), which is disclosed"
+}
