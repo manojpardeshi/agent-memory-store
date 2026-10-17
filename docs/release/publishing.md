@@ -27,6 +27,10 @@ uvx --from twine==6.2.0 twine upload \
   dist/llm_memory_store-0.2.0.tar.gz
 ```
 
+Since 0.2.0 the gate audits the demo dashboard's production dependencies only
+(`npm audit --omit=dev`), an owner decision recorded on 2026-10-17. Development-tool advisories
+that have no patched release are listed in that release's evidence instead of blocking it.
+
 The 0.1.0 inputs and first-release procedure follow unchanged for the record.
 
 ## Fixed release inputs
