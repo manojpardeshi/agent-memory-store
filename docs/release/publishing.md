@@ -8,6 +8,12 @@ Actions, or a repository secret.
 
 ## Releases after 0.1.0
 
+Since 2026-10-17 the canonical repository is `https://github.com/manojpardeshi/agent-memory-store`
+(decision AD-054). Release pages, with the wheel, source archive, `SHA256SUMS`, and SBOM attached,
+are created on GitHub with `gh release create vX.Y.Z --verify-tag`. The Codeberg-specific steps
+below are historical.
+
+
 The project exists on PyPI, so later releases skip the bootstrap token (steps 4–5 below). Run the
 same gate and tag steps with the release's own inputs, then upload with the project-scoped token
 entered only at Twine's hidden password prompt:
@@ -17,6 +23,7 @@ entered only at Twine's hidden password prompt:
 | Package and version | `llm-memory-store==0.2.0` |
 | Tag | `v0.2.0` |
 | Reproducible build timestamp | `1792195200` (`2026-10-17T00:00:00Z`) |
+| Build backend | `hatchling==1.31.0` (pinned; writes Metadata 2.4) |
 | SBOM | `docs/release/0.2.0-sbom.cdx.json` (cyclonedx-bom 7.3.0, `--pyproject pyproject.toml --mc-type library`, Python 3.13 environment of the locked production set plus a no-dependency wheel install) |
 | Release notes | `docs/release/0.2.0-release-notes.md` |
 

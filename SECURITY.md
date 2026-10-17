@@ -6,12 +6,12 @@ including memory content, credentials, database artifacts, or exploit details in
 ## Supported versions
 
 Before the first public release, security fixes are made on the private development branch. After
-release, only the latest `0.1.x` release is supported. Older pre-1.0 releases may receive a fix only
+release, only the latest `0.2.x` release is supported. Older pre-1.0 releases may receive a fix only
 when the maintainer determines that a safe backport is practical.
 
 ## Reporting a vulnerability
 
-Codeberg/Forgejo issues are public. Open an issue in the canonical repository titled
+GitHub issues are public. Open an issue in the canonical repository titled
 `Security contact request` with no vulnerability details. Include only a way for the maintainer to
 reach you privately. The maintainer will establish a private channel before requesting technical
 details. If a private channel cannot be established, do not disclose the vulnerability in the issue.

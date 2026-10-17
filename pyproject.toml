@@ -46,11 +46,11 @@ llm-memory = "llm_memory_store.cli:main"
 llm-memory-mcp = "llm_memory_store.mcp_server:main"
 
 [project.urls]
-Homepage = "https://codeberg.org/manojpardeshi/agent-memory-store"
-Repository = "https://codeberg.org/manojpardeshi/agent-memory-store"
-Issues = "https://codeberg.org/manojpardeshi/agent-memory-store/issues"
-Changelog = "https://codeberg.org/manojpardeshi/agent-memory-store/src/branch/main/CHANGELOG.md"
-Documentation = "https://codeberg.org/manojpardeshi/agent-memory-store/src/branch/main/README.md"
+Homepage = "https://github.com/manojpardeshi/agent-memory-store"
+Repository = "https://github.com/manojpardeshi/agent-memory-store"
+Issues = "https://github.com/manojpardeshi/agent-memory-store/issues"
+Changelog = "https://github.com/manojpardeshi/agent-memory-store/blob/main/CHANGELOG.md"
+Documentation = "https://github.com/manojpardeshi/agent-memory-store/blob/main/README.md"
 
 [tool.hatch.build]
 skip-excluded-dirs = true

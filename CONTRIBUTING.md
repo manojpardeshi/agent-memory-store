@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for considering a contribution to LLM Memory Store. Codeberg is the canonical source,
+Thank you for considering a contribution to LLM Memory Store. GitHub is the canonical source,
 issue tracker, and pull-request venue.
 
 ## Before opening a change

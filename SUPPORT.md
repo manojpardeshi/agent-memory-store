@@ -6,7 +6,7 @@ warranty, uptime promise, response-time commitment, managed service, or private 
 ## Getting help
 
 - Read `README.md` and the architecture contracts first.
-- Search existing Codeberg issues before opening a new one.
+- Search existing GitHub issues before opening a new one.
 - Use a public issue for reproducible bugs, documentation problems, and bounded feature proposals.
 - Follow `SECURITY.md` for suspected vulnerabilities.
 
