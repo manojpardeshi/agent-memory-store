@@ -129,6 +129,28 @@ which makes `forget` physically remove a memory's words; on older SQLite, hybrid
 unavailable and vector recall works as before. See
 `docs/architecture/benchmarks/2026-10-02-hybrid-recall-product.md`.
 
+## When Things Happened (`occurred_at`)
+
+A memory's `created_at` is when it was stored. When an application imports earlier
+conversations, pass the original time as `occurred_at`:
+
+```python
+store.remember_turn(
+    "We signed the lease today",
+    "user",
+    private_scope,
+    occurred_at="2025-03-15T09:30:00+02:00",
+)
+```
+
+The CLI takes `--occurred-at` and the MCP tools take `occurred_at`. It must be ISO 8601 with a
+timezone, and not in the future (a few minutes of clock skew are tolerated). It is stored in UTC.
+Recall recency uses it, so imported history ranks as old rather than new. Context headers show
+`occurred_at=` when it is set, giving the model the dates it needs for "how long ago" questions. A
+correction keeps the original time. Expiry still counts from storage time, so imported turns are
+not purged on arrival. JSON export carries the field. Importers from before 0.3 ignore it, and
+stores from before 0.3 gain the column the first time they are opened writable.
+
 ## Looking Up Memories by Metadata
 
 Applications that attach their own identifiers can fetch matching memories directly, for example

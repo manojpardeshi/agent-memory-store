@@ -40,14 +40,19 @@ def memory_remember_turn(
     agent_or_app: str = "default",
     operation_id: str | None = None,
     expires_at: str | None = None,
+    occurred_at: str | None = None,
 ) -> dict[str, Any]:
-    """Durably commit a raw turn to a private agent/application scope."""
+    """Durably commit a raw turn to a private agent/application scope.
+
+    occurred_at: when the message was sent (ISO 8601 with timezone), when importing history.
+    """
     record = get_store().remember_turn(
         content,
         role,  # type: ignore[arg-type]
         Scope.private(subject, environment, agent_or_app),
         operation_id=operation_id,
         expires_at=expires_at,
+        occurred_at=occurred_at,
     )
     return record.to_dict()
 
@@ -63,8 +68,12 @@ def memory_remember(
     source_memory_ids: list[str] | None = None,
     operation_id: str | None = None,
     expires_at: str | None = None,
+    occurred_at: str | None = None,
 ) -> dict[str, Any]:
-    """Commit a typed fact, preference, summary, or event."""
+    """Commit a typed fact, preference, summary, or event.
+
+    occurred_at: when it happened (ISO 8601 with timezone), if earlier than now.
+    """
     record = get_store().remember(
         kind,  # type: ignore[arg-type]
         content,
@@ -72,6 +81,7 @@ def memory_remember(
         source_memory_ids=source_memory_ids or (),
         operation_id=operation_id,
         expires_at=expires_at,
+        occurred_at=occurred_at,
     )
     return record.to_dict()
 

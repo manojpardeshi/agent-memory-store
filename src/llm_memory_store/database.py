@@ -186,6 +186,7 @@ def _initialize_schema(connection: sqlite3.Connection, identity: EmbeddingIdenti
             created_at TEXT NOT NULL,
             expires_at TEXT,
             supersedes_id INTEGER REFERENCES memories(id) ON DELETE SET NULL,
+            occurred_at TEXT,
             UNIQUE(lineage_id, version),
             CHECK (
                 (kind = 'turn' AND role IS NOT NULL)
@@ -243,6 +244,28 @@ def _initialize_schema(connection: sqlite3.Connection, identity: EmbeddingIdenti
             utc_now(),
         ),
     )
+
+
+def occurred_at_column_exists(connection: sqlite3.Connection) -> bool:
+    return any(
+        row["name"] == "occurred_at"
+        for row in connection.execute("PRAGMA table_info(memories)").fetchall()
+    )
+
+
+def ensure_occurred_at_column(connection: sqlite3.Connection) -> bool:
+    """Add the optional ``occurred_at`` column to a store created before it existed.
+
+    Additive and nullable, so ``SCHEMA_VERSION`` is unchanged and older runtimes, which name
+    their insert columns explicitly, keep working and simply leave it empty.
+    """
+
+    if occurred_at_column_exists(connection):
+        return True
+    with immediate_transaction(connection):
+        if not occurred_at_column_exists(connection):
+            connection.execute("ALTER TABLE memories ADD COLUMN occurred_at TEXT")
+    return True
 
 
 KEYWORD_INDEX_TABLE = "memory_keywords"

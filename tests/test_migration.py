@@ -47,6 +47,7 @@ def test_embedding_migration_preserves_logical_graph_and_rebuilds_vectors(tmp_pa
             "Summary derived from the original",
             scope,
             source_memory_ids=[original.memory_id],
+            occurred_at="2025-03-15T07:30:00+00:00",
         )
         corrected = source.correct(original.memory_id, "Corrected project fact")
         source_export = source.export_data(all_scopes=True)
@@ -86,6 +87,7 @@ def test_embedding_migration_preserves_logical_graph_and_rebuilds_vectors(tmp_pa
         assert migrated.status()["orphan_vectors"] == 0
         assert migrated.embedding_identity.dimension == 96
         assert migrated.get(derived.memory_id).source_memory_ids == (original.memory_id,)
+        assert migrated.get(derived.memory_id).occurred_at == "2025-03-15T07:30:00.000000+00:00"
         assert migrated.get(corrected.memory_id).supersedes_memory_id == original.memory_id
         replay = migrated.remember(
             "fact", "Ignored duplicate operation", scope, operation_id="migration-op-1"

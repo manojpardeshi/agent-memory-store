@@ -136,6 +136,7 @@ def build_parser() -> argparse.ArgumentParser:
     turn.add_argument("--content", required=True)
     turn.add_argument("--operation-id")
     turn.add_argument("--expires-at")
+    turn.add_argument("--occurred-at", help="When the message was sent, ISO 8601 with timezone")
 
     remember = subparsers.add_parser("remember", help="Commit a typed memory")
     _add_runtime_args(remember)
@@ -147,6 +148,7 @@ def build_parser() -> argparse.ArgumentParser:
     remember.add_argument("--source", action="append", default=[])
     remember.add_argument("--operation-id")
     remember.add_argument("--expires-at")
+    remember.add_argument("--occurred-at", help="When it happened, ISO 8601 with timezone")
 
     propose = subparsers.add_parser(
         "propose-extraction", help="Create a review-only typed-memory proposal artifact"
@@ -570,6 +572,7 @@ def main(argv: list[str] | None = None) -> None:
                     scope,
                     operation_id=args.operation_id,
                     expires_at=args.expires_at,
+                    occurred_at=args.occurred_at,
                 )
             )
         elif args.command == "remember":
@@ -581,6 +584,7 @@ def main(argv: list[str] | None = None) -> None:
                     source_memory_ids=args.source,
                     operation_id=args.operation_id,
                     expires_at=args.expires_at,
+                    occurred_at=args.occurred_at,
                 )
             )
         elif args.command == "propose-extraction":

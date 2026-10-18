@@ -22,9 +22,11 @@ from .database import (
     connect_database,
     consistent_backup,
     ensure_keyword_index,
+    ensure_occurred_at_column,
     immediate_transaction,
     initialize_or_validate,
     keyword_index_exists,
+    occurred_at_column_exists,
     secure_write_text,
     utc_now,
 )
@@ -44,6 +46,8 @@ from .models import (
 
 MAX_CONTENT_LENGTH = 100_000
 MAX_RECALL_SCOPES = 32
+# Tolerance for occurred_at timestamps from clocks slightly ahead of this one.
+OCCURRED_AT_CLOCK_SKEW = timedelta(minutes=5)
 RECALL_RETRIEVAL_MODES = ("vector", "hybrid")
 # Hybrid recall fuses the vector ranking with an FTS5 BM25 keyword ranking by reciprocal rank
 # fusion. These values are the configuration frozen and confirmed on held-out LongMemEval-S
@@ -254,7 +258,12 @@ class MemoryStore:
                     allow_initialize=not read_only,
                 )
             )
-            # Opening writable builds the keyword index for stores created before it existed.
+            # Opening writable upgrades stores created before these additive features existed.
+            self.has_occurred_at = (
+                occurred_at_column_exists(self.connection)
+                if read_only
+                else ensure_occurred_at_column(self.connection)
+            )
             self.keyword_index = (
                 keyword_index_exists(self.connection)
                 if read_only
@@ -299,6 +308,17 @@ class MemoryStore:
         value = datetime.fromisoformat(expires_at.replace("Z", "+00:00"))
         if value.tzinfo is None:
             raise ValueError("expires_at must include a timezone")
+        return value.astimezone(UTC).isoformat(timespec="microseconds")
+
+    @staticmethod
+    def _validate_occurred_at(occurred_at: str | None) -> str | None:
+        if occurred_at is None:
+            return None
+        value = datetime.fromisoformat(occurred_at.replace("Z", "+00:00"))
+        if value.tzinfo is None:
+            raise ValueError("occurred_at must include a timezone")
+        if value > datetime.now(UTC) + OCCURRED_AT_CLOCK_SKEW:
+            raise ValueError("occurred_at must not be in the future")
         return value.astimezone(UTC).isoformat(timespec="microseconds")
 
     @staticmethod
@@ -379,7 +399,10 @@ class MemoryStore:
         metadata: dict[str, Any] | None = None,
         expires_at: str | None = None,
         operation_id: str | None = None,
+        occurred_at: str | None = None,
     ) -> MemoryRecord:
+        # The default TTL counts from storage, not occurred_at, so importing old history does
+        # not expire it on arrival.
         if expires_at is None and self.default_turn_ttl_days is not None:
             expires_at = (datetime.now(UTC) + timedelta(days=self.default_turn_ttl_days)).isoformat(
                 timespec="microseconds"
@@ -392,6 +415,7 @@ class MemoryStore:
             metadata=metadata,
             expires_at=expires_at,
             operation_id=operation_id,
+            occurred_at=occurred_at,
         )
 
     def remember(
@@ -407,7 +431,10 @@ class MemoryStore:
         expires_at: str | None = None,
         operation_id: str | None = None,
         embed: bool = True,
+        occurred_at: str | None = None,
     ) -> MemoryRecord:
+        """Store a memory. ``occurred_at`` records when its source happened, for example when an
+        imported message was originally sent; recall recency uses it, expiry does not."""
         if kind not in ("turn", "fact", "preference", "summary", "event"):
             raise ValueError(f"unsupported memory kind: {kind}")
         if kind == "turn" and role not in ("user", "assistant", "system", "tool"):
@@ -419,6 +446,7 @@ class MemoryStore:
         content = self._validate_content(content)
         metadata_json = self._validate_metadata(metadata)
         expires_at = self._validate_expires_at(expires_at)
+        occurred_at = self._validate_occurred_at(occurred_at)
         if operation_id:
             existing = self._record_for_operation(operation_id, embed=embed)
             if existing is not None:
@@ -437,8 +465,8 @@ class MemoryStore:
                     INSERT INTO memories(
                         memory_id, lineage_id, version, scope_id, kind, role, content,
                         content_hash, status, generation, embedding_status,
-                        metadata_json, operation_id, created_at, expires_at
-                    ) VALUES(?, ?, 1, ?, ?, ?, ?, ?, 'active', ?, 'pending', ?, ?, ?, ?)
+                        metadata_json, operation_id, created_at, expires_at, occurred_at
+                    ) VALUES(?, ?, 1, ?, ?, ?, ?, ?, 'active', ?, 'pending', ?, ?, ?, ?, ?)
                     """,
                     (
                         memory_id,
@@ -453,6 +481,7 @@ class MemoryStore:
                         operation_id,
                         created_at,
                         expires_at,
+                        occurred_at,
                     ),
                 )
                 internal_id = int(cursor.lastrowid)
@@ -711,8 +740,9 @@ class MemoryStore:
                     INSERT INTO memories(
                         memory_id, lineage_id, version, scope_id, kind, role, content,
                         content_hash, status, generation, embedding_status,
-                        metadata_json, operation_id, created_at, expires_at, supersedes_id
-                    ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, 'pending', ?, ?, ?, ?, ?)
+                        metadata_json, operation_id, created_at, expires_at, supersedes_id,
+                        occurred_at
+                    ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, 'pending', ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         new_memory_id,
@@ -729,6 +759,8 @@ class MemoryStore:
                         created_at,
                         current["expires_at"],
                         int(current["id"]),
+                        # A correction changes what is remembered, not when it happened.
+                        current["occurred_at"],
                     ),
                 )
                 new_internal_id = int(cursor.lastrowid)
@@ -835,12 +867,14 @@ class MemoryStore:
         # plus a full two-query record load, even candidates cut by the limit.
         status_rows: dict[int, sqlite3.Row] = {}
         candidate_ids = list(candidates)
+        occurred = "occurred_at" if self.has_occurred_at else "NULL"
         for offset in range(0, len(candidate_ids), self._RECORD_BATCH_SIZE):
             batch = candidate_ids[offset : offset + self._RECORD_BATCH_SIZE]
             marks = ",".join("?" * len(batch))
             for row in self.connection.execute(
                 f"""
-                SELECT id, memory_id, status, embedding_status, created_at, expires_at
+                SELECT id, memory_id, status, embedding_status, created_at, expires_at,
+                       {occurred} AS occurred_at
                 FROM memories WHERE id IN ({marks})
                 """,
                 batch,
@@ -855,7 +889,7 @@ class MemoryStore:
                 expiry = datetime.fromisoformat(row["expires_at"])
                 if expiry <= now:
                     continue
-            created = datetime.fromisoformat(row["created_at"])
+            created = datetime.fromisoformat(row["occurred_at"] or row["created_at"])
             age_days = max(0.0, (now - created).total_seconds() / 86_400)
             semantic_score = max(0.0, min(1.0, 1.0 - distance))
             recency_score = math.pow(0.5, age_days / recency_half_life_days)
@@ -954,9 +988,10 @@ class MemoryStore:
         truncated = False
         for result in results:
             memory = result.memory
+            occurred = f" occurred_at={memory.occurred_at}" if memory.occurred_at else ""
             header = (
                 f"[memory id={memory.memory_id} kind={memory.kind} "
-                f"created_at={memory.created_at} trust=untrusted_memory]"
+                f"created_at={memory.created_at}{occurred} trust=untrusted_memory]"
             )
             block = f"{header}\n{memory.content}"
             separator = 2 if parts else 0
@@ -1518,6 +1553,8 @@ class MemoryStore:
             expires_at=row["expires_at"],
             supersedes_memory_id=row["supersedes_memory_id"],
             source_memory_ids=source_ids,
+            # sqlite3.Row membership tests values, not column names, so .keys() is required.
+            occurred_at=row["occurred_at"] if "occurred_at" in row.keys() else None,  # noqa: SIM118
         )
 
     def _record_by_internal_id(self, internal_id: int) -> MemoryRecord:

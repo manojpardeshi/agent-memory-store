@@ -4,6 +4,21 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+### Added
+
+- Optional `occurred_at` on `remember`, `remember_turn`, `llm-memory remember[-turn]
+  --occurred-at`, and the MCP remember tools: when a memory's source happened, for imported
+  history. Recall recency uses it, and context headers show it when set. Corrections keep it,
+  while expiry still counts from storage time. Memories without it behave exactly as before.
+
+### Compatibility
+
+- Opening a store writable adds a nullable `occurred_at` column once. `SCHEMA_VERSION` stays 1,
+  read-only stores without it keep working, and 0.1/0.2 runtimes keep writing to upgraded stores,
+  leaving the column empty (verified against both from PyPI). A correction made by a 0.1/0.2
+  runtime does not carry `occurred_at` forward. JSON export gains an optional `occurred_at` field that pre-0.3
+  importers ignore.
+
 ### Evaluation and evidence
 
 - Completed the Supermemory Local comparison on all sixty stratified LongMemEval-S questions, with

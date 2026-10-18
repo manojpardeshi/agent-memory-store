@@ -226,6 +226,8 @@ def _canonical_document(path: Path) -> tuple[dict[str, Any], str, tuple[str, ...
             "operation_id": operation_id,
             "created_at": _timestamp(item.get("created_at"), "created_at"),
             "expires_at": _timestamp(item.get("expires_at"), "expires_at", optional=True),
+            # Optional and additive: absent in exports from before 0.3, ignored by older importers.
+            "occurred_at": _timestamp(item.get("occurred_at"), "occurred_at", optional=True),
             "supersedes_memory_id": supersedes,
             "source_memory_ids": tuple(source_ids),
         }
@@ -461,8 +463,9 @@ def _populate_store(store: MemoryStore, document: dict[str, Any]) -> None:
                 INSERT INTO memories(
                     memory_id, lineage_id, version, scope_id, kind, role, content,
                     content_hash, status, generation, embedding_status, embedding_error,
-                    metadata_json, operation_id, created_at, expires_at, supersedes_id
-                ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    metadata_json, operation_id, created_at, expires_at, supersedes_id,
+                    occurred_at
+                ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     memory["memory_id"],
@@ -482,6 +485,7 @@ def _populate_store(store: MemoryStore, document: dict[str, Any]) -> None:
                     memory["created_at"],
                     memory["expires_at"],
                     supersedes_id,
+                    memory["occurred_at"],
                 ),
             )
             internal_ids[memory["memory_id"]] = int(cursor.lastrowid)

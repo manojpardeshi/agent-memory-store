@@ -88,6 +88,8 @@ pythonpath = ["."]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+# A frozen benchmark-runner template with placeholders filled in at build time; not importable.
+extend-exclude = ["evaluation/memorybench/kaggle/runner_template.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

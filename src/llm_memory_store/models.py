@@ -105,6 +105,9 @@ class MemoryRecord:
     expires_at: str | None
     supersedes_memory_id: str | None
     source_memory_ids: tuple[str, ...]
+    # When the memory's source happened (for example when a message was sent), if it differs
+    # from when it was stored; None means it happened when it was stored.
+    occurred_at: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         value = asdict(self)
