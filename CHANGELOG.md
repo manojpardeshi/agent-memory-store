@@ -9,7 +9,9 @@ All notable changes to this project are documented here.
 - Completed the Supermemory Local comparison on all sixty stratified LongMemEval-S questions, with
   the second thirty on free Kaggle T4 GPUs under a frozen protocol extension. The store's top ten
   contained the gold answer text in 35 of 60, against 15 for Supermemory Local's top ten and 22 for
-  its full default output. Supermemory led only on temporal reasoning (5 vs 2 of 10)
+  its full default output. A number-checked rescoring (`scripts/check_numeric_answer_presence.py`)
+  corrects an apparent Supermemory lead on temporal reasoning, which was a lexical-metric artifact:
+  store 35, Supermemory full 17, temporal 2 vs 3
   (`docs/architecture/benchmarks/2026-10-18-supermemory-local-strat60.md`).
 
 ## 0.2.0 — 2026-10-17

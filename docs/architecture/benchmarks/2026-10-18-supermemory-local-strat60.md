@@ -1,7 +1,7 @@
 # Supermemory Local vs the Store — Stratified Sixty, Free Local Models
 
 Date: 2026-10-18
-Status: **completed under protocols frozen before each run.** The first thirty used
+Status: **completed under protocols frozen before each run; temporal claim corrected the same day (see Correction).** The first thirty used
 `supermemory-local-comparison-v1.json` (commit 2c83423). The second thirty used its Kaggle extension
 `supermemory-local-comparison-v1-extension-kaggle.json` (commit 3d1b7ec). Free throughout: no hosted
 model and no paid API.
@@ -78,9 +78,36 @@ The second thirty, run on different hardware, reproduce the first:
   machines.
 - **Full default:** at about four times the store's context, Supermemory still trails, 22 vs 35
   (p = 0.007). The gap is not significant once damaged questions are removed.
-- **Temporal reasoning is the exception.** There Supermemory's full output finds the answer in 5
-  of 10 against the store's 2. Its extracted memories carry document and event dates, which
-  answers to "when" questions need. This matches the store's known weakness and points to the next
-  product work: date-aware recall.
+- **Temporal reasoning is not an exception (corrected; see below).** The table's 5-of-10 for
+  Supermemory's full output is mostly a metric artifact. Under a check that also requires the
+  answer's numbers, temporal is store 2, Supermemory full 3 (one of those three only contains a
+  stray "7", not "7 days"). Both systems are weak on temporal questions, and the metric cannot
+  tell them apart.
 - **What this measures.** Supermemory was run under a free local 7B model. This says nothing about
   its hosted service or about answer quality.
+
+## Correction — numeric answers (2026-10-18)
+
+The first version of this document said Supermemory led on temporal reasoning, 5 vs 2. That was a
+metric artifact. Many LongMemEval answers are computed values written as, for example, "26 days.
+27 days (including the last day) is also acceptable". The frozen rule accepts a long answer when
+80% of its words appear in the retrieved text, so a long context can match the filler words
+("including", "last", "also", "the") without containing the number. Supermemory's three temporal
+"hits" over the store matched 6 or 7 filler words each. None contains "26 days", "9 days", or
+"7 days".
+
+`scripts/check_numeric_answer_presence.py` keeps the frozen rule and additionally requires every
+number in the answer's first sentence (output:
+`demo-artifacts/supermemory-local-strat60-numeric-check.json`):
+
+| Arm | Frozen metric | Number-checked | Temporal (number-checked) |
+| --- | ---: | ---: | ---: |
+| Store, top 10 | 35 | **35** | 2 |
+| Supermemory Local, top 10 | 15 | 13 | 1 |
+| Supermemory Local, full default | 22 | 17 | 3 |
+
+The flaw only inflates arms with long contexts; the store lost no hits. Number-checked paired
+results: store vs Supermemory top 10 is 22–0 (p = 4.8 × 10⁻⁷), and store vs full default is 20–2
+(p = 0.0001). The frozen numbers above stay as the pre-registered result; this check is the more
+faithful reading. The finding for product work is that both systems are weak on temporal questions.
+Supermemory's dated memories did not give it a measurable advantage.

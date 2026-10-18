@@ -91,9 +91,10 @@ All sixty stratified questions are complete, with the second thirty run on free 
 under a frozen extension of the protocol. The store's top ten contained the gold answer text in
 35 of 60, against 15 for Supermemory Local's top ten (discordant 20–0, p = 1.9 × 10⁻⁶) and 22 for
 its full default output (17–4, p = 0.007), using about half to a quarter of the context. Both
-halves replicate on different hardware. The exception is temporal reasoning, where Supermemory's
-dated memories found 5 of 10 against the store's 2. That makes date-aware recall the next product
-priority (`benchmarks/2026-10-18-supermemory-local-strat60.md`).
+halves replicate on different hardware. A same-day correction found the lexical metric credits long
+contexts with computed answers they do not contain. Requiring the answer's numbers gives store 35,
+Supermemory full 17 (20–2, p = 0.0001), and removes an apparent Supermemory lead on temporal
+reasoning: it is 2 vs 3, with both weak (`benchmarks/2026-10-18-supermemory-local-strat60.md`).
 
 ### Supermemory Local comparison, 2026-10-12
 
