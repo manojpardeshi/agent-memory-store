@@ -85,6 +85,16 @@ design-blind 120. It failed both: v3 MRR 0.782 against vector's 0.867, and held-
 0.98) and cuts paraphrase questions (0.80 → 0.53–0.58). The default stays vector and opt-in hybrid
 is unchanged (`benchmarks/2026-10-09-gated-hybrid-v1-decision.md`).
 
+### Supermemory Local comparison, stratified sixty, 2026-10-18
+
+All sixty stratified questions are complete, with the second thirty run on free Kaggle T4 GPUs
+under a frozen extension of the protocol. The store's top ten contained the gold answer text in
+35 of 60, against 15 for Supermemory Local's top ten (discordant 20–0, p = 1.9 × 10⁻⁶) and 22 for
+its full default output (17–4, p = 0.007), using about half to a quarter of the context. Both
+halves replicate on different hardware. The exception is temporal reasoning, where Supermemory's
+dated memories found 5 of 10 against the store's 2. That makes date-aware recall the next product
+priority (`benchmarks/2026-10-18-supermemory-local-strat60.md`).
+
 ### Supermemory Local comparison, 2026-10-12
 
 Under free local models only (Supermemory Local 0.0.8 with Ollama `qwen2.5:7b`), on the stratified
