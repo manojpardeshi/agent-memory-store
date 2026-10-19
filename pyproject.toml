@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "llm-memory-store"
-version = "0.2.0"
+version = "0.3.0"
 description = "A personal, local-first memory store for LLM applications and agents"
 readme = "README.md"
 authors = [

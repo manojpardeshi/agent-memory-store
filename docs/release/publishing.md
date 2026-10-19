@@ -18,20 +18,21 @@ The project exists on PyPI, so later releases skip the bootstrap token (steps 4â
 same gate and tag steps with the release's own inputs, then upload with the project-scoped token
 entered only at Twine's hidden password prompt:
 
-| Input | 0.2.0 |
-| --- | --- |
-| Package and version | `llm-memory-store==0.2.0` |
-| Tag | `v0.2.0` |
-| Reproducible build timestamp | `1792195200` (`2026-10-17T00:00:00Z`) |
-| Build backend | `hatchling==1.31.0` (pinned; writes Metadata 2.4) |
-| SBOM | `docs/release/0.2.0-sbom.cdx.json` (cyclonedx-bom 7.3.0, `--pyproject pyproject.toml --mc-type library`, Python 3.13 environment of the locked production set plus a no-dependency wheel install) |
-| Release notes | `docs/release/0.2.0-release-notes.md` |
+| Input | 0.2.0 | 0.3.0 |
+| --- | --- | --- |
+| Package and version | `llm-memory-store==0.2.0` | `llm-memory-store==0.3.0` |
+| Tag | `v0.2.0` | `v0.3.0` |
+| Reproducible build timestamp | `1792195200` (`2026-10-17T00:00:00Z`) | `1792368000` (`2026-10-19T00:00:00Z`) |
+| Build backend | `hatchling==1.31.0` (pinned; writes Metadata 2.4) | same |
+| SBOM | `docs/release/0.2.0-sbom.cdx.json` | `docs/release/0.3.0-sbom.cdx.json` |
+| SBOM method | cyclonedx-bom 7.3.0, `--pyproject pyproject.toml --mc-type library`, Python 3.13 environment of the locked production set plus a no-dependency wheel install | same |
+| Release notes | `docs/release/0.2.0-release-notes.md` | `docs/release/0.3.0-release-notes.md` |
 
 ```bash
 uvx --from twine==6.2.0 twine upload \
   --username __token__ \
-  dist/llm_memory_store-0.2.0-py3-none-any.whl \
-  dist/llm_memory_store-0.2.0.tar.gz
+  dist/llm_memory_store-X.Y.Z-py3-none-any.whl \
+  dist/llm_memory_store-X.Y.Z.tar.gz
 ```
 
 Since 0.2.0 the gate audits the demo dashboard's production dependencies only
