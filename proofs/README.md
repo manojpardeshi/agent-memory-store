@@ -26,6 +26,26 @@ Rocq 9.3 standard library (`Stdlib`).
 Some hypotheses are written as `Context` inside a `Section`. They are not axioms. When the section closes, they become
 ordinary arguments, so each theorem holds for every instantiation. `Print Assumptions` and `coqchk` confirm this.
 
+## Findings fixed in code (2026-10-23)
+
+Writing the proofs exposed two places where the Python did not have a property it was meant to
+have. Both are now fixed, so the code matches the models more closely than when the proofs were
+written:
+
+- **Exact fusion scores.** `recall` now computes RRF scores with `fractions.Fraction` through
+  `reciprocal_rank_fusion` instead of summing floats. Equal scores therefore compare equal, and ties
+  fall to `memory_id` exactly as `fuse` models. The float discrepancy described under RankFusion.v
+  no longer applies to the code.
+  - Test: `tests/test_hybrid_recall.py::test_fusion_scores_are_exact_so_equal_scores_tie`.
+- **Serialized held-out looks.** `record_look` now holds an exclusive `fcntl.flock` on the ledger
+  file across read, check and write. Concurrent looks are serialized, so the sequential model's
+  theorems (`budget_respected`, `scores_within_budget`, `ledger_is_audit_log`) describe real runs
+  on one machine. `concurrent_budget_violation` now documents why the lock is required.
+  - Test: `tests/test_locomo_heldout.py::test_look_holds_an_exclusive_lock_on_the_ledger`.
+
+`_validate_occurred_at` also converts the rare `OverflowError` from `astimezone` near the edges of
+the date range into `ValueError`, so every rejection the model describes surfaces the same way.
+
 ## What is not proved, for all four files
 
 - That the Python code conforms to the model. The models were written by reading the code and are argued to match in

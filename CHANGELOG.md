@@ -4,6 +4,23 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+### Fixed
+
+- Hybrid recall computes reciprocal-rank-fusion scores exactly (`fractions.Fraction`). Rare
+  exactly-equal scores now break ties by memory id instead of by float rounding. Found while
+  proving fusion in Rocq.
+- The held-out look ledger is locked across read, check and write, so concurrent looks cannot both
+  pass the budget. Found while proving the ledger protocol.
+- `occurred_at` near the edges of the representable date range is rejected with `ValueError`
+  instead of an `OverflowError`.
+
+### Added
+
+- Machine-checked Rocq proofs (`proofs/`, checked by `scripts/check_proofs.sh`) of the keyword
+  query's injection safety, fusion's scope isolation and ordering, the held-out ledger's budget,
+  and `occurred_at` validation. Hypothesis property tests (`tests/test_formal_properties.py`) check
+  the real code against the same properties.
+
 ## 0.3.0 — 2026-10-19
 
 ### Added

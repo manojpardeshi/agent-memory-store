@@ -11,6 +11,7 @@ import uuid
 from collections import Counter, defaultdict, deque
 from collections.abc import Mapping, Sequence
 from datetime import UTC, datetime, timedelta
+from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
@@ -183,6 +184,22 @@ KEYWORD_STOPWORDS = frozenset(
 _KEYWORD_TOKEN = re.compile(r"[^\W_]+")
 
 
+def reciprocal_rank_fusion(
+    rankings: Sequence[Sequence[int]], k: int = HYBRID_RRF_K
+) -> dict[int, Fraction]:
+    """Exact reciprocal-rank-fusion scores: sum of 1/(k + rank) over the rankings holding an id.
+
+    Exact fractions, not floats, so equal scores compare equal and ties fall to the caller's
+    tie-break (the memory id), as in the Rocq model proofs/RankFusion.v.
+    """
+
+    scores: dict[int, Fraction] = {}
+    for ranking in rankings:
+        for rank, item in enumerate(ranking, start=1):
+            scores[item] = scores.get(item, Fraction(0)) + Fraction(1, k + rank)
+    return scores
+
+
 def keyword_query(text: str) -> str | None:
     """Build an FTS5 OR query of distinct non-stopword terms, or None when none remain.
 
@@ -319,7 +336,10 @@ class MemoryStore:
             raise ValueError("occurred_at must include a timezone")
         if value > datetime.now(UTC) + OCCURRED_AT_CLOCK_SKEW:
             raise ValueError("occurred_at must not be in the future")
-        return value.astimezone(UTC).isoformat(timespec="microseconds")
+        try:
+            return value.astimezone(UTC).isoformat(timespec="microseconds")
+        except OverflowError as exc:  # an offset pushing the instant outside datetime's range
+            raise ValueError("occurred_at is out of range") from exc
 
     @staticmethod
     def _normalize_cutoff(as_of: str | None) -> str:
@@ -899,20 +919,18 @@ class MemoryStore:
             )
         # Same order as before: descending score, ties broken by public memory id.
         scored.sort(key=lambda item: (-item[0], item[1]))
-        fusion_scores: dict[int, float] = {}
+        fusion_scores: dict[int, Fraction] = {}
         if hybrid:
             vector_ranked = [item for item in scored if item[2] in vector_candidate_ids][:depth]
             # The relevance filter keeps its vector-mode anchor: the top vector-ranked result.
             anchor = vector_ranked[0][3] if vector_ranked else None
             by_internal_id = {item[2]: item for item in scored}
-            for ranking in (
-                [item[2] for item in vector_ranked],
-                [i for i in keyword_ranked if i in by_internal_id],
-            ):
-                for rank, internal_id in enumerate(ranking, start=1):
-                    fusion_scores[internal_id] = fusion_scores.get(internal_id, 0.0) + 1.0 / (
-                        HYBRID_RRF_K + rank
-                    )
+            fusion_scores = reciprocal_rank_fusion(
+                [
+                    [item[2] for item in vector_ranked],
+                    [i for i in keyword_ranked if i in by_internal_id],
+                ]
+            )
             scored = sorted(
                 (by_internal_id[internal_id] for internal_id in fusion_scores),
                 key=lambda item: (-fusion_scores[item[2]], item[1]),
@@ -931,7 +949,7 @@ class MemoryStore:
                 semantic_score=semantic_score,
                 recency_score=recency_score,
                 distance=distance,
-                fusion_score=fusion_scores.get(internal_id) if hybrid else None,
+                fusion_score=float(fusion_scores[internal_id]) if hybrid else None,
             )
             for record, (score, _, internal_id, semantic_score, recency_score, distance) in zip(
                 records, chosen, strict=True

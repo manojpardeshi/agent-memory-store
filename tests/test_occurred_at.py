@@ -155,3 +155,8 @@ def test_store_from_before_the_column_is_upgraded_when_opened_writable(tmp_path:
         new = upgraded.remember("fact", "Remembered after", SCOPE, occurred_at=LAST_YEAR)
         assert upgraded.get(new.memory_id).occurred_at == LAST_YEAR_UTC
         assert upgraded.status()["integrity_check"] == "ok"
+
+
+def test_out_of_range_instant_is_a_value_error(store: MemoryStore) -> None:
+    with pytest.raises(ValueError, match="out of range"):
+        store.remember("fact", "Year one", SCOPE, occurred_at="0001-01-01T00:30:00+14:00")

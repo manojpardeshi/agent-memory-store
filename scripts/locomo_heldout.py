@@ -12,6 +12,7 @@ set's look budget, and writes only aggregate and per-category results, never per
 from __future__ import annotations
 
 import argparse
+import fcntl
 import hashlib
 import json
 import re
@@ -183,7 +184,17 @@ def record_look(candidate: str, freeze_commit: str, dataset_sha: str) -> dict[st
     subprocess.run(
         ["git", "merge-base", "--is-ancestor", freeze_commit, "HEAD"], cwd=ROOT, check=True
     )
-    ledger = json.loads(LEDGER.read_text())
+    # Hold an exclusive lock across read, check and write, so concurrent looks are serialized and
+    # cannot both pass the budget check (the race found while proving proofs/HeldOutLedger.v).
+    with LEDGER.open("r+", encoding="utf-8") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        return _record_look_locked(handle, candidate, freeze_commit, dataset_sha)
+
+
+def _record_look_locked(
+    handle: Any, candidate: str, freeze_commit: str, dataset_sha: str
+) -> dict[str, Any]:
+    ledger = json.loads(handle.read())
     entry = ledger["held_out_sets"][SET_NAME]
     if entry["status"] != "active":
         raise SystemExit(f"{SET_NAME} is {entry['status']}")
@@ -201,7 +212,10 @@ def record_look(candidate: str, freeze_commit: str, dataset_sha: str) -> dict[st
     entry["looks"].append(look)
     if len(entry["looks"]) >= entry["max_looks"]:
         entry["status"] = "retired to tuning after its last look"
-    LEDGER.write_text(json.dumps(ledger, indent=2) + "\n")
+    handle.seek(0)
+    handle.truncate()
+    handle.write(json.dumps(ledger, indent=2) + "\n")
+    handle.flush()
     return look
 
 

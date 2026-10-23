@@ -258,3 +258,17 @@ def test_keyword_query_drops_stopwords_and_quotes_every_term() -> None:
 def test_retrieval_mode_is_validated(store: MemoryStore) -> None:
     with pytest.raises(ValueError, match="retrieval"):
         store.recall("anything", SCOPE, retrieval="keyword")
+
+
+def test_fusion_scores_are_exact_so_equal_scores_tie() -> None:
+    """Rank 5 alone and ranks 18 + 330 both score exactly 1/65; floats would split them."""
+    from fractions import Fraction
+
+    from llm_memory_store.store import reciprocal_rank_fusion
+
+    first = list(range(100, 117)) + [2]  # id 2 at vector rank 18
+    second = list(range(1000, 1329)) + [2]  # id 2 at keyword rank 330
+    scores = reciprocal_rank_fusion([[90, 91, 92, 93, 1], [], first, second])
+    assert scores[1] == Fraction(1, 65)
+    assert scores[2] == Fraction(1, 78) + Fraction(1, 390) == Fraction(1, 65)
+    assert 1.0 / 78 + 1.0 / 390 != 1.0 / 65  # the float artifact the exact scores remove

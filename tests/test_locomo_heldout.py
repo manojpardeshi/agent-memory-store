@@ -179,3 +179,17 @@ def test_look_is_refused_on_a_dirty_worktree(
     monkeypatch.setattr(heldout, "_git", lambda *args: " M some_file.py\n")
     with pytest.raises(SystemExit, match="clean worktree"):
         heldout.record_look("hybrid", "f00d", "abc")
+
+
+def test_look_holds_an_exclusive_lock_on_the_ledger(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, clean_git: None
+) -> None:
+    import fcntl
+
+    import scripts.locomo_heldout as heldout
+
+    monkeypatch.setattr(heldout, "LEDGER", _ledger(tmp_path, looks=0))
+    calls: list[int] = []
+    monkeypatch.setattr(heldout.fcntl, "flock", lambda handle, op: calls.append(op))
+    heldout.record_look("hybrid", "f00d", "abc")
+    assert calls == [fcntl.LOCK_EX]
