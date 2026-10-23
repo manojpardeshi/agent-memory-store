@@ -55,6 +55,16 @@ Reopening requires evidence that message selection rather than synthesis dominat
 temporal failure. The unfrozen `session-density` corpus and its completed cross-review are retained
 as a reusable screening instrument should that evidence appear.
 
+**Reopening condition met at turn level, 2026-10-23.** On the development 180, vector recall leaves
+84 evidence turns out of the top ten; 61 rank 11–30 and 12 more sit in a session already in the top
+ten (`benchmarks/2026-10-23-evidence-miss-diagnosis.md`). Multi-session has complete evidence for
+18 of 43 questions and temporal for 26 of 43. Selection within the top thirty, not search, drops the
+evidence. The closure's other premise, that session-level recall was already high, still holds;
+the gap is in turns. Work reopens only as ranking changes judged on evidence-level recall under
+`held-out-renewal-plan.md`. The first is cross-encoder re-ranking of the top-K. No bundling-policy
+variant from the closed list is revived, and because answer quality is not measured, no answer
+gain is claimed.
+
 ## No paid evaluation — owner decision, 2026-10-02
 
 The owner stopped all spending on kimi-k3, hosted Mem0, Supermemory, and similar paid services.
