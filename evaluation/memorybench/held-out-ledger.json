@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "purpose": "Every look at a held-out set, recorded before results are read. See docs/architecture/held-out-renewal-plan.md.",
+  "held_out_sets": {
+    "locomo10": {
+      "status": "active",
+      "max_looks": 3,
+      "access": "aggregate and per-category only",
+      "license": "CC BY-NC 4.0, snap-research/locomo; downloaded at run time, never committed",
+      "dataset_sha256": null,
+      "looks": []
+    },
+    "longmemeval-design-blind120": {
+      "status": "retired to tuning on 2026-10-23 after two looks",
+      "looks": [
+        {
+          "candidate": "hybrid-rrf-v1",
+          "frozen_in": "56419da",
+          "result": "confirmed: complete evidence 80 -> 91 of 117"
+        },
+        {
+          "candidate": "gated-hybrid-v1",
+          "frozen_in": "7061f16",
+          "result": "failed: complete evidence 78 vs vector 80"
+        }
+      ]
+    },
+    "longmemeval-sealed-validation150": {
+      "status": "sealed",
+      "looks": []
+    },
+    "longmemeval-reserve170": {
+      "status": "sealed (owner decision 2026-10-23, option A)",
+      "looks": []
+    }
+  },
+  "tuning_pool": "evaluation/memorybench/longmemeval-kimi-development-v1.json (all 180)"
+}

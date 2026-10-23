@@ -1,7 +1,13 @@
 # Held-Out Renewal Plan
 
 Date: 2026-10-19
-Status: **proposed; needs three owner decisions (below) before any held-out data is touched.**
+Status: **accepted by the owner on 2026-10-23:**
+
+- the development 180 become the tuning pool;
+- LoCoMo-10 becomes the primary held-out under a three-look ledger;
+- the LongMemEval reserve stays sealed (option A);
+- LoCoMo may be used under its CC BY-NC 4.0 terms, with the data never committed and the authors
+  credited.
 
 ## Why
 
