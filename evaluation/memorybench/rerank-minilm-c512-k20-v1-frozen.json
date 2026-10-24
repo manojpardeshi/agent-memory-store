@@ -1,0 +1,23 @@
+{
+  "experiment_id": "rerank-minilm-c512-k20-v1",
+  "candidate": "rerank-minilm-c512-k20",
+  "frozen_on": "2026-10-24",
+  "frozen_before": "any LoCoMo-10 scoring; LoCoMo stores were built but never queried or scored",
+  "definition": "Vector recall's top 50 (relevance filter off), its first 20, re-scored by FastEmbed TextCrossEncoder 'Xenova/ms-marco-MiniLM-L-6-v2' (Apache-2.0, 92 MB) on each memory's first 512 characters, reordered by descending score with ties keeping vector order, top 10. Implemented by make_rerank_arm in scripts/locomo_heldout.py, reproducing scripts/prototype_rerank.py.",
+  "product_scope": "opt-in recall setting only; the default recall path is unchanged",
+  "tuned_on": [
+    "LongMemEval-S development 180 (174 with evidence): complete evidence 121 -> 138 (multi-session 18 -> 28, temporal 26 -> 29, single-session-assistant 22 -> 20)",
+    "synthetic retrieval_v1, retrieval_v2, retrieval_v3: all pass; v3 distractor leak exactly at the 0.10 gate. v3 was used as a gate in selection and is not independent evidence"
+  ],
+  "selection": "best variant passing every synthetic gate among 5 models x 3 depths (full text) and MiniLM-L6 x 4 truncations x 3 depths; all depth-30/50 variants failed retrieval_v3 on distractor leak",
+  "held_out": "LoCoMo-10, categories 1-4 with parseable evidence, one paired look (vector baseline and candidate in the same pass), aggregate only",
+  "pass_rule": {
+    "min_gain_fraction": 0.02,
+    "max_category_loss_fraction": 0.01,
+    "max_added_median_ms": 500,
+    "max_added_p95_ms": 750
+  },
+  "pass_rule_meaning": "candidate complete evidence >= baseline + ceil(2% of scored questions); in every category 1-4 the candidate loses at most floor(1% of that category's questions) versus baseline; per-query latency (recall plus re-rank, measured in the same look) adds at most 500 ms median and 750 ms p95 over vector recall. Latency limits are an owner decision of 2026-10-24 for an opt-in setting; the plan's +3 ms limit still governs any default-path change. Applied mechanically by verdict() and recorded in the ledger.",
+  "if_passed": "add the re-ranker to the product as an opt-in recall setting, re-run all synthetic gates and the test suite through the product code path, prove its reordering properties in Rocq, and document the latency cost",
+  "if_failed": "record the result; the re-ranker does not ship; LoCoMo keeps its remaining looks"
+}

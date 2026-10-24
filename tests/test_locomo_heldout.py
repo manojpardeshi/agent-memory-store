@@ -193,3 +193,91 @@ def test_look_holds_an_exclusive_lock_on_the_ledger(
     monkeypatch.setattr(heldout.fcntl, "flock", lambda handle, op: calls.append(op))
     heldout.record_look("hybrid", "f00d", "abc")
     assert calls == [fcntl.LOCK_EX]
+
+
+def test_rerank_arm_reorders_only_the_vector_pool_with_stable_ties(tmp_path: Path) -> None:
+    from scripts.locomo_heldout import DEPTH, RERANK_CHARS, make_rerank_arm
+
+    embedder = DeterministicEmbedder(64)
+    build(FIXTURE, tmp_path, embedder)
+    seen: list[list[str]] = []
+
+    def fake_scores(query: str, docs: list[str]) -> list[float]:
+        seen.append(docs)
+        return [1.0 if "beach" in doc else 0.0 for doc in docs]  # ties for all but one
+
+    arm = make_rerank_arm(fake_scores)
+    with MemoryStore(store_path(tmp_path, "conv-a"), embedder, read_only=True) as store:
+        vector = store.recall("Comet", scope_for("conv-a"), limit=50, relevance_filter=None)
+        reranked = arm(store, scope_for("conv-a"), "Comet")
+    pool_ids = [r.memory.memory_id for r in vector[:20]]
+    out_ids = [r.memory.memory_id for r in reranked]
+    assert set(out_ids) <= set(pool_ids) and len(out_ids) == min(DEPTH, len(pool_ids))
+    assert "beach" in reranked[0].memory.content
+    rest = [i for i in pool_ids if i != reranked[0].memory.memory_id]
+    assert out_ids[1:] == rest[: len(out_ids) - 1]  # ties keep vector order
+    assert all(len(doc) <= RERANK_CHARS for doc in seen[0])
+
+
+def _report(base: int, cand: int, cats: dict[str, tuple[int, int, int]], lat: tuple) -> dict:
+    return {
+        "arms": {
+            "vector": {
+                "scored_questions": sum(n for n, _, _ in cats.values()),
+                "complete_evidence": base,
+                "median_latency_ms": lat[0],
+                "p95_latency_ms": lat[1],
+                "categories": {
+                    c: {"n": n, "complete_evidence": b} for c, (n, b, _) in cats.items()
+                },
+            },
+            "cand": {
+                "complete_evidence": cand,
+                "median_latency_ms": lat[2],
+                "p95_latency_ms": lat[3],
+                "categories": {c: {"complete_evidence": x} for c, (_, _, x) in cats.items()},
+            },
+        }
+    }
+
+
+RULE = {
+    "min_gain_fraction": 0.02,
+    "max_category_loss_fraction": 0.01,
+    "max_added_median_ms": 500,
+    "max_added_p95_ms": 750,
+}
+
+
+def test_verdict_applies_the_frozen_rule_mechanically() -> None:
+    from scripts.locomo_heldout import verdict
+
+    cats = {"1": (200, 100, 110), "2": (300, 150, 150)}  # 500 scored -> need +10
+    ok = verdict(_report(250, 260, cats, (10, 20, 300, 600)), RULE, "cand")
+    assert ok["passed"] and ok["required_complete_evidence"] == 260
+    short = verdict(_report(250, 259, cats, (10, 20, 300, 600)), RULE, "cand")
+    assert not short["checks"]["complete_evidence_gain"]
+    lossy = {"1": (200, 100, 120), "2": (300, 150, 146)}  # loses 4 > floor(3)
+    assert not verdict(_report(250, 266, lossy, (10, 20, 300, 600)), RULE, "cand")["passed"]
+    slow = verdict(_report(250, 270, cats, (10, 20, 511, 600)), RULE, "cand")
+    assert not slow["checks"]["median_latency"] and slow["checks"]["p95_latency"]
+
+
+def test_result_is_recorded_on_its_own_look(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import json
+
+    import scripts.locomo_heldout as heldout
+
+    path = _ledger(tmp_path, looks=0)
+    data = json.loads(path.read_text())
+    data["held_out_sets"]["locomo10"]["looks"] = [
+        {"candidate": "a", "started": "t1", "result": None},
+        {"candidate": "b", "started": "t2", "result": None},
+    ]
+    path.write_text(json.dumps(data))
+    monkeypatch.setattr(heldout, "LEDGER", path)
+    heldout.record_result({"candidate": "b", "started": "t2"}, {"passed": True})
+    looks = json.loads(path.read_text())["held_out_sets"]["locomo10"]["looks"]
+    assert looks[0]["result"] is None and looks[1]["result"] == {"passed": True}

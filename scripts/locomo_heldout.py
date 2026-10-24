@@ -15,6 +15,7 @@ import argparse
 import fcntl
 import hashlib
 import json
+import math
 import re
 import subprocess
 import time
@@ -111,6 +112,37 @@ ARMS: dict[str, Arm] = {
     ),
 }
 
+# The frozen re-ranking candidate (evaluation/memorybench/rerank-minilm-c512-k20-v1-frozen.json),
+# reproducing scripts/prototype_rerank.py exactly: vector recall's top 50 (unfiltered), its first
+# 20, re-scored by the cross-encoder on each memory's first 512 characters, ties keeping vector
+# order, top 10.
+RERANK_MODEL = "Xenova/ms-marco-MiniLM-L-6-v2"
+RERANK_POOL, RERANK_DEPTH, RERANK_CHARS = 50, 20, 512
+
+ScorePairs = Callable[[str, list[str]], list[float]]
+
+
+def make_rerank_arm(score_pairs: ScorePairs) -> Arm:
+    def arm(store: MemoryStore, scope: Scope, query: str) -> list[Any]:
+        pool = store.recall(query, scope, limit=RERANK_POOL, relevance_filter=None)[:RERANK_DEPTH]
+        scores = score_pairs(query, [r.memory.content[:RERANK_CHARS] for r in pool])
+        order = sorted(range(len(pool)), key=lambda i: (-scores[i], i))
+        return [pool[i] for i in order][:DEPTH]
+
+    return arm
+
+
+def candidate_arms(cache_dir: Path) -> dict[str, Arm]:
+    from fastembed.rerank.cross_encoder import TextCrossEncoder
+
+    encoder = TextCrossEncoder(RERANK_MODEL, cache_dir=str(cache_dir), local_files_only=True)
+    return {
+        **ARMS,
+        "rerank-minilm-c512-k20": make_rerank_arm(
+            lambda query, docs: list(encoder.rerank(query, docs))
+        ),
+    }
+
 
 def score(
     dataset: list[dict[str, Any]], store_dir: Path, embedder: Any, arms: dict[str, Arm]
@@ -156,9 +188,8 @@ def score(
             "evidence_recall": round(sum(c["recall_sum"] for c in cats.values()) / n, 4)
             if n
             else 0,
-            "median_latency_ms": round(sorted(latency[name])[len(latency[name]) // 2], 2)
-            if latency[name]
-            else None,
+            "median_latency_ms": _quantile(latency[name], 0.5),
+            "p95_latency_ms": _quantile(latency[name], 0.95),
             "categories": {
                 str(c): {
                     "n": v["n"],
@@ -169,6 +200,45 @@ def score(
             },
         }
     return report
+
+
+def _quantile(values: list[float], fraction: float) -> float | None:
+    if not values:
+        return None
+    ordered = sorted(values)
+    return round(ordered[min(len(ordered) - 1, int(fraction * len(ordered)))], 2)
+
+
+def verdict(report: dict[str, Any], rule: dict[str, Any], candidate: str) -> dict[str, Any]:
+    """Apply a frozen pass/fail rule to an aggregate report, mechanically."""
+    base, cand = report["arms"]["vector"], report["arms"][candidate]
+    scored = base["scored_questions"]
+    need = base["complete_evidence"] + math.ceil(rule["min_gain_fraction"] * scored)
+    checks = {"complete_evidence_gain": cand["complete_evidence"] >= need}
+    for category, values in base["categories"].items():
+        allowed = math.floor(rule["max_category_loss_fraction"] * values["n"])
+        loss = values["complete_evidence"] - cand["categories"][category]["complete_evidence"]
+        checks[f"category_{category}_loss"] = loss <= allowed
+    checks["median_latency"] = (
+        cand["median_latency_ms"] <= base["median_latency_ms"] + rule["max_added_median_ms"]
+    )
+    checks["p95_latency"] = (
+        cand["p95_latency_ms"] <= base["p95_latency_ms"] + rule["max_added_p95_ms"]
+    )
+    return {"required_complete_evidence": need, "checks": checks, "passed": all(checks.values())}
+
+
+def record_result(look: dict[str, Any], summary: dict[str, Any]) -> None:
+    """Write the aggregate result into the look's ledger entry, under the same lock."""
+    with LEDGER.open("r+", encoding="utf-8") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        ledger = json.loads(handle.read())
+        for entry in ledger["held_out_sets"][SET_NAME]["looks"]:
+            if entry.get("started") == look["started"] and entry["candidate"] == look["candidate"]:
+                entry["result"] = summary
+        handle.seek(0)
+        handle.truncate()
+        handle.write(json.dumps(ledger, indent=2) + "\n")
 
 
 def _git(*args: str) -> str:
@@ -228,6 +298,7 @@ def main() -> int:
     parser.add_argument("--candidate", help="arm name in ARMS for a look")
     parser.add_argument("--freeze-commit", help="commit that froze the candidate and its rule")
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--rule", type=Path, help="frozen candidate file with its pass/fail rule")
     args = parser.parse_args()
     raw = args.dataset.read_bytes()
     dataset = json.loads(raw)
@@ -235,18 +306,40 @@ def main() -> int:
     if args.command == "build":
         print(json.dumps(build(dataset, args.stores, embedder)))
         return 0
-    if args.candidate not in ARMS or args.candidate == "vector" or not args.freeze_commit:
-        raise SystemExit("a look needs --candidate (a non-baseline arm) and --freeze-commit")
-    if args.output is None:
-        raise SystemExit("a look needs --output for its aggregate report")
+    if args.output is None or args.rule is None or not args.freeze_commit:
+        raise SystemExit("a look needs --candidate, --freeze-commit, --rule and --output")
+    rule_doc = json.loads(args.rule.read_text())
+    if rule_doc.get("candidate") != args.candidate:
+        raise SystemExit("--rule does not freeze this candidate")
+    relative_rule = args.rule.resolve().relative_to(ROOT).as_posix()
+    if subprocess.run(
+        ["git", "cat-file", "-e", f"{args.freeze_commit}:{relative_rule}"], cwd=ROOT
+    ).returncode:
+        raise SystemExit("the rule file is not part of the freeze commit")
+    # Load everything before the look is recorded, so a load failure cannot spend a look.
+    arms = candidate_arms(args.cache_dir)
+    if args.candidate not in arms or args.candidate == "vector":
+        raise SystemExit(f"unknown candidate {args.candidate!r}")
     look = record_look(args.candidate, args.freeze_commit, hashlib.sha256(raw).hexdigest())
     report = score(
         dataset,
         args.stores,
         embedder,
-        {"vector": ARMS["vector"], args.candidate: ARMS[args.candidate]},
+        {"vector": arms["vector"], args.candidate: arms[args.candidate]},
     )
+    report["verdict"] = verdict(report, rule_doc["pass_rule"], args.candidate)
     report["look"] = look
+    record_result(
+        look,
+        {
+            "passed": report["verdict"]["passed"],
+            "checks": report["verdict"]["checks"],
+            "scored_questions": report["arms"]["vector"]["scored_questions"],
+            "complete_evidence": {
+                name: arm["complete_evidence"] for name, arm in report["arms"].items()
+            },
+        },
+    )
     args.output.write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps({k: v for k, v in report.items() if k != "look"}, indent=2))
     return 0
