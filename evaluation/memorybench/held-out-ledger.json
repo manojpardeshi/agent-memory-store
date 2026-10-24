@@ -8,7 +8,31 @@
       "access": "aggregate and per-category only",
       "license": "CC BY-NC 4.0, snap-research/locomo; downloaded at run time, never committed",
       "dataset_sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
-      "looks": [],
+      "looks": [
+        {
+          "candidate": "rerank-minilm-c512-k20",
+          "frozen_in": "c572178",
+          "evaluated_at_commit": "c572178",
+          "started": "2026-10-24T16:02:29+00:00",
+          "result": {
+            "passed": true,
+            "checks": {
+              "complete_evidence_gain": true,
+              "category_1_loss": true,
+              "category_2_loss": true,
+              "category_3_loss": true,
+              "category_4_loss": true,
+              "median_latency": true,
+              "p95_latency": true
+            },
+            "scored_questions": 1536,
+            "complete_evidence": {
+              "vector": 805,
+              "rerank-minilm-c512-k20": 924
+            }
+          }
+        }
+      ],
       "source_url": "https://raw.githubusercontent.com/snap-research/locomo/main/data/locomo10.json",
       "downloaded_on": "2026-10-23",
       "shape": {
