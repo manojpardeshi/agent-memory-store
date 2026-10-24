@@ -28,7 +28,7 @@ SSH_OPTS=(-o BatchMode=yes -o ConnectTimeout=15)
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PROOFS="$ROOT/proofs"
-MODULES=(KeywordQuery RankFusion HeldOutLedger OccurredAt)
+MODULES=(KeywordQuery RankFusion HeldOutLedger OccurredAt RerankOrder)
 
 fail() { echo "FAIL: $*" >&2; exit 1; }
 

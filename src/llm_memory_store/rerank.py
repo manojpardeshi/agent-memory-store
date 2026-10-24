@@ -35,7 +35,8 @@ class Reranker(Protocol):
 def rerank_order(scores: Sequence[float], limit: int) -> list[int]:
     """Candidate indices by descending score, ties keeping candidate order, at most ``limit``.
 
-    Modelled and proved in proofs/RerankOrder.v. NaN scores sort last.
+    Modelled and proved in proofs/RerankOrder.v. A NaN score ranks below every finite score and
+    ties with -inf (ties keep candidate order).
     """
 
     def key(index: int) -> tuple[float, int]:

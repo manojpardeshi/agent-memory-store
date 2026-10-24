@@ -46,7 +46,7 @@ written:
 `_validate_occurred_at` also converts the rare `OverflowError` from `astimezone` near the edges of
 the date range into `ValueError`, so every rejection the model describes surfaces the same way.
 
-## What is not proved, for all four files
+## What is not proved, for all five files
 
 - That the Python code conforms to the model. The models were written by reading the code and are argued to match in
   the sections below. No tool connects the two.
@@ -287,3 +287,89 @@ The sequential model assumes one invocation at a time and that only `record_look
 - **Clock correctness.** The bound is relative to the host clock, which is not modelled.
 - **Parsing details.** Which strings `fromisoformat` accepts (fraction truncation, offsets with seconds) lives inside
   the abstract `parse`.
+
+---
+
+## RerankOrder.v: `rerank_order` in `src/llm_memory_store/rerank.py` and its use in `MemoryStore.recall`
+
+```python
+def rerank_order(scores, limit):
+    def key(index):
+        value = scores[index]
+        return (math.inf if math.isnan(value) else -value, index)
+    return sorted(range(len(scores)), key=key)[:limit]
+```
+
+`recall` then keeps `[pool[i] for i in rerank_order(scores, len(pool))]`, where `pool` is the first vector or hybrid
+candidates, already restricted to the queried scopes.
+
+**Correspondence**
+
+- **Scores.** `scores` is a `list Sc` for an arbitrary type `Sc` with a boolean comparison `le`. `le s t = true` reads
+  "s ranks no higher than t", i.e. `key(s) >= key(t)` in Python. Theorems about order assume only that `le` is
+  total and transitive (a total preorder). Equal-ranking but different values are allowed, e.g. `-0.0` and `0.0`.
+- **The key.** `before (i, si) (j, sj)` holds when `(-si, i) <= (-sj, j)`: `sj` is strictly lower, or the scores are equal
+  and `i <= j`. `outranks si i sj j` is the strict version (equal scores need `i < j`).
+- **`range(len(scores))`.** `indexed_from 0 scores` pairs each index with its score.
+- **`sorted(...)`.** `full_order` sorts those pairs with a stable insertion sort under `before` and keeps the indices.
+  Indices are distinct, so the key is a strict total order and the sorted list is unique. `rerank_order_unique`
+  proves that every sorted permutation of `range(len(scores))` gives the same list, so the result is what CPython's
+  `sorted` returns, regardless of algorithm or stability.
+- **`[:limit]`.** `rerank_order scores limit = firstn limit (full_order scores)`.
+- **`pool[i]`.** `nth i pool d`. The default `d` is never used, because every index is below `length scores`.
+- **Instances.**
+  - `rerank_order_Q` uses `Qle_bool` on exact rationals.
+  - `le_nan` on `option Q` models NaN as `None`, ranked below every number, as the `math.inf` key does.
+
+**Theorems**
+
+The generic theorems hold for every `Sc` and every `le`. Where stated, they also assume `le` is total and transitive.
+
+- (1) Indices:
+  - `rerank_order_in_range`: every output index is `< length scores`.
+  - `rerank_order_NoDup`: the output has no duplicates.
+  - `rerank_order_length`: the output length is `min limit (length scores)`.
+- (2) `rerank_order_subset`: if `length scores <= length pool` and every pool item satisfies `P`, so does every item of
+  `map (fun i => nth i pool d) (rerank_order scores limit)`. Re-ranking never introduces an item, so scope isolation
+  of the pool carries over.
+- (3) Order:
+  - `rerank_order_sorted`: if the output is `l1 ++ i :: l2` and `j` is in `l2`, then `i` outranks `j`. Its score is
+    strictly higher, or equal with `i < j`.
+  - `rerank_order_consecutive`: the same for adjacent indices (`l1 ++ i :: j :: l2`).
+- (4) `rerank_order_top`: an index left out has a score ≤ every chosen score. When the scores are equal, the chosen
+  index is smaller.
+- (5) `rerank_order_all_equal`: if all scores rank equally, the output is `seq 0 (min limit (length scores))`. Vector
+  order is kept.
+- (6) `rerank_order_strictly_decreasing`: strictly decreasing scores give the same `seq`. `rerank_order_nonincreasing`
+  covers both (5) and (6): any non-increasing score list keeps its order.
+- `rerank_order_unique`: any permutation of `seq 0 (length scores)` sorted by the key gives, after `firstn limit`,
+  exactly `rerank_order`.
+- Over `Q`: `rerank_Q_sorted`, `rerank_Q_top`, `rerank_Q_all_equal` and `rerank_Q_strictly_decreasing` restate (3)–(6)
+  with `<`, `<=` and `==`.
+- NaN: `rerank_nan_last` shows that every index after a NaN-scored index is also NaN-scored and comes later. NaN
+  scores sort last, in candidate order.
+- Examples, evaluated by `vm_compute`, match the real function's output:
+  - `rerank_order([0.5, 0.75, 0.5, 2.0], 3) == [3, 1, 0]`, and `[3, 1, 0, 2]` with limit 10. `1#2` and `2#4` tie as
+    numbers.
+  - `rerank_order([0.5, 0.5, 0.5], 2) == [0, 1]`, `rerank_order([], 5) == []`
+  - `rerank_order([nan, 0.5, nan, 2.0], 4) == [3, 1, 0, 2]`
+
+**Simplifications**
+
+- **Floats.** Python compares floats, not rationals. The generic theorems still cover them: the key `inf if
+  isnan(v) else -v` is never NaN, so `le s t := key(s) >= key(t)` is a total preorder on *all* floats. That
+  includes `±inf`, `-0.0 == 0.0` and NaN. The `Q` instance is a convenience and has no infinities or NaN.
+- **NaN.** The NaN instance uses `option Q`, so it has no `-inf`. In Python, NaN *ties* with `-inf` (the tie falls
+  to the index: `rerank_order([nan, -inf], 2) == [0, 1]`). So "NaN sorts last" means last among finite scores.
+  NaN is not last relative to `-inf`.
+- **Length.** `recall` passes `limit = len(pool)` and checks `len(scores) == len(pool)`. The theorems allow any
+  `limit` and any `length scores <= length pool`.
+
+**Not proved**
+
+- That the pool is scope-correct. That rests on the vector and keyword SQL filters (see RankFusion.v).
+- That the cross-encoder scores are meaningful, and the reranker's length check.
+- The relevance filter and `[:limit]` that follow re-ranking. Both only drop items; RankFusion.v's
+  `recall_output_isolated` shows filtering and truncation keep isolation.
+- That the key's float comparisons form a total preorder. This is IEEE-754 behaviour of `<`/`==` on non-NaN doubles,
+  argued here and not proved.
