@@ -44,6 +44,14 @@ from .models import (
     RelevanceFilter,
     Scope,
 )
+from .rerank import (
+    RERANK_DEPTH,
+    RERANK_INPUT_CHARS,
+    RERANK_POOL,
+    FastEmbedReranker,
+    Reranker,
+    rerank_order,
+)
 
 MAX_CONTENT_LENGTH = 100_000
 MAX_RECALL_SCOPES = 32
@@ -257,6 +265,7 @@ class MemoryStore:
         *,
         default_turn_ttl_days: float | None = 30.0,
         read_only: bool = False,
+        reranker: Reranker | None = None,
     ) -> None:
         if default_turn_ttl_days is not None and default_turn_ttl_days <= 0:
             raise ValueError("default_turn_ttl_days must be positive or None")
@@ -264,6 +273,8 @@ class MemoryStore:
         self.read_only = read_only
         self.embedder = embedder or FastEmbedder()
         self.default_turn_ttl_days = default_turn_ttl_days
+        # Loaded on the first re-ranked recall unless one is supplied.
+        self.reranker = reranker
         self.embedding_identity = embedding_identity(self.embedder)
         self.default_relevance_filter = _certified_default_relevance_filter(self.embedding_identity)
         self.connection = connect_database(self.path, read_only=read_only)
@@ -811,6 +822,7 @@ class MemoryStore:
         semantic_weight: float = 0.8,
         relevance_filter: RelevanceFilter | None | str = "default",
         retrieval: str = "vector",
+        rerank: bool = False,
     ) -> list[RecallResult]:
         """Recall ranked memories; the certified default may return fewer than ``limit``.
 
@@ -839,6 +851,8 @@ class MemoryStore:
         if retrieval not in RECALL_RETRIEVAL_MODES:
             raise ValueError(f"retrieval must be one of {', '.join(RECALL_RETRIEVAL_MODES)}")
         hybrid = retrieval == "hybrid"
+        if rerank and hybrid:
+            raise ValueError("rerank applies to vector retrieval only")
         if hybrid and not self.keyword_index:
             raise StoreCompatibilityError(
                 "hybrid recall needs the keyword index: open the store writable once to build "
@@ -855,8 +869,10 @@ class MemoryStore:
             return []
         query_vector = sqlite_vec.serialize_float32(self.embedder.embed_query(query))
         depth = min(max(HYBRID_MIN_DEPTH, limit * 5), HYBRID_MAX_DEPTH)
-        # Hybrid ranks the same vector candidates recall would return at limit=depth.
-        candidate_limit = max((depth if hybrid else limit) * 4, 20)
+        # Hybrid ranks the same vector candidates recall would return at limit=depth; re-ranking
+        # draws its candidates from what recall would return at limit=RERANK_POOL.
+        pool_limit = depth if hybrid else max(RERANK_POOL, limit) if rerank else limit
+        candidate_limit = max(pool_limit * 4, 20)
         candidates: dict[int, float] = {}
         for scope_id in scope_ids:
             rows = self.connection.execute(
@@ -937,6 +953,24 @@ class MemoryStore:
             )
         else:
             anchor = scored[0][3] if scored else None
+        rerank_scores: dict[int, float] = {}
+        if rerank:
+            # Re-score the first candidates and reorder them; nothing outside them can enter, so
+            # scope isolation is unchanged (proofs/RerankOrder.v). The relevance filter below keeps
+            # its vector anchor.
+            pool = scored[:RERANK_DEPTH]
+            contents = [
+                record.content[:RERANK_INPUT_CHARS]
+                for record in self._records_by_internal_ids([item[2] for item in pool])
+            ]
+            scores = self._get_reranker().score(query, contents)
+            if len(scores) != len(pool):
+                raise RuntimeError("reranker returned the wrong number of scores")
+            # The re-scored first 20, then any further candidates in vector order.
+            scored = [pool[i] for i in rerank_order(scores, len(pool))] + scored[RERANK_DEPTH:]
+            rerank_scores = {
+                item[2]: float(value) for item, value in zip(pool, scores, strict=True)
+            }
         if effective_filter is not None and anchor is not None:
             minimum_semantic_score = anchor - effective_filter.maximum_semantic_score_gap
             scored = [item for item in scored if item[3] >= minimum_semantic_score]
@@ -950,11 +984,17 @@ class MemoryStore:
                 recency_score=recency_score,
                 distance=distance,
                 fusion_score=float(fusion_scores[internal_id]) if hybrid else None,
+                rerank_score=rerank_scores.get(internal_id) if rerank else None,
             )
             for record, (score, _, internal_id, semantic_score, recency_score, distance) in zip(
                 records, chosen, strict=True
             )
         ]
+
+    def _get_reranker(self) -> Reranker:
+        if self.reranker is None:
+            self.reranker = FastEmbedReranker()
+        return self.reranker
 
     def _keyword_ranking(self, query: str, scope_ids: Sequence[int], depth: int) -> list[int]:
         """Return active, embedded memory ids in the given scopes by BM25 rank."""

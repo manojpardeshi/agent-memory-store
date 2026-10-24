@@ -124,6 +124,8 @@ class RecallResult:
     distance: float
     # Reciprocal-rank-fusion score; set only by hybrid recall, which orders results by it.
     fusion_score: float | None = None
+    # Cross-encoder score; set only by re-ranked recall, which orders results by it.
+    rerank_score: float | None = None
 
     def to_dict(self) -> dict[str, Any]:
         result = {
@@ -136,6 +138,8 @@ class RecallResult:
         }
         if self.fusion_score is not None:
             result["fusion_score"] = self.fusion_score
+        if self.rerank_score is not None:
+            result["rerank_score"] = self.rerank_score
         return result
 
 

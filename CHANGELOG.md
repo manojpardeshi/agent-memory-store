@@ -4,6 +4,21 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+### Added
+
+- Opt-in re-ranked recall: `recall(..., rerank=True)`, `llm-memory recall --rerank`, and MCP
+  `rerank`. The first 20 vector candidates are re-scored with a local cross-encoder
+  (`Xenova/ms-marco-MiniLM-L-6-v2`, on each memory's first 512 characters) and reordered. Tuned
+  on the LongMemEval-S development 180 (complete evidence 121 → 138 of 174). Confirmed in one
+  frozen look at the LoCoMo-10 held-out set (805 → 924 of 1,536), where every category improved,
+  at about 140 ms more per recall.
+  - New `FastEmbedReranker` and `DeterministicReranker`.
+  - `MemoryStore(reranker=...)`.
+  - `rerank_score` on results.
+  - `evaluate-retrieval --rerank`.
+- `scripts/check_rerank_equivalence.py` confirms the product path reproduces the frozen candidate
+  exactly (180 of 180 identical top tens on the tuning pool).
+
 ### Fixed
 
 - Hybrid recall computes reciprocal-rank-fusion scores exactly (`fractions.Fraction`). Rare

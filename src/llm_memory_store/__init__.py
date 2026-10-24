@@ -23,11 +23,14 @@ from .extraction_evaluation import (
 from .importing import import_json_store, preview_json_import
 from .migration import migrate_embeddings, preview_embedding_migration
 from .models import ExpiryPurgePreview, ExpiryPurgeReceipt, RelevanceFilter, Scope
+from .rerank import DeterministicReranker, FastEmbedReranker
 from .store import MemoryStore
 
 __all__ = [
     "DeterministicEmbedder",
+    "DeterministicReranker",
     "FastEmbedder",
+    "FastEmbedReranker",
     "DeterministicRuleExtractor",
     "ExpiryPurgePreview",
     "ExpiryPurgeReceipt",

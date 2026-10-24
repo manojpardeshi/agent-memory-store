@@ -97,11 +97,14 @@ def memory_recall(
     max_characters: int = 4000,
     relevance_filter: str | None = "default",
     retrieval: str = "vector",
+    rerank: bool = False,
 ) -> dict[str, Any]:
     """Recall scopes; filter is default, off, or relative:GAP and may return < limit, even zero.
 
     retrieval is vector (default) or hybrid; hybrid adds keyword matching, which helps when the
     query repeats exact words, names, or numbers from the memory, and can hurt paraphrases.
+    rerank re-scores the top vector candidates with a local cross-encoder: better ranking for
+    questions needing several memories, at about 150 ms extra per call; not combinable with hybrid.
     """
 
     store = get_store()
@@ -121,9 +124,11 @@ def memory_recall(
         limit=limit,
         relevance_filter=parsed_filter,
         retrieval=retrieval,
+        rerank=rerank,
     )
     bundle = store.context_bundle(query, results, max_characters=max_characters)
     bundle["retrieval"] = retrieval
+    bundle["rerank"] = rerank
     bundle["relevance_filter"] = parsed_filter.to_dict() if parsed_filter is not None else None
     bundle["relevance_filter_policy"] = filter_policy
     if parsed_filter is not None:

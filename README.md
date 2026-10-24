@@ -129,6 +129,33 @@ which makes `forget` physically remove a memory's words; on older SQLite, hybrid
 unavailable and vector recall works as before. See
 `docs/architecture/benchmarks/2026-10-02-hybrid-recall-product.md`.
 
+## Re-Ranked Recall (Opt-In)
+
+Questions that need several memories, such as "how many times did I…" or "what changed
+between…", often find the right memories just outside the top ten. Re-ranking re-scores the first
+20 vector candidates with a small local cross-encoder (`Xenova/ms-marco-MiniLM-L-6-v2`, Apache-2.0,
+about 92 MB, downloaded on first use). The cross-encoder reads the question and each memory
+together.
+
+```python
+results = store.recall("How many trips did I take this year?", private_scope, rerank=True)
+```
+
+The CLI takes `--rerank` and the MCP tool takes `rerank: true`. Results carry a `rerank_score`.
+Re-ranking only reorders memories recall already found, so scope isolation is unchanged
+(`proofs/RerankOrder.v`). The relevance filter still applies, and re-ranking cannot be combined
+with hybrid recall.
+
+| Data set | Measure | Vector | Re-ranked |
+| --- | --- | ---: | ---: |
+| LongMemEval-S development 180 (tuning) | Questions with every answer-bearing message in the top ten | 121 / 174 | 138 / 174 |
+| LoCoMo-10 (held out, one frozen look) | Same | 805 / 1,536 | 924 / 1,536 |
+
+On LoCoMo every category improved. The cost is about 140 ms more per recall on a laptop CPU, so it
+is off by default. Supply your own model with `MemoryStore(..., reranker=FastEmbedReranker(...))`,
+for example with `local_files_only=True` for offline use. See
+`docs/architecture/benchmarks/2026-10-24-rerank-locomo-heldout.md`.
+
 ## When Things Happened (`occurred_at`)
 
 A memory's `created_at` is when it was stored. When an application imports earlier

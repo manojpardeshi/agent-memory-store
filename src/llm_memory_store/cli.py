@@ -28,6 +28,7 @@ from .extraction_evaluation import (
 from .importing import import_json_store, preview_json_import
 from .migration import MigrationQualityError, migrate_embeddings, preview_embedding_migration
 from .models import RelevanceFilter, Scope
+from .rerank import DeterministicReranker, FastEmbedReranker
 from .store import MemoryStore, _certified_default_relevance_filter
 
 DEFAULT_DB = Path(os.environ.get("LLM_MEMORY_DB", "~/.llm-memory/memory.sqlite3")).expanduser()
@@ -204,6 +205,11 @@ def build_parser() -> argparse.ArgumentParser:
         default="vector",
         help="hybrid adds keyword matching, for queries that repeat exact words or names",
     )
+    recall.add_argument(
+        "--rerank",
+        action="store_true",
+        help="re-score the top vector candidates with a local cross-encoder (about 150 ms more)",
+    )
     recall_filter = recall.add_mutually_exclusive_group()
     recall_filter.add_argument(
         "--relevance-filter",
@@ -309,6 +315,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     evaluate.add_argument("--overwrite", action="store_true")
     evaluate.add_argument("--retrieval", choices=("vector", "hybrid"), default="vector")
+    evaluate.add_argument("--rerank", action="store_true")
     evaluation_filter = evaluate.add_mutually_exclusive_group()
     evaluation_filter.add_argument(
         "--relevance-filter",
@@ -425,6 +432,14 @@ def main(argv: list[str] | None = None) -> None:
             embedder,
             relevance_filter=effective_filter,
             retrieval=args.retrieval,
+            rerank=args.rerank,
+            reranker=(
+                FastEmbedReranker(cache_dir=args.model_cache, local_files_only=args.offline)
+                if args.rerank and args.embedder == "fastembed"
+                else DeterministicReranker()
+                if args.rerank
+                else None
+            ),
         )
         if args.report:
             write_evaluation_report(report, args.report, overwrite=args.overwrite)
@@ -661,9 +676,11 @@ def main(argv: list[str] | None = None) -> None:
                 limit=args.limit,
                 relevance_filter=effective_filter,
                 retrieval=args.retrieval,
+                rerank=args.rerank,
             )
             bundle = store.context_bundle(args.query, results, max_characters=args.max_characters)
             bundle["retrieval"] = args.retrieval
+            bundle["rerank"] = args.rerank
             bundle["relevance_filter"] = (
                 effective_filter.to_dict() if effective_filter is not None else None
             )

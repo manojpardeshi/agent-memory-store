@@ -466,6 +466,8 @@ def run_retrieval_evaluation(
     *,
     relevance_filter: RelevanceFilter | None = None,
     retrieval: str = "vector",
+    rerank: bool = False,
+    reranker: Any = None,
 ) -> dict[str, Any]:
     """Seed an isolated store, run the dataset, and return a reproducible report."""
 
@@ -475,7 +477,7 @@ def run_retrieval_evaluation(
     ranking_details: dict[str, list[dict[str, Any]]] = {}
     with (
         tempfile.TemporaryDirectory(prefix="llm-memory-eval-") as directory,
-        MemoryStore(Path(directory) / "evaluation.sqlite3", embedder) as store,
+        MemoryStore(Path(directory) / "evaluation.sqlite3", embedder, reranker=reranker) as store,
     ):
         embedding_identity = store.embedding_identity
         product_default_filter = store.default_relevance_filter
@@ -505,6 +507,7 @@ def run_retrieval_evaluation(
                 limit=accessible_candidate_count,
                 relevance_filter=relevance_filter,
                 retrieval=retrieval,
+                rerank=rerank,
             )
             rankings[query.query_id] = [
                 public_to_fixture[result.memory.memory_id] for result in results
@@ -562,6 +565,7 @@ def run_retrieval_evaluation(
         "retrieval_config": {
             "limit": dataset.top_k,
             "retrieval": retrieval,
+            **({"rerank": getattr(reranker, "model_name", "default")} if rerank else {}),
             "relevance_filter": (
                 relevance_filter.to_dict() if relevance_filter is not None else None
             ),
