@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+## 0.4.0 — 2026-10-26
+
 ### Added
 
 - Opt-in re-ranked recall: `recall(..., rerank=True)`, `llm-memory recall --rerank`, and MCP

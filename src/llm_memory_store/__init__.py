@@ -56,4 +56,4 @@ __all__ = [
     "write_proposal_bundle",
     "write_extraction_evaluation_report",
 ]
-__version__ = "0.3.0"
+__version__ = "0.4.0"
