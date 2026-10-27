@@ -62,6 +62,30 @@ class Embedder(Protocol):
     def embed_query(self, text: str) -> list[float]: ...
 
 
+# Behaviour fingerprints hash sentinel embeddings to 8 decimals, so harmless numerical drift
+# between ONNX Runtime releases changes them. Each group below was measured to be the same model's
+# behaviour: cosine similarity 1.000000 on probe texts, at most 2.2e-4 absolute difference per
+# component, and identical retrieval_v1/v2/v3 metrics (docs/architecture/benchmarks/
+# 2026-10-27-embedding-runtime-equivalence.md). Stores open under any fingerprint in their group.
+# Older releases without this table still require an exact match.
+EQUIVALENT_FINGERPRINTS: tuple[frozenset[str], ...] = (
+    frozenset(
+        {
+            # BAAI/bge-small-en-v1.5: ONNX Runtime 1.27 (FastEmbed 0.8.0 or 0.9.1; the certified
+            # fingerprint) and ONNX Runtime 1.31.1 (FastEmbed 0.9.1)
+            "36d7909ee7cda48a3603dddd95e79a27c6a92770ce888a55b77b1811d5e27c87",
+            "625b4f337c44fb4b1dc03d07188dc0473bc93bbe3ad3607e0bf39683449fb635",
+        }
+    ),
+)
+
+
+def fingerprints_equivalent(first: str, second: str) -> bool:
+    return first == second or any(
+        first in group and second in group for group in EQUIVALENT_FINGERPRINTS
+    )
+
+
 def embedding_identity(embedder: Embedder) -> EmbeddingIdentity:
     digest = hashlib.sha256()
     for vector in (

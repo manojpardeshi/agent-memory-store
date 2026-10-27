@@ -4,7 +4,23 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
-## 0.4.0 — 2026-10-26
+## 0.4.0 — 2026-10-27
+
+### Security
+
+- FastEmbed moves to 0.9.1 (`fastembed>=0.9.1,<1`) with a `pillow>=13` floor, fixing about 40
+  Pillow advisories. `certifi` and `filelock` are also updated. pip-audit reports no known
+  vulnerability in the locked runtime set.
+
+### Changed
+
+- Embedding compatibility and the certified relevance default are judged by behaviour fingerprint,
+  including measured-equivalent fingerprints, not by exact runtime version strings (AD-055). The
+  same model under ONNX Runtime 1.27 and 1.31.1 is measured equivalent (cosine 1.000000, identical
+  retrieval metrics). Stores no longer refuse to open after a routine ONNX Runtime update, and the
+  certified filter keeps applying.
+  - Found: `all-MiniLM-L6-v2`'s July certification no longer matches today's model download; it
+    needs re-certification.
 
 ### Added
 

@@ -197,7 +197,7 @@
       "version": "26.1.0"
     },
     {
-      "bom-ref": "certifi==2026.6.17",
+      "bom-ref": "certifi==2026.10.23",
       "description": "Python package for providing Mozilla's CA Bundle.",
       "externalReferences": [
         {
@@ -226,9 +226,9 @@
         }
       ],
       "name": "certifi",
-      "purl": "pkg:pypi/certifi@2026.6.17",
+      "purl": "pkg:pypi/certifi@2026.10.23",
       "type": "library",
-      "version": "2026.6.17"
+      "version": "2026.10.23"
     },
     {
       "bom-ref": "cffi==2.1.0",
@@ -401,7 +401,7 @@
       "version": "50.0.2"
     },
     {
-      "bom-ref": "fastembed==0.8.0",
+      "bom-ref": "fastembed==0.9.1",
       "description": "Fast, light, accurate library built for retrieval embedding generation",
       "externalReferences": [
         {
@@ -419,17 +419,17 @@
         {
           "license": {
             "acknowledgement": "declared",
-            "name": "License :: Other/Proprietary License"
+            "id": "Apache-2.0"
           }
         }
       ],
       "name": "fastembed",
-      "purl": "pkg:pypi/fastembed@0.8.0",
+      "purl": "pkg:pypi/fastembed@0.9.1",
       "type": "library",
-      "version": "0.8.0"
+      "version": "0.9.1"
     },
     {
-      "bom-ref": "filelock==3.29.7",
+      "bom-ref": "filelock==4.2.4",
       "description": "A platform independent file lock.",
       "externalReferences": [
         {
@@ -462,9 +462,9 @@
         }
       ],
       "name": "filelock",
-      "purl": "pkg:pypi/filelock@3.29.7",
+      "purl": "pkg:pypi/filelock@4.2.4",
       "type": "library",
-      "version": "3.29.7"
+      "version": "4.2.4"
     },
     {
       "bom-ref": "flatbuffers==25.12.19",
@@ -1071,7 +1071,7 @@
       "version": "26.2"
     },
     {
-      "bom-ref": "pillow==12.3.0",
+      "bom-ref": "pillow==13.0.0",
       "description": "Python Imaging Library (fork)",
       "externalReferences": [
         {
@@ -1090,6 +1090,11 @@
           "url": "https://github.com/python-pillow/Pillow"
         },
         {
+          "comment": "from packaging metadata Project-URL: Security",
+          "type": "other",
+          "url": "https://pillow.readthedocs.io/en/stable/handbook/security.html"
+        },
+        {
           "comment": "from packaging metadata Project-URL: Release notes",
           "type": "other",
           "url": "https://pillow.readthedocs.io/en/stable/releasenotes/index.html"
@@ -1097,7 +1102,7 @@
         {
           "comment": "from packaging metadata Project-URL: Funding",
           "type": "other",
-          "url": "https://tidelift.com/subscription/pkg/pypi-pillow?utm_source=pypi-pillow&utm_medium=pypi"
+          "url": "https://tidelift.com/lifter/search/pypi/pillow"
         },
         {
           "comment": "from packaging metadata Project-URL: Changelog",
@@ -1107,7 +1112,7 @@
         {
           "comment": "from packaging metadata Project-URL: Homepage",
           "type": "website",
-          "url": "https://python-pillow.github.io"
+          "url": "https://python-pillow.org"
         }
       ],
       "licenses": [
@@ -1119,9 +1124,9 @@
         }
       ],
       "name": "pillow",
-      "purl": "pkg:pypi/pillow@12.3.0",
+      "purl": "pkg:pypi/pillow@13.0.0",
       "type": "library",
-      "version": "12.3.0"
+      "version": "13.0.0"
     },
     {
       "bom-ref": "protobuf==7.35.1",
@@ -1847,7 +1852,7 @@
       "ref": "attrs==26.1.0"
     },
     {
-      "ref": "certifi==2026.6.17"
+      "ref": "certifi==2026.10.23"
     },
     {
       "dependsOn": [
@@ -1875,16 +1880,16 @@
         "mmh3==5.2.1",
         "numpy==2.5.1",
         "onnxruntime==1.27.0",
-        "pillow==12.3.0",
+        "pillow==13.0.0",
         "py_rust_stemmers==0.1.8",
         "requests==2.34.2",
         "tokenizers==0.23.1",
         "tqdm==4.68.4"
       ],
-      "ref": "fastembed==0.8.0"
+      "ref": "fastembed==0.9.1"
     },
     {
-      "ref": "filelock==3.29.7"
+      "ref": "filelock==4.2.4"
     },
     {
       "ref": "flatbuffers==25.12.19"
@@ -1907,7 +1912,7 @@
     {
       "dependsOn": [
         "anyio==4.14.2",
-        "certifi==2026.6.17",
+        "certifi==2026.10.23",
         "h11==0.16.0"
       ],
       "ref": "httpcore==1.0.9"
@@ -1918,7 +1923,7 @@
     {
       "dependsOn": [
         "anyio==4.14.2",
-        "certifi==2026.6.17",
+        "certifi==2026.10.23",
         "click==8.4.2",
         "httpcore==1.0.9",
         "idna==3.18"
@@ -1929,14 +1934,14 @@
       "dependsOn": [
         "PyYAML==6.0.3",
         "click==8.4.2",
-        "filelock==3.29.7",
+        "filelock==4.2.4",
         "fsspec==2026.6.0",
         "hf-xet==1.5.1",
         "httpx==0.28.1",
         "mcp==1.30.0",
         "numpy==2.5.1",
         "packaging==26.2",
-        "pillow==12.3.0",
+        "pillow==13.0.0",
         "requests==2.34.2",
         "tqdm==4.68.4",
         "typing_extensions==4.16.0",
@@ -2007,7 +2012,7 @@
       "dependsOn": [
         "packaging==26.2"
       ],
-      "ref": "pillow==12.3.0"
+      "ref": "pillow==13.0.0"
     },
     {
       "ref": "protobuf==7.35.1"
@@ -2061,7 +2066,7 @@
     },
     {
       "dependsOn": [
-        "certifi==2026.6.17",
+        "certifi==2026.10.23",
         "charset-normalizer==3.4.9",
         "idna==3.18",
         "urllib3==2.8.0"
@@ -2070,8 +2075,9 @@
     },
     {
       "dependsOn": [
-        "fastembed==0.8.0",
+        "fastembed==0.9.1",
         "mcp==1.30.0",
+        "pillow==13.0.0",
         "sqlite-vec==0.1.9"
       ],
       "ref": "root-component"

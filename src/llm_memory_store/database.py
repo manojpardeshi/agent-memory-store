@@ -12,7 +12,7 @@ from pathlib import Path
 
 import sqlite_vec
 
-from .embeddings import EmbeddingIdentity
+from .embeddings import EmbeddingIdentity, fingerprints_equivalent
 
 SCHEMA_VERSION = 1
 
@@ -113,6 +113,7 @@ def initialize_or_validate(
         field: {"store": row[field], "runtime": value}
         for field, value in checks.items()
         if row[field] != value
+        and not (field == "behavior_fingerprint" and fingerprints_equivalent(row[field], value))
     }
     if row["schema_version"] != SCHEMA_VERSION:
         mismatches["schema_version"] = {

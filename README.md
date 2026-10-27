@@ -93,7 +93,7 @@ uv run llm-memory recall \
   --no-relevance-filter
 ```
 
-MCP callers use `relevance_filter: "default"`, `"off"`, or an explicit override such as `"relative:0.10"`. CLI/MCP bundles expose the effective filter and policy. Unknown or changed embedding identities remain unfiltered until re-certified.
+MCP callers use `relevance_filter: "default"`, `"off"`, or an explicit override such as `"relative:0.10"`. CLI/MCP bundles expose the effective filter and policy. Certification follows behaviour, not version strings: the default applies when the model's behaviour fingerprint is the certified one or a fingerprint measured equivalent to it (for example the same model under a newer ONNX Runtime), and any other model or fingerprint stays unfiltered until re-certified.
 
 Python uses the typed API rather than MCP strings: omit the argument or pass `"default"` for the identity-scoped policy, pass a `RelevanceFilter` override, or pass `None` to disable. `store.default_relevance_filter` and `store.status()` expose whether the current identity matched a certification.
 

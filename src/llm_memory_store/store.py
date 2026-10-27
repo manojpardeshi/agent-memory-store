@@ -31,7 +31,7 @@ from .database import (
     secure_write_text,
     utc_now,
 )
-from .embeddings import Embedder, FastEmbedder, embedding_identity
+from .embeddings import Embedder, FastEmbedder, embedding_identity, fingerprints_equivalent
 from .models import (
     DeletePreview,
     DeleteReceipt,
@@ -244,15 +244,23 @@ CERTIFIED_RELEVANCE_DEFAULTS = {
 
 
 def _certified_default_relevance_filter(identity: Any) -> RelevanceFilter | None:
-    key = (
-        identity.provider,
-        identity.model_name,
-        identity.model_revision,
-        identity.runtime_version,
-        identity.dimension,
-        identity.behavior_fingerprint,
-    )
-    return RelevanceFilter.relative(0.20) if key in CERTIFIED_RELEVANCE_DEFAULTS else None
+    """The certified default applies to the certified model whenever its behaviour matches.
+
+    Behaviour is judged by the fingerprint, allowing measured-equivalent fingerprints, not by the
+    runtime version string: the same FastEmbed release gives different fingerprints under different
+    ONNX Runtime releases, while a different FastEmbed release can reproduce the certified one.
+    """
+    for provider, model, revision, _runtime, dimension, fingerprint in CERTIFIED_RELEVANCE_DEFAULTS:
+        if (
+            identity.provider,
+            identity.model_name,
+            identity.model_revision,
+            identity.dimension,
+        ) == (provider, model, revision, dimension) and fingerprints_equivalent(
+            identity.behavior_fingerprint, fingerprint
+        ):
+            return RelevanceFilter.relative(0.20)
+    return None
 
 
 class MemoryStore:

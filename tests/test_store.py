@@ -91,7 +91,7 @@ def test_opt_in_relative_relevance_filter_preserves_default_and_can_shorten_resu
     ]
 
 
-def test_default_filter_requires_the_exact_certified_embedding_identity() -> None:
+def test_default_filter_requires_certified_behaviour_not_a_runtime_version() -> None:
     certified = EmbeddingIdentity(
         provider="fastembed",
         model_name="BAAI/bge-small-en-v1.5",
@@ -104,12 +104,19 @@ def test_default_filter_requires_the_exact_certified_embedding_identity() -> Non
     )
     selected = _certified_default_relevance_filter(certified)
     assert selected == RelevanceFilter.relative(0.20)
+    # Behaviour decides: a runtime reproducing the certified fingerprint stays certified...
+    assert _certified_default_relevance_filter(
+        replace(certified, runtime_version="future-runtime")
+    ) == RelevanceFilter.relative(0.20)
+    # ...and any fingerprint neither certified nor measured equivalent is not.
     assert (
-        _certified_default_relevance_filter(replace(certified, runtime_version="future-runtime"))
+        _certified_default_relevance_filter(replace(certified, behavior_fingerprint="0" * 64))
         is None
     )
     assert (
-        _certified_default_relevance_filter(replace(certified, behavior_fingerprint="0" * 64))
+        _certified_default_relevance_filter(
+            replace(certified, runtime_version="0.8.0", behavior_fingerprint="0" * 64)
+        )
         is None
     )
 
