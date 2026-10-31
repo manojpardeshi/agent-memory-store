@@ -14,6 +14,9 @@ from llm_memory_store.store import _certified_default_relevance_filter
 
 ORT_127 = "36d7909ee7cda48a3603dddd95e79a27c6a92770ce888a55b77b1811d5e27c87"
 ORT_131 = "625b4f337c44fb4b1dc03d07188dc0473bc93bbe3ad3607e0bf39683449fb635"
+MINILM_JULY = "d448bfe05c5208f88f0c4c327ea72d334b48421c9cb4c5522b5baa688958bcde"
+MINILM_TODAY = "08625e07fc693a25092de1ed029f01b75432a0e4d2243b76e096b175a3305a49"
+MINILM = "sentence-transformers/all-MiniLM-L6-v2"
 
 
 def test_equivalence_is_reflexive_symmetric_and_group_bound() -> None:
@@ -39,6 +42,15 @@ def test_certified_filter_follows_behaviour_not_the_runtime_version_string() -> 
     assert _certified_default_relevance_filter(_identity(ORT_131)) is not None
     assert _certified_default_relevance_filter(_identity("0" * 64)) is None
     assert _certified_default_relevance_filter(_identity(ORT_131, model="other/model")) is None
+
+
+def test_minilm_recertified_for_todays_download_without_crossing_models() -> None:
+    assert _certified_default_relevance_filter(_identity(MINILM_TODAY, model=MINILM)) is not None
+    assert _certified_default_relevance_filter(_identity(MINILM_JULY, model=MINILM)) is not None
+    # Equivalence groups never mix models: bge's fingerprints do not certify MiniLM, or vice versa.
+    assert _certified_default_relevance_filter(_identity(ORT_127, model=MINILM)) is None
+    assert _certified_default_relevance_filter(_identity(MINILM_TODAY)) is None
+    assert not fingerprints_equivalent(MINILM_TODAY, ORT_127)
 
 
 def _set_fingerprint(path: Path, value: str) -> None:

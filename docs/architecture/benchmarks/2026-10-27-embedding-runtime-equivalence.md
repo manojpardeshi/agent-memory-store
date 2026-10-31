@@ -45,8 +45,8 @@ Is the difference real? Comparing FastEmbed 0.8.0 with 0.9.1 on ONNX Runtime 1.3
 A fresh download of `sentence-transformers/all-MiniLM-L6-v2` under FastEmbed 0.8.0 gives
 fingerprint `b6702b95…`, not the certified `d448bfe0…`. The model files served today differ from
 the ones certified in July. That certification therefore no longer applies to new downloads, and
-those stores run unfiltered until re-certified. The default model, bge-small, is unaffected. This
-needs a separate re-certification and is not fixed here.
+those stores run unfiltered until re-certified. The default model, bge-small, is unaffected. Re-certified on
+2026-10-31: see `2026-10-31-minilm-recertification.md`.
 
 ## Limit
 

@@ -4,6 +4,15 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+### Fixed
+
+- `sentence-transformers/all-MiniLM-L6-v2` is re-certified. Today's model download gives a
+  different behaviour fingerprint from July's certified one, so new MiniLM stores silently ran
+  without the certified relevance filter. Re-running the July certification gave identical
+  rankings on all 110 retrieval_v1/v2 queries and identical metrics, under ONNX Runtime 1.27 and
+  1.31.1. The new fingerprint is recorded as equivalent, so the filter applies again and July
+  MiniLM stores open under the current runtime.
+
 ## 0.4.0 — 2026-10-27
 
 ### Security

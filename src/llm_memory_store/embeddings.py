@@ -77,6 +77,14 @@ EQUIVALENT_FINGERPRINTS: tuple[frozenset[str], ...] = (
             "625b4f337c44fb4b1dc03d07188dc0473bc93bbe3ad3607e0bf39683449fb635",
         }
     ),
+    frozenset(
+        {
+            # sentence-transformers/all-MiniLM-L6-v2: the July 2026 certified fingerprint and
+            # today's model download under FastEmbed 0.9.1 with ONNX Runtime 1.27 or 1.31.1
+            "d448bfe05c5208f88f0c4c327ea72d334b48421c9cb4c5522b5baa688958bcde",
+            "08625e07fc693a25092de1ed029f01b75432a0e4d2243b76e096b175a3305a49",
+        }
+    ),
 )
 
 
