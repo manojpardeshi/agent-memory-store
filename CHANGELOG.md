@@ -6,6 +6,11 @@ All notable changes to this project are documented here.
 
 ### Fixed
 
+- Hard deletion now computes the lineage and descendant set, deletes it, and verifies absence under
+  one SQLite write transaction. A concurrent derived memory cannot survive with its source link
+  removed. CLI and MCP hard deletion require the preview digest or an explicit force-current choice;
+  a changed preview aborts without deleting. The Python API accepts an optional expected digest.
+
 - `sentence-transformers/all-MiniLM-L6-v2` is re-certified. Today's model download gives a
   different behaviour fingerprint from July's certified one, so new MiniLM stores silently ran
   without the certified relevance filter. Re-running the July certification gave identical

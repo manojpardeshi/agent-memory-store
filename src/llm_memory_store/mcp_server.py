@@ -178,12 +178,26 @@ def memory_preview_forget(memory_id: str) -> dict[str, Any]:
 
 
 @mcp.tool(name="memory_forget")
-def memory_forget(memory_id: str, confirm: bool = False) -> dict[str, Any]:
-    """Hard-delete a lineage and descendants; pass confirm=true to execute."""
+def memory_forget(
+    memory_id: str,
+    confirm: bool = False,
+    expected_digest: str | None = None,
+    force_current: bool = False,
+) -> dict[str, Any]:
+    """Hard-delete a lineage; confirm with its preview digest or explicit force_current."""
     store = get_store()
     if not confirm:
+        if expected_digest is not None or force_current:
+            raise ValueError("expected_digest and force_current require confirm=true")
         return {"executed": False, "preview": store.preview_forget(memory_id).to_dict()}
-    return {"executed": True, "receipt": store.forget(memory_id).to_dict()}
+    if expected_digest is None and not force_current:
+        raise ValueError("confirm=true requires expected_digest or force_current=true")
+    if expected_digest is not None and force_current:
+        raise ValueError("select expected_digest or force_current, not both")
+    return {
+        "executed": True,
+        "receipt": store.forget(memory_id, expected_digest=expected_digest).to_dict(),
+    }
 
 
 @mcp.tool(name="memory_forget_scope")
@@ -193,13 +207,24 @@ def memory_forget_scope(
     environment: str,
     owner: str,
     confirm: bool = False,
+    expected_digest: str | None = None,
+    force_current: bool = False,
 ) -> dict[str, Any]:
-    """Hard-delete an exact scope and derived descendants; confirm explicitly."""
+    """Hard-delete an exact scope; confirm with its preview digest or force_current."""
     scope = Scope(scope_kind, subject, environment, owner)  # type: ignore[arg-type]
     store = get_store()
     if not confirm:
+        if expected_digest is not None or force_current:
+            raise ValueError("expected_digest and force_current require confirm=true")
         return {"executed": False, "preview": store.preview_forget_scope(scope).to_dict()}
-    return {"executed": True, "receipt": store.forget_scope(scope).to_dict()}
+    if expected_digest is None and not force_current:
+        raise ValueError("confirm=true requires expected_digest or force_current=true")
+    if expected_digest is not None and force_current:
+        raise ValueError("select expected_digest or force_current, not both")
+    return {
+        "executed": True,
+        "receipt": store.forget_scope(scope, expected_digest=expected_digest).to_dict(),
+    }
 
 
 @mcp.tool(name="memory_purge_expired")

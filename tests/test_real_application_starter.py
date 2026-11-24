@@ -120,7 +120,7 @@ async def _exercise_transport(tmp_path: Path, transport: str) -> dict:
 
         preview = await memory.preview_forget(corrected["memory_id"])
         assert preview["count"] == 2
-        receipt = await memory.forget(corrected["memory_id"])
+        receipt = await memory.forget(corrected["memory_id"], preview["digest"])
         assert receipt["verified"] is True
         after_delete = await memory.recall_bundle(
             "SAFFRON_CORRECTED starter accent", max_characters=1000

@@ -1131,21 +1131,56 @@ class MemoryStore:
                     queue.extend(children.get(member_id, ()))
 
         selected_rows = [by_id[item] for item in sorted(selected)]
+        memory_ids = tuple(row["memory_id"] for row in selected_rows)
+        lineage_ids = tuple(sorted({row["lineage_id"] for row in selected_rows}))
+        kinds = dict(Counter(row["kind"] for row in selected_rows))
+        digest_payload = {
+            "requested_memory_id": requested_memory_id,
+            "requested_scope": requested_scope.to_dict() if requested_scope else None,
+            "memory_ids": memory_ids,
+            "lineage_ids": lineage_ids,
+            "kinds": kinds,
+        }
+        digest = hashlib.sha256(
+            json.dumps(digest_payload, sort_keys=True, separators=(",", ":")).encode()
+        ).hexdigest()
         return DeletePreview(
             requested_memory_id=requested_memory_id,
             requested_scope=requested_scope,
-            memory_ids=tuple(row["memory_id"] for row in selected_rows),
-            lineage_ids=tuple(sorted({row["lineage_id"] for row in selected_rows})),
-            kinds=dict(Counter(row["kind"] for row in selected_rows)),
+            memory_ids=memory_ids,
+            lineage_ids=lineage_ids,
+            kinds=kinds,
+            digest=digest,
         )
 
-    def forget(self, memory_id: str) -> DeleteReceipt:
-        return self._delete_preview(self.preview_forget(memory_id))
+    def forget(self, memory_id: str, *, expected_digest: str | None = None) -> DeleteReceipt:
+        with immediate_transaction(self.connection):
+            preview = self.preview_forget(memory_id)
+            if expected_digest is not None and expected_digest != preview.digest:
+                raise ValueError("hard deletion preview changed; request a new preview")
+            receipt = self._delete_preview(preview)
+        self._finish_hard_delete(receipt)
+        return receipt
 
-    def forget_scope(self, scope: Scope) -> DeleteReceipt:
-        return self._delete_preview(self.preview_forget_scope(scope))
+    def forget_scope(
+        self, scope: Scope, *, expected_digest: str | None = None
+    ) -> DeleteReceipt:
+        with immediate_transaction(self.connection):
+            preview = self.preview_forget_scope(scope)
+            if expected_digest is not None and expected_digest != preview.digest:
+                raise ValueError("hard deletion preview changed; request a new preview")
+            receipt = self._delete_preview(preview)
+        self._finish_hard_delete(receipt)
+        return receipt
+
+    def _finish_hard_delete(self, receipt: DeleteReceipt) -> None:
+        if receipt.deleted_memories:
+            self.connection.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+            self.connection.execute("PRAGMA incremental_vacuum")
 
     def _delete_preview(self, preview: DeletePreview) -> DeleteReceipt:
+        if not self.connection.in_transaction:
+            raise RuntimeError("hard deletion requires a write transaction")
         if not preview.memory_ids:
             return DeleteReceipt(preview, 0, 0, True)
         internal_ids: list[int] = []
@@ -1165,25 +1200,24 @@ class MemoryStore:
                 "SELECT 1 FROM memory_vectors WHERE rowid=?", (internal_id,)
             ).fetchone()
         )
-        with immediate_transaction(self.connection):
-            for internal_chunk in self._chunks(internal_ids):
-                internal_placeholders = ",".join("?" for _ in internal_chunk)
-                self.connection.execute(
-                    f"""
-                    DELETE FROM memory_sources
-                    WHERE child_id IN ({internal_placeholders})
-                       OR source_id IN ({internal_placeholders})
-                    """,
-                    (*internal_chunk, *internal_chunk),
-                )
-            for internal_id in internal_ids:
-                self.connection.execute("DELETE FROM memory_vectors WHERE rowid=?", (internal_id,))
-            for internal_chunk in self._chunks(internal_ids):
-                internal_placeholders = ",".join("?" for _ in internal_chunk)
-                self.connection.execute(
-                    f"DELETE FROM memories WHERE id IN ({internal_placeholders})",
-                    internal_chunk,
-                )
+        for internal_chunk in self._chunks(internal_ids):
+            internal_placeholders = ",".join("?" for _ in internal_chunk)
+            self.connection.execute(
+                f"""
+                DELETE FROM memory_sources
+                WHERE child_id IN ({internal_placeholders})
+                   OR source_id IN ({internal_placeholders})
+                """,
+                (*internal_chunk, *internal_chunk),
+            )
+        for internal_id in internal_ids:
+            self.connection.execute("DELETE FROM memory_vectors WHERE rowid=?", (internal_id,))
+        for internal_chunk in self._chunks(internal_ids):
+            internal_placeholders = ",".join("?" for _ in internal_chunk)
+            self.connection.execute(
+                f"DELETE FROM memories WHERE id IN ({internal_placeholders})",
+                internal_chunk,
+            )
 
         remaining_memories = 0
         for public_chunk in self._chunks(preview.memory_ids):
@@ -1215,9 +1249,9 @@ class MemoryStore:
                 ).fetchone()[0]
             )
         verified = remaining_memories == 0 and remaining_vectors == 0 and remaining_edges == 0
-        self.connection.execute("PRAGMA wal_checkpoint(TRUNCATE)")
-        self.connection.execute("PRAGMA incremental_vacuum")
-        return DeleteReceipt(preview, len(internal_ids), vector_count, verified)
+        if not verified:
+            raise RuntimeError("hard deletion verification failed; transaction rolled back")
+        return DeleteReceipt(preview, len(internal_ids), vector_count, True)
 
     def preview_expiry_purge(self, as_of: str | None = None) -> ExpiryPurgePreview:
         """Preview expired rows that can be removed without deleting live descendants."""
