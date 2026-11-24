@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Fixed
 
+- `find_by_metadata(..., limit=N)` now excludes expired rows in SQLite before applying `LIMIT`.
+  Older expired matches no longer hide later live matches or make a nonempty result appear empty.
+
 - `sentence-transformers/all-MiniLM-L6-v2` is re-certified. Today's model download gives a
   different behaviour fingerprint from July's certified one, so new MiniLM stores silently ran
   without the certified relevance filter. Re-running the July certification gave identical
