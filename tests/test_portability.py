@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from llm_memory_store import DeterministicEmbedder, MemoryStore, Scope
+from llm_memory_store import DeterministicEmbedder, MemoryStore, Scope, database
 from llm_memory_store.database import restore_database
 
 
@@ -76,6 +76,36 @@ def test_portability_operations_do_not_clobber_by_default(store: MemoryStore, tm
     with pytest.raises(FileExistsError, match="restore destination already exists"):
         restore_database(backup, restored)
     assert restored.read_text() == "keep me"
+
+
+@pytest.mark.parametrize("artifact", ["export", "backup"])
+def test_concurrent_destination_creation_is_never_clobbered(
+    store: MemoryStore, tmp_path, monkeypatch, artifact: str
+) -> None:
+    scope = Scope.private("me", "personal", "codex")
+    store.remember("fact", "Sensitive", scope)
+    destination = tmp_path / f"racing-{artifact}"
+    original_link = database.os.link
+    original_replace = database.os.replace
+
+    def racing_link(source, target):
+        if target == destination:
+            destination.write_text("competing file")
+        return original_link(source, target)
+
+    def racing_replace(source, target):
+        if target == destination:
+            destination.write_text("competing file")
+        return original_replace(source, target)
+
+    monkeypatch.setattr(database.os, "link", racing_link)
+    monkeypatch.setattr(database.os, "replace", racing_replace)
+    with pytest.raises(FileExistsError):
+        if artifact == "export":
+            store.export_json(destination, scope)
+        else:
+            store.backup(destination)
+    assert destination.read_text() == "competing file"
 
 
 def test_whole_store_export_requires_explicit_selector(store: MemoryStore) -> None:
