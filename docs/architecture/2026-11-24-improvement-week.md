@@ -25,4 +25,11 @@ existing benchmark decisions unchanged unless new independent evidence meets the
 
 - **Nov 24 complete:** expiry filtering now happens before the metadata lookup limit. The new
   regression covers expired rows preceding a live match. Full Python suite: 354 passed; Ruff,
-  lock check, and package build passed.
+  lock check, and package build passed. PR #2.
+- **Nov 25 complete early:** export and backup publication now preserves a competing destination.
+  Deterministic race tests cover both paths. Full Python suite: 355 passed; Ruff, lock check, and
+  package build passed. PR #3.
+- **Nov 26 local portion complete early:** the Mem0 local comparator has a configurable question
+  deadline, checkpointed timeout, and alarm cleanup. Offline tests prove a deadline is not swallowed
+  by its session-error handler. Full Python suite: 356 passed; Ruff, lock check, and package build
+  passed. PR #4. Paid Kimi timeout and billing-safe resume behavior remain under audit.
