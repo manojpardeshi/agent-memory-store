@@ -11,7 +11,7 @@ and preview-bound confirmation; it remains separate from the work below.
 | --- | --- | --- |
 | Nov 24 | Fix `find_by_metadata` applying `LIMIT` before expiry filtering. | An expired first match cannot hide a later live match; full Python tests and Ruff pass. |
 | Nov 25 | Audit no-overwrite publication for JSON export and SQLite backup under concurrent destination creation. Fix any reproduced race. | A deterministic race test proves existing destinations are preserved, or the audit records why no change is needed. |
-| Nov 26 | Add bounded per-question watchdogs to the remaining long-running benchmark runners. | Timeout and cleanup paths have offline tests; a stalled question cannot silently hang a run. |
+| Nov 26 | Add a per-question watchdog to the local Mem0 runner. Audit the paid Kimi runners for timeout and billing-safe resume behavior before changing them. | Offline tests prove the local timeout and alarm cleanup; paid runs never reissue an uncertain in-flight call automatically. |
 | Nov 27 | Audit concurrent correction and idempotent write behavior across two SQLite connections. Fix verified invariant failures. | Reproducible interleaving tests cover any fix; no duplicate active lineage or wrong-scope replay is introduced. |
 | Nov 28 | Measure `status()` cost and memory use at personal-scale store sizes, then optimize only if the measurements justify it. | Before/after figures and unchanged integrity results are recorded. |
 | Nov 29 | Review CLI/MCP lifecycle parity and package installation against the week's changes. | Full tests, Ruff, lock check, and wheel/source build pass; examples still run offline. |
