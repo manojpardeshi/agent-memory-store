@@ -41,7 +41,12 @@ Deletion requires a preview and explicit confirmation at the CLI/MCP boundary. D
 1. every version in its correction lineage; and
 2. every recursively derived descendant of those versions.
 
-Deleting a derived memory does not delete its sources. Memory rows, vector rows, and provenance edges are removed transactionally and post-commit absence is verified. SQLite secure deletion, checkpoint, and incremental vacuum reduce residual active-store data, but the MVP does not promise forensic media erasure and cannot erase previously created backups or exports.
+Deleting a derived memory does not delete its sources. The lineage/descendant set is recomputed under
+the same write transaction that removes and verifies memory rows, vector rows, and provenance edges.
+CLI/MCP confirmation requires the preview digest or an explicit force-current choice; a changed set
+aborts. SQLite secure deletion, checkpoint, and incremental vacuum reduce residual active-store data,
+but the MVP does not promise forensic media erasure and cannot erase previously created backups or
+exports.
 
 Expiry purge is a separate retention operation with narrower authority. One timezone-aware cutoff is captured for preview and execution. A row is purgeable only when it is expired at that cutoff and backward reachability from unexpired correction-lineage or derived descendants does not protect it. Consequently:
 
@@ -62,7 +67,7 @@ CLI and MCP preview by default and require explicit confirmation bound to the pr
 
 ## Security Boundary
 
-The trusted boundary is the local OS account and machine. Store directories are mode `0700`; database and backup files are mode `0600`. The design relies on filesystem permissions and OS full-disk encryption. Same-account privileged processes, malicious MCP clients, storage forensics, and compromise of the host are outside the MVP protection claim.
+The trusted boundary is the local OS account and machine. Store directories are mode `0700`; database and backup files are mode `0600`. The design relies on filesystem permissions and OS full-disk encryption. Scopes partition recall but are not per-agent authorization: MCP clients can name other scopes and use ID-based tools. Same-account privileged processes, malicious MCP clients, storage forensics, and compromise of the host are outside the MVP protection claim.
 
 ## Known Deferrals
 

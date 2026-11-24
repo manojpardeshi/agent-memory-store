@@ -194,6 +194,56 @@ def test_cli_expiry_purge_previews_then_requires_yes_to_execute(tmp_path, capsys
     assert executed["receipt"]["verified"] is True
 
 
+def test_cli_forget_requires_matching_preview_digest(tmp_path, capsys) -> None:
+    database = tmp_path / "forget.sqlite3"
+    common = ["--db", str(database), "--embedder", "deterministic"]
+    with MemoryStore(database, DeterministicEmbedder()) as store:
+        memory = store.remember("fact", "CLI deletion fixture", Scope.private("me", "test", "app"))
+
+    command = ["forget", *common, "--memory-id", memory.memory_id]
+    main(command)
+    preview = json.loads(capsys.readouterr().out)["preview"]
+    assert preview["memory_ids"] == [memory.memory_id]
+
+    with pytest.raises(SystemExit):
+        main([*command, "--yes"])
+    assert "requires --expected-digest" in capsys.readouterr().err
+
+    with pytest.raises(ValueError, match="preview changed"):
+        main([*command, "--yes", "--expected-digest", "wrong"])
+    capsys.readouterr()
+
+    main([*command, "--yes", "--expected-digest", preview["digest"]])
+    receipt = json.loads(capsys.readouterr().out)
+    assert receipt["deleted_memories"] == 1
+    assert receipt["verified"] is True
+
+
+def test_cli_forget_scope_rejects_stale_preview(tmp_path, capsys) -> None:
+    database = tmp_path / "forget-scope.sqlite3"
+    common = ["--db", str(database), "--embedder", "deterministic"]
+    scope_args = [
+        "--scope-kind", "private", "--subject", "me",
+        "--environment", "test", "--owner", "app",
+    ]
+    command = ["forget-scope", *common, *scope_args]
+    main(command)
+    empty_preview = json.loads(capsys.readouterr().out)["preview"]
+
+    with MemoryStore(database, DeterministicEmbedder()) as store:
+        memory = store.remember("fact", "New scope memory", Scope.private("me", "test", "app"))
+    with pytest.raises(ValueError, match="preview changed"):
+        main([*command, "--yes", "--expected-digest", empty_preview["digest"]])
+    capsys.readouterr()
+
+    main(command)
+    current_preview = json.loads(capsys.readouterr().out)["preview"]
+    assert current_preview["memory_ids"] == [memory.memory_id]
+    main([*command, "--yes", "--expected-digest", current_preview["digest"]])
+    receipt = json.loads(capsys.readouterr().out)
+    assert receipt["deleted_memories"] == 1
+
+
 def test_cli_embedding_migration_previews_and_writes_report(tmp_path, capsys) -> None:
     source = tmp_path / "source.sqlite3"
     destination = tmp_path / "target.sqlite3"

@@ -78,7 +78,7 @@ class MemoryClient(Protocol):
 
     async def preview_forget(self, memory_id: str) -> dict[str, Any]: ...
 
-    async def forget(self, memory_id: str) -> dict[str, Any]: ...
+    async def forget(self, memory_id: str, expected_digest: str) -> dict[str, Any]: ...
 
     async def status(self) -> dict[str, Any]: ...
 
@@ -133,8 +133,8 @@ class DirectMemoryClient:
     async def preview_forget(self, memory_id: str) -> dict[str, Any]:
         return self.store.preview_forget(memory_id).to_dict()
 
-    async def forget(self, memory_id: str) -> dict[str, Any]:
-        return self.store.forget(memory_id).to_dict()
+    async def forget(self, memory_id: str, expected_digest: str) -> dict[str, Any]:
+        return self.store.forget(memory_id, expected_digest=expected_digest).to_dict()
 
     async def status(self) -> dict[str, Any]:
         return self.store.status()
@@ -256,8 +256,11 @@ class McpMemoryClient:
     async def preview_forget(self, memory_id: str) -> dict[str, Any]:
         return await self._call("memory_preview_forget", {"memory_id": memory_id})
 
-    async def forget(self, memory_id: str) -> dict[str, Any]:
-        result = await self._call("memory_forget", {"memory_id": memory_id, "confirm": True})
+    async def forget(self, memory_id: str, expected_digest: str) -> dict[str, Any]:
+        result = await self._call(
+            "memory_forget",
+            {"memory_id": memory_id, "confirm": True, "expected_digest": expected_digest},
+        )
         return result["receipt"]
 
     async def status(self) -> dict[str, Any]:
@@ -413,7 +416,7 @@ async def _scripted_demo(
         "What accent color do I prefer now?", capture_turns=False
     )
     preview = await memory.preview_forget(corrected["memory_id"])
-    receipt = await memory.forget(corrected["memory_id"])
+    receipt = await memory.forget(corrected["memory_id"], preview["digest"])
     initial_response = initial.response.casefold()
     corrected_response = after_correction.response.casefold()
     status = await memory.status()
@@ -541,9 +544,10 @@ async def _run(args: argparse.Namespace) -> None:
                 print(json.dumps(await memory.correct(memory_id, content), indent=2))
             elif user_text.startswith("/forget "):
                 memory_id = user_text.split(" ", 1)[1]
-                print(json.dumps(await memory.preview_forget(memory_id), indent=2))
+                preview = await memory.preview_forget(memory_id)
+                print(json.dumps(preview, indent=2))
                 if input("Type yes to confirm deletion: ").strip().casefold() == "yes":
-                    print(json.dumps(await memory.forget(memory_id), indent=2))
+                    print(json.dumps(await memory.forget(memory_id, preview["digest"]), indent=2))
             elif user_text:
                 print((await application.answer(user_text)).response)
 
