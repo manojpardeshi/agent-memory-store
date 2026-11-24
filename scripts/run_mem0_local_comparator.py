@@ -17,11 +17,14 @@ run checkpoints after every question and is resumable, because a full pass takes
 from __future__ import annotations
 
 import argparse
+import faulthandler
 import json
 import os
 import platform
 import shutil
+import signal
 import time
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +35,30 @@ os.environ.setdefault("MEM0_TELEMETRY", "false")
 SEARCH_DEPTH = 10
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"
 EMBED_DIMS = 384
+QUESTION_DEADLINE_S = 3600
+
+
+class QuestionDeadlineExceeded(TimeoutError):
+    """Raised when local ingestion or search exceeds one question's wall-clock limit."""
+
+
+def _on_alarm(signum: int, frame: object) -> None:  # noqa: ARG001
+    raise QuestionDeadlineExceeded("per-question deadline exceeded")
+
+
+@contextmanager
+def question_deadline(seconds: int):
+    """Bound one question and restore the previous SIGALRM handler afterward."""
+
+    if seconds <= 0:
+        raise ValueError("question deadline must be positive")
+    previous_handler = signal.signal(signal.SIGALRM, _on_alarm)
+    try:
+        signal.alarm(seconds)
+        yield
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, previous_handler)
 
 
 def _load_json(path: Path) -> Any:
@@ -116,6 +143,8 @@ def run_question(
                 infer=True,
             )
             extracted += len(result.get("results", []) if isinstance(result, dict) else [])
+        except QuestionDeadlineExceeded:
+            raise
         except Exception as error:  # noqa: BLE001 - one bad session must not lose the run
             failures.append({"session_index": index, "error": repr(error)[:300]})
     ingest_seconds = time.time() - ingest_started
@@ -160,7 +189,13 @@ def main() -> int:
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     parser.add_argument("--model", default="llama3.1:8b")
     parser.add_argument("--max-questions", type=int, default=0)
+    parser.add_argument("--question-deadline-seconds", type=int, default=QUESTION_DEADLINE_S)
     args = parser.parse_args()
+    if not hasattr(signal, "SIGALRM"):
+        parser.error("per-question deadlines require SIGALRM on this platform")
+    if args.question_deadline_seconds <= 0:
+        parser.error("--question-deadline-seconds must be positive")
+    faulthandler.enable()
 
     dataset = _load_json(args.dataset)
     by_id = {str(item["question_id"]): item for item in dataset}
@@ -217,12 +252,19 @@ def main() -> int:
     for position, question_id in enumerate(pending, start=1):
         started = time.time()
         try:
-            entry = run_question(
-                by_id[question_id],
-                work_root=args.work,
-                ollama_url=args.ollama_url,
-                model=args.model,
-            )
+            with question_deadline(args.question_deadline_seconds):
+                entry = run_question(
+                    by_id[question_id],
+                    work_root=args.work,
+                    ollama_url=args.ollama_url,
+                    model=args.model,
+                )
+        except QuestionDeadlineExceeded:
+            entry = {
+                "phases": {},
+                "error": f"exceeded {args.question_deadline_seconds}s per-question deadline",
+            }
+            print(f"[{position}/{len(pending)}] {question_id} DEADLINE", flush=True)
         except Exception as error:  # noqa: BLE001 - record and continue
             entry = {"phases": {}, "error": repr(error)[:500]}
             print(f"[{position}/{len(pending)}] {question_id} FAILED: {error!r}", flush=True)
