@@ -216,7 +216,8 @@ def test_import_atomic_publish_never_clobbers_concurrent_destination(tmp_path, m
     real_link = importing_module.os.link
 
     def competing_publish(source, target):
-        Path(target).write_text("competitor")
+        if Path(target) == destination:
+            destination.write_text("competitor")
         return real_link(source, target)
 
     monkeypatch.setattr(importing_module.os, "link", competing_publish)
