@@ -51,3 +51,10 @@ existing benchmark decisions unchanged unless new independent evidence meets the
   8.929–9.020 MiB to 0.002–0.004 MiB. Full status reports and integrity results matched; a
   focused regression also counts a missing and an orphan vector. Full Python suite: 354 passed;
   Ruff, lock check, and package build passed. PR #7.
+- **Nov 29 complete early:** all seven code PRs were merged in a temporary local integration
+  worktree. Combined verification passed 373 tests, Ruff, lock check, and wheel/source build.
+  Fresh virtual environments installed both artifacts. An installed-wheel smoke flow crossed CLI
+  and MCP for remember, get, correct, preview-bound deletion, and status; the source archive's CLI
+  also initialized a store offline. Both Python and MCP real-application demos passed offline.
+  Only additive changelog conflicts arose during local merges; no code conflict. PR #8 records the
+  parity and package audit. The open PRs will need changelog reconciliation as they land.
