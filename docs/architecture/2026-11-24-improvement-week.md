@@ -1,7 +1,8 @@
 # Improvement Week: November 24–30, 2026
 
-Status: in progress. Work is limited to the local, single-user product boundary. Use synthetic
-data and free local checks; do not reopen rejected retrieval policies or run paid model benchmarks.
+Status: complete early on November 25. Work is limited to the local, single-user product boundary.
+Use synthetic data and free local checks; do not reopen rejected retrieval policies or run paid
+model benchmarks.
 
 The September `improvement-suggestions.md` predates releases 0.2–0.4. Its completed and rejected
 items are historical evidence, not this week's backlog. PR #1 already addresses atomic hard deletion
@@ -58,3 +59,7 @@ existing benchmark decisions unchanged unless new independent evidence meets the
   also initialized a store offline. Both Python and MCP real-application demos passed offline.
   Only additive changelog conflicts arose during local merges; no code conflict. PR #8 records the
   parity and package audit. The open PRs will need changelog reconciliation as they land.
+- **Nov 30 complete early:** final review found one stale cross-PR changelog sentence, corrected in
+  PR #4. The combined eight-PR tree passed the full 373-test suite, Ruff, lock check, and build
+  again. The closeout report records independent PR evidence, integration checks, and remaining
+  limits. A combined pull request carries the conflict-resolved tree for one merge path.
