@@ -49,6 +49,32 @@ def test_remember_and_recall_private_scope(store: MemoryStore) -> None:
     assert all(item.memory.scope == codex for item in results)
 
 
+def test_status_counts_missing_and_orphan_vectors(store: MemoryStore) -> None:
+    scope = Scope.private("me", "test", "status")
+    missing = store.remember("fact", "missing vector", scope)
+    intact = store.remember("fact", "intact vector", scope)
+    rows = store.connection.execute(
+        "SELECT id, scope_id, memory_id FROM memories WHERE memory_id IN (?, ?)",
+        (missing.memory_id, intact.memory_id),
+    ).fetchall()
+    by_memory_id = {row["memory_id"]: row for row in rows}
+    missing_id = int(by_memory_id[missing.memory_id]["id"])
+    intact_id = int(by_memory_id[intact.memory_id]["id"])
+    vector = store.connection.execute(
+        "SELECT embedding FROM memory_vectors WHERE rowid=?", (intact_id,)
+    ).fetchone()["embedding"]
+    store.connection.execute("DELETE FROM memory_vectors WHERE rowid=?", (missing_id,))
+    store.connection.execute(
+        "INSERT INTO memory_vectors(rowid, embedding, scope_id) VALUES(?, ?, ?)",
+        (10_000_000, vector, int(by_memory_id[intact.memory_id]["scope_id"])),
+    )
+
+    report = store.status()
+    assert report["memories"] == 2
+    assert report["missing_vectors"] == 1
+    assert report["orphan_vectors"] == 1
+
+
 def test_opt_in_relative_relevance_filter_preserves_default_and_can_shorten_results(
     tmp_path,
 ) -> None:

@@ -29,6 +29,10 @@ All notable changes to this project are documented here.
 - Paid Kimi baseline and paired runners now stop on an uncertain in-flight call instead of
   automatically reissuing a request that may already have been billed. The baseline persists a
   question marker before its first call and rejects incomplete legacy reports without one.
+- `status()` counts memories and vector integrity differences in SQLite instead of materializing
+  every ID in Python. Synthetic 50,000-memory measurement reduced status time from about 0.56 s
+  to 0.38 s and traced Python peak allocation from about 9 MiB to under 0.01 MiB, with identical
+  integrity results.
 - `sentence-transformers/all-MiniLM-L6-v2` is re-certified. Today's model download gives a
   different behaviour fingerprint from July's certified one, so new MiniLM stores silently ran
   without the certified relevance filter. Re-running the July certification gave identical
