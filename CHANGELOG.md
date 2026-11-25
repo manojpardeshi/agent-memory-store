@@ -4,8 +4,35 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+### Evaluation tooling
+
+- The local Mem0 comparator now sets a configurable per-question `SIGALRM` deadline, records timed
+  out questions in its checkpoint, and restores the signal handler after each question. Paid Kimi
+  runner resume safety is addressed separately.
+
 ### Fixed
 
+- Hard deletion now computes the lineage and descendant set, deletes it, and verifies absence under
+  one SQLite write transaction. A concurrent derived memory cannot survive with its source link
+  removed. CLI and MCP hard deletion require the preview digest or an explicit force-current choice;
+  a changed preview aborts without deleting. The Python API accepts an optional expected digest.
+- `find_by_metadata(..., limit=N)` now excludes expired rows in SQLite before applying `LIMIT`.
+  Older expired matches no longer hide later live matches or make a nonempty result appear empty.
+- JSON export and SQLite backup now publish with an atomic no-clobber link when overwrite is off.
+  A destination created after the initial existence check is preserved instead of replaced.
+
+- Operation-ID replays now validate the original memory scope, write type, role, and source
+  provenance before returning a record. Correction replays must target the same lineage. A
+  collision across scopes or write types raises `ValueError`, including after a concurrent insert.
+- Corrections read the active lineage version under the write lock, so concurrent corrections
+  advance versions in order instead of racing on the same version number.
+- Paid Kimi baseline and paired runners now stop on an uncertain in-flight call instead of
+  automatically reissuing a request that may already have been billed. The baseline persists a
+  question marker before its first call and rejects incomplete legacy reports without one.
+- `status()` counts memories and vector integrity differences in SQLite instead of materializing
+  every ID in Python. Synthetic 50,000-memory measurement reduced status time from about 0.56 s
+  to 0.38 s and traced Python peak allocation from about 9 MiB to under 0.01 MiB, with identical
+  integrity results.
 - `sentence-transformers/all-MiniLM-L6-v2` is re-certified. Today's model download gives a
   different behaviour fingerprint from July's certified one, so new MiniLM stores silently ran
   without the certified relevance filter. Re-running the July certification gave identical

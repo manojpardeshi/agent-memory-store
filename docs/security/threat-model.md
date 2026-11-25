@@ -26,7 +26,7 @@ when they originate on the same machine.
 
 | Threat | Boundary and mitigation |
 | --- | --- |
-| Cross-agent or shared-pool disclosure | Reads use normalized exact-match private scopes and explicitly selected shared pools. Scope-isolation tests are release invariants. |
+| Cross-agent or shared-pool disclosure | Recall uses normalized exact-match private scopes and explicitly selected shared pools. This prevents accidental query expansion; the trusted MCP host must control which clients receive tools because scopes are not per-agent authorization. |
 | Prompt injection through recalled memory | Context bundles label memory as untrusted data and are bounded. Applications must not convert recalled instructions into tool authority. |
 | Unreviewed model output becoming durable memory | Extraction produces tamper-evident proposals only. Selected acceptance is explicit, digest-bound, provenance-linked, and source-revalidated. |
 | Destructive deletion or stale confirmation | Hard deletion and expiry purge expose previews and verification receipts. CLI/MCP confirmation is bound to reviewed digests or an explicit force-current choice. |

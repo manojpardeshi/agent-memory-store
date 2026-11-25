@@ -200,4 +200,59 @@ def test_mcp_stdio_vertical_slice(tmp_path) -> None:
             assert purged.structuredContent["receipt"]["deleted_memories"] == 1
             assert purged.structuredContent["receipt"]["verified"] is True
 
+            delete_preview = await session.call_tool(
+                "memory_forget", {"memory_id": remembered.structuredContent["memory_id"]}
+            )
+            assert delete_preview.isError is False
+            digest = delete_preview.structuredContent["preview"]["digest"]
+            unbound_delete = await session.call_tool(
+                "memory_forget",
+                {"memory_id": remembered.structuredContent["memory_id"], "confirm": True},
+            )
+            assert unbound_delete.isError is True
+            stale_delete = await session.call_tool(
+                "memory_forget",
+                {
+                    "memory_id": remembered.structuredContent["memory_id"],
+                    "confirm": True,
+                    "expected_digest": "wrong",
+                },
+            )
+            assert stale_delete.isError is True
+            deleted = await session.call_tool(
+                "memory_forget",
+                {
+                    "memory_id": remembered.structuredContent["memory_id"],
+                    "confirm": True,
+                    "expected_digest": digest,
+                },
+            )
+            assert deleted.isError is False
+            assert deleted.structuredContent["receipt"]["deleted_memories"] == 1
+
+            scope_preview = await session.call_tool(
+                "memory_forget_scope",
+                {
+                    "scope_kind": "private",
+                    "subject": "me",
+                    "environment": "filter-test",
+                    "owner": "app",
+                },
+            )
+            assert scope_preview.isError is False
+            scope_digest = scope_preview.structuredContent["preview"]["digest"]
+            deleted_scope = await session.call_tool(
+                "memory_forget_scope",
+                {
+                    "scope_kind": "private",
+                    "subject": "me",
+                    "environment": "filter-test",
+                    "owner": "app",
+                    "confirm": True,
+                    "expected_digest": scope_digest,
+                },
+            )
+            assert deleted_scope.isError is False
+            assert deleted_scope.structuredContent["receipt"]["deleted_memories"] == 2
+
     asyncio.run(run())

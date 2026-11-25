@@ -325,6 +325,39 @@ def test_resume_rejects_output_identity_tampering(tmp_path, monkeypatch) -> None
         )
 
 
+def test_resume_rejects_uncertain_in_flight_call(tmp_path, monkeypatch) -> None:
+    paths = _fixture_files(tmp_path)
+    selection = json.loads(paths["selection"].read_text(encoding="utf-8"))
+    contract = json.loads(paths["contract"].read_text(encoding="utf-8"))
+    identity = paired._input_identity(
+        selection_sha256=_sha256(paths["selection"]),
+        development_sha256=_sha256(paths["development"]),
+        candidate_sha256=_sha256(paths["candidate"]),
+        baseline_sha256=[_sha256(paths["baseline"])],
+        contract_sha256=_sha256(paths["contract"]),
+    )
+    report = paired._new_report(
+        question_ids=tuple(selection["question_ids"]),
+        identity=identity,
+        contract=contract,
+    )
+    report["in_flight"] = {
+        "slot": f"answer:{selection['question_ids'][0]}:baseline",
+        "request_sha256": "a" * 64,
+        "reserved_usd": paired.ANSWER_MAX_CALL_USD,
+    }
+    _write(paths["output"], report)
+    monkeypatch.setattr(
+        paired,
+        "run_kimi_call",
+        lambda *args, **kwargs: pytest.fail("must fail before an API call"),
+    )
+
+    with pytest.raises(paired.PairedDevelopmentError, match="uncertain in-flight"):
+        paired.run_paired_development(**_paired_kwargs(paths))
+    assert json.loads(paths["output"].read_text(encoding="utf-8")) == report
+
+
 def test_known_http_429_recovery_records_one_no_charge_identical_retry(
     tmp_path: Path,
 ) -> None:

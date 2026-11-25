@@ -192,6 +192,28 @@ crosses scopes. Superseded and expired memories are excluded by default, matchin
 `include_superseded=True` or `include_expired=True` for audit views. Filters combine with AND, keys
 must be plain identifiers, and values must be strings, numbers, or booleans.
 
+## Hard Deletion
+
+Preview the full lineage and derived-descendant set before deleting:
+
+```bash
+llm-memory forget --db ~/.llm-memory/memory.sqlite3 --memory-id MEMORY_ID
+```
+
+Confirm that exact set with the returned digest:
+
+```bash
+llm-memory forget --db ~/.llm-memory/memory.sqlite3 --memory-id MEMORY_ID \
+  --expected-digest RETURNED_DIGEST --yes
+```
+
+`forget-scope` uses the same preview and confirmation flow for an exact scope. MCP callers pass
+`confirm: true` and `expected_digest` to `memory_forget` or `memory_forget_scope`. A changed set
+fails before any deletion. `--force-current` (MCP: `force_current: true`) deliberately confirms
+the set recomputed under the deletion transaction without a prior digest. Direct Python callers
+may pass `expected_digest` to `forget` or `forget_scope`; omitting it is the trusted domain API's
+force-current behavior.
+
 ## Expiry Cleanup
 
 Expired memories are excluded from recall immediately, but physical cleanup is deliberately on demand. Preview the exact cutoff and candidate set first:
@@ -409,6 +431,11 @@ Choose **Replay measured run** to animate the provider matrix, or **Load report*
 ## Security Boundary
 
 The MVP trusts the local OS account. The database directory is created with mode `0700`; databases, backups, and JSON exports are created with mode `0600` from the outset. Full-disk encryption such as FileVault is recommended. Verified deletion means absence from the active database after transactional cascade and verification; it does not erase prior backups, filesystem snapshots, synced copies, or SSD remanence.
+
+Scopes restrict which memories a recall query reads. The MCP host is trusted: its tools do not
+authenticate individual agents or enforce scope ownership, and a client with access to the server
+can request other named scopes, inspect a known memory ID, or request a whole-store export with
+confirmation. Give a separate server and database to clients that must be isolated from each other.
 
 See `docs/security/threat-model.md` for the complete trust boundaries and `SECURITY.md` for private-first vulnerability reporting.
 

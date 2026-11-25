@@ -246,11 +246,23 @@ def build_parser() -> argparse.ArgumentParser:
     forget = subparsers.add_parser("forget", help="Hard-delete a memory lineage and descendants")
     _add_runtime_args(forget)
     forget.add_argument("--memory-id", required=True)
+    forget.add_argument("--expected-digest", help="Abort if the preview set has changed")
+    forget.add_argument(
+        "--force-current",
+        action="store_true",
+        help="Confirm the recomputed set without matching a prior preview digest",
+    )
     forget.add_argument("--yes", action="store_true", help="Execute instead of previewing")
 
     forget_scope = subparsers.add_parser("forget-scope", help="Hard-delete an exact scope")
     _add_runtime_args(forget_scope)
     _add_any_scope_args(forget_scope)
+    forget_scope.add_argument("--expected-digest", help="Abort if the preview set has changed")
+    forget_scope.add_argument(
+        "--force-current",
+        action="store_true",
+        help="Confirm the recomputed set without matching a prior preview digest",
+    )
     forget_scope.add_argument("--yes", action="store_true", help="Execute instead of previewing")
 
     purge = subparsers.add_parser(
@@ -710,8 +722,14 @@ def main(argv: list[str] | None = None) -> None:
             _print(store.preview_forget(args.memory_id))
         elif args.command == "forget":
             if args.yes:
-                _print(store.forget(args.memory_id))
+                if args.expected_digest is None and not args.force_current:
+                    parser.error("forget execution requires --expected-digest or --force-current")
+                if args.expected_digest is not None and args.force_current:
+                    parser.error("select --expected-digest or --force-current, not both")
+                _print(store.forget(args.memory_id, expected_digest=args.expected_digest))
             else:
+                if args.expected_digest or args.force_current:
+                    parser.error("--expected-digest and --force-current require --yes")
                 _print(
                     {
                         "executed": False,
@@ -721,8 +739,16 @@ def main(argv: list[str] | None = None) -> None:
         elif args.command == "forget-scope":
             scope = _scope_from_any(args)
             if args.yes:
-                _print(store.forget_scope(scope))
+                if args.expected_digest is None and not args.force_current:
+                    parser.error(
+                        "forget-scope execution requires --expected-digest or --force-current"
+                    )
+                if args.expected_digest is not None and args.force_current:
+                    parser.error("select --expected-digest or --force-current, not both")
+                _print(store.forget_scope(scope, expected_digest=args.expected_digest))
             else:
+                if args.expected_digest or args.force_current:
+                    parser.error("--expected-digest and --force-current require --yes")
                 _print({"executed": False, "preview": store.preview_forget_scope(scope).to_dict()})
         elif args.command == "purge-expired":
             if args.yes:

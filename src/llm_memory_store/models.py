@@ -150,6 +150,7 @@ class DeletePreview:
     memory_ids: tuple[str, ...]
     lineage_ids: tuple[str, ...]
     kinds: dict[str, int]
+    digest: str
 
     @property
     def count(self) -> int:
@@ -163,6 +164,7 @@ class DeletePreview:
             "lineage_ids": list(self.lineage_ids),
             "kinds": self.kinds,
             "count": self.count,
+            "digest": self.digest,
         }
 
 

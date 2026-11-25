@@ -487,9 +487,12 @@ class MemoryStore:
         expires_at = self._validate_expires_at(expires_at)
         occurred_at = self._validate_occurred_at(occurred_at)
         if operation_id:
-            existing = self._record_for_operation(operation_id, embed=embed)
+            existing = self._record_for_operation(operation_id, embed=False)
             if existing is not None:
-                return existing
+                self._validate_remember_replay(
+                    existing, scope, kind, role, source_memory_ids, source_relation
+                )
+                return self._record_for_operation(operation_id, embed=embed) or existing
 
         memory_id = str(uuid.uuid4())
         lineage_id = str(uuid.uuid4())
@@ -536,9 +539,12 @@ class MemoryStore:
                     )
         except sqlite3.IntegrityError:
             if operation_id:
-                existing = self._record_for_operation(operation_id, embed=embed)
+                existing = self._record_for_operation(operation_id, embed=False)
                 if existing is not None:
-                    return existing
+                    self._validate_remember_replay(
+                        existing, scope, kind, role, source_memory_ids, source_relation
+                    )
+                    return self._record_for_operation(operation_id, embed=embed) or existing
             raise
 
         if embed:
@@ -574,6 +580,32 @@ class MemoryStore:
             self._embed_internal(internal_id)
             record = self._record_by_internal_id(internal_id)
         return record
+
+    def _validate_remember_replay(
+        self,
+        existing: MemoryRecord,
+        scope: Scope,
+        kind: MemoryKind,
+        role: MemoryRole | None,
+        source_memory_ids: Sequence[str],
+        source_relation: str,
+    ) -> None:
+        if (
+            existing.version != 1
+            or existing.scope != scope
+            or existing.kind != kind
+            or existing.role != role
+            or sorted(existing.source_memory_ids) != sorted(source_memory_ids)
+        ):
+            raise ValueError("operation_id belongs to a different memory write")
+        if source_memory_ids:
+            relations = self.connection.execute(
+                """SELECT DISTINCT relation FROM memory_sources
+                WHERE child_id=(SELECT id FROM memories WHERE memory_id=?)""",
+                (existing.memory_id,),
+            ).fetchall()
+            if len(relations) != 1 or relations[0]["relation"] != source_relation:
+                raise ValueError("operation_id belongs to a different memory write")
 
     def _embed_internal(self, internal_id: int) -> bool:
         row = self.connection.execute(
@@ -727,6 +759,11 @@ class MemoryStore:
         values: list[Any] = [scope_id]
         if not include_superseded:
             conditions.append("status='active'")
+        if not include_expired:
+            # Expiry timestamps are stored as fixed-width UTC ISO 8601 strings. Filter before
+            # LIMIT so older expired matches cannot hide later live records.
+            conditions.append("(expires_at IS NULL OR expires_at > ?)")
+            values.append(datetime.now(UTC).isoformat(timespec="microseconds"))
         conditions.extend(["json_extract(metadata_json, ?) = ?"] * len(filters))
         values.extend(filter_terms)
         values.append(limit)
@@ -734,39 +771,32 @@ class MemoryStore:
             f"SELECT id FROM memories WHERE {' AND '.join(conditions)} ORDER BY id LIMIT ?",
             values,
         ).fetchall()
-        records = self._records_by_internal_ids([int(row["id"]) for row in rows])
-        if include_expired:
-            return records
-        now = datetime.now(UTC)
-        return [
-            record
-            for record in records
-            if record.expires_at is None or datetime.fromisoformat(record.expires_at) > now
-        ]
+        return self._records_by_internal_ids([int(row["id"]) for row in rows])
 
     def correct(
         self, memory_id: str, new_content: str, *, operation_id: str | None = None
     ) -> MemoryRecord:
         new_content = self._validate_content(new_content)
-        if operation_id:
-            existing = self._record_for_operation(operation_id, embed=True)
-            if existing is not None:
-                return existing
         target = self.connection.execute(
             "SELECT lineage_id FROM memories WHERE memory_id=?", (memory_id,)
         ).fetchone()
         if target is None:
             raise KeyError(f"memory not found: {memory_id}")
-        current = self.connection.execute(
-            "SELECT * FROM memories WHERE lineage_id=? AND status='active'",
-            (target["lineage_id"],),
-        ).fetchone()
-        if current is None:
-            raise RuntimeError("memory lineage has no active version")
+        if operation_id:
+            existing = self._record_for_operation(operation_id, embed=False)
+            if existing is not None:
+                self._validate_correction_replay(existing, target["lineage_id"])
+                return self._record_for_operation(operation_id, embed=True) or existing
         created_at = utc_now()
         new_memory_id = str(uuid.uuid4())
         try:
             with immediate_transaction(self.connection):
+                current = self.connection.execute(
+                    "SELECT * FROM memories WHERE lineage_id=? AND status='active'",
+                    (target["lineage_id"],),
+                ).fetchone()
+                if current is None:
+                    raise RuntimeError("memory lineage has no active version")
                 self.connection.execute(
                     "UPDATE memories SET status='superseded' WHERE id=?",
                     (int(current["id"]),),
@@ -812,12 +842,19 @@ class MemoryStore:
                 )
         except sqlite3.IntegrityError:
             if operation_id:
-                existing = self._record_for_operation(operation_id, embed=True)
+                existing = self._record_for_operation(operation_id, embed=False)
                 if existing is not None:
-                    return existing
+                    self._validate_correction_replay(existing, target["lineage_id"])
+                    return self._record_for_operation(operation_id, embed=True) or existing
             raise
         self._embed_internal(new_internal_id)
         return self._record_by_internal_id(new_internal_id)
+
+    @staticmethod
+    def _validate_correction_replay(existing: MemoryRecord, lineage_id: str) -> MemoryRecord:
+        if existing.lineage_id != lineage_id or existing.version <= 1:
+            raise ValueError("operation_id belongs to a different correction")
+        return existing
 
     def recall(
         self,
@@ -1131,21 +1168,56 @@ class MemoryStore:
                     queue.extend(children.get(member_id, ()))
 
         selected_rows = [by_id[item] for item in sorted(selected)]
+        memory_ids = tuple(row["memory_id"] for row in selected_rows)
+        lineage_ids = tuple(sorted({row["lineage_id"] for row in selected_rows}))
+        kinds = dict(Counter(row["kind"] for row in selected_rows))
+        digest_payload = {
+            "requested_memory_id": requested_memory_id,
+            "requested_scope": requested_scope.to_dict() if requested_scope else None,
+            "memory_ids": memory_ids,
+            "lineage_ids": lineage_ids,
+            "kinds": kinds,
+        }
+        digest = hashlib.sha256(
+            json.dumps(digest_payload, sort_keys=True, separators=(",", ":")).encode()
+        ).hexdigest()
         return DeletePreview(
             requested_memory_id=requested_memory_id,
             requested_scope=requested_scope,
-            memory_ids=tuple(row["memory_id"] for row in selected_rows),
-            lineage_ids=tuple(sorted({row["lineage_id"] for row in selected_rows})),
-            kinds=dict(Counter(row["kind"] for row in selected_rows)),
+            memory_ids=memory_ids,
+            lineage_ids=lineage_ids,
+            kinds=kinds,
+            digest=digest,
         )
 
-    def forget(self, memory_id: str) -> DeleteReceipt:
-        return self._delete_preview(self.preview_forget(memory_id))
+    def forget(self, memory_id: str, *, expected_digest: str | None = None) -> DeleteReceipt:
+        with immediate_transaction(self.connection):
+            preview = self.preview_forget(memory_id)
+            if expected_digest is not None and expected_digest != preview.digest:
+                raise ValueError("hard deletion preview changed; request a new preview")
+            receipt = self._delete_preview(preview)
+        self._finish_hard_delete(receipt)
+        return receipt
 
-    def forget_scope(self, scope: Scope) -> DeleteReceipt:
-        return self._delete_preview(self.preview_forget_scope(scope))
+    def forget_scope(
+        self, scope: Scope, *, expected_digest: str | None = None
+    ) -> DeleteReceipt:
+        with immediate_transaction(self.connection):
+            preview = self.preview_forget_scope(scope)
+            if expected_digest is not None and expected_digest != preview.digest:
+                raise ValueError("hard deletion preview changed; request a new preview")
+            receipt = self._delete_preview(preview)
+        self._finish_hard_delete(receipt)
+        return receipt
+
+    def _finish_hard_delete(self, receipt: DeleteReceipt) -> None:
+        if receipt.deleted_memories:
+            self.connection.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+            self.connection.execute("PRAGMA incremental_vacuum")
 
     def _delete_preview(self, preview: DeletePreview) -> DeleteReceipt:
+        if not self.connection.in_transaction:
+            raise RuntimeError("hard deletion requires a write transaction")
         if not preview.memory_ids:
             return DeleteReceipt(preview, 0, 0, True)
         internal_ids: list[int] = []
@@ -1165,25 +1237,24 @@ class MemoryStore:
                 "SELECT 1 FROM memory_vectors WHERE rowid=?", (internal_id,)
             ).fetchone()
         )
-        with immediate_transaction(self.connection):
-            for internal_chunk in self._chunks(internal_ids):
-                internal_placeholders = ",".join("?" for _ in internal_chunk)
-                self.connection.execute(
-                    f"""
-                    DELETE FROM memory_sources
-                    WHERE child_id IN ({internal_placeholders})
-                       OR source_id IN ({internal_placeholders})
-                    """,
-                    (*internal_chunk, *internal_chunk),
-                )
-            for internal_id in internal_ids:
-                self.connection.execute("DELETE FROM memory_vectors WHERE rowid=?", (internal_id,))
-            for internal_chunk in self._chunks(internal_ids):
-                internal_placeholders = ",".join("?" for _ in internal_chunk)
-                self.connection.execute(
-                    f"DELETE FROM memories WHERE id IN ({internal_placeholders})",
-                    internal_chunk,
-                )
+        for internal_chunk in self._chunks(internal_ids):
+            internal_placeholders = ",".join("?" for _ in internal_chunk)
+            self.connection.execute(
+                f"""
+                DELETE FROM memory_sources
+                WHERE child_id IN ({internal_placeholders})
+                   OR source_id IN ({internal_placeholders})
+                """,
+                (*internal_chunk, *internal_chunk),
+            )
+        for internal_id in internal_ids:
+            self.connection.execute("DELETE FROM memory_vectors WHERE rowid=?", (internal_id,))
+        for internal_chunk in self._chunks(internal_ids):
+            internal_placeholders = ",".join("?" for _ in internal_chunk)
+            self.connection.execute(
+                f"DELETE FROM memories WHERE id IN ({internal_placeholders})",
+                internal_chunk,
+            )
 
         remaining_memories = 0
         for public_chunk in self._chunks(preview.memory_ids):
@@ -1215,9 +1286,9 @@ class MemoryStore:
                 ).fetchone()[0]
             )
         verified = remaining_memories == 0 and remaining_vectors == 0 and remaining_edges == 0
-        self.connection.execute("PRAGMA wal_checkpoint(TRUNCATE)")
-        self.connection.execute("PRAGMA incremental_vacuum")
-        return DeleteReceipt(preview, len(internal_ids), vector_count, verified)
+        if not verified:
+            raise RuntimeError("hard deletion verification failed; transaction rolled back")
+        return DeleteReceipt(preview, len(internal_ids), vector_count, True)
 
     def preview_expiry_purge(self, as_of: str | None = None) -> ExpiryPurgePreview:
         """Preview expired rows that can be removed without deleting live descendants."""
@@ -1538,19 +1609,23 @@ class MemoryStore:
                 """
             )
         }
-        memory_ids = {
-            int(row["id"]) for row in self.connection.execute("SELECT id FROM memories").fetchall()
-        }
-        vector_ids = {
-            int(row["rowid"])
-            for row in self.connection.execute("SELECT rowid FROM memory_vectors").fetchall()
-        }
-        ready_ids = {
-            int(row["id"])
-            for row in self.connection.execute(
-                "SELECT id FROM memories WHERE status='active' AND embedding_status='ready'"
-            ).fetchall()
-        }
+        memory_count = int(self.connection.execute("SELECT count(*) FROM memories").fetchone()[0])
+        orphan_vectors = int(
+            self.connection.execute(
+                """SELECT count(*) FROM (
+                    SELECT rowid FROM memory_vectors
+                    EXCEPT SELECT id FROM memories
+                )"""
+            ).fetchone()[0]
+        )
+        missing_vectors = int(
+            self.connection.execute(
+                """SELECT count(*) FROM (
+                    SELECT id FROM memories WHERE status='active' AND embedding_status='ready'
+                    EXCEPT SELECT rowid FROM memory_vectors
+                )"""
+            ).fetchone()[0]
+        )
         return {
             "database": str(self.path),
             "store_id": self.manifest["store_id"],
@@ -1562,11 +1637,11 @@ class MemoryStore:
                 if self.default_relevance_filter is not None
                 else None
             ),
-            "memories": len(memory_ids),
+            "memories": memory_count,
             "by_kind": by_kind,
             "by_embedding_status": by_embedding,
-            "orphan_vectors": len(vector_ids - memory_ids),
-            "missing_vectors": len(ready_ids - vector_ids),
+            "orphan_vectors": orphan_vectors,
+            "missing_vectors": missing_vectors,
             "keyword_index": self._keyword_index_status(),
             "integrity_check": self.connection.execute("PRAGMA integrity_check").fetchone()[0],
         }

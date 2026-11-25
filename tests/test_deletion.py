@@ -1,6 +1,10 @@
 from __future__ import annotations
 
-from llm_memory_store import MemoryStore, Scope
+import sqlite3
+
+import pytest
+
+from llm_memory_store import DeterministicEmbedder, MemoryStore, Scope
 
 
 def test_delete_preview_and_cascade_cover_lineages_and_descendants(store: MemoryStore) -> None:
@@ -59,3 +63,70 @@ def test_forget_empty_scope_is_idempotent(store: MemoryStore) -> None:
     receipt = store.forget_scope(Scope.private("me", "test", "missing"))
     assert receipt.verified is True
     assert receipt.deleted_memories == 0
+
+
+def test_forget_rejects_stale_descendant_preview_without_deleting(tmp_path) -> None:
+    path = tmp_path / "memory.sqlite3"
+    scope = Scope.private("me", "test", "agent")
+    with (
+        MemoryStore(path, DeterministicEmbedder()) as deleting,
+        MemoryStore(path, DeterministicEmbedder()) as writing,
+    ):
+        source = deleting.remember("fact", "Source fact", scope)
+        preview = deleting.preview_forget(source.memory_id)
+        child = writing.remember(
+            "summary", "Derived summary", scope, source_memory_ids=[source.memory_id]
+        )
+
+        with pytest.raises(ValueError, match="preview changed"):
+            deleting.forget(source.memory_id, expected_digest=preview.digest)
+        assert deleting.get(child.memory_id).source_memory_ids == (source.memory_id,)
+        assert deleting.get(source.memory_id).memory_id == source.memory_id
+
+        receipt = deleting.forget(
+            source.memory_id,
+            expected_digest=deleting.preview_forget(source.memory_id).digest,
+        )
+        assert receipt.verified is True
+        assert receipt.deleted_memories == 2
+        with pytest.raises(KeyError):
+            deleting.get(child.memory_id)
+
+
+def test_forget_holds_write_lock_while_selecting_descendants(tmp_path, monkeypatch) -> None:
+    path = tmp_path / "memory.sqlite3"
+    scope = Scope.private("me", "test", "agent")
+    with (
+        MemoryStore(path, DeterministicEmbedder()) as deleting,
+        MemoryStore(path, DeterministicEmbedder()) as writing,
+    ):
+        source = deleting.remember("fact", "Source fact", scope)
+        writing.connection.execute("PRAGMA busy_timeout=100")
+        original_preview = deleting.preview_forget
+
+        def preview_during_delete(memory_id: str):
+            assert deleting.connection.in_transaction
+            preview = original_preview(memory_id)
+            with pytest.raises(sqlite3.OperationalError, match="database is locked"):
+                writing.remember(
+                    "summary", "Concurrent derived summary", scope, source_memory_ids=[memory_id]
+                )
+            return preview
+
+        monkeypatch.setattr(deleting, "preview_forget", preview_during_delete)
+        receipt = deleting.forget(source.memory_id)
+        assert receipt.verified is True
+        assert receipt.deleted_memories == 1
+        assert deleting.status()["memories"] == 0
+
+
+def test_forget_scope_rejects_stale_preview(tmp_path) -> None:
+    path = tmp_path / "memory.sqlite3"
+    scope = Scope.private("me", "test", "agent")
+    with MemoryStore(path, DeterministicEmbedder()) as store:
+        preview = store.preview_forget_scope(scope)
+        assert preview.count == 0
+        memory = store.remember("fact", "New memory", scope)
+        with pytest.raises(ValueError, match="preview changed"):
+            store.forget_scope(scope, expected_digest=preview.digest)
+        assert store.get(memory.memory_id).memory_id == memory.memory_id

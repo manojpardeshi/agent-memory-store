@@ -147,3 +147,69 @@ def test_persistent_429_eventually_stops(monkeypatch) -> None:
         runner._guarded_call(
             _ledger(), "k", b"{}", max_completion_tokens=10, max_call_usd=0.5, timeout_seconds=1
         )
+
+
+def test_interrupted_question_cannot_be_reissued_on_resume(tmp_path, monkeypatch) -> None:
+    import scripts.run_memorybench_kimi_baseline as runner
+
+    dataset = tmp_path / "dataset.json"
+    dataset.write_text("{}", encoding="utf-8")
+    selection = tmp_path / "selection.json"
+    selection.write_text(json.dumps({"question_ids": ["q1"]}), encoding="utf-8")
+    checkpoint = tmp_path / "checkpoint.json"
+    checkpoint.write_text("{}", encoding="utf-8")
+    output = tmp_path / "report.json"
+    entry = {
+        "question": "What happened?",
+        "groundTruth": "Answer",
+        "questionType": "single-session-user",
+        "questionDate": "2026-01-01",
+    }
+    monkeypatch.setattr(runner, "_sha256", lambda path: DATASET_SHA256)
+    monkeypatch.setattr(runner, "_merge_checkpoints", lambda paths: {"q1": entry})
+    monkeypatch.setattr(runner, "load_question_dates", lambda path: {})
+    monkeypatch.setattr(runner, "_search_results", lambda entry, path: [])
+    calls = 0
+
+    def uncertain_call(*args, **kwargs):
+        nonlocal calls
+        calls += 1
+        raise TimeoutError("response status unknown")
+
+    monkeypatch.setattr(runner, "run_kimi_call", uncertain_call)
+    kwargs = {
+        "dataset": dataset,
+        "selection": selection,
+        "checkpoints": [checkpoint],
+        "output": output,
+        "api_key": "secret",
+        "max_total_usd": 5.0,
+        "timeout_seconds": 1,
+    }
+    with pytest.raises(TimeoutError, match="status unknown"):
+        runner.run_baseline(**kwargs)
+    assert json.loads(output.read_text(encoding="utf-8"))["in_flight_question"] == "q1"
+    with pytest.raises(BaselineRunError, match="uncertain in-flight"):
+        runner.run_baseline(**kwargs)
+    assert calls == 1
+
+
+def test_incomplete_legacy_report_cannot_resume_without_call_marker() -> None:
+    import scripts.run_memorybench_kimi_baseline as runner
+
+    report = {
+        "model": runner.MODEL,
+        "experiment_id": runner.EXPERIMENT_ID,
+        "question_ids": ["q1"],
+        "input_identity": {"dataset_sha256": "a"},
+        "budget": {"max_total_usd": 5.0},
+        "questions": {},
+    }
+    with pytest.raises(BaselineRunError, match="legacy incomplete"):
+        runner._validate_resume_report(
+            report,
+            experiment_id=runner.EXPERIMENT_ID,
+            question_ids=["q1"],
+            input_identity={"dataset_sha256": "a"},
+            max_total_usd=5.0,
+        )

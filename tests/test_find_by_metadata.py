@@ -60,6 +60,23 @@ def test_expired_memories_are_excluded_by_default(store) -> None:
     assert len(store.find_by_metadata(scope, {"tag": "t"}, include_expired=True)) == 2
 
 
+def test_expired_matches_do_not_consume_the_result_limit(store) -> None:
+    scope = _scope()
+    past = (datetime.now(UTC) - timedelta(minutes=1)).isoformat()
+    for index in range(3):
+        store.remember(
+            "fact", f"expired {index}", scope, metadata={"tag": "t"}, expires_at=past
+        )
+    live = store.remember("fact", "live match", scope, metadata={"tag": "t"})
+
+    found = store.find_by_metadata(scope, {"tag": "t"}, limit=1)
+    assert [record.memory_id for record in found] == [live.memory_id]
+    assert [
+        record.content
+        for record in store.find_by_metadata(scope, {"tag": "t"}, limit=1, include_expired=True)
+    ] == ["expired 0"]
+
+
 def test_superseded_memories_follow_the_flag(store) -> None:
     scope = _scope()
     original = store.remember("fact", "old value", scope, metadata={"tag": "t"})

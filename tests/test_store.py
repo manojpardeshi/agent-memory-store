@@ -49,6 +49,32 @@ def test_remember_and_recall_private_scope(store: MemoryStore) -> None:
     assert all(item.memory.scope == codex for item in results)
 
 
+def test_status_counts_missing_and_orphan_vectors(store: MemoryStore) -> None:
+    scope = Scope.private("me", "test", "status")
+    missing = store.remember("fact", "missing vector", scope)
+    intact = store.remember("fact", "intact vector", scope)
+    rows = store.connection.execute(
+        "SELECT id, scope_id, memory_id FROM memories WHERE memory_id IN (?, ?)",
+        (missing.memory_id, intact.memory_id),
+    ).fetchall()
+    by_memory_id = {row["memory_id"]: row for row in rows}
+    missing_id = int(by_memory_id[missing.memory_id]["id"])
+    intact_id = int(by_memory_id[intact.memory_id]["id"])
+    vector = store.connection.execute(
+        "SELECT embedding FROM memory_vectors WHERE rowid=?", (intact_id,)
+    ).fetchone()["embedding"]
+    store.connection.execute("DELETE FROM memory_vectors WHERE rowid=?", (missing_id,))
+    store.connection.execute(
+        "INSERT INTO memory_vectors(rowid, embedding, scope_id) VALUES(?, ?, ?)",
+        (10_000_000, vector, int(by_memory_id[intact.memory_id]["scope_id"])),
+    )
+
+    report = store.status()
+    assert report["memories"] == 2
+    assert report["missing_vectors"] == 1
+    assert report["orphan_vectors"] == 1
+
+
 def test_opt_in_relative_relevance_filter_preserves_default_and_can_shorten_results(
     tmp_path,
 ) -> None:
@@ -173,6 +199,86 @@ def test_operation_id_is_idempotent(store: MemoryStore) -> None:
     assert store.status()["memories"] == 1
 
 
+def test_operation_id_replay_cannot_cross_scope_or_write_type(store: MemoryStore) -> None:
+    first_scope = Scope.private("me", "test", "first")
+    second_scope = Scope.private("me", "test", "second")
+    first = store.remember("fact", "private first fact", first_scope, operation_id="same-op")
+
+    with pytest.raises(ValueError, match="different memory write"):
+        store.remember("fact", "second fact", second_scope, operation_id="same-op")
+    with pytest.raises(ValueError, match="different memory write"):
+        store.remember("preference", "new kind", first_scope, operation_id="same-op")
+    with pytest.raises(ValueError, match="different correction"):
+        store.correct(first.memory_id, "changed", operation_id="same-op")
+    assert store.status()["memories"] == 1
+
+
+def test_operation_id_replay_preserves_provenance(store: MemoryStore) -> None:
+    scope = Scope.private("me", "test", "agent")
+    first_source = store.remember("fact", "first source", scope)
+    second_source = store.remember("fact", "second source", scope)
+    derived = store.remember(
+        "summary",
+        "derived",
+        scope,
+        source_memory_ids=[first_source.memory_id],
+        source_relation="summarizes",
+        operation_id="derived-op",
+    )
+
+    with pytest.raises(ValueError, match="different memory write"):
+        store.remember(
+            "summary",
+            "different source",
+            scope,
+            source_memory_ids=[second_source.memory_id],
+            source_relation="summarizes",
+            operation_id="derived-op",
+        )
+    with pytest.raises(ValueError, match="different memory write"):
+        store.remember(
+            "summary",
+            "different relation",
+            scope,
+            source_memory_ids=[first_source.memory_id],
+            source_relation="derived_from",
+            operation_id="derived-op",
+        )
+    assert (
+        store.remember(
+            "summary",
+            "ignored replay",
+            scope,
+            source_memory_ids=[first_source.memory_id],
+            source_relation="summarizes",
+            operation_id="derived-op",
+        )
+        == derived
+    )
+
+
+def test_correction_operation_id_rejects_another_lineage(store: MemoryStore) -> None:
+    scope = Scope.private("me", "test", "agent")
+    first = store.remember("fact", "first", scope)
+    second = store.remember("fact", "second", scope)
+    corrected = store.correct(first.memory_id, "first corrected", operation_id="correction-op")
+
+    with pytest.raises(ValueError, match="different correction"):
+        store.correct(second.memory_id, "second corrected", operation_id="correction-op")
+    with pytest.raises(ValueError, match="different memory write"):
+        store.remember(
+            "fact",
+            "cannot replay a correction as a new memory",
+            scope,
+            source_memory_ids=[first.memory_id],
+            operation_id="correction-op",
+        )
+    assert store.get(second.memory_id).status == "active"
+    assert (
+        store.correct(first.memory_id, "ignored replay", operation_id="correction-op") == corrected
+    )
+
+
 def test_concurrent_operation_id_race_returns_one_record(tmp_path) -> None:
     path = tmp_path / "memory.sqlite3"
     barrier = Barrier(2)
@@ -207,6 +313,71 @@ def test_concurrent_operation_id_race_returns_one_record(tmp_path) -> None:
     assert len(set(memory_ids)) == 1
     with MemoryStore(path, DeterministicEmbedder(64)) as verified:
         assert verified.status()["memories"] == 1
+
+
+def test_concurrent_operation_id_collision_does_not_replay_other_scope(tmp_path) -> None:
+    path = tmp_path / "memory.sqlite3"
+    barrier = Barrier(2)
+
+    class RacingStore(MemoryStore):
+        def _record_for_operation(self, operation_id: str, *, embed: bool):
+            record = super()._record_for_operation(operation_id, embed=embed)
+            if record is None:
+                barrier.wait(timeout=5)
+            return record
+
+    with MemoryStore(path, DeterministicEmbedder(64)):
+        pass
+
+    def write_once(owner: str) -> str | None:
+        with RacingStore(path, DeterministicEmbedder(64)) as racing_store:
+            try:
+                return racing_store.remember(
+                    "fact",
+                    f"{owner} fact",
+                    Scope.private("me", "test", owner),
+                    operation_id="racing-op",
+                ).memory_id
+            except ValueError as error:
+                assert "different memory write" in str(error)
+                return None
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        results = list(executor.map(write_once, ("first", "second")))
+
+    assert sum(result is not None for result in results) == 1
+    with MemoryStore(path, DeterministicEmbedder(64)) as verified:
+        assert verified.status()["memories"] == 1
+
+
+def test_concurrent_corrections_advance_lineage_versions(tmp_path) -> None:
+    path = tmp_path / "memory.sqlite3"
+    scope = Scope.private("me", "test", "agent")
+    with MemoryStore(path, DeterministicEmbedder(64)) as initial_store:
+        original = initial_store.remember("fact", "original", scope)
+    barrier = Barrier(3)
+
+    def correct_once(index: int):
+        with MemoryStore(path, DeterministicEmbedder(64)) as correcting_store:
+            barrier.wait(timeout=5)
+            return correcting_store.correct(
+                original.memory_id,
+                f"correction {index}",
+                operation_id=f"correction-{index}",
+            )
+
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        corrections = list(executor.map(correct_once, range(3)))
+
+    assert sorted(record.version for record in corrections) == [2, 3, 4]
+    assert {record.lineage_id for record in corrections} == {original.lineage_id}
+    with MemoryStore(path, DeterministicEmbedder(64)) as verified:
+        assert verified.status()["memories"] == 4
+        active = verified.connection.execute(
+            "SELECT version FROM memories WHERE lineage_id=? AND status='active'",
+            (original.lineage_id,),
+        ).fetchall()
+        assert [row["version"] for row in active] == [4]
 
 
 def test_correction_supersedes_and_excludes_stale_vector(store: MemoryStore) -> None:
