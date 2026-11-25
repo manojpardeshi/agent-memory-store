@@ -45,3 +45,9 @@ existing benchmark decisions unchanged unless new independent evidence meets the
   lineage, and active-version reads happen under the SQLite write lock so concurrent corrections
   advance versions serially. Full Python suite: 358 passed; Ruff, lock check, and package build
   passed. PR #5.
+- **Nov 28 complete early:** synthetic 1,000/10,000/50,000-memory measurements showed `status()`
+  spent Python memory on three full ID sets. At 50,000 memories, SQLite `EXCEPT` counts reduced
+  status latency from 0.546–0.575 s to 0.376–0.377 s and traced Python peak allocation from
+  8.929–9.020 MiB to 0.002–0.004 MiB. Full status reports and integrity results matched; a
+  focused regression also counts a missing and an orphan vector. Full Python suite: 354 passed;
+  Ruff, lock check, and package build passed. PR #7.
