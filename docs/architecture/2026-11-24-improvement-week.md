@@ -38,4 +38,10 @@ existing benchmark decisions unchanged unless new independent evidence meets the
   a previously charged call on resume. The paired runner persists an in-flight reservation and
   charges its ceiling on recovery, but can reissue the uncertain slot. A new question alarm would
   not make either path billing-safe. No paid calls were made, and no alarm was added to those
-  runners. A separate resume-policy decision and durable call ledger are needed before promotion.
+  runners. The Nov 26 completion check is still open: a separate resume-policy decision and durable
+  call ledger are needed before promotion.
+- **Nov 27 complete early:** operation-ID replay now rejects scope, write-type, role, and provenance
+  collisions, including a concurrent insert collision. Correction replay is restricted to the same
+  lineage, and active-version reads happen under the SQLite write lock so concurrent corrections
+  advance versions serially. Full Python suite: 358 passed; Ruff, lock check, and package build
+  passed. PR #5.
