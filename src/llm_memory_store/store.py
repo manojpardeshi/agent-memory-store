@@ -487,9 +487,12 @@ class MemoryStore:
         expires_at = self._validate_expires_at(expires_at)
         occurred_at = self._validate_occurred_at(occurred_at)
         if operation_id:
-            existing = self._record_for_operation(operation_id, embed=embed)
+            existing = self._record_for_operation(operation_id, embed=False)
             if existing is not None:
-                return existing
+                self._validate_remember_replay(
+                    existing, scope, kind, role, source_memory_ids, source_relation
+                )
+                return self._record_for_operation(operation_id, embed=embed) or existing
 
         memory_id = str(uuid.uuid4())
         lineage_id = str(uuid.uuid4())
@@ -536,9 +539,12 @@ class MemoryStore:
                     )
         except sqlite3.IntegrityError:
             if operation_id:
-                existing = self._record_for_operation(operation_id, embed=embed)
+                existing = self._record_for_operation(operation_id, embed=False)
                 if existing is not None:
-                    return existing
+                    self._validate_remember_replay(
+                        existing, scope, kind, role, source_memory_ids, source_relation
+                    )
+                    return self._record_for_operation(operation_id, embed=embed) or existing
             raise
 
         if embed:
@@ -574,6 +580,32 @@ class MemoryStore:
             self._embed_internal(internal_id)
             record = self._record_by_internal_id(internal_id)
         return record
+
+    def _validate_remember_replay(
+        self,
+        existing: MemoryRecord,
+        scope: Scope,
+        kind: MemoryKind,
+        role: MemoryRole | None,
+        source_memory_ids: Sequence[str],
+        source_relation: str,
+    ) -> None:
+        if (
+            existing.version != 1
+            or existing.scope != scope
+            or existing.kind != kind
+            or existing.role != role
+            or sorted(existing.source_memory_ids) != sorted(source_memory_ids)
+        ):
+            raise ValueError("operation_id belongs to a different memory write")
+        if source_memory_ids:
+            relations = self.connection.execute(
+                """SELECT DISTINCT relation FROM memory_sources
+                WHERE child_id=(SELECT id FROM memories WHERE memory_id=?)""",
+                (existing.memory_id,),
+            ).fetchall()
+            if len(relations) != 1 or relations[0]["relation"] != source_relation:
+                raise ValueError("operation_id belongs to a different memory write")
 
     def _embed_internal(self, internal_id: int) -> bool:
         row = self.connection.execute(
@@ -748,25 +780,26 @@ class MemoryStore:
         self, memory_id: str, new_content: str, *, operation_id: str | None = None
     ) -> MemoryRecord:
         new_content = self._validate_content(new_content)
-        if operation_id:
-            existing = self._record_for_operation(operation_id, embed=True)
-            if existing is not None:
-                return existing
         target = self.connection.execute(
             "SELECT lineage_id FROM memories WHERE memory_id=?", (memory_id,)
         ).fetchone()
         if target is None:
             raise KeyError(f"memory not found: {memory_id}")
-        current = self.connection.execute(
-            "SELECT * FROM memories WHERE lineage_id=? AND status='active'",
-            (target["lineage_id"],),
-        ).fetchone()
-        if current is None:
-            raise RuntimeError("memory lineage has no active version")
+        if operation_id:
+            existing = self._record_for_operation(operation_id, embed=False)
+            if existing is not None:
+                self._validate_correction_replay(existing, target["lineage_id"])
+                return self._record_for_operation(operation_id, embed=True) or existing
         created_at = utc_now()
         new_memory_id = str(uuid.uuid4())
         try:
             with immediate_transaction(self.connection):
+                current = self.connection.execute(
+                    "SELECT * FROM memories WHERE lineage_id=? AND status='active'",
+                    (target["lineage_id"],),
+                ).fetchone()
+                if current is None:
+                    raise RuntimeError("memory lineage has no active version")
                 self.connection.execute(
                     "UPDATE memories SET status='superseded' WHERE id=?",
                     (int(current["id"]),),
@@ -812,12 +845,19 @@ class MemoryStore:
                 )
         except sqlite3.IntegrityError:
             if operation_id:
-                existing = self._record_for_operation(operation_id, embed=True)
+                existing = self._record_for_operation(operation_id, embed=False)
                 if existing is not None:
-                    return existing
+                    self._validate_correction_replay(existing, target["lineage_id"])
+                    return self._record_for_operation(operation_id, embed=True) or existing
             raise
         self._embed_internal(new_internal_id)
         return self._record_by_internal_id(new_internal_id)
+
+    @staticmethod
+    def _validate_correction_replay(existing: MemoryRecord, lineage_id: str) -> MemoryRecord:
+        if existing.lineage_id != lineage_id or existing.version <= 1:
+            raise ValueError("operation_id belongs to a different correction")
+        return existing
 
     def recall(
         self,
