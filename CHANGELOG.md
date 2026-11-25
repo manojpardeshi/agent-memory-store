@@ -12,6 +12,8 @@ All notable changes to this project are documented here.
   a changed preview aborts without deleting. The Python API accepts an optional expected digest.
 - `find_by_metadata(..., limit=N)` now excludes expired rows in SQLite before applying `LIMIT`.
   Older expired matches no longer hide later live matches or make a nonempty result appear empty.
+- JSON export and SQLite backup now publish with an atomic no-clobber link when overwrite is off.
+  A destination created after the initial existence check is preserved instead of replaced.
 
 - `sentence-transformers/all-MiniLM-L6-v2` is re-certified. Today's model download gives a
   different behaviour fingerprint from July's certified one, so new MiniLM stores silently ran

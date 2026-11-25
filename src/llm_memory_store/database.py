@@ -388,10 +388,7 @@ def consistent_backup(
                 raise RuntimeError(f"backup integrity check failed: {result}")
         finally:
             check.close()
-        if destination.exists() and not overwrite:
-            raise FileExistsError(f"backup destination already exists: {destination}")
-        os.replace(temporary, destination)
-        destination.chmod(0o600)
+        _publish_private_file(temporary, destination, overwrite=overwrite)
     finally:
         with suppress(FileNotFoundError):
             temporary.unlink()
@@ -413,13 +410,21 @@ def secure_write_text(destination: Path, content: str, *, overwrite: bool = Fals
             handle.flush()
             os.fsync(handle.fileno())
         temporary.chmod(0o600)
-        if destination.exists() and not overwrite:
-            raise FileExistsError(f"destination already exists: {destination}")
-        os.replace(temporary, destination)
-        destination.chmod(0o600)
+        _publish_private_file(temporary, destination, overwrite=overwrite)
     finally:
         with suppress(FileNotFoundError):
             temporary.unlink()
+
+
+def _publish_private_file(temporary: Path, destination: Path, *, overwrite: bool) -> None:
+    """Publish a complete owner-only file without replacing a concurrently created destination."""
+
+    if overwrite:
+        os.replace(temporary, destination)
+    else:
+        # The temporary file is in the destination directory, so linking it is an atomic
+        # no-clobber publication. A second creator wins with FileExistsError, not a lost file.
+        os.link(temporary, destination)
 
 
 def restore_database(source: Path, destination: Path) -> None:
