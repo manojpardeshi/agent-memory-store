@@ -219,6 +219,32 @@ def _summary(report: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _validate_resume_report(
+    report: dict[str, Any],
+    *,
+    experiment_id: str,
+    question_ids: list[str],
+    input_identity: dict[str, Any],
+    max_total_usd: float,
+) -> None:
+    if report.get("model") != MODEL or report.get("experiment_id") != experiment_id:
+        raise BaselineRunError("existing report belongs to a different experiment or model")
+    if report.get("question_ids") != question_ids or report.get("input_identity") != input_identity:
+        raise BaselineRunError("existing report has different frozen inputs")
+    if report.get("budget", {}).get("max_total_usd") != max_total_usd:
+        raise BaselineRunError("existing report has a different budget")
+    if not isinstance(report.get("questions"), dict):
+        raise BaselineRunError("existing report has invalid questions")
+    if report.get("in_flight_question") is not None:
+        raise BaselineRunError(
+            "uncertain in-flight Kimi question; automatic resume could repeat a billed call"
+        )
+    if "in_flight_question" not in report and any(
+        question_id not in report["questions"] for question_id in question_ids
+    ):
+        raise BaselineRunError("legacy incomplete report has no in-flight call marker")
+
+
 def run_baseline(
     *,
     dataset: Path,
@@ -242,11 +268,21 @@ def run_baseline(
     if missing:
         raise BaselineRunError(f"checkpoints are missing questions: {missing[:5]}")
     question_dates = load_question_dates(dataset)
+    input_identity = {
+        "dataset_sha256": dataset_sha,
+        "selection_sha256": _sha256(selection),
+        "checkpoint_sha256": [_sha256(p) for p in checkpoints],
+    }
 
     if output.exists():
         report = json.loads(output.read_text(encoding="utf-8"))
-        if report.get("model") != MODEL or report.get("experiment_id") != experiment_id:
-            raise BaselineRunError("existing report belongs to a different experiment or model")
+        _validate_resume_report(
+            report,
+            experiment_id=experiment_id,
+            question_ids=question_ids,
+            input_identity=input_identity,
+            max_total_usd=max_total_usd,
+        )
     else:
         report = {
             "schema_version": 1,
@@ -257,6 +293,7 @@ def run_baseline(
             "judge_repeats": JUDGE_REPEATS,
             "question_ids": question_ids,
             "questions": {},
+            "in_flight_question": None,
             "budget": {"max_total_usd": max_total_usd, "spent_usd": 0.0},
             "protocol": {
                 "answer_system_prompt_sha256": _sha256_text(ANSWER_SYSTEM_PROMPT),
@@ -272,11 +309,7 @@ def run_baseline(
                 "per-question answers and labels for these ids may be aggregated but must "
                 "not be read to design or tune a candidate; they are held for validation"
             ),
-            "input_identity": {
-                "dataset_sha256": dataset_sha,
-                "selection_sha256": _sha256(selection),
-                "checkpoint_sha256": [_sha256(p) for p in checkpoints],
-            },
+            "input_identity": input_identity,
             "started_at": datetime.now(UTC).isoformat(),
         }
         _atomic_write_json(output, report)
@@ -290,6 +323,8 @@ def run_baseline(
 
         resolved_date = question_dates.get(question_id) or entry.get("questionDate")
         prompt = build_answer_prompt(entry["question"], results, resolved_date)
+        report["in_flight_question"] = question_id
+        _atomic_write_json(output, report)
         answer_call = _guarded_call(
             report,
             api_key,
@@ -342,6 +377,7 @@ def run_baseline(
             "judge_unanimous": len(set(votes)) == 1,
             "label": label,
         }
+        report["in_flight_question"] = None
         _atomic_write_json(output, report)
         print(
             f"[{position}/{len(pending)}] {question_id} {label} "
