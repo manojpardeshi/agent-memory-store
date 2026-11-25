@@ -6,6 +6,11 @@ All notable changes to this project are documented here.
 
 ### Fixed
 
+- Operation-ID replays now validate the original memory scope, write type, role, and source
+  provenance before returning a record. Correction replays must target the same lineage. A
+  collision across scopes or write types raises `ValueError`, including after a concurrent insert.
+- Corrections read the active lineage version under the write lock, so concurrent corrections
+  advance versions in order instead of racing on the same version number.
 - `sentence-transformers/all-MiniLM-L6-v2` is re-certified. Today's model download gives a
   different behaviour fingerprint from July's certified one, so new MiniLM stores silently ran
   without the certified relevance filter. Re-running the July certification gave identical
