@@ -528,7 +528,7 @@ def _validate_resume(
         raise PairedDevelopmentError("saved run exceeded the shared budget")
 
 
-def _recover_in_flight(report: dict[str, Any], output: Path) -> None:
+def _reject_in_flight(report: dict[str, Any]) -> None:
     pending = report.get("in_flight")
     if pending is None:
         return
@@ -537,16 +537,10 @@ def _recover_in_flight(report: dict[str, Any], output: Path) -> None:
         JUDGE_MAX_CALL_USD,
     ):
         raise PairedDevelopmentError("saved in-flight reservation is invalid")
-    reserved = float(pending["reserved_usd"])
-    report["budget"]["spent_usd"] = round(
-        float(report["budget"]["spent_usd"]) + reserved, 9
+    raise PairedDevelopmentError(
+        f"uncertain in-flight Kimi call {pending.get('slot')}; "
+        "automatic resume would reissue a potentially billed request"
     )
-    report["budget"]["unreconciled_reservations_usd"] = round(
-        float(report["budget"]["unreconciled_reservations_usd"]) + reserved, 9
-    )
-    report["unreconciled_calls"].append(pending)
-    report["in_flight"] = None
-    _atomic_write_json(output, report)
 
 
 def _recover_known_http_429(report: dict[str, Any], output: Path) -> None:
@@ -733,7 +727,7 @@ def run_paired_development(
         if recover_known_http_429:
             _recover_known_http_429(report, output)
         else:
-            _recover_in_flight(report, output)
+            _reject_in_flight(report)
         report["status"] = "running"
         _atomic_write_json(output, report)
     else:
