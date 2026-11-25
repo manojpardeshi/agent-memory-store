@@ -10,6 +10,8 @@ All notable changes to this project are documented here.
   one SQLite write transaction. A concurrent derived memory cannot survive with its source link
   removed. CLI and MCP hard deletion require the preview digest or an explicit force-current choice;
   a changed preview aborts without deleting. The Python API accepts an optional expected digest.
+- `find_by_metadata(..., limit=N)` now excludes expired rows in SQLite before applying `LIMIT`.
+  Older expired matches no longer hide later live matches or make a nonempty result appear empty.
 
 - `sentence-transformers/all-MiniLM-L6-v2` is re-certified. Today's model download gives a
   different behaviour fingerprint from July's certified one, so new MiniLM stores silently ran

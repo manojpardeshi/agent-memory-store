@@ -727,6 +727,11 @@ class MemoryStore:
         values: list[Any] = [scope_id]
         if not include_superseded:
             conditions.append("status='active'")
+        if not include_expired:
+            # Expiry timestamps are stored as fixed-width UTC ISO 8601 strings. Filter before
+            # LIMIT so older expired matches cannot hide later live records.
+            conditions.append("(expires_at IS NULL OR expires_at > ?)")
+            values.append(datetime.now(UTC).isoformat(timespec="microseconds"))
         conditions.extend(["json_extract(metadata_json, ?) = ?"] * len(filters))
         values.extend(filter_terms)
         values.append(limit)
@@ -734,15 +739,7 @@ class MemoryStore:
             f"SELECT id FROM memories WHERE {' AND '.join(conditions)} ORDER BY id LIMIT ?",
             values,
         ).fetchall()
-        records = self._records_by_internal_ids([int(row["id"]) for row in rows])
-        if include_expired:
-            return records
-        now = datetime.now(UTC)
-        return [
-            record
-            for record in records
-            if record.expires_at is None or datetime.fromisoformat(record.expires_at) > now
-        ]
+        return self._records_by_internal_ids([int(row["id"]) for row in rows])
 
     def correct(
         self, memory_id: str, new_content: str, *, operation_id: str | None = None
