@@ -8,7 +8,7 @@ All notable changes to this project are documented here.
 
 - The local Mem0 comparator now sets a configurable per-question `SIGALRM` deadline, records timed
   out questions in its checkpoint, and restores the signal handler after each question. Paid Kimi
-  runners remain unchanged pending a billing-safe timeout and resume audit.
+  runner resume safety is addressed separately.
 
 ### Fixed
 
