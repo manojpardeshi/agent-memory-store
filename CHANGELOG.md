@@ -26,6 +26,9 @@ All notable changes to this project are documented here.
   collision across scopes or write types raises `ValueError`, including after a concurrent insert.
 - Corrections read the active lineage version under the write lock, so concurrent corrections
   advance versions in order instead of racing on the same version number.
+- Paid Kimi baseline and paired runners now stop on an uncertain in-flight call instead of
+  automatically reissuing a request that may already have been billed. The baseline persists a
+  question marker before its first call and rejects incomplete legacy reports without one.
 - `sentence-transformers/all-MiniLM-L6-v2` is re-certified. Today's model download gives a
   different behaviour fingerprint from July's certified one, so new MiniLM stores silently ran
   without the certified relevance filter. Re-running the July certification gave identical
