@@ -32,4 +32,10 @@ existing benchmark decisions unchanged unless new independent evidence meets the
 - **Nov 26 local portion complete early:** the Mem0 local comparator has a configurable question
   deadline, checkpointed timeout, and alarm cleanup. Offline tests prove a deadline is not swallowed
   by its session-error handler. Full Python suite: 356 passed; Ruff, lock check, and package build
-  passed. PR #4. Paid Kimi timeout and billing-safe resume behavior remain under audit.
+  passed. PR #4.
+- **Nov 26 paid-runner audit finding:** Kimi calls already have per-call network timeouts. The
+  baseline runner persists cost only after a whole question, so an interrupted question can repeat
+  a previously charged call on resume. The paired runner persists an in-flight reservation and
+  charges its ceiling on recovery, but can reissue the uncertain slot. A new question alarm would
+  not make either path billing-safe. No paid calls were made, and no alarm was added to those
+  runners. A separate resume-policy decision and durable call ledger are needed before promotion.
