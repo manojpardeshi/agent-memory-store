@@ -1538,19 +1538,23 @@ class MemoryStore:
                 """
             )
         }
-        memory_ids = {
-            int(row["id"]) for row in self.connection.execute("SELECT id FROM memories").fetchall()
-        }
-        vector_ids = {
-            int(row["rowid"])
-            for row in self.connection.execute("SELECT rowid FROM memory_vectors").fetchall()
-        }
-        ready_ids = {
-            int(row["id"])
-            for row in self.connection.execute(
-                "SELECT id FROM memories WHERE status='active' AND embedding_status='ready'"
-            ).fetchall()
-        }
+        memory_count = int(self.connection.execute("SELECT count(*) FROM memories").fetchone()[0])
+        orphan_vectors = int(
+            self.connection.execute(
+                """SELECT count(*) FROM (
+                    SELECT rowid FROM memory_vectors
+                    EXCEPT SELECT id FROM memories
+                )"""
+            ).fetchone()[0]
+        )
+        missing_vectors = int(
+            self.connection.execute(
+                """SELECT count(*) FROM (
+                    SELECT id FROM memories WHERE status='active' AND embedding_status='ready'
+                    EXCEPT SELECT rowid FROM memory_vectors
+                )"""
+            ).fetchone()[0]
+        )
         return {
             "database": str(self.path),
             "store_id": self.manifest["store_id"],
@@ -1562,11 +1566,11 @@ class MemoryStore:
                 if self.default_relevance_filter is not None
                 else None
             ),
-            "memories": len(memory_ids),
+            "memories": memory_count,
             "by_kind": by_kind,
             "by_embedding_status": by_embedding,
-            "orphan_vectors": len(vector_ids - memory_ids),
-            "missing_vectors": len(ready_ids - vector_ids),
+            "orphan_vectors": orphan_vectors,
+            "missing_vectors": missing_vectors,
             "keyword_index": self._keyword_index_status(),
             "integrity_check": self.connection.execute("PRAGMA integrity_check").fetchone()[0],
         }
